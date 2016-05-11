@@ -1,0 +1,50 @@
+﻿body {
+    padding-top: 50px;
+    padding-bottom: 20px;
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select,
+textarea {
+    max-width: 280px;
+}
+
+.moduleImage {
+    max-height: 200px;
+    width: auto;
+}
+
+.floatLeft{
+    float:left;
+}
+
+.floatRight{
+    float:right;
+}
+
+article{
+    float:right;
+    margin-right:60%;
+}
+
+.scroll-box{
+    overflow: scroll;
+    scrollbar-face-color:#00aeef;
+}
+
+.gameButton{
+    margin: 1.5%;
+    width: 30%;
+    overflow: hidden;
+}
+
+#answerButtons{
+    padding-bottom:10px;
+}

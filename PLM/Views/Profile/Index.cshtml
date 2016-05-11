@@ -1,0 +1,132 @@
+﻿@model IEnumerable<PLM.Module>
+@using Microsoft.AspNet.Identity
+@{
+    ViewBag.Title = "Your Profile";
+    var name = User.Identity.GetFirstName() + " " + User.Identity.GetLastName();
+    var instution = User.Identity.GetInstution();
+    var email = User.Identity.GetUserName();
+}
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Modules | Triangle</title>
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet">
+    <link href="~/Content/font-awesome.min.css" rel="stylesheet">
+    <link href="~/Content/animate.min.css" rel="stylesheet">
+    <link href="~/Conetnt/lightbox.css" rel="stylesheet">
+    <link href="~/Content/main.css" rel="stylesheet">
+    <link href="~/Content/responsive.css" rel="stylesheet">
+
+    <!--[if lt IE 9]>
+        <script src="js/html5shiv.js"></script>
+        <script src="js/respond.min.js"></script>
+    <![endif]-->
+    <link rel="shortcut icon" href="~/Content/images/ico/favicon.ico">
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="~/Content/images/ico/apple-touch-icon-144-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="~/Content/images/ico/apple-touch-icon-114-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="~/Content/images/ico/apple-touch-icon-72-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" href="~/Content/images/ico/apple-touch-icon-57-precomposed.png">
+</head><!--/head-->
+
+<header id="header">
+
+    <div class="navbar navbar-inverse" role="banner">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+
+                <a class="navbar-brand" href="index.html">
+                    <h1><img src="http://perceptuallearning.azurewebsites.net/Content/images/logo.png" alt="logo"></h1>
+                </a>
+            </div>
+        </div>
+    </div>
+</header>
+<!--/#header-->
+
+<section id="page-breadcrumb">
+    <div class="vertical-center sun">
+        <div class="container">
+            <div class="row">
+                <div class="action">
+                    <div class="col-sm-12">
+                        <h1 class="title">Your Profile</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--/#action-->
+
+<img class="floatLeft" src="http://perceptuallearning.azurewebsites.net/Content/Images/blank-profile.png" alt="Profile Picture" height="200" width="200" />
+
+<article>
+    <h3>Name:</h3>
+    <p>@name</p>
+
+    <h3>Email:</h3>
+    <p>@email</p>
+
+    <h3>Institution:</h3>
+    <p>@instution</p>
+
+    <br /><br />
+</article>
+
+
+<div>
+    <table class="table">
+        <caption>Courses Created:</caption>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CategoryId)
+            </th>
+            <th>
+                Answer Count
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CategoryId)
+                </td>
+                <td>
+                    @item.Answers.Count()
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { controller = "ModulesEDIT", id = item.ModuleID }) |
+                    @*@Html.ActionLink("Details", "Details", new { controller = "ModulesEDIT", id = item.ModuleID }) |*@
+                    @Html.ActionLink("Delete", "Delete", new { controller = "ModulesEDIT", id = item.ModuleID })
+                </td>
+            </tr>
+        }
+
+    </table>
+
+</div>
+
+<br />
+<br />
+@Html.ActionLink("Create New", "Create", new { controller = "ModulesEDIT" })
+
+
+
+

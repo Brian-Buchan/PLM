@@ -1,0 +1,42 @@
+﻿  #ScoreBoard {
+      float: right;
+      margin: 10px, 10px, 0px, 10px;
+      background-color: lightgray;
+      border: 2px solid black;
+      width: 300px;
+      height: 100px;
+  }
+
+  #picture {
+      display: block;
+      height: 480px;
+      width: 640px;
+      resize: none;
+      background-color: gray;
+  }
+
+  #gameBoard {
+      width: 1000px;
+      resize: none;
+      margin: 10px;
+  }
+
+  #ScoreBoard p {
+      float: left;
+      font-size: 20pt;
+      margin: 5px;
+  }
+
+  #answerButtons {
+      width: 640px;
+      height: auto;
+      resize: none;
+      background-color: lightgray;
+      border: 3px solid black;
+  }
+
+  #answerButtons Button {      
+    margin: 1.5%;
+    width: 30%;
+    overflow: hidden;
+  }

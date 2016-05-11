@@ -1,0 +1,122 @@
+﻿@model PLM.Answer
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>Edit</h2>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <div style="text-align:right; float:right">
+            <a href="http://plmeditor.azurewebsites.net" target="_blank">Edit an image to upload.</a>
+        </div>
+        <h4>Answer</h4>
+        <hr />
+        @Html.ValidationSummary(true)
+        @Html.HiddenFor(model => model.AnswerID)
+        <div class="form-group">
+            @Html.LabelFor(model => model.AnswerString, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.AnswerString)
+                @Html.ValidationMessageFor(model => model.AnswerString)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ModuleID, "ModuleID", new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("ModuleID", String.Empty)
+                @Html.ValidationMessageFor(model => model.ModuleID)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Pictures, "Pictures", new { @class = "control-label col-md-2" })
+            <p>
+                @*@{
+                        Picture test = new Picture()
+                        {
+                            PictureID = 4,
+                            Location = "http://plmgamesite2.azurewebsites.net/Content/Images/PLM/AmerGeoPhoto/test.png",
+                            AnswerID = 1
+                        };
+                    }*@
+            </p>
+            <div class="form-group, scroll-box, col-md-10">
+                @foreach (Picture pic in Model.Pictures)
+                {
+                    <img src="@pic.Location" alt="Answer Image" class="img-thumbnail" width="225" />
+                }
+            </div>
+        </div>
+
+        <br />
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-submit" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Add Picture", "Create", new { Controller = "Pictures", id = Model.AnswerID });
+</div>
+
+@*<!-- HTML heavily inspired by http://blueimp.github.io/jQuery-File-Upload/ -->
+<div class="table table-striped" class="files" id="previews">
+
+    <div id="template" class="file-row">
+        <!-- This is used as the file preview template -->
+        <div>
+            <span class="preview"><img data-dz-thumbnail /></span>
+        </div>
+        <div>
+            <p class="name" data-dz-name></p>
+            <strong class="error text-danger" data-dz-errormessage></strong>
+        </div>
+        <div>
+            <p class="size" data-dz-size></p>
+            <div class="progress progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+                <div class="progress-bar progress-bar-success" style="width:0%;" data-dz-uploadprogress></div>
+            </div>
+        </div>
+        <div>
+            <button class="btn btn-primary start">
+                <i class="glyphicon glyphicon-upload"></i>
+                <span>Start</span>
+            </button>
+            <button data-dz-remove class="btn btn-warning cancel">
+                <i class="glyphicon glyphicon-ban-circle"></i>
+                <span>Cancel</span>
+            </button>
+            <button data-dz-remove class="btn btn-danger delete">
+                <i class="glyphicon glyphicon-trash"></i>
+                <span>Delete</span>
+            </button>
+        </div>
+    </div>
+
+</div>*@
+
+
+<div>
+    <div style="text-align:right; float:right">
+        <a href="http://plmeditor.azurewebsites.net" target="_blank">Edit an image to upload.</a>
+    </div>
+    @Html.ActionLink("Back to List", "edit", new { controller = "ModulesEdit", id = Model.ModuleID })
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+<script src="~/Content/dropzone.js"></script>
+<script src="~/Content/dropzone-amd-module.js"></script>
+<script src="~/Content/min/dropzone-amd-module.min.js"></script>
+<script src="~/Content/min/dropzone.min.js"></script>

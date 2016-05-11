@@ -1,0 +1,30 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.30501.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PLM", "PLM\PLM.csproj", "{7DAD4DAB-ACE3-4FF3-AC47-D2CECE3FE202}"
+EndProject
+Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "Database1", "..\..\..\Documents\Visual Studio 2013\Projects\Database1\Database1.sqlproj", "{CF5C12A2-5524-4A10-BFF9-233D2872EB26}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7DAD4DAB-ACE3-4FF3-AC47-D2CECE3FE202}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7DAD4DAB-ACE3-4FF3-AC47-D2CECE3FE202}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7DAD4DAB-ACE3-4FF3-AC47-D2CECE3FE202}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7DAD4DAB-ACE3-4FF3-AC47-D2CECE3FE202}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CF5C12A2-5524-4A10-BFF9-233D2872EB26}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CF5C12A2-5524-4A10-BFF9-233D2872EB26}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CF5C12A2-5524-4A10-BFF9-233D2872EB26}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{CF5C12A2-5524-4A10-BFF9-233D2872EB26}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CF5C12A2-5524-4A10-BFF9-233D2872EB26}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CF5C12A2-5524-4A10-BFF9-233D2872EB26}.Release|Any CPU.Deploy.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
