@@ -98,7 +98,7 @@
                                 <div class="portfolio-wrapper">
                                     <div class="portfolio-single">
                                         <div class="portfolio-thumb">
-                                            <img src="@picture.Location" class="img-responsive moduleImage" alt="">
+                                            <img src="@picture.Location" onerror="this.src='/Content/Images/ico/Title-logo.png';" class="img-responsive moduleImage" alt="">
                                         </div>
                                         <div class="portfolio-view">
                                             <ul class="nav nav-pills">
@@ -115,12 +115,12 @@
                             </div>
                         }
 
-                        <div class="portfolio-pagination">
+                        <div class="portfolio-pagination clearScrollBar">
                             <ul class="pagination">
                                 <li><a href="#">left</a></li>
-                                <li><a href="#">1</a></li>
+                                <li class="active"><a href="#">1</a></li>
                                 <li><a href="#">2</a></li>
-                                <li class="active"><a href="#">3</a></li>
+                                <li><a href="#">3</a></li>
                                 <li><a href="#">4</a></li>
                                 <li><a href="#">5</a></li>
                                 <li><a href="#">6</a></li>
