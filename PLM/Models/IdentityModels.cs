@@ -22,7 +22,20 @@ namespace PLM
         [Display(Name = "Institution")]
         public string Institution { get; set; }
 
+        [Display(Name = "Modules List")]
         public List <Module> ModuleList { get; set; }
+
+        [Display(Name = "Score List")]
+        public List<Score> ScoreList { get; set; }
+
+        [Display(Name = "Enrolled Courses")]
+        public List<Course> EnrolledCourses { get; set; }
+
+        [Display(Name = "Instructed Courses")]
+        public List<Course> InstructedCourses { get; set; }
+
+        public int OverrideNumberOfAnswers { get; set; }
+
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {

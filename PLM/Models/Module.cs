@@ -12,13 +12,11 @@ namespace PLM
     {
         public int ModuleID { get; set; }
         public string Name { get; set; }
-       // public string CategoryId { get; set; }  - Shane: commented out. Switched to Category.
-
+        public string Description { get; set; }
         public virtual int CategoryId { get; set; }
-
+        public int DefaultNumAnswers { get; set; }
         public virtual List<Answer> Answers { get; set; }
-
         public virtual ApplicationUser User { get; set; }
-
+        public bool isPrivate { get; set; }
     }
 }
