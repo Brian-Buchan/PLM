@@ -307,6 +307,7 @@
     <Content Include="Content\Images\ico\apple-touch-icon-57-precomposed.png" />
     <Content Include="Content\Images\ico\apple-touch-icon-72-precomposed.png" />
     <Content Include="Content\Images\ico\favicon.ico" />
+    <Content Include="Content\Images\ico\Title-logo.png" />
     <Content Include="Content\Images\lightbox\close.png" />
     <Content Include="Content\Images\lightbox\loading.gif" />
     <Content Include="Content\Images\lightbox\next.png" />
