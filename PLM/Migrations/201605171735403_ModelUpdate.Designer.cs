@@ -13,7 +13,7 @@ namespace PLM.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "201605111827341_ModelUpdate"; }
+            get { return "201605171735403_ModelUpdate"; }
         }
         
         string IMigrationMetadata.Source
