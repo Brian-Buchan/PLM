@@ -5,7 +5,10 @@
 <h2>Complete</h2>
 <div>
     @{
-        
+        foreach (var score in TopTenScore.GetTopTenScores(ViewBag.ModuleID))
+        {
+            
+        }
     }
     <p>SCORE:</p>
     <p>@Model</p>
