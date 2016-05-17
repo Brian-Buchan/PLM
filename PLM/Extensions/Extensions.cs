@@ -25,6 +25,18 @@ namespace PLM
         }
     }
 
+    public static class TopTenScore
+    {
+        private ApplicationDbContext db = new ApplicationDbContext();
+        private List<Score> scores = new List<Score>();
+            //ViewBag.UserID = User.Identity.GetUserId();
+
+        public TopTenScore()
+        {
+            scores = db.Scores.ToList();
+        }
+    }
+
     public static class IdentityExtensions
     {
         public static string GetFirstName(this IIdentity identity)
