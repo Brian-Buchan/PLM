@@ -107,6 +107,7 @@ namespace PLM.Controllers
                 else
                 {
                     AddErrors(result);
+                    RedirectToAction("Index", "Profile");
                 }
             }
 
