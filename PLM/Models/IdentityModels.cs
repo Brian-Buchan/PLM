@@ -19,6 +19,7 @@ namespace PLM
         [Display(Name = "Last Name")]
         public string LastName { get; set; }
 
+        [Required]
         [Display(Name = "Institution")]
         public string Institution { get; set; }
 

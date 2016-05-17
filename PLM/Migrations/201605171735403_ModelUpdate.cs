@@ -76,10 +76,13 @@ namespace PLM.Migrations
             
             AddColumn("dbo.Modules", "Description", c => c.String());
             AddColumn("dbo.Modules", "DefaultNumAnswers", c => c.Int(nullable: false));
+            AddColumn("dbo.Modules", "DefaultTime", c => c.Int(nullable: false));
+            AddColumn("dbo.Modules", "DefaultNumPictures", c => c.Int(nullable: false));
             AddColumn("dbo.Modules", "isPrivate", c => c.Boolean(nullable: false));
             AddColumn("dbo.Modules", "Course_ID", c => c.Int());
             AddColumn("dbo.AspNetUsers", "OverrideNumberOfAnswers", c => c.Int(nullable: false));
             AddColumn("dbo.AspNetUsers", "Course_ID", c => c.Int());
+            AlterColumn("dbo.AspNetUsers", "Institution", c => c.String(nullable: false));
             CreateIndex("dbo.Modules", "Course_ID");
             CreateIndex("dbo.AspNetUsers", "Course_ID");
             AddForeignKey("dbo.Modules", "Course_ID", "dbo.Courses", "ID");
@@ -110,10 +113,13 @@ namespace PLM.Migrations
             DropIndex("dbo.Courses", new[] { "Instructor_Id" });
             DropIndex("dbo.AspNetUsers", new[] { "Course_ID" });
             DropIndex("dbo.Modules", new[] { "Course_ID" });
+            AlterColumn("dbo.AspNetUsers", "Institution", c => c.String());
             DropColumn("dbo.AspNetUsers", "Course_ID");
             DropColumn("dbo.AspNetUsers", "OverrideNumberOfAnswers");
             DropColumn("dbo.Modules", "Course_ID");
             DropColumn("dbo.Modules", "isPrivate");
+            DropColumn("dbo.Modules", "DefaultNumPictures");
+            DropColumn("dbo.Modules", "DefaultTime");
             DropColumn("dbo.Modules", "DefaultNumAnswers");
             DropColumn("dbo.Modules", "Description");
             DropTable("dbo.Scores");
