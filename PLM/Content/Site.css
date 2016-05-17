@@ -48,3 +48,17 @@ article{
 #answerButtons{
     padding-bottom:10px;
 }
+
+#navImg{
+    height:60px;
+    padding-top:0px;
+}
+
+.maxWidth{
+    width:100%;
+    padding:0px 0px;
+}
+.span{
+    background-image: url("~/Content/images/home/under.png");
+    background-size:100%;
+}
