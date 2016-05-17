@@ -13,14 +13,14 @@ namespace PLM.Controllers
             return View();
         }
 
-        public ActionResult About()
+        public ActionResult AboutUs()
         {
             ViewBag.Message = "Learning Without Thinking";
 
             return View();
         }
 
-        public ActionResult Contact()
+        public ActionResult ContactUs()
         {
             ViewBag.Message = "Please feel free to contact me!";
 

@@ -4,6 +4,8 @@ using System.Linq;
 using System.Web;
 using System.Security.Claims;
 using System.Security.Principal;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace PLM
 {
@@ -22,6 +24,18 @@ namespace PLM
                 list[k] = list[n];
                 list[n] = value;
             }
+        }
+    }
+
+    public static class TopTenScore
+    {
+        public static List<Score> GetTopTenScores()
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+            List<Score> scores = db.Scores.ToList();
+
+            scores.OrderBy(x => (x.TotalAnswers / x.CorrectAnswers)).ToList();
+            return((List<Score>)scores.Take(10));
         }
     }
 
