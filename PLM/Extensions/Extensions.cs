@@ -29,11 +29,11 @@ namespace PLM
 
     public static class TopTenScore
     {
-        public static List<Score> GetTopTenScores()
+        public static List<Score> GetTopTenScores(int moduleID)
         {
             ApplicationDbContext db = new ApplicationDbContext();
             List<Score> scores = db.Scores.ToList();
-
+            scores.Where(x => x.Module.ModuleID == moduleID);
             scores.OrderBy(x => (x.TotalAnswers / x.CorrectAnswers)).ToList();
             return((List<Score>)scores.Take(10));
         }
