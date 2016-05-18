@@ -496,9 +496,12 @@
     <Content Include="Views\ModulesEDIT\Edit.cshtml" />
     <Content Include="Views\ModulesEDIT\Index.cshtml" />
     <Content Include="Views\Game\Complete.cshtml" />
+    <Content Include="Views\Home\FAQ.cshtml" />
+    <Content Include="Views\Home\FileUpload.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Content\Images\Profile\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

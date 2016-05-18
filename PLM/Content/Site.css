@@ -50,8 +50,9 @@ article{
 }
 
 #navImg{
-    height:60px;
+    height:40px;
     padding-top:0px;
+    visibility:visible;
 }
 
 .maxWidth{
