@@ -179,6 +179,7 @@
     <Compile Include="Controllers\ModuleViewModel.cs" />
     <Compile Include="Controllers\PicturesController.cs" />
     <Compile Include="Controllers\ProfileController.cs" />
+    <Compile Include="CutomAttributes\AuthorizeOrRedirectAttribute.cs" />
     <Compile Include="Extensions\FTPDirectoryWriter.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
