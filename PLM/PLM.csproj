@@ -440,6 +440,7 @@
     <Content Include="Scripts\respond.matchmedia.addListener.min.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\gameplay.js" />
+    <Content Include="Scripts\Setup.js" />
     <Content Include="Scripts\w.gif" />
     <Content Include="Scripts\wow.min.js" />
     <Content Include="Scripts\_references.js" />
@@ -496,6 +497,7 @@
     <Content Include="Views\ModulesEDIT\Index.cshtml" />
     <Content Include="Views\Game\Complete.cshtml" />
     <Content Include="Views\Home\FAQ.cshtml" />
+    <Content Include="Views\Game\Setup.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

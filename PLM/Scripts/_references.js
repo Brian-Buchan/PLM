@@ -27,3 +27,4 @@
 /// <reference path="../content/dropzone-amd-module.js" />
 /// <reference path="../content/min/dropzone-amd-module.min.js" />
 /// <reference path="../content/min/dropzone.min.js" />
+/// <reference path="setup.js" />

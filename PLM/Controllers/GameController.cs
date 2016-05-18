@@ -72,7 +72,14 @@ namespace PLM.Controllers
             return View(currentGuess);
         }
 
-        public ActionResult Setup(int? PLMid)
+        [HttpGet]
+        public ActionResult Setup(int PLMid)
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult Setup()
         {
             return View();
         }
