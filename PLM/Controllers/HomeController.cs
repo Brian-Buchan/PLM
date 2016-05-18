@@ -12,7 +12,10 @@ namespace PLM.Controllers
         {
             return View();
         }
-
+        public ActionResult FAQ()
+        {
+            return View();
+        }
         public ActionResult AboutUs()
         {
             ViewBag.Message = "Learning Without Thinking";
