@@ -34,7 +34,6 @@ namespace PLM
             ApplicationDbContext db = new ApplicationDbContext();
             List<Score> scores = db.Scores.ToList();
             scores.Where(x => x.Module.ModuleID == moduleID);
-            scores.Where(y => y.User.Id == )
             scores.OrderBy(x => (x.TotalAnswers / x.CorrectAnswers)).ToList();
             return((List<Score>)scores.Take(10));
         }
