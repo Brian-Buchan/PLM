@@ -28,7 +28,9 @@ textarea {
 .floatRight{
     float:right;
 }
-
+.navbar-inverse .navbar-nav>li>a {
+    color: #ff0000;
+}
 article{
     float:right;
     margin-right:60%;
@@ -47,4 +49,8 @@ article{
 
 #answerButtons{
     padding-bottom:10px;
+}
+
+.navBarText {
+    color: #FF0000;
 }

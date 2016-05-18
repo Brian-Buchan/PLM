@@ -7,6 +7,7 @@
     @Scripts.Render("~/bundles/modernizr")
     <script src="~/Scripts/jquery-1.10.2.js"></script>
     <link type="image/png" rel="icon" href="~/Content/Images/ico/Title-logo.png"/>
+    <link type="text/css" rel="stylesheet" href="~/Content/Site.css" />
 </head>
 
 <body>
@@ -21,17 +22,17 @@
                 @*@Html.ActionLink("Home", "Index", "Home", new { @class = "navbar-brand" })*@
             </div>
             <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("Profile", "Index", "Profile")</li>
-                    <li>@Html.ActionLink("Modules", "Index", "Modules")</li>
-                    <li>@Html.ActionLink("About Us", "AboutUs", "Home")</li>
-                    <li>@Html.ActionLink("Contact Us", "ContactUs", "Home")</li>
+                <ul class="nav navbar-nav navBarText">
+                    <li class="navBarText">@Html.ActionLink("Home", "Index", "Home")</li>
+                    <li class="navBarText">@Html.ActionLink("Profile", "Index", "Profile")</li>
+                    <li class="navBarText">@Html.ActionLink("Modules", "Index", "Modules")</li>
+                    <li class="navBarText">@Html.ActionLink("About Us", "AboutUs", "Home")</li>
+                    <li class="navBarText">@Html.ActionLink("Contact Us", "ContactUs", "Home")</li>
                     @*<li>@Html.ActionLink("Blog", "Blog", "Home")</li>*@
                     @*<li>@Html.ActionLink("Game", "Play", "Game")</li>*@
                     @*<li>@Html.ActionLink("Edit Answers", "Index", "Answers")</li>
-                    <li>@Html.ActionLink("Edit Modules", "Index", "ModulesEDIT")</li>
-                    <li>@Html.ActionLink("Edit Pictures", "Index", "Pictures")</li>*@
+            <li>@Html.ActionLink("Edit Modules", "Index", "ModulesEDIT")</li>
+            <li>@Html.ActionLink("Edit Pictures", "Index", "Pictures")</li>*@
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>
