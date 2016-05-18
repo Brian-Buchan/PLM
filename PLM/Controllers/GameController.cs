@@ -24,7 +24,7 @@ namespace PLM.Controllers
 
         private int answerID;
         private int pictureID;
-        private int NumAnswersDifficultyBased = 12;
+        //private int DefaultNumAnswers = 12;
 
         //Module currentModule;
         //
@@ -72,16 +72,16 @@ namespace PLM.Controllers
             return View(currentGuess);
         }
 
-        public ActionResult Setup()
+        public ActionResult Setup(int? PLMid)
         {
             return View();
         }
 
         private void CheckMaxGuesses()
         {
-            if (currentModule.Answers.Count <= NumAnswersDifficultyBased)
+            if (currentModule.Answers.Count <= currentModule.DefaultNumAnswers)
             {
-                NumAnswersDifficultyBased = currentModule.Answers.Count - 2;
+                currentModule.DefaultNumAnswers = currentModule.Answers.Count - 2;
             }
         }
 
@@ -153,6 +153,7 @@ namespace PLM.Controllers
         {
             AnsPicIndex IndexItem = ((UserGameSession)Session["userGameSession"]).PictureIndicies.ElementAt(currentGuessNum);
             return new int[] { IndexItem.AnswerIndex, IndexItem.PictureIndex };
+            #region legacy code
             //Picture currentPicture = ((UserGameSession)Session["userGameSession"]).Pictures.ElementAt(currentGuessNum);
             //int AnswerTrackerIndex = -1;
             //int PictureTrackerIndex;
@@ -170,9 +171,11 @@ namespace PLM.Controllers
             //        }
             //    }
             //}
-            //return new int[] { 1, 1, 1 };
+            //return new int[] { 1, 1, 1 }; 
+            #endregion
         }
 
+        #region Legacy Method
         //private int GetAnswerID()
         //{
         //    foreach (Answer answer in currentModule.Answers)
@@ -188,9 +191,11 @@ namespace PLM.Controllers
         //    // Defaults to 1 so error doesn't occur
         //    return 1;
         //}
+        #endregion
 
         // Generates guess, only loops through each answer once, so only
         // one picture will be chosen per answer
+        #region Legacy Method - GenerateGuessOnePerAnswer
         private void GenerateGuessONEperANS()
         {
             ((UserGameSession)Session["userGameSession"]).currentGuess++;
@@ -211,7 +216,8 @@ namespace PLM.Controllers
 
             //shuffle the list of possible answers so that the first answer isn't always the right one.
             currentGuess.possibleAnswers.Shuffle();
-        }
+        } 
+        #endregion
 
         private void GenerateWrongAnswers()
         {
@@ -231,8 +237,8 @@ namespace PLM.Controllers
 
                 //if we've completed our work
                 // TODO - Add functionality that checks if the module has enough answers to reach
-                // the value of NumAnswersDifficultBased so that an error isn't thrown
-                if (GeneratedGuessIDs.Count >= NumAnswersDifficultyBased)
+                // the value of DefaultNumAnswers so that an error isn't thrown
+                if (GeneratedGuessIDs.Count >= currentModule.DefaultNumAnswers)
                 {
                     //break out of the loop
                     WrongAnswersGenerationNOTcompleted = false;
