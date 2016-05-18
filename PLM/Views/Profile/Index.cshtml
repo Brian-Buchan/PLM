@@ -56,9 +56,16 @@
         </div>
     </div>
 </section>
+@using (Html.BeginForm("FileUpload", "Profile", FormMethod.Post,
+                            new { enctype = "multipart/form-data" }))
+{
+    <label for="file">Upload Image:</label>
+    <input type="file" name="file" id="file" style="width: 100%;" />
+    <input type="submit" value="Upload" class="submit" />
+}
 <!--/#action-->
 
-<img class="floatLeft" src="http://perceptuallearning.azurewebsites.net/Content/Images/blank-profile.png" alt="Profile Picture" height="200" width="200" />
+<img class="floatLeft" src="@ViewBag.ImageUrl" alt="Profile Picture" height="200" width="200" />
 
 <article>
     <h3>Name:</h3>
