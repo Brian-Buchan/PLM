@@ -4975,11 +4975,14 @@ select[multiple].input-group-sm > .form-control, select[multiple].input-group-sm
 
     .navbar-inverse .navbar-brand {
         color: #ddd;
+        visibility:hidden;
+        
     }
 
         .navbar-inverse .navbar-brand:focus, .navbar-inverse .navbar-brand:hover {
             color: #fff;
             background-color: transparent;
+            visibility:hidden;
         }
 
     .navbar-inverse .navbar-text {
@@ -4987,12 +4990,16 @@ select[multiple].input-group-sm > .form-control, select[multiple].input-group-sm
     }
 
     .navbar-inverse .navbar-nav > li > a {
-        color: #eeeeee;
+        color: #ddd;
+        font-weight:bolder;
+
     }
 
         .navbar-inverse .navbar-nav > li > a:focus, .navbar-inverse .navbar-nav > li > a:hover {
-            color: #fff;
+            color: #ffffff;
             background-color: transparent;
+            font-weight:bold;
+            font-size:24px;
         }
 
     .navbar-inverse .navbar-nav > .active > a, .navbar-inverse .navbar-nav > .active > a:focus, .navbar-inverse .navbar-nav > .active > a:hover {
