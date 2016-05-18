@@ -28,9 +28,7 @@ textarea {
 .floatRight{
     float:right;
 }
-.navbar-inverse .navbar-nav>li>a {
-    color: #ff0000;
-}
+
 article{
     float:right;
     margin-right:60%;
@@ -51,6 +49,17 @@ article{
     padding-bottom:10px;
 }
 
-.navBarText {
-    color: #FF0000;
+#navImg{
+    height:40px;
+    padding-top:0px;
+    visibility:visible;
+}
+
+.maxWidth{
+    width:100%;
+    padding:0px 0px;
+}
+.span{
+    background-image: url("~/Content/images/home/under.png");
+    background-size:100%;
 }

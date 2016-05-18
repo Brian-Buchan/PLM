@@ -96,6 +96,14 @@
     <Reference Include="Owin">
       <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
     </Reference>
+    <Reference Include="PagedList, Version=1.17.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\PagedList.1.17.0.0\lib\net40\PagedList.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="PagedList.Mvc, Version=4.5.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\PagedList.Mvc.4.5.0.0\lib\net40\PagedList.Mvc.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -368,6 +376,7 @@
     <Content Include="Content\min\dropzone-amd-module.min.js" />
     <Content Include="Content\min\dropzone.min.css" />
     <Content Include="Content\min\dropzone.min.js" />
+    <Content Include="Content\PagedList.css" />
     <Content Include="Content\prettyPhoto.css" />
     <Content Include="Content\responsive.css" />
     <Content Include="Content\test.css" />
@@ -395,6 +404,7 @@
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Properties\PublishProfiles\PerceptualLearning %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\PerceptualLearning.pubxml" />
+    <None Include="Properties\PublishProfiles\PerceptualLearningBeta.pubxml" />
     <None Include="Properties\PublishProfiles\PerceptualLearningEDU.pubxml" />
     <None Include="Properties\PublishProfiles\PLMAlpha - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\PLMAlpha - Web Deploy.pubxml" />
@@ -485,9 +495,12 @@
     <Content Include="Views\ModulesEDIT\Edit.cshtml" />
     <Content Include="Views\ModulesEDIT\Index.cshtml" />
     <Content Include="Views\Game\Complete.cshtml" />
+    <Content Include="Views\Home\FAQ.cshtml" />
+    <Content Include="Views\Home\FileUpload.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Content\Images\Profile\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
