@@ -34,11 +34,23 @@ namespace PLM.Controllers
             return View();
         }
 
-        public ActionResult Complete(int? score)
+        public ActionResult Complete(int score)
         {
             ViewBag.UserID = User.Identity.GetUserId();
             ViewBag.ModuleID = currentModule.ModuleID;
+            SaveScore(score);
+
             return View(score);
+        }
+
+        private void SaveScore(int score)
+        {
+            Score newScore = new Score();
+            newScore.CorrectAnswers = (score / 100);
+            newScore.Module = currentModule;
+
+            db.Scores.Add(newScore);
+            db.SaveChanges();
         }
 
         public ActionResult Play(int? PLMid)

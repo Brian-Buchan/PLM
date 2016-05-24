@@ -29,12 +29,19 @@ namespace PLM
 
     public static class TopTenScore
     {
-        public static List<Score> GetTopTenScores(int moduleID, ApplicationUser user)
+        public static List<Score> GetTopTenScores(int moduleID, string userID)
         {
+            if (userID == null)
+            {
+                //The current Guest Account ID
+                // TODO - Set up a txt file that this can be read from, or find another way of selecting the guest account if not logged in
+                userID = "5b853c48-424f-455e-b731-f24e102cdc6d";
+            }
+
             ApplicationDbContext db = new ApplicationDbContext();
             List<Score> scores = db.Scores.ToList();
             scores.Where(x => x.Module.ModuleID == moduleID);
-            scores.Where(y => y.User.Id == user.Id);
+            scores.Where(y => y.User.Id == userID);
             scores.OrderBy(x => (x.TotalAnswers / x.CorrectAnswers)).ToList();
             return((List<Score>)scores.Take(10));
         }
