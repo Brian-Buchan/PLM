@@ -300,6 +300,7 @@
     <Content Include="Content\Images\home\icon1.png" />
     <Content Include="Content\Images\home\icon2.png" />
     <Content Include="Content\Images\home\icon3.png" />
+    <Content Include="Content\Images\home\PlayIcon.png" />
     <Content Include="Content\Images\home\image1.png" />
     <Content Include="Content\Images\home\image2.png" />
     <Content Include="Content\Images\home\image3.png" />
@@ -503,8 +504,6 @@
     <Content Include="Views\Game\Complete.cshtml" />
     <Content Include="Views\Home\FAQ.cshtml" />
     <Content Include="Views\Game\Setup.cshtml" />
-    <Content Include="Views\Home\FileUpload.cshtml" />
-    <Content Include="Views\Profile\FileUpload.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

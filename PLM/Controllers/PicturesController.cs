@@ -86,6 +86,7 @@ namespace PLM.Controllers
 
             ViewBag.AnswerID = new SelectList(db.Answers, "AnswerID", "AnswerString", picture.AnswerID);
             return View(picture);
+
         }
 
         // GET: /Pictures/Edit/5
