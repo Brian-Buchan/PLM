@@ -26,7 +26,7 @@ namespace PLM.Controllers
             {
                 string pic = System.IO.Path.GetFileName(file.FileName);
                 string path = System.IO.Path.Combine(
-                                       Server.MapPath("~/images/profile"), pic);
+                                       Server.MapPath("~/Content/Images/Profile"), pic);
                 // file is uploaded
                 file.SaveAs(path);
 
@@ -38,10 +38,10 @@ namespace PLM.Controllers
                     file.InputStream.CopyTo(ms);
                     byte[] array = ms.GetBuffer();
                 }
-
+               
+                return RedirectToAction("Index", "Profile", new { imageurl = path });
             }
-            // after successfully uploading redirect the user
-            return RedirectToAction("Index", "Profile");
+            return View();
         }
     }
 }

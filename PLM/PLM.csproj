@@ -179,6 +179,7 @@
     <Compile Include="Controllers\ModuleViewModel.cs" />
     <Compile Include="Controllers\PicturesController.cs" />
     <Compile Include="Controllers\ProfileController.cs" />
+    <Compile Include="CutomAttributes\AuthorizeOrRedirectAttribute.cs" />
     <Compile Include="Extensions\FTPDirectoryWriter.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -444,6 +445,7 @@
     <Content Include="Scripts\respond.matchmedia.addListener.min.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\gameplay.js" />
+    <Content Include="Scripts\Setup.js" />
     <Content Include="Scripts\w.gif" />
     <Content Include="Scripts\wow.min.js" />
     <Content Include="Scripts\_references.js" />
@@ -500,7 +502,9 @@
     <Content Include="Views\ModulesEDIT\Index.cshtml" />
     <Content Include="Views\Game\Complete.cshtml" />
     <Content Include="Views\Home\FAQ.cshtml" />
+    <Content Include="Views\Game\Setup.cshtml" />
     <Content Include="Views\Home\FileUpload.cshtml" />
+    <Content Include="Views\Profile\FileUpload.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

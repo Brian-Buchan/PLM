@@ -1,0 +1,23 @@
+﻿
+@{
+    ViewBag.Title = "Setup";
+}
+
+<h2>Game Setup</h2>
+
+<form action="Setup" method="post">
+    <label>Number of Answers per Question</label>
+    <input type="range" id="numAnswers" name="numAnswers" step="3" min="3" max="15" value="12" oninput="outputUpdate(value, '#numAnswersOutput')"/>
+    <output for="numAnswers" id="numAnswersOutput">12</output>
+
+    <label>Number of Questions</label>
+    <input type="range" id="numQuestions" name="numQuestions" step="5" min="5" max="200" value="50" oninput="outputUpdate(value, '#numQuestionsOutput')" />
+    <output for="numQuestions" id="numQuestionsOutput">50</output>
+
+    <label>Time Limit</label>
+    <input type="range" id="time" name="time" value="5" min="3" max="120" step="1" oninput="outputUpdate(value, '#timeOutput')" />
+    <output for="time" id="timeOutput">5</output>
+
+    <input type="submit" name="btnPlay" value="Play" />
+</form>
+<script src="~/Scripts/Setup.js"></script>

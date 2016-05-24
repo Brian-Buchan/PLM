@@ -23,6 +23,9 @@ namespace PLM
         [Display(Name = "Institution")]
         public string Institution { get; set; }
 
+        [Display(Name = "Avatar Url")]
+        public string ProfilePicture { get; set; }
+
         [Display(Name = "Modules List")]
         public List <Module> ModuleList { get; set; }
 
