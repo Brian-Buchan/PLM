@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Mvc.Html;
+using System.Net;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 
@@ -55,19 +57,9 @@ namespace PLM.Controllers
 
         public ActionResult Play(int? PLMid)
         {
-            // Added the '?' after int to make the value nullable
+           
 
-            int IDtoPASS = 1;
-            if (PLMid != null)
-            {
-            // Attempts to set nullable value, If null sets to itself (DEFAULT IS 0 - AMERICAN GEO PLM)
-                IDtoPASS = PLMid ?? 1;
-            }
-
-            if (PLMgenerated == false)
-                GenerateModule(IDtoPASS);
-
-            GenerateGuessONEperANS();
+            GenerateGuessONEperPIC();
             return View(currentGuess);
         }
 
@@ -85,15 +77,28 @@ namespace PLM.Controllers
         }
 
         [HttpGet]
-        public ActionResult Setup(int PLMid)
+        public ActionResult Setup(int? PLMid)
         {
+            int IDtoPASS = 1;
+            if (PLMid != null)
+        {
+                // Attempts to set nullable value, If null sets to itself (DEFAULT IS 0 - AMERICAN GEO PLM)
+                IDtoPASS = PLMid ?? 1;
+            }
+
+            if (PLMgenerated == false)
+                GenerateModule(IDtoPASS);
             return View();
         }
 
         [HttpPost]
-        public ActionResult Setup()
+        [ValidateAntiForgeryToken]
+        public ActionResult Setup([Bind(Include="numAnswers,numQuestions,time")] UserGameSession ugs)
         {
-            return View();
+            ((UserGameSession)Session["userGameSession"]).numAnswers = ugs.numAnswers;
+            ((UserGameSession)Session["userGameSession"]).numQuestions = ugs.numQuestions;
+            ((UserGameSession)Session["userGameSession"]).time = ugs.time;
+            return RedirectToAction("Play");
         }
 
         private void CheckMaxGuesses()
@@ -107,7 +112,10 @@ namespace PLM.Controllers
         private bool IsGameDone()
         {
             currentModule = ((UserGameSession)Session["userGameSession"]).currentModule;
-            if (((UserGameSession)Session["userGameSession"]).currentGuess >= 5)
+            
+            if (((UserGameSession)Session["userGameSession"]).currentGuess
+                //subtract 1 from number of questions since current guess is zero based
+                >= (((UserGameSession)Session["userGameSession"]).numQuestions -1))
             //if (((UserGameSession)Session["userGameSession"]).currentGuess >= (((UserGameSession)Session["userGameSession"]).PictureIndicies.Count))
             {
                 return true;
@@ -147,7 +155,9 @@ namespace PLM.Controllers
         // the same answer will be chosen multiple times with different pictures
         private void GenerateGuessONEperPIC()
         {
-            currentGuessNum = (((UserGameSession)Session["userGameSession"]).currentGuess++);
+            ((UserGameSession)Session["UserGameSession"]).currentGuess += 1;
+            currentGuessNum=((UserGameSession)Session["UserGameSession"]).currentGuess;
+            //currentGuessNum = (((UserGameSession)Session["userGameSession"]).currentGuess++);
             currentModule = ((UserGameSession)Session["userGameSession"]).currentModule;
             int[] indicies = GetPictureID(currentGuessNum);
             int answerIndex = indicies[0];
@@ -257,7 +267,8 @@ namespace PLM.Controllers
                 //if we've completed our work
                 // TODO - Add functionality that checks if the module has enough answers to reach
                 // the value of DefaultNumAnswers so that an error isn't thrown
-                if (GeneratedGuessIDs.Count >= currentModule.DefaultNumAnswers)
+                //if (GeneratedGuessIDs.Count >= currentModule.DefaultNumAnswers)
+                if (GeneratedGuessIDs.Count >= ((UserGameSession)Session["userGameSession"]).numAnswers)
                 {
                     //break out of the loop
                     WrongAnswersGenerationNOTcompleted = false;
