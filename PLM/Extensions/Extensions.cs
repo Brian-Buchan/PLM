@@ -54,6 +54,14 @@ namespace PLM
             // Test for null to avoid issues during local testing
             return (claim != null) ? claim.Value : string.Empty;
         }
+        public static string GetLocation(this IIdentity identity)
+        {
+            var claim = ((ClaimsIdentity)identity).FindFirst("ProfilePicture");
+            // Test for null to avoid issues during local testing
+            return (claim != null) ? claim.Value : string.Empty;
+        }
+
+
 
         public static string GetInstution(this IIdentity identity)
         {
