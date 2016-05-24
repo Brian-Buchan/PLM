@@ -13,9 +13,17 @@ namespace PLM
         public int ModuleID { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
+
+        [Display(Name = "Category")]
         public virtual int CategoryId { get; set; }
+
+        [Display(Name="Default Number of Answers")]
         public int DefaultNumAnswers { get; set; }
+
+        [Display(Name = "Default Time")]
         public int DefaultTime { get; set; }
+
+        [Display(Name = "Default Number of Pictures")]
         public int DefaultNumPictures { get; set; }
         public virtual List<Answer> Answers { get; set; }
         public virtual ApplicationUser User { get; set; }

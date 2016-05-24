@@ -104,6 +104,9 @@
             <th>
                 Answer Count
             </th>
+            <th>
+                Private
+            </th>
             <th></th>
         </tr>
 
@@ -118,6 +121,9 @@
                 </td>
                 <td>
                     @item.Answers.Count()
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.isPrivate)
                 </td>
                 <td>
                     @Html.ActionLink("Edit", "Edit", new { controller = "ModulesEDIT", id = item.ModuleID }) |

@@ -1,11 +1,11 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = "Setup";
 }
 
 <h2>Game Setup</h2>
 
-<form action="Setup" method="post">
+@using (Html.BeginForm()) { 
+    @Html.AntiForgeryToken()
     <label>Number of Answers per Question</label>
     <input type="range" id="numAnswers" name="numAnswers" step="3" min="3" max="15" value="12" oninput="outputUpdate(value, '#numAnswersOutput')"/>
     <output for="numAnswers" id="numAnswersOutput">12</output>
@@ -19,5 +19,5 @@
     <output for="time" id="timeOutput">5</output>
 
     <input type="submit" name="btnPlay" value="Play" />
-</form>
+}
 <script src="~/Scripts/Setup.js"></script>

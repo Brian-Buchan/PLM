@@ -5,7 +5,7 @@
 <h2>Complete</h2>
 <div>
     @{
-        foreach (var score in TopTenScore.GetTopTenScores(ViewBag.ModuleID))
+        foreach (var score in TopTenScore.GetTopTenScores(ViewBag.ModuleID, Model.User))
         {
             // TODO - Update username and scores
             <p>@score.User.FirstName</p>
