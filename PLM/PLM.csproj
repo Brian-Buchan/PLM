@@ -300,6 +300,7 @@
     <Content Include="Content\Images\home\icon1.png" />
     <Content Include="Content\Images\home\icon2.png" />
     <Content Include="Content\Images\home\icon3.png" />
+    <Content Include="Content\Images\home\PlayIcon.png" />
     <Content Include="Content\Images\home\image1.png" />
     <Content Include="Content\Images\home\image2.png" />
     <Content Include="Content\Images\home\image3.png" />
