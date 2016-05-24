@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using PagedList;
 
 namespace PLM.Controllers
 {
@@ -10,11 +11,35 @@ namespace PLM.Controllers
     {
         private ApplicationDbContext db = new ApplicationDbContext();
         private ModuleViewModel ModuleModel = new ModuleViewModel();
-        // GET: Profile
-        public ActionResult Index()
+        
+         //GET: Profile
+        public ActionResult Index(string sortOrder, string searchString, string currentFilter, int? filterParam, int? page)
         {
-            ModuleModel.Cats = db.Categories.ToList();
-            ModuleModel.Mods = db.Modules.ToList();
+            ViewBag.CurrentSort = sortOrder;
+            var modules = db.Modules.ToList();
+
+            if (searchString != null)
+            {
+                page = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+
+            ViewBag.CurrentFilter = searchString;
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                searchString.ToLower();
+                modules = modules.Where(m => m.Name.ToLower().Contains(searchString)).ToList();
+                                       //|| m.Description.Contains(searchString)).ToList();
+            }
+
+            if(filterParam > 0)
+            {
+                modules = modules.Where(m => m.CategoryId == filterParam).ToList();
+            }
             //var query = (db.Modules
             //            .GroupBy(p => new
             //            {
@@ -71,7 +96,11 @@ namespace PLM.Controllers
                  where p.CategoryId == 11
                  select p).Count();
 
-            return View(ModuleModel);
+
+            int pageSize = 3;
+            int pageNumber = (page ?? 1);
+
+            return View(modules.ToPagedList(pageNumber, pageSize));
         }
 
         public ActionResult AddModule()

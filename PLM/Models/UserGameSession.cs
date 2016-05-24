@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
 
 namespace PLM
 {
@@ -15,6 +17,7 @@ namespace PLM
         public int numAnswers { get; set; }
         public int numQuestions { get; set; }
         public int time { get; set; }
+        public ApplicationUser User;
 
         public UserGameSession()
         {
