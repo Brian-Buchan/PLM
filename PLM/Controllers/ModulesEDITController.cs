@@ -46,7 +46,7 @@ namespace PLM.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include="ModuleID,Name,CategoryId")] Module module)
+        public ActionResult Create([Bind(Include="ModuleID,Name,CategoryId,Description,DefaultNumAnswers,DefaultTime,DefaultNumPictures,isPrivate")] Module module)
         {
             if (ModelState.IsValid)
             {
@@ -78,7 +78,7 @@ namespace PLM.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include="ModuleID,Name,CategoryId")] Module module)
+        public ActionResult Edit([Bind(Include = "ModuleID,Name,CategoryId,Description,DefaultNumAnswers,DefaultTime,DefaultNumPictures,isPrivate")] Module module)
         {
             if (ModelState.IsValid)
             {
