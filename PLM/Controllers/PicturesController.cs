@@ -203,21 +203,5 @@ namespace PLM.Controllers
         {
             return View();
         }
-
-        //public string GetPathStringKindaFixed(string pathstring, string moduleName)
-        //{
-        //    string returnpath = "http://perceptuallearning.azurewebsites.net/" + moduleName;
-
-        //    return returnpath;
-        //}
-
-        public string GetPathStringKindaFixed(string moduleName, string fileName)
-        {
-            string returnpath = "http://plmalpha.azurewebsites.net/Content/Images/PLM/" + moduleName + "/" + fileName;
-            
-            return returnpath;
-        }
-
-
     }
 }
