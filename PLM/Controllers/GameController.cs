@@ -57,8 +57,6 @@ namespace PLM.Controllers
 
         public ActionResult Play(int? PLMid)
         {
-           
-
             GenerateGuessONEperPIC();
             return View(currentGuess);
         }
