@@ -1,17 +1,7 @@
-// Hello.
-//
-// This is JSHint, a tool that helps to detect errors and potential
-// problems in your JavaScript code.
-//
-// To start, simply enter some JavaScript anywhere on this page. Your
-// report will appear on the right side.
-//
-// Additionally, you can toggle specific options in the Configure
-// menu.
-
 //Sounds from http://www.freesfx.co.uk/
 var pictureAnswer = "default";
 var count = Number(document.getElementById("displayScore").innerText);
+var revealed = false;
 
 //These cookie functions are from w3schools
 function setCookie(cname, cvalue, exdays) {
@@ -55,12 +45,13 @@ function isGuessRight(answer, guess) {
 //Still being worked on
 function ButtonClick(guess) {
     pictureAnswer = $("#StoredAnswer").text();
+    if(!revealed) {
+        if (isGuessRight(pictureAnswer, guess)) {
+            Correct();
+        }
+        else {
 
-    if (isGuessRight(pictureAnswer, guess)) {
-        Correct();
-    }
-    else {
-
+        }
     }
 }
 
@@ -85,12 +76,15 @@ function reveal() {
     pictureAnswer = $("#StoredAnswer").text();
 
     $('.btn').each(function () {
+        $(this).disabled = true;
         if ($(this).text() === pictureAnswer) {
             $(this).css({ "background-color": "green" });
         } else {
             $(this).css({ "background-color": "red" });
         }
+
     });
+    revealed = true;
 }
 
 //Legacy function
