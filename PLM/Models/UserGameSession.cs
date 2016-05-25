@@ -12,6 +12,7 @@ namespace PLM
         public ApplicationUser currentUser { get; set; }
         public int Score { get; set; }
         public int currentGuess { get; set; }
+        public int iteratedGuess { get; set; }
         public Module currentModule { get; set; }
         public List<Picture> Pictures { get; set; }
         public List<AnsPicIndex> PictureIndicies { get; set; }

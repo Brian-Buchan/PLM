@@ -94,4 +94,19 @@ namespace PLM
         }
 
     }
+
+    //Taken from http://stackoverflow.com/questions/3216496/c-sharp-how-to-determine-if-a-number-is-a-multiple-of-another
+    public static class MathExtensions
+    {
+        /// <summary>
+        /// Check if this number is evenly divisible by another number
+        /// </summary>
+        /// <param name="dividend">The number this method is being applied to</param>
+        /// <param name="divisor">The number to divide by</param>
+        /// <returns>bool</returns>
+        public static bool IsDivisible(this int dividend, int divisor)
+        {
+            return (dividend % divisor) == 0;
+        }
+    }
 }

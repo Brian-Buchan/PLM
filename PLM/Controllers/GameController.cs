@@ -7,6 +7,7 @@ using System.Web.Mvc.Html;
 using System.Net;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using PLM.Extensions;
 
 namespace PLM.Controllers
 {
@@ -57,8 +58,6 @@ namespace PLM.Controllers
 
         public ActionResult Play(int? PLMid)
         {
-           
-
             GenerateGuessONEperPIC();
             return View(currentGuess);
         }
@@ -121,6 +120,17 @@ namespace PLM.Controllers
                 return true;
             }
             else
+            {
+                //if the game is not over, and the list of pictures is exhausted
+                if (((UserGameSession)Session["userGameSession"]).currentGuess.IsDivisible(
+                    ((UserGameSession)Session["userGameSession"]).PictureIndicies.Count - 1))
+                {
+                    //shuffle the picture indices
+                    ((UserGameSession)Session["userGameSession"]).PictureIndicies.Shuffle();
+                    //reset the iterated guess counter
+                    ((UserGameSession)Session["userGameSession"]).iteratedGuess = -1;
+                }
+            }
                 return false;
         }
 
@@ -132,6 +142,7 @@ namespace PLM.Controllers
 
             // set to -1 because GenerateGuess() will increment it to 0 the first time it runs
             currentGameSession.currentGuess = -1;
+            currentGameSession.iteratedGuess = -1;
             int answerIndex = -1;
             int pictureIndex;
             foreach (Answer answer in currentGameSession.currentModule.Answers)
@@ -155,8 +166,10 @@ namespace PLM.Controllers
         // the same answer will be chosen multiple times with different pictures
         private void GenerateGuessONEperPIC()
         {
+            //increment guess counters
             ((UserGameSession)Session["UserGameSession"]).currentGuess += 1;
-            currentGuessNum=((UserGameSession)Session["UserGameSession"]).currentGuess;
+            ((UserGameSession)Session["UserGameSession"]).iteratedGuess += 1;
+            currentGuessNum=((UserGameSession)Session["UserGameSession"]).iteratedGuess;
             //currentGuessNum = (((UserGameSession)Session["userGameSession"]).currentGuess++);
             currentModule = ((UserGameSession)Session["userGameSession"]).currentModule;
             int[] indicies = GetPictureID(currentGuessNum);
@@ -166,8 +179,6 @@ namespace PLM.Controllers
             //pictureIndex = indicies[1];
             //answerIndex = indicies[2];
 
-
-            //getting index out of range errors here, need to look into it - Ben
             currentGuess.Answer = currentModule.Answers.ElementAt(answerIndex).AnswerString;
             currentGuess.ImageURL = currentModule.Answers.ElementAt(answerIndex).Pictures.ElementAt(pictureIndex).Location;
             currentGuess.possibleAnswers.Add(currentModule.Answers.ElementAt(answerIndex).AnswerString);
