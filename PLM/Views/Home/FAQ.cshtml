@@ -14,30 +14,8 @@
     <link href="~/Conetnt/lightbox.css" rel="stylesheet">
     <link href="~/Content/main.css" rel="stylesheet">
     <link href="~/Content/responsive.css" rel="stylesheet">
-    <!--[if lt IE 9]>
-        <script src="js/html5shiv.js"></script>
-        <script src="js/respond.min.js"></script>
-    <![endif]-->
-    <link rel="shortcut icon" href="~/Content/images/ico/favicon.ico">
-    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="~/Content/images/ico/apple-touch-icon-144-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="~/Content/images/ico/apple-touch-icon-114-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="~/Content/images/ico/apple-touch-icon-72-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" href="~/Content/images/ico/apple-touch-icon-57-precomposed.png">
 </head><!--/head-->
 <body>
-    @*<header id="header">
-        <div class="navbar navbar-inverse" role="banner" />
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-            </div>
-        </div>
-    </header>*@
     <!--/#header-->
     <section id="page-breadcrumb">
         <div class="vertical-center sun">
@@ -52,42 +30,102 @@
             </div>
         </div>
     </section>
-    <!--/#action-->
-    <section id="map-section">
-        <div class="container">
-            <div class="row">
-                <div class="single-features">
-                    <h3>Question</h3>
-                    <p>Answer</p>
+
+    <br/><br/>
+    <div id="accordion-container">
+        <div class="panel-group" id="accordion">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+                            What is perceptual learning?
+                        </a>
+                    </h4>
+                </div>
+                <div id="collapseOne" class="panel-collapse collapse in">
+                    <div class="panel-body">
+                        Perceptual Learning is the idea that a person who is repeatedly exposed to a certain stimuli or form of information will invoke long lasting and amazing changes in one's ability to respond to their enviroment.
+                        Perceptual Learning involves attention weighing, imprinting, differention, and unitization. A person becomes adapted to tasks by increasing the attention paid to important features. 
+                        Special receptors are developed and become specialized to specific stimuli. Evenually, tasks that originally required detection so several components are accomplished by detecting only one part of it. 
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="container">
-            <div class="row">
-                <div class="single-features">
-                    <h3>Question</h3>
-                    <p>Answer</p>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
+                            What is a module?
+                        </a>
+                    </h4>
+                </div>
+                <div id="collapseTwo" class="panel-collapse collapse">
+                    <div class="panel-body">
+                        A module is a set of answers with associated pictures almost like an everyday quiz. These answers and pictures cover a specific topic (American Geography, for example), and are used to play a game concerning that topic in order to get the 
+                        brain to quickly differenciate differences between different concepts, topics, or ideas. The responce quickly become immediate and the player realizes that they no longer have to think to know the correct answer. Perceptual learning is 
+                        learning without thinking. 
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="container">
-            <div class="row">
-                <div class="single-features">
-                    <h3>Question</h3>
-                    <p>Answer</p>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree">
+                            How do I reset my password?
+                        </a>
+                    </h4>
+                </div>
+                <div id="collapseThree" class="panel-collapse collapse">
+                    <div class="panel-body">
+                        If you are already logged in, click your username in the top right corner and follow the instructions on the page. Otherwise, contact the admins thorugh our email and we'll make sure that things are fixed up.
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="container">
-            <div class="row">
-                <div class="single-features">
-                    <h3>Question</h3>
-                    <p>Answer</p>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title accordianHeading">
+                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseFour">
+                            My image keeps getting deleted! This is censorship!
+                        </a>
+                    </h4>
                 </div>
-            </div>
-        </div>
-    </section> <!--/#map-section-->
-   
+                <div id="collapseFour" class="panel-collapse collapse">
+                    <div class="panel-body">
+                        You might be using unsourced and/or offensive material. If the image keeps getting taken down, it’s probably because it violates our terms of service. Reference our Terms and Conditions, and then remove any material that violates it.
+                    </div>
+                </div>
+            </div>   
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title accordianHeading">
+                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseFive">
+                            Why can’t I play my module?
+                        </a>
+                    </h4>
+                </div>
+                <div id="collapseFive" class="panel-collapse collapse">
+                    <div class="panel-body">
+                        Your module might not have pictures for all of your answers. Go to the Edit Module page for your module, and make sure that there are pictures associated with each answer. You might have also forgotten to publish your module.
+                    </div>
+                </div>
+            </div>   
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title accordianHeading">
+                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseSix">
+                            My module doesn’t have answers to click on when I try to play a module.
+                        </a>
+                    </h4>
+                </div>
+                <div id="collapseSix" class="panel-collapse collapse">
+                    <div class="panel-body">
+                        You may not have enough answers to correctly play a module. You should try and add more answers to play though before you try testing your module. You should have a minimum of 5 answers to play a module for the minimum of 3 answers. 
+                        The idea of perceptual learning is to have as many pictures and as many answers as possible! So do you best to add enough content to your module. 
+                    </div>
+                </div>
+            </div>   
+        </div><!--/#accordion-->
+    </div><!--/#accordion-container-->
+
 
     <script type="text/javascript" src="~/Scripts/jquery.js"></script>
     <script type="text/javascript" src="~/Scripts/bootstrap.min.js"></script>

@@ -7,6 +7,8 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using PLM;
+using Microsoft.AspNet.Identity;
+using System.Data.Entity.Infrastructure;
 
 namespace PLM.Controllers
 {
@@ -38,6 +40,7 @@ namespace PLM.Controllers
         // GET: /ModulesEDIT/Create
         public ActionResult Create()
         {
+            PopulateCategoryDropDownList();
             return View();
         }
 
@@ -50,8 +53,16 @@ namespace PLM.Controllers
         {
             if (ModelState.IsValid)
             {
+                //**********NOTE****************//
+                //Make sure that a user is logged in to access this page
+                if (((User.IsInRole("User")) || (User.IsInRole("Admin"))))
+                {
+                    module.User = (ApplicationUser)User;
+                }
+
                 db.Modules.Add(module);
                 db.SaveChanges();
+                PopulateCategoryDropDownList(module.CategoryId);
                 return RedirectToAction("Index", new { controller = "Profile"});
             }
 
@@ -70,6 +81,7 @@ namespace PLM.Controllers
             {
                 return HttpNotFound();
             }
+            PopulateCategoryDropDownList(module.CategoryId);
             return View(module);
         }
 
@@ -86,7 +98,15 @@ namespace PLM.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index", new { controller = "Profile" });
             }
+            PopulateCategoryDropDownList(module.CategoryId);
             return View(module);
+        }
+
+        private void PopulateCategoryDropDownList(object selectedCategory = null)
+        {
+            var categoryQuery = from c in db.Categories
+                                select c;
+            ViewBag.CategoryId = new SelectList(categoryQuery.Distinct().ToList(), "CategoryId", "CategoryName", selectedCategory);
         }
 
         // GET: /ModulesEDIT/Delete/5
