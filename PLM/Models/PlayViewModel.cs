@@ -8,6 +8,7 @@ namespace PLM
     public class PlayViewModel
     {
         public string ImageURL;
+        public string Attribution;
         public List<string> possibleAnswers;
         public string Answer;
         public int Score;

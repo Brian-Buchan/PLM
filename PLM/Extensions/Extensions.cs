@@ -29,12 +29,19 @@ namespace PLM
 
     public static class TopTenScore
     {
-        public static List<Score> GetTopTenScores(int moduleID, ApplicationUser user)
+        public static List<Score> GetTopTenScores(int moduleID, string userID)
         {
+            if (userID == null)
+            {
+                //The current Guest Account ID
+                // TODO - Set up a txt file that this can be read from, or find another way of selecting the guest account if not logged in
+                userID = "5b853c48-424f-455e-b731-f24e102cdc6d";
+            }
+
             ApplicationDbContext db = new ApplicationDbContext();
             List<Score> scores = db.Scores.ToList();
             scores.Where(x => x.Module.ModuleID == moduleID);
-            scores.Where(y => y.User.Id == user.Id);
+            scores.Where(y => y.User.Id == userID);
             scores.OrderBy(x => (x.TotalAnswers / x.CorrectAnswers)).ToList();
             return((List<Score>)scores.Take(10));
         }
@@ -55,6 +62,14 @@ namespace PLM
             // Test for null to avoid issues during local testing
             return (claim != null) ? claim.Value : string.Empty;
         }
+        public static string GetLocation(this IIdentity identity)
+        {
+            var claim = ((ClaimsIdentity)identity).FindFirst("ProfilePicture");
+            // Test for null to avoid issues during local testing
+            return (claim != null) ? claim.Value : string.Empty;
+        }
+
+
 
         public static string GetInstution(this IIdentity identity)
         {
@@ -78,5 +93,20 @@ namespace PLM
             return source.Skip((page - 1) * pageSize).Take(pageSize);
         }
 
+    }
+
+    //Taken from http://stackoverflow.com/questions/3216496/c-sharp-how-to-determine-if-a-number-is-a-multiple-of-another
+    public static class MathExtensions
+    {
+        /// <summary>
+        /// Check if this number is evenly divisible by another number
+        /// </summary>
+        /// <param name="dividend">The number this method is being applied to</param>
+        /// <param name="divisor">The number to divide by</param>
+        /// <returns>bool</returns>
+        public static bool IsDivisible(this int dividend, int divisor)
+        {
+            return (dividend % divisor) == 0;
+        }
     }
 }

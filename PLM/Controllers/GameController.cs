@@ -3,8 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Mvc.Html;
+using System.Net;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using PLM.Extensions;
 
 namespace PLM.Controllers
 {
@@ -34,28 +37,28 @@ namespace PLM.Controllers
             return View();
         }
 
-        public ActionResult Complete(int? score)
+        public ActionResult Complete(int score)
         {
             ViewBag.UserID = User.Identity.GetUserId();
             ViewBag.ModuleID = currentModule.ModuleID;
+            SaveScore(score);
+
             return View(score);
+        }
+
+        private void SaveScore(int score)
+        {
+            Score newScore = new Score();
+            newScore.CorrectAnswers = (score / 100);
+            newScore.Module = currentModule;
+
+            db.Scores.Add(newScore);
+            db.SaveChanges();
         }
 
         public ActionResult Play(int? PLMid)
         {
-            // Added the '?' after int to make the value nullable
-
-            int IDtoPASS = 1;
-            if (PLMid != null)
-            {
-            // Attempts to set nullable value, If null sets to itself (DEFAULT IS 0 - AMERICAN GEO PLM)
-                IDtoPASS = PLMid ?? 1;
-            }
-
-            if (PLMgenerated == false)
-                GenerateModule(IDtoPASS);
-
-            GenerateGuessONEperANS();
+            GenerateGuessONEperPIC();
             return View(currentGuess);
         }
 
@@ -73,15 +76,28 @@ namespace PLM.Controllers
         }
 
         [HttpGet]
-        public ActionResult Setup(int PLMid)
+        public ActionResult Setup(int? PLMid)
         {
+            int IDtoPASS = 1;
+            if (PLMid != null)
+        {
+                // Attempts to set nullable value, If null sets to itself (DEFAULT IS 0 - AMERICAN GEO PLM)
+                IDtoPASS = PLMid ?? 1;
+            }
+
+            if (PLMgenerated == false)
+                GenerateModule(IDtoPASS);
             return View();
         }
 
         [HttpPost]
-        public ActionResult Setup()
+        [ValidateAntiForgeryToken]
+        public ActionResult Setup([Bind(Include="numAnswers,numQuestions,time")] UserGameSession ugs)
         {
-            return View();
+            ((UserGameSession)Session["userGameSession"]).numAnswers = ugs.numAnswers;
+            ((UserGameSession)Session["userGameSession"]).numQuestions = ugs.numQuestions;
+            ((UserGameSession)Session["userGameSession"]).time = ugs.time;
+            return RedirectToAction("Play");
         }
 
         private void CheckMaxGuesses()
@@ -95,12 +111,26 @@ namespace PLM.Controllers
         private bool IsGameDone()
         {
             currentModule = ((UserGameSession)Session["userGameSession"]).currentModule;
-            if (((UserGameSession)Session["userGameSession"]).currentGuess >= 5)
+            
+            if (((UserGameSession)Session["userGameSession"]).currentGuess
+                //subtract 1 from number of questions since current guess is zero based
+                >= (((UserGameSession)Session["userGameSession"]).numQuestions -1))
             //if (((UserGameSession)Session["userGameSession"]).currentGuess >= (((UserGameSession)Session["userGameSession"]).PictureIndicies.Count))
             {
                 return true;
             }
             else
+            {
+                //if the game is not over, and the list of pictures is exhausted
+                if (((UserGameSession)Session["userGameSession"]).currentGuess.IsDivisible(
+                    ((UserGameSession)Session["userGameSession"]).PictureIndicies.Count - 1))
+                {
+                    //shuffle the picture indices
+                    ((UserGameSession)Session["userGameSession"]).PictureIndicies.Shuffle();
+                    //reset the iterated guess counter
+                    ((UserGameSession)Session["userGameSession"]).iteratedGuess = -1;
+                }
+            }
                 return false;
         }
 
@@ -112,6 +142,7 @@ namespace PLM.Controllers
 
             // set to -1 because GenerateGuess() will increment it to 0 the first time it runs
             currentGameSession.currentGuess = -1;
+            currentGameSession.iteratedGuess = -1;
             int answerIndex = -1;
             int pictureIndex;
             foreach (Answer answer in currentGameSession.currentModule.Answers)
@@ -135,7 +166,11 @@ namespace PLM.Controllers
         // the same answer will be chosen multiple times with different pictures
         private void GenerateGuessONEperPIC()
         {
-            currentGuessNum = (((UserGameSession)Session["userGameSession"]).currentGuess++);
+            //increment guess counters
+            ((UserGameSession)Session["UserGameSession"]).currentGuess += 1;
+            ((UserGameSession)Session["UserGameSession"]).iteratedGuess += 1;
+            currentGuessNum=((UserGameSession)Session["UserGameSession"]).iteratedGuess;
+            //currentGuessNum = (((UserGameSession)Session["userGameSession"]).currentGuess++);
             currentModule = ((UserGameSession)Session["userGameSession"]).currentModule;
             int[] indicies = GetPictureID(currentGuessNum);
             int answerIndex = indicies[0];
@@ -144,11 +179,10 @@ namespace PLM.Controllers
             //pictureIndex = indicies[1];
             //answerIndex = indicies[2];
 
-
-            //getting index out of range errors here, need to look into it - Ben
             currentGuess.Answer = currentModule.Answers.ElementAt(answerIndex).AnswerString;
             currentGuess.ImageURL = currentModule.Answers.ElementAt(answerIndex).Pictures.ElementAt(pictureIndex).Location;
             currentGuess.possibleAnswers.Add(currentModule.Answers.ElementAt(answerIndex).AnswerString);
+            currentGuess.Attribution = currentModule.Answers.ElementAt(answerIndex).Pictures.ElementAt(pictureID).Attribution;
 
             GeneratedGuessIDs.Add(answerIndex);
             GenerateWrongAnswers();
@@ -245,7 +279,8 @@ namespace PLM.Controllers
                 //if we've completed our work
                 // TODO - Add functionality that checks if the module has enough answers to reach
                 // the value of DefaultNumAnswers so that an error isn't thrown
-                if (GeneratedGuessIDs.Count >= currentModule.DefaultNumAnswers)
+                //if (GeneratedGuessIDs.Count >= currentModule.DefaultNumAnswers)
+                if (GeneratedGuessIDs.Count >= ((UserGameSession)Session["userGameSession"]).numAnswers)
                 {
                     //break out of the loop
                     WrongAnswersGenerationNOTcompleted = false;

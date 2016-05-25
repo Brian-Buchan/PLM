@@ -1,23 +1,52 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = "Setup";
 }
 
-<h2>Game Setup</h2>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Setup</title>
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet">
+    <link href="~/Content/font-awesome.min.css" rel="stylesheet">
+    <link href="~/Content/animate.min.css" rel="stylesheet">
+    <link href="~/Conetnt/lightbox.css" rel="stylesheet">
+    <link href="~/Content/main.css" rel="stylesheet">
+    <link href="~/Content/responsive.css" rel="stylesheet">
+    <link href="~/Content/Site.css" rel="stylesheet" />
+</head><!--/head-->
 
-<form action="Setup" method="post">
-    <label>Number of Answers per Question</label>
-    <input type="range" id="numAnswers" name="numAnswers" step="3" min="3" max="15" value="12" oninput="outputUpdate(value, '#numAnswersOutput')"/>
-    <output for="numAnswers" id="numAnswersOutput">12</output>
+<section id="page-breadcrumb">
+    <div class="vertical-center sun">
+        <div class="container">
+            <div class="row">
+                <div class="action">
+                    <div class="col-sm-12">
+                        <h1 class="title">Game Setup</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 
-    <label>Number of Questions</label>
-    <input type="range" id="numQuestions" name="numQuestions" step="5" min="5" max="200" value="50" oninput="outputUpdate(value, '#numQuestionsOutput')" />
-    <output for="numQuestions" id="numQuestionsOutput">50</output>
+@using (Html.BeginForm()) { 
+    @Html.AntiForgeryToken()
+    <div class="form-horizontal col-lg-offset-1">
+        <label>Number of Answers per Question</label>
+        <input type="range" id="numAnswers" name="numAnswers" step="3" min="3" max="15" value="12" oninput="outputUpdate(value, '#numAnswersOutput')" />
+        <output for="numAnswers" id="numAnswersOutput">12</output>
 
-    <label>Time Limit</label>
-    <input type="range" id="time" name="time" value="5" min="3" max="120" step="1" oninput="outputUpdate(value, '#timeOutput')" />
-    <output for="time" id="timeOutput">5</output>
+        <label>Number of Questions</label>
+        <input type="range" id="numQuestions" name="numQuestions" step="5" min="5" max="260" value="50" oninput="outputUpdate(value, '#numQuestionsOutput')" />
+        <output for="numQuestions" id="numQuestionsOutput">50</output>
 
-    <input type="submit" name="btnPlay" value="Play" />
-</form>
+        <label>Time Limit</label>
+        <input type="range" id="time" name="time" value="5" min="3" max="120" step="1" oninput="outputUpdate(value, '#timeOutput')" />
+        <output for="time" id="timeOutput">5</output>
+        <br />
+        <input type="submit" name="btnPlay" value="Play" class="btn btn-success" />
+    </div>
+}
 <script src="~/Scripts/Setup.js"></script>
