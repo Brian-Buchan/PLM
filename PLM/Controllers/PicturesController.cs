@@ -52,19 +52,20 @@ namespace PLM.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(int id)
-        //[Bind(Include = "PictureID,Location,AnswerID")] Picture picture
+        public ActionResult Create([Bind(Include = "Attribution,PictureID")] Picture picture, int? id) 
         {
             if (ModelState.IsValid)
             {
+                //db.Entry(picture).State = EntityState.Modified;
                 var ans = db.Answers
                     .Where(a => a.AnswerID == id)
                     .ToList().First();
 
                 picture = new Picture();
                 picture.Answer = ans;
+                //picture.Attribution = attribution;
 
-                picture.AnswerID = id;
+                picture.AnswerID = (int)id;
 
                 picture.Location = "";
                 db.Pictures.Add(picture);
