@@ -41,7 +41,7 @@ namespace PLM.Controllers
         {
             ViewBag.UserID = User.Identity.GetUserId();
             ViewBag.ModuleID = currentModule.ModuleID;
-            SaveScore(score);
+            //SaveScore(score);
 
             return View(score);
         }
