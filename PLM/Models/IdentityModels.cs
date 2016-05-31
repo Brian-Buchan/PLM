@@ -48,6 +48,7 @@ namespace PLM
             userIdentity.AddClaim(new Claim("FirstName", this.FirstName));
             userIdentity.AddClaim(new Claim("LastName", this.LastName));
             userIdentity.AddClaim(new Claim("Instution", this.Institution));
+            userIdentity.AddClaim(new Claim("ProfilePicture", this.ProfilePicture));
             return userIdentity;
         }
     }
