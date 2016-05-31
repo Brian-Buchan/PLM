@@ -16,6 +16,9 @@ namespace PLM.Controllers
         public ActionResult Index()
         {
             ViewBag.UserID = User.Identity.Name;
+            var name = User.Identity.GetUserName();
+            ApplicationUser currentUser = (ApplicationUser)db.Users.Single(x => x.UserName == name);
+            ViewBag.location = currentUser.ProfilePicture;
             return View(db.Modules.ToList());
         }
 
@@ -29,7 +32,6 @@ namespace PLM.Controllers
                 var name = User.Identity.GetUserName();
                 ApplicationUser currentUser = (ApplicationUser)db.Users.Single(x => x.UserName == name);
                 var location = SaveUploadedFileProfile(currentUser.Id);
-
                 if (location == "")
                 {
                     //error
@@ -41,7 +43,7 @@ namespace PLM.Controllers
 
                 db.SaveChanges(); 
             }
-
+            
             return RedirectToAction("Index");
         }
 
@@ -49,16 +51,16 @@ namespace PLM.Controllers
         {
             Session["upload"] = UserId;
             bool isSavedSuccessfully = true;
-            string fName = "";
+            string fName = "profilePicture.jpg";
             string path = "";
             string relpath = "";
-            try
-            {
+            //try
+            //{
                 foreach (string fileName in Request.Files)
                 {
                     HttpPostedFileBase file = Request.Files[fileName];
                     //Save file content goes here
-                    fName = file.FileName;
+                    //fName = file.FileName;
                     if (file != null && file.ContentLength > 0)
                     {
                         string moduleDirectory = (Path.Combine(Server.MapPath("~/Content/Images/PLM/" + Session["upload"].ToString() + "/")));
@@ -71,11 +73,11 @@ namespace PLM.Controllers
                         file.SaveAs(path);
                     }
                 }
-            }
-            catch (Exception ex)
-            {
-                isSavedSuccessfully = false;
-            }
+            //}
+            //catch (Exception ex)
+            //{
+            //    isSavedSuccessfully = false;
+            //}
 
             if (isSavedSuccessfully)
             {
@@ -83,7 +85,7 @@ namespace PLM.Controllers
             }
             else
             {
-                return "FAILED";
+                return "error";
             }
         }
     }
