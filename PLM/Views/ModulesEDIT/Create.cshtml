@@ -14,7 +14,8 @@
     <link href="~/Content/responsive.css" rel="stylesheet">
 
     <link rel="shortcut icon" href="~/Content/images/ico/favicon.ico">
-</head>
+</head><!--/head-->
+
 <section id="page-breadcrumb">
     <div class="vertical-center sun">
         <div class="container">
@@ -50,9 +51,9 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.CategoryId, new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.Category.CategoryName, new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.CategoryId)
+                @Html.DropDownList("CategoryId", String.Empty)
                 @Html.ValidationMessageFor(model => model.CategoryId)
             </div>
         </div>
@@ -64,6 +65,7 @@
                 @Html.ValidationMessageFor(model => model.Description)
             </div>
         </div>
+
 
         <div class="form-group">
             @Html.LabelFor(model => model.DefaultNumAnswers, new { @class = "control-label col-md-2" })

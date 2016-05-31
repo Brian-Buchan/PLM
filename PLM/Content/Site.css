@@ -29,6 +29,9 @@ textarea {
     float:right;
 }
 
+.accordianHeading{
+    color: #0099AE;
+}
 article{
     float:right;
     margin-right:60%;

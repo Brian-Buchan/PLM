@@ -28,5 +28,7 @@ namespace PLM
         public virtual List<Answer> Answers { get; set; }
         public virtual ApplicationUser User { get; set; }
         public bool isPrivate { get; set; }
+
+        public virtual Category Category { get; set; }
     }
 }

@@ -3,13 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.IO;
+using System.ComponentModel.DataAnnotations;
 
 namespace PLM
 {
     public class Answer
     {
         public int AnswerID { get; set; }
+        [Display(Name="Answer Text")]
         public string AnswerString { get; set; }
+        [Display(Name="Module")]
         public int ModuleID { get; set; }
 
         public virtual Module Module { get; set; }

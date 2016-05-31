@@ -61,30 +61,17 @@
                                 {
                                     <li><a href="#">@cat<span class="pull-right">@CategoriesCount(cat.CategoryID)</span></a></li>
                                 }*@
-                                <li>@Html.ActionLink((string)("Aviation " + ViewBag.Cat1Count), "Index", new { filterParam = 1 })</li>
-                                <li>@Html.ActionLink((string)("Business " + ViewBag.Cat2Count), "Index", new { filterParam = 2 })</li>
-                                <li>@Html.ActionLink((string)("Communications " + ViewBag.Cat3Count), "Index", new { filterParam = 3 })</li>
-                                <li>@Html.ActionLink((string)("Humanities " + ViewBag.Cat4Count), "Index", new { filterParam = 4 })</li>
-                                <li>@Html.ActionLink((string)("Maritime " + ViewBag.Cat5Count), "Index", new { filterParam = 5 })</li>
-                                <li>@Html.ActionLink((string)("Math " + ViewBag.Cat6Count), "Index", new { filterParam = 6 })</li>
-                                <li>@Html.ActionLink((string)("Medical " + ViewBag.Cat7Count), "Index", new { filterParam = 7 })</li>
-                                <li>@Html.ActionLink((string)("Science " + ViewBag.Cat8Count), "Index", new { filterParam = 8 })</li>
-                                <li>@Html.ActionLink((string)("Social Science " + ViewBag.Cat9Count), "Index", new { filterParam = 9 })</li>
-                                <li>@Html.ActionLink((string)("Technical " + ViewBag.Cat10Count), "Index", new { filterParam = 10 })</li>
-                                <li>@Html.ActionLink((string)("Other " + ViewBag.Cat11Count), "Index", new { filterParam = 11 })</li>
-
-
-                                @*<li><a href="#">Aviation<span class="pull-right">@ViewBag.Cat1Count</span></a></li>
-                                <li><a href="#">Business<span class="pull-right">@ViewBag.Cat2Count</span></a></li>
-                                <li><a href="#">Communications<span class="pull-right">@ViewBag.Cat3Count</span></a></li>
-                                <li><a href="#">Humanities<span class="pull-right">@ViewBag.Cat4Count</span></a></li>
-                                <li><a href="#">Maritime<span class="pull-right">@ViewBag.Cat5Count</span></a></li>
-                                <li><a href="#">Math<span class="pull-right">@ViewBag.Cat6Count</span></a></li>
-                                <li><a href="#">Medical<span class="pull-right">@ViewBag.Cat7Count</span></a></li>
-                                <li><a href="#">Science<span class="pull-right">@ViewBag.Cat8Count</span></a></li>
-                                <li><a href="#">Social Science<span class="pull-right">@ViewBag.Cat9Count</span></a></li>
-                                <li><a href="#">Technical<span class="pull-right">@ViewBag.Cat10Count</span></a></li>
-                                <li><a href="#">Other<span class="pull-right">@ViewBag.Cat11Count</span></a></li>*@
+                                <li>@Html.ActionLink((string)("Aviation " + ViewBag.Cat1Count), "Index", new { filterParam = 1, currentFilter = ViewBag.CurrentFilter })</li>
+                                <li>@Html.ActionLink((string)("Business " + ViewBag.Cat2Count), "Index", new { filterParam = 2, currentFilter = ViewBag.CurrentFilter })</li>
+                                <li>@Html.ActionLink((string)("Communications " + ViewBag.Cat3Count), "Index", new { filterParam = 3, currentFilter = ViewBag.CurrentFilter })</li>
+                                <li>@Html.ActionLink((string)("Humanities " + ViewBag.Cat4Count), "Index", new { filterParam = 4, currentFilter = ViewBag.CurrentFilter })</li>
+                                <li>@Html.ActionLink((string)("Maritime " + ViewBag.Cat5Count), "Index", new { filterParam = 5, currentFilter = ViewBag.CurrentFilter })</li>
+                                <li>@Html.ActionLink((string)("Math " + ViewBag.Cat6Count), "Index", new { filterParam = 6, currentFilter = ViewBag.CurrentFilter })</li>
+                                <li>@Html.ActionLink((string)("Medical " + ViewBag.Cat7Count), "Index", new { filterParam = 7, currentFilter = ViewBag.CurrentFilter })</li>
+                                <li>@Html.ActionLink((string)("Science " + ViewBag.Cat8Count), "Index", new { filterParam = 8, currentFilter = ViewBag.CurrentFilter })</li>
+                                <li>@Html.ActionLink((string)("Social Science " + ViewBag.Cat9Count), "Index", new { filterParam = 9, currentFilter = ViewBag.CurrentFilter })</li>
+                                <li>@Html.ActionLink((string)("Technical " + ViewBag.Cat10Count), "Index", new { filterParam = 10, currentFilter = ViewBag.CurrentFilter })</li>
+                                <li>@Html.ActionLink((string)("Other " + ViewBag.Cat11Count), "Index", new { filterParam = 11, currentFilter = ViewBag.CurrentFilter })</li>
                             </ul>
                         </div>
                     </div>
