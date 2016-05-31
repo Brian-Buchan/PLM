@@ -48,11 +48,13 @@
                     }*@
             </p>
             <div class="form-group, scroll-box, col-md-10">
-                @foreach (Picture pic in Model.Pictures)
-                {
-                    <img src="@pic.Location" alt="Answer Image" class="img-thumbnail" width="225" />
-                }
-            </div>
+                                @foreach (Picture pic in Model.Pictures)
+                                 {
+                                 <a href="@Url.Action("Delete", "Pictures",new { Controller = "Pictures", id = pic.PictureID})">
+                                 <img src="@pic.Location" alt="Answer Image" class="img-thumbnail" width="225" /></a>
+                 }
+                                     
+</div>
         </div>
 
         <br />
