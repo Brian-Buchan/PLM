@@ -158,6 +158,11 @@ namespace PLM.Controllers
             base.Dispose(disposing);
         }
 
+        /// <summary>
+        /// Save a picture to the server. Returns the relative path if successful, otherwise returns "FAILED"
+        /// </summary>
+        /// <param name="picture">The picture object to be saved</param>
+        /// <returns>string</returns>
         public string SaveUploadedFile(Picture picture)
         {
             Session["upload"] = picture.Answer.Module.Name;
