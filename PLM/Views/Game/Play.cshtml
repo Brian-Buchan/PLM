@@ -34,7 +34,7 @@
             <p id="clockdiv">@Model.Time.ToString()</p>
         </div>
 
-        <img id="picture" src="@Model.ImageURL" title="Image Courtesy of @Model.Attribution"/>
+        <img onerror="this.src='~/Content/images/home/ThinkGraphicColor.jpg';" id="picture" src="@Model.ImageURL" title="Image Courtesy of @Model.Attribution"/>
         <p id="StoredAnswer" hidden="hidden">@Model.Answer</p>
 
         <div>

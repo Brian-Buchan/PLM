@@ -1081,6 +1081,7 @@
     <Content Include="pixie-image-editor\pixie\assets\less\vendor\spectrum.less" />
     <Content Include="pixie-image-editor\pixie\config.json" />
     <Content Include="pixie-image-editor\pixie\package.json" />
+    <None Include="Properties\PublishProfiles\NMC-PLM.pubxml" />
     <None Include="Properties\PublishProfiles\PerceptualLearning %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\PerceptualLearning.pubxml" />
     <None Include="Properties\PublishProfiles\PerceptualLearningBeta.pubxml" />

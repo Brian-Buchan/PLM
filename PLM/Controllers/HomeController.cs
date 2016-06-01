@@ -31,7 +31,10 @@ namespace PLM.Controllers
 
             return View();
         }
-
+        public ActionResult TOU()
+        {
+            return View();
+        }
         public ActionResult Blog()
         {
             ViewBag.Message = "Please feel free to contact me!";

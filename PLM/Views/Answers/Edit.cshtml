@@ -51,7 +51,7 @@
                                 @foreach (Picture pic in Model.Pictures)
                                  {
                                  <a href="@Url.Action("Delete", "Pictures",new { Controller = "Pictures", id = pic.PictureID})">
-                                 <img src="@pic.Location" alt="Answer Image" class="img-thumbnail" width="225" /></a>
+                                 <img onerror="this.src='~/Content/images/home/ThinkGraphicColor.jpg';" src="@pic.Location" alt="Answer Image" class="img-thumbnail" width="225" /></a>
                  }
                                      
 </div>
@@ -76,7 +76,7 @@
     <div id="template" class="file-row">
         <!-- This is used as the file preview template -->
         <div>
-            <span class="preview"><img data-dz-thumbnail /></span>
+            <span class="preview"><img onerror="this.src='~/Content/images/home/ThinkGraphicColor.jpg';" data-dz-thumbnail /></span>
         </div>
         <div>
             <p class="name" data-dz-name></p>

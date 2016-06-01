@@ -9,6 +9,17 @@
         document.getElementById("demo").innerHTML = res;
     }
   </script>
+<script>
+    //$("input").change(function () {
+    ////var $input = $(this);
+    //$('btn btn-default').prop('disabled', true);
+    //$('input[type="submit"], input[type="button"], button').disable(true);
+    //}).change(); 
+    $('#check').change(function () {
+        $('#btncheck').disabled(!('#check').checked)
+    }).change()
+</script>
+
 
     <h2>@ViewBag.Title.</h2>
 
@@ -54,11 +65,15 @@
                 @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
             </div>
         </div>
+        <div class="form-group">
+            <input type="checkbox" name="TermsOfUse" value="Accepted" id="check">I accept the <a target="_blank" href="@Url.Action("TOU", "Home")"> Terms Of Use</a>
+        </div>
     <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" class="btn btn-default" value="Register" />
+                <input type="submit" class="btn btn-default" id="btncheck" value="Register" @*disabled="disabled"*@ />
             </div>
         </div>
+
 }
 
     @section Scripts {
