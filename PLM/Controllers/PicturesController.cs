@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using PLM;
 using System.IO;
+using PLM.Extensions;
 
 namespace PLM.Controllers
 {
@@ -135,6 +136,8 @@ namespace PLM.Controllers
             {
                 return HttpNotFound();
             }
+
+            
             return View(picture);
         }
 
@@ -146,6 +149,7 @@ namespace PLM.Controllers
             Picture picture = db.Pictures.Find(id);
             db.Pictures.Remove(picture);
             db.SaveChanges();
+            FTPDirectoryWriter.FTPDelete(picture.Location);
             return RedirectToAction("edit", new { controller = "Answers", id = picture.AnswerID });
         }
 
@@ -193,6 +197,7 @@ namespace PLM.Controllers
             catch (Exception ex)
             {
                 isSavedSuccessfully = false;
+                
             }
 
             if (isSavedSuccessfully)
