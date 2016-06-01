@@ -15,11 +15,18 @@ namespace PLM.Controllers
 
         public ActionResult Index()
         {
+            if (!System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
+            {
+                RedirectToAction("index", "home");
+                return View(db.Modules.ToList());
+            }
+            else{ 
             ViewBag.UserID = User.Identity.Name;
             var name = User.Identity.GetUserName();
             ApplicationUser currentUser = (ApplicationUser)db.Users.Single(x => x.UserName == name);
             ViewBag.location = currentUser.ProfilePicture;
             return View(db.Modules.ToList());
+            }
         }
 
         [HttpPost]
