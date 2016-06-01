@@ -1,0 +1,13 @@
+- Most integrate mode options can now be used in regular mode by specifying them in global PixieParams javascript variable.
+- Made several improvements to responsiveness of the UI.
+- Pixie should now work in iframe even when not using integrate mode.
+- Selected object now can be moved around with arrow keys for more precision.
+- Selected object can now be deleted using delete key on keyboard.
+- Fixed an issue where stickers panel would sometimes not display properly.
+- Fixed an issue where switching tabs to quickly would open a blank tab.
+- Fonts will now be correctly preserved when editing an existing text object.
+- User supplied filename will now be passed to onSave callback as a third parameter.
+- "Open" menu item can now be hidden in integration mode.
+- You can now open integrate model with custom sized blank canvas as well as an image.
+- Popup panel will now be hidden once an object is deselected in the canvas.
+- Popup panel will now be hidden when clicking outside the canvas.
