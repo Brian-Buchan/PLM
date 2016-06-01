@@ -5,7 +5,8 @@
     var name = User.Identity.GetFirstName() + " " + User.Identity.GetLastName();
     var instution = User.Identity.GetInstution();
     var email = User.Identity.GetUserName();
-    var location = User.Identity.GetLocation();
+    var location = ViewBag.location;
+
 }
 
 <head>
@@ -22,27 +23,6 @@
     <link href="~/Content/responsive.css" rel="stylesheet">
 
 </head><!--/head-->
-
-@*<header id="header">
-
-    <div class="navbar navbar-inverse" role="banner">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-
-                <a class="navbar-brand" href="@Url.Action("Index", "Modules")">
-                    <h1><img src="http://perceptuallearning.azurewebsites.net/Content/images/logo.png" alt="logo"></h1>
-                </a>
-            </div>
-        </div>
-    </div>
-</header>*@
-<!--/#header-->
 
 <section id="page-breadcrumb">
     <div class="vertical-center sun">
@@ -66,16 +46,9 @@
         </div>
     </form>
 </div>
-@*@using (Html.BeginForm("FileUpload", "Profile", FormMethod.Post,
-                            new { enctype = "multipart/form-data" }))
-{
-    <label for="file">Upload Image:</label>
-    <input type="file" name="file" id="file" style="width: 100%;" />
-    <input type="submit" value="Upload" class="submit" />
-}*@
-<!--/#action-->
 
-<img class="floatLeft" src="@location" onerror="this.src = '/Content/Images/ico/Title-logo.png';" alt="Profile Picture" height="200" width="200" />
+
+<img class="floatLeft" src="@location" onerror="this.src = '';" alt="Profile Picture" height="200" width="200" />
 
 <article>
     <h3>Name:</h3>
@@ -112,12 +85,13 @@
 
         @foreach (var item in Model)
         {
+ 
             <tr>
                 <td>
                     @Html.DisplayFor(modelItem => item.Name)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.CategoryId)
+                    @Html.DisplayFor(modelItem => item.Category.CategoryName)
                 </td>
                 <td>
                     @item.Answers.Count()

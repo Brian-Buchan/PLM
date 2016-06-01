@@ -10,6 +10,7 @@ namespace PLM
     {
         [Key]
         public int CategoryID { get; set; }
+        [Display(Name="Category Name")]
         public string CategoryName { get; set; }
 
         public virtual List <Module> ModuleList { get; set; }

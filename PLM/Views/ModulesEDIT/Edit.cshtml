@@ -18,26 +18,6 @@
     <link rel="shortcut icon" href="~/Content/images/ico/favicon.ico">
 </head><!--/head-->
 
-@*<header id="header">
-    <div class="navbar navbar-inverse" role="banner">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-
-                <a class="navbar-brand" href="@Url.Action("Index", "Modules")">
-                    <h1><img src="http://perceptuallearning.azurewebsites.net/Content/images/logo.png" alt="logo"></h1>
-                </a>
-            </div>
-        </div>
-    </div>
-</header>*@
-<!--/#header-->
-
 <section id="page-breadcrumb">
     <div class="vertical-center sun">
         <div class="container">
@@ -74,9 +54,9 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.CategoryId, new { @class = "control-label col-md-2" })
+            <label class="control-label col-md-2" for="CategoryID">Category</label>
             <div class="col-md-10">
-                @Html.EditorFor(model => model.CategoryId)
+                @Html.DropDownList("CategoryId", String.Empty)
                 @Html.ValidationMessageFor(model => model.CategoryId)
             </div>
         </div>
@@ -124,7 +104,7 @@
         <br />
 
         <p>
-            @Html.ActionLink("Add New Answer", "Create", new { controller = "Answers"})
+            @Html.ActionLink("Add New Answer", "Create", new { controller = "Answers", ID = Model.ModuleID})
         </p>
 
         <div class="form-group col-md-10">

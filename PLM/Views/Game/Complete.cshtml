@@ -4,14 +4,14 @@
 
 <h2>Complete</h2>
 <div>
-    @{
+    @*@{
         foreach (var score in TopTenScore.GetTopTenScores(ViewBag.ModuleID, ViewBag.UserId))
         {
             // TODO - Update username and scores
             <p>@score.User.FirstName</p>
             <p>@score.CorrectAnswers</p>
         }
-    }
+    }*@
     <p>YOUR SCORE:</p>
     <p>@Model</p>
 

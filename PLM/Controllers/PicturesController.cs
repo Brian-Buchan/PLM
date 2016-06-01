@@ -52,19 +52,20 @@ namespace PLM.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(int id)
-        //[Bind(Include = "PictureID,Location,AnswerID")] Picture picture
+        public ActionResult Create([Bind(Include = "Attribution,PictureID")] Picture picture, int? id) 
         {
             if (ModelState.IsValid)
             {
+                //db.Entry(picture).State = EntityState.Modified;
                 var ans = db.Answers
                     .Where(a => a.AnswerID == id)
                     .ToList().First();
 
                 picture = new Picture();
                 picture.Answer = ans;
+                //picture.Attribution = attribution;
 
-                picture.AnswerID = id;
+                picture.AnswerID = (int)id;
 
                 picture.Location = "";
                 db.Pictures.Add(picture);
@@ -157,6 +158,11 @@ namespace PLM.Controllers
             base.Dispose(disposing);
         }
 
+        /// <summary>
+        /// Save a picture to the server. Returns the relative path if successful, otherwise returns "FAILED"
+        /// </summary>
+        /// <param name="picture">The picture object to be saved</param>
+        /// <returns>string</returns>
         public string SaveUploadedFile(Picture picture)
         {
             Session["upload"] = picture.Answer.Module.Name;

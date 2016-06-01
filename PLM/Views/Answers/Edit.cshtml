@@ -27,10 +27,10 @@
             </div>
         </div>
 
-        <div class="form-group">
+        <div class="form-group hidden">
             @Html.LabelFor(model => model.ModuleID, "ModuleID", new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownList("ModuleID", String.Empty)
+                @Html.EditorFor(model => model.ModuleID, Model.ModuleID)
                 @Html.ValidationMessageFor(model => model.ModuleID)
             </div>
         </div>
@@ -48,11 +48,13 @@
                     }*@
             </p>
             <div class="form-group, scroll-box, col-md-10">
-                @foreach (Picture pic in Model.Pictures)
-                {
-                    <img src="@pic.Location" alt="Answer Image" class="img-thumbnail" width="225" />
-                }
-            </div>
+                                @foreach (Picture pic in Model.Pictures)
+                                 {
+                                 <a href="@Url.Action("Delete", "Pictures",new { Controller = "Pictures", id = pic.PictureID})">
+                                 <img src="@pic.Location" alt="Answer Image" class="img-thumbnail" width="225" /></a>
+                 }
+                                     
+</div>
         </div>
 
         <br />
@@ -65,7 +67,7 @@
 }
 
 <div>
-    @Html.ActionLink("Add Picture", "Create", new { Controller = "Pictures", id = Model.AnswerID });
+    @Html.ActionLink("Add Picture", "Create", new { Controller = "Pictures", id = Model.AnswerID, ModuleID = Model.ModuleID });
 </div>
 
 @*<!-- HTML heavily inspired by http://blueimp.github.io/jQuery-File-Upload/ -->
