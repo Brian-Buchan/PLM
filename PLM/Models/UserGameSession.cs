@@ -50,9 +50,14 @@ namespace PLM
         public int numQuestions { get; set; }
 
         /// <summary>
-        /// The amount of time left in the module
+        /// The amount of time (in minutes) alloted for the module
         /// </summary>
         public int time { get; set; }
+
+        /// <summary>
+        /// The amount of time left in the module
+        /// </summary>
+        public TimeSpan timeLeft { get; set; }
 
         public UserGameSession()
         {

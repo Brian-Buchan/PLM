@@ -31,7 +31,8 @@
     </div>
 </section>
 
-@using (Html.BeginForm()) { 
+@using (Html.BeginForm("Setup", "Game", FormMethod.Post, new { onsubmit = "return validate();" }))
+{ 
     @Html.AntiForgeryToken()
     <div class="form-horizontal col-lg-offset-1">
         <label>Number of Answers per Question</label>
@@ -43,10 +44,10 @@
         <output for="numQuestions" id="numQuestionsOutput">50</output>
 
         <label>Time Limit</label>
-        <input type="range" id="time" name="time" value="5" min="3" max="120" step="1" oninput="outputUpdate(value, '#timeOutput')" />
-        <output for="time" id="timeOutput">5</output>
+        <input type="range" id="time" name="time" value="30" min="15" max="135" step="15" oninput="outputUpdate(value, '#timeOutput')" />
+        <output for="time" id="timeOutput">30</output>
         <br />
-        <input type="submit" name="btnPlay" value="Play" class="btn btn-success" />
+        <input type="submit" name="btnPlay" value="Play" class="btn btn-success"/>
     </div>
 }
 <script src="~/Scripts/Setup.js"></script>

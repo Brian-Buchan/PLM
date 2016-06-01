@@ -12,6 +12,7 @@ namespace PLM
         public List<string> possibleAnswers;
         public string Answer;
         public int Score;
+        public TimeSpan Time;
 
         public PlayViewModel()
         {

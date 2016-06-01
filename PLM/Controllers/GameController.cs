@@ -59,14 +59,16 @@ namespace PLM.Controllers
         public ActionResult Play(int? PLMid)
         {
             GenerateQuestionONEperPIC();
+            currentGuess.Time = ((UserGameSession)Session["userGameSession"]).timeLeft;
             return View(currentGuess);
         }
 
         [HttpPost]
-        public ActionResult Play(int Score)
+        public ActionResult Play(int Score, string Time)
         {
-            //Update the user's score
+            //Update the user's score and time
             ((UserGameSession)Session["userGameSession"]).Score = Score;
+            ((UserGameSession)Session["userGameSession"]).timeLeft = TimeSpan.Parse(Time);
             if (IsGameDone())
             {
                 //If the user is done, break out of the loop and send the "Complete" action the final score               
@@ -74,6 +76,7 @@ namespace PLM.Controllers
             }
             GenerateQuestionONEperPIC();
             currentGuess.Score = Score;
+            currentGuess.Time = ((UserGameSession)Session["userGameSession"]).timeLeft;
             return View(currentGuess);
         }
 
@@ -96,9 +99,12 @@ namespace PLM.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Setup([Bind(Include="numAnswers,numQuestions,time")] UserGameSession ugs)
         {
+            int timeHours = (ugs.time / 60);
+            int timeMinutes = (ugs.time % 60);
             ((UserGameSession)Session["userGameSession"]).numAnswers = ugs.numAnswers;
             ((UserGameSession)Session["userGameSession"]).numQuestions = ugs.numQuestions;
             ((UserGameSession)Session["userGameSession"]).time = ugs.time;
+            ((UserGameSession)Session["userGameSession"]).timeLeft = new TimeSpan(timeHours, timeMinutes, 0);
             return RedirectToAction("Play");
         }
 
