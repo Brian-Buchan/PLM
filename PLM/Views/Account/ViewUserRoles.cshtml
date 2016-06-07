@@ -1,10 +1,14 @@
-﻿@model IEnumerable<PLM.Module>
+﻿@{
+    ViewBag.Title = "Roles by User";
+    string userName = ViewBag.UserName;
+}
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="">
-    <title>Modules</title>
+    <title>View Roles</title>
     <link href="~/Content/bootstrap.min.css" rel="stylesheet">
     <link href="~/Content/font-awesome.min.css" rel="stylesheet">
     <link href="~/Conent/animate.min.css" rel="stylesheet">
@@ -14,62 +18,46 @@
 </head><!--/head-->
 
 <body>
-    <br/>
+
     <section id="page-breadcrumb">
         <div class="vertical-center sun">
             <div class="container">
                 <div class="row">
                     <div class="action">
                         <div class="col-sm-12">
-                            <h1 class="title">Modules Administration</h1>
+                            <h1 class="title">View Role</h1>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
-    <!--/#page-breadcrumb-->
 
+    <h3>User: @ViewBag.UserName</h3>
 
-    @using (Html.BeginForm())
-    {
-        <p>
-            Find by name: @Html.TextBox("SearchString")
-            <input type="submit" value="Search" />
-        </p>
-    }
-    @using (Html.BeginForm())
-    {
-        <p>
-            Find Profanity: <input type="submit" value="Search" />
-        </p>
-    }
+    <p>
+        @Html.ActionLink("Add a Role", "AddRoleToUser", new { userName = userName })
+    </p>
     <table class="table">
         <tr>
             <th>
-                @Html.ActionLink("Name", "Index", new { sortOrder = ViewBag.NameSortParam })
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CategoryId)
+                User Role
             </th>
             <th></th>
         </tr>
 
-        @foreach (var item in Model)
+        @foreach (var role in ViewBag.RolesForUser)
         {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Name)
+                    @role
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.CategoryId)
-                </td>
-                <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.ModuleID }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = item.ModuleID })
+                    @Html.ActionLink("Delete", "DeleteRoleForUser", new { userName = userName, roleName = role })
                 </td>
             </tr>
         }
 
     </table>
-</body>
+
+    <a href="~/Account/Index">Click here to return to the list of users.</a>

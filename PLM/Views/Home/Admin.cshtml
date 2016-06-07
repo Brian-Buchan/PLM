@@ -1,0 +1,49 @@
+﻿
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Administration</title>
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet">
+    <link href="~/Content/font-awesome.min.css" rel="stylesheet">
+    <link href="~/Content/animate.min.css" rel="stylesheet">
+    <link href="~/Conetnt/lightbox.css" rel="stylesheet">
+    <link href="~/Content/main.css" rel="stylesheet">
+    <link href="~/Content/responsive.css" rel="stylesheet">
+</head><!--/head-->
+
+<body>
+
+    <br /><br />
+    <section id="page-breadcrumb">
+        <div class="vertical-center sun">
+            <div class="container">
+                <div class="row">
+                    <div class="action">
+                        <div class="col-sm-12">
+                            <h1 class="title">Administration</h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--/#page-breadcrumb-->
+
+    <div>
+        <h2>Users</h2>
+        @Html.ActionLink("Click here for a list of all users.", "Index", "Account")
+    </div>
+
+    <div>
+        <h2>User Roles</h2>
+        @Html.ActionLink("Click here for a list of all user roles.", "Index", "IdentityRoles")
+    </div>
+
+    <div>
+        <h2>Modules</h2>
+        @Html.ActionLink("Click here for a list of all modules.", "Index", "ModulesEDIT")
+    </div>
+
+</body>

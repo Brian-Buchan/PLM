@@ -6,6 +6,7 @@ using System.Security.Claims;
 using System.Security.Principal;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using PLM.Models;
 
 namespace PLM
 {
@@ -94,6 +95,56 @@ namespace PLM
         }
 
     }
+
+    //public class ProfanityFilter
+    //{        
+    //    // METHOD: containsProfanity
+    //    public bool containsProfanity(string checkStr)
+    //    {
+    //        bool badwordpresent = false;
+
+    //        string[] inStrArray = checkStr.Split(new char[] { ' ' });
+
+    //        string[] words = this.profanityArray();
+
+    //        // LOOP THROUGH WORDS IN MESSAGE
+    //        for (int x = 0; x < inStrArray.Length; x++)
+    //        {
+    //            // LOOP THROUGH PROFANITY WORDS
+    //            for (int i = 0; i < words.Length; i++)
+    //            {
+    //                // IF WORD IS PROFANITY, SET FLAG AND BREAK OUT OF LOOP
+    //                //if (inStrArray[x].toString().toLowerCase().equals(words[i]))
+    //                if( inStrArray[x].ToLower() == words[i].ToLower() )
+    //                {
+    //                    badwordpresent = true;
+    //                    break;
+    //                }
+    //            }
+    //            // IF FLAG IS SET, BREAK OUT OF OUTER LOOP
+    //            if (badwordpresent == true) break;
+    //        }
+
+    //        return badwordpresent;
+    //    }
+    //    // ************************************************************************
+
+
+
+
+    //    // ************************************************************************
+    //    // METHOD: profanityArray()
+    //    // METHOD OF PROFANITY WORDS
+    //    private string[] profanityArray()
+    //    {
+    //        var profanity = Enum.GetValues(typeof(Profanity));
+    //        // THESE WERE UPDATED TO USE THE SAME BADWORDS FROM FACESOFMBCFBAPP
+    //        foreach(Word w in Enum.GetValues(typeof(Profanity))
+    //        string[] words = 
+    //        return words;
+    //    }
+    //}
+
 
     //Taken from http://stackoverflow.com/questions/3216496/c-sharp-how-to-determine-if-a-number-is-a-multiple-of-another
     public static class MathExtensions

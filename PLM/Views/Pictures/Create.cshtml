@@ -42,24 +42,28 @@
     <div class="form-horizontal">
         @Html.ValidationSummary(true)
 
-        @*<div class="form-group">
-            @Html.LabelFor(model => model.Location, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Location)
-                @Html.ValidationMessageFor(model => model.Location)
             </div>
-        </div>*@
-
-
-
-
-        @*<div class="form-group">
-                <div class="col-md-offset-2 col-md-10">
-                    <input type="submit" value="Create" class="btn btn-default" />
-                </div>
-            </div>*@
-    </div>
 }
+
+<div class="jumbotron">
+    <form action="~/Pictures/Create?id=@ViewBag.AnswerID" method="post" enctype="multipart/form-data" class="dropzone" id="dropzoneForm" style="width: 50px; background: none; border: none;">
+        @Html.AntiForgeryToken()
+        <div class="fallback">
+            <input name="file" type="file" multiple />
+
+            <br />
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Attribution, "Attribution", new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Attribution)
+                    @Html.ValidationMessageFor(model => model.Attribution)
+                </div>
+            </div>
+
+            <br />
+            <br />
+            <br />
 
 <div class="jumbotron">
     <form action="~/Pictures/Create?id=@ViewBag.AnswerID" method="post" enctype="multipart/form-data" class="dropzone" id="dropzoneForm" style="width: 50px; background: none; border: none;" >
@@ -79,6 +83,7 @@
             <input name="file" type="file" multiple />
             <input type="submit" value="Upload"/>
         </div>
+
     </form>
 </div>
 

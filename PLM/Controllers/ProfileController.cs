@@ -9,6 +9,7 @@ using Microsoft.AspNet.Identity;
 
 namespace PLM.Controllers
 {
+    [Authorize]
     public class ProfileController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
@@ -24,9 +25,13 @@ namespace PLM.Controllers
             ViewBag.UserID = User.Identity.Name;
             var name = User.Identity.GetUserName();
             ApplicationUser currentUser = (ApplicationUser)db.Users.Single(x => x.UserName == name);
-            ViewBag.location = currentUser.ProfilePicture;
-            return View(db.Modules.ToList());
-            }
+            var modules = db.Modules.ToList();
+            modules = (from m in modules
+                           where m.User == currentUser
+                           select m).ToList();
+
+            return View(modules);
+        }
         }
 
         [HttpPost]
@@ -50,7 +55,7 @@ namespace PLM.Controllers
 
                 db.SaveChanges(); 
             }
-            
+
             return RedirectToAction("Index");
         }
 
@@ -79,7 +84,7 @@ namespace PLM.Controllers
                         relpath = ("/Content/Images/PLM/" + Session["upload"].ToString() + "/" + fName);
                         file.SaveAs(path);
                     }
-                }
+            }
             //}
             //catch (Exception ex)
             //{
