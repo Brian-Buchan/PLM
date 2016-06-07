@@ -174,8 +174,11 @@
     <Compile Include="Controllers\AnswersController.cs" />
     <Compile Include="Controllers\GameController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\IdentityRolesController.cs" />
+    <Compile Include="Controllers\ImageEditorController.cs" />
     <Compile Include="Controllers\ModulesController.cs" />
     <Compile Include="Controllers\ModulesEDITController.cs" />
+    <Compile Include="Controllers\ReportController.cs" />
     <Compile Include="Models\ModuleViewModel.cs" />
     <Compile Include="Controllers\PicturesController.cs" />
     <Compile Include="Controllers\ProfileController.cs" />
@@ -215,6 +218,7 @@
     <Compile Include="Models\PlayViewModel.cs" />
     <Compile Include="Models\PLMContext.cs" />
     <Compile Include="Models\ProfanityEnum.cs" />
+    <Compile Include="Models\Report.cs" />
     <Compile Include="Models\Score.cs" />
     <Compile Include="Models\UserGameSession.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -1183,10 +1187,21 @@
     <Content Include="Views\Home\FAQ.cshtml" />
     <Content Include="Views\Game\Setup.cshtml" />
     <Content Include="Views\ModulesEDIT\AddAnswer.cshtml" />
+    <Content Include="Views\Report\Create.cshtml" />
+    <Content Include="Views\Report\Delete.cshtml" />
+    <Content Include="Views\Report\Details.cshtml" />
+    <Content Include="Views\Report\Edit.cshtml" />
+    <Content Include="Views\Report\Index.cshtml" />
+    <Content Include="Views\IdentityRoles\Create.cshtml" />
+    <Content Include="Views\IdentityRoles\Delete.cshtml" />
+    <Content Include="Views\IdentityRoles\Edit.cshtml" />
+    <Content Include="Views\IdentityRoles\Index.cshtml" />
+    <Content Include="Views\ImageEditor\ImageEditor.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Content\Images\Profile\" />
+    <Folder Include="Views\Reports\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

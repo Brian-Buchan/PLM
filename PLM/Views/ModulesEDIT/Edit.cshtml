@@ -130,7 +130,7 @@
                             @ans.Pictures.Count()
                         </td>
                         <td>
-                            @*@Html.ActionLink("Add Image", "Create", new { controller = "Pictures", id = ans.AnswerID })*@
+                            @Html.ActionLink("Add Answer", "Create", new { controller = "Answers", id = Model.ModuleID })
                         </td>
                         <td>
                             @Html.ActionLink("Edit", "Edit", new { controller = "Answers", id = ans.AnswerID }) |
