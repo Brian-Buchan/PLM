@@ -96,3 +96,5 @@
 /// <reference path="../pixie-image-editor/pixie/assets/js/vendor/pagination.js" />
 /// <reference path="../pixie-image-editor/pixie/assets/js/vendor/scrollbar.js" />
 /// <reference path="../pixie-image-editor/pixie/assets/js/vendor/spectrum.js" />
+/// <reference path="jquery.countdown.min.js" />
+/// <reference path="jquery.plugin.min.js" />
