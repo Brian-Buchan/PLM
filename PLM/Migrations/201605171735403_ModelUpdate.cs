@@ -77,7 +77,7 @@ namespace PLM.Migrations
             AddColumn("dbo.Modules", "Description", c => c.String());
             AddColumn("dbo.Modules", "DefaultNumAnswers", c => c.Int(nullable: false));
             AddColumn("dbo.Modules", "DefaultTime", c => c.Int(nullable: false));
-            AddColumn("dbo.Modules", "DefaultNumPictures", c => c.Int(nullable: false));
+            AddColumn("dbo.Modules", "DefaultNumQuestions", c => c.Int(nullable: false));
             AddColumn("dbo.Modules", "isPrivate", c => c.Boolean(nullable: false));
             AddColumn("dbo.Modules", "Course_ID", c => c.Int());
             AddColumn("dbo.AspNetUsers", "OverrideNumberOfAnswers", c => c.Int(nullable: false));
@@ -118,7 +118,7 @@ namespace PLM.Migrations
             DropColumn("dbo.AspNetUsers", "OverrideNumberOfAnswers");
             DropColumn("dbo.Modules", "Course_ID");
             DropColumn("dbo.Modules", "isPrivate");
-            DropColumn("dbo.Modules", "DefaultNumPictures");
+            DropColumn("dbo.Modules", "DefaultNumQuestions");
             DropColumn("dbo.Modules", "DefaultTime");
             DropColumn("dbo.Modules", "DefaultNumAnswers");
             DropColumn("dbo.Modules", "Description");

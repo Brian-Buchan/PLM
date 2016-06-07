@@ -182,6 +182,10 @@
     <Compile Include="Migrations\201606071719110_initial.Designer.cs">
       <DependentUpon>201606071719110_initial.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201606071832334_Name-Normalization.cs" />
+    <Compile Include="Migrations\201606071832334_Name-Normalization.Designer.cs">
+      <DependentUpon>201606071832334_Name-Normalization.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\ModuleViewModel.cs" />
     <Compile Include="Controllers\PicturesController.cs" />
     <Compile Include="Controllers\ProfileController.cs" />
@@ -1237,6 +1241,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201606071719110_initial.resx">
       <DependentUpon>201606071719110_initial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201606071832334_Name-Normalization.resx">
+      <DependentUpon>201606071832334_Name-Normalization.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
