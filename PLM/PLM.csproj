@@ -224,6 +224,7 @@
     <Compile Include="Models\PlayViewModel.cs" />
     <Compile Include="Models\PLMContext.cs" />
     <Compile Include="Models\ProfanityEnum.cs" />
+    <Compile Include="Models\Report.cs" />
     <Compile Include="Models\Score.cs" />
     <Compile Include="Models\UserGameSession.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -1192,6 +1193,11 @@
     <Content Include="Views\Home\FAQ.cshtml" />
     <Content Include="Views\Game\Setup.cshtml" />
     <Content Include="Views\ModulesEDIT\AddAnswer.cshtml" />
+    <Content Include="Views\Report\Create.cshtml" />
+    <Content Include="Views\Report\Delete.cshtml" />
+    <Content Include="Views\Report\Details.cshtml" />
+    <Content Include="Views\Report\Edit.cshtml" />
+    <Content Include="Views\Report\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
