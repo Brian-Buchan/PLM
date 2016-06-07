@@ -387,6 +387,7 @@
     <Content Include="Content\Images\services\2.png" />
     <Content Include="Content\Images\services\3.png" />
     <Content Include="Content\Images\services\4.png" />
+    <Content Include="Content\jquery.countdown.css" />
     <Content Include="Content\lightbox.css" />
     <Content Include="Content\main.css" />
     <Content Include="Content\min\basic.min.css" />
@@ -1113,12 +1114,14 @@
     <None Include="Scripts\jquery-2.2.3.intellisense.js" />
     <Content Include="Scripts\jquery-2.2.3.js" />
     <Content Include="Scripts\jquery-2.2.3.min.js" />
+    <Content Include="Scripts\jquery.countdown.min.js" />
     <Content Include="Scripts\jquery.countTo.js" />
     <Content Include="Scripts\jquery.fitvids.js" />
     <Content Include="Scripts\jquery.isotope.min.js" />
     <Content Include="Scripts\jquery.js" />
     <Content Include="Scripts\jquery-2.2.3.min.map" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.plugin.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
