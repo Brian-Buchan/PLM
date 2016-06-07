@@ -37,10 +37,10 @@ namespace PLM.Controllers
         }
 
         // GET: /Report/Create
-        public ActionResult Create(int moduleID)
+        public ActionResult Create()
         {
-            ViewBag.module = moduleID;
-            ViewBag.user = User.Identity.GetUserName();
+            //ViewBag.module = moduleID;
+            //ViewBag.user = User.Identity.GetUserName();
             return View();
         }
 
