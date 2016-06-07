@@ -11,6 +11,7 @@ namespace PLM
     public class Module
     {
         public int ModuleID { get; set; }
+         [Display(Name = "Module name")]
         public string Name { get; set; }
         public string Description { get; set; }
 
@@ -20,7 +21,7 @@ namespace PLM
         [Display(Name="Default Number of Answers")]
         public int DefaultNumAnswers { get; set; }
 
-        [Display(Name = "Default Time")]
+        [Display(Name = "Default Time in minutes")]
         public int DefaultTime { get; set; }
 
         [Display(Name = "Default Number of Questions")]
