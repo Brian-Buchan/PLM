@@ -130,6 +130,20 @@ namespace PLM.Controllers
             return View(module);
         }
 
+        public ActionResult AddAnswer(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Module module = db.Modules.Find(id);
+            if (module == null)
+            {
+                return HttpNotFound();
+            }
+            return View(module);
+        }
+
         private void PopulateCategoryDropDownList(object selectedCategory = null)
         {
             var categoryQuery = from c in db.Categories
