@@ -40,7 +40,8 @@ namespace PLM.Controllers
         public ActionResult Complete(int score)
         {
             ViewBag.UserID = User.Identity.GetUserId();
-            ViewBag.ModuleID = currentModule.ModuleID;
+            //ViewBag.ModuleID = currentModule.ModuleID;
+            ViewBag.ModuleID = 1;
             //SaveScore(score);
 
             return View(score);

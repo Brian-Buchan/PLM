@@ -73,5 +73,6 @@ namespace PLM
         public DbSet<CourseWork> CourseWork { get; set; }
         public DbSet<Assignment> Assignments { get; set; }
         public DbSet<Score> Scores { get; set; }
+        public DbSet<PLM.Models.Report> Reports { get; set; }
     }
 }

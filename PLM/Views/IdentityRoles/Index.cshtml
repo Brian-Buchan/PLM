@@ -1,10 +1,11 @@
-﻿@model IEnumerable<PLM.Module>
+﻿@model IEnumerable<Microsoft.AspNet.Identity.EntityFramework.IdentityRole>
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="">
-    <title>Modules</title>
+    <title>Roles</title>
     <link href="~/Content/bootstrap.min.css" rel="stylesheet">
     <link href="~/Content/font-awesome.min.css" rel="stylesheet">
     <link href="~/Conent/animate.min.css" rel="stylesheet">
@@ -14,14 +15,14 @@
 </head><!--/head-->
 
 <body>
-    <br/>
+
     <section id="page-breadcrumb">
         <div class="vertical-center sun">
             <div class="container">
                 <div class="row">
                     <div class="action">
                         <div class="col-sm-12">
-                            <h1 class="title">Modules Administration</h1>
+                            <h1 class="title">Roles</h1>
                         </div>
                     </div>
                 </div>
@@ -30,46 +31,28 @@
     </section>
     <!--/#page-breadcrumb-->
 
-
-    @using (Html.BeginForm())
-    {
-        <p>
-            Find by name: @Html.TextBox("SearchString")
-            <input type="submit" value="Search" />
-        </p>
-    }
-    @using (Html.BeginForm())
-    {
-        <p>
-            Find Profanity: <input type="submit" value="Search" />
-        </p>
-    }
+    <p>
+        @Html.ActionLink("Create New", "Create")
+    </p>
     <table class="table">
         <tr>
             <th>
-                @Html.ActionLink("Name", "Index", new { sortOrder = ViewBag.NameSortParam })
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CategoryId)
+                @Html.DisplayNameFor(model => model.Name)
             </th>
             <th></th>
         </tr>
 
-        @foreach (var item in Model)
+        @foreach (var role in Model)
         {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Name)
+                    @Html.DisplayFor(modelItem => role.Name)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.CategoryId)
-                </td>
-                <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.ModuleID }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = item.ModuleID })
+                    @Html.ActionLink("Edit", "Edit", new { id = role.Id }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = role.Id })
                 </td>
             </tr>
         }
 
     </table>
-</body>

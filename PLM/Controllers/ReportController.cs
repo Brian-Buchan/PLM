@@ -6,124 +6,116 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using PLM.Models;
 using PLM;
-
+using Microsoft.AspNet.Identity;
 namespace PLM.Controllers
 {
-    public class AnswersController : Controller
+    public class ReportController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
-        // GET: /Answers/
+        // GET: /Report/
         public ActionResult Index()
         {
-            var answers = db.Answers.Include(a => a.Module);
-            return View(answers.ToList());
+            return View(db.Reports.ToList());
         }
 
-        // GET: /Answers/Details/5
+        // GET: /Report/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Answer answer = db.Answers.Find(id);
-            if (answer == null)
+            Report report = db.Reports.Find(id);
+            if (report == null)
             {
                 return HttpNotFound();
             }
-            return View(answer);
+            return View(report);
         }
 
-        // GET: /Answers/Create
-        public ActionResult Create(int ID)
+        // GET: /Report/Create
+        public ActionResult Create(int moduleID)
         {
-            ViewBag.ModuleID = ID;
-            //ViewBag.ModuleID = new SelectList(db.Modules, "ModuleID", "Name");
+            ViewBag.module = moduleID;
+            ViewBag.user = User.Identity.GetUserName();
             return View();
         }
 
-        // POST: /Answers/Create
+        // POST: /Report/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "AnswerID,AnswerString,ModuleID")] Answer answer)
+        public ActionResult Create([Bind(Include="ID,moduleID,description,userID")] Report report)
         {
             if (ModelState.IsValid)
             {
-                db.Answers.Add(answer);
+                db.Reports.Add(report);
                 db.SaveChanges();
-                return RedirectToAction("edit", new { controller = "ModulesEdit", id = answer.ModuleID });
+                return RedirectToAction("Index");
             }
 
-            ViewBag.ModuleID = new SelectList(db.Modules, "ModuleID", "Name");
-            return View(answer);
+            return View(report);
         }
 
-        // GET: /Answers/Edit/5
+        // GET: /Report/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Answer answer = db.Answers.Find(id);
-            if (answer == null)
+            Report report = db.Reports.Find(id);
+            if (report == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.ModuleID = new SelectList(db.Modules, "ModuleID", "Name");
-            return View(answer);
+            return View(report);
         }
 
-        // POST: /Answers/Edit/5
+        // POST: /Report/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "AnswerID,AnswerString,ModuleID")] Answer answer, int? ModuleID)
+        public ActionResult Edit([Bind(Include="ID,moduleID,description,userID")] Report report)
         {
             if (ModelState.IsValid)
             {
-
-                db.Entry(answer).State = EntityState.Modified;
-                if (ModuleID != null)
-                {
-                    answer.ModuleID = (int)ModuleID;
-                }
+                db.Entry(report).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("edit", new { controller = "ModulesEdit", id = answer.ModuleID });
+                return RedirectToAction("Index");
             }
-            ViewBag.ModuleID = new SelectList(db.Modules, "ModuleID", "Name");
-            return View(answer);
+            return View(report);
         }
 
-        // GET: /Answers/Delete/5
+        // GET: /Report/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Answer answer = db.Answers.Find(id);
-            if (answer == null)
+            Report report = db.Reports.Find(id);
+            if (report == null)
             {
                 return HttpNotFound();
             }
-            return View(answer);
+            return View(report);
         }
 
-        // POST: /Answers/Delete/5
+        // POST: /Report/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Answer answer = db.Answers.Find(id);
-            db.Answers.Remove(answer);
+            Report report = db.Reports.Find(id);
+            db.Reports.Remove(report);
             db.SaveChanges();
-            return RedirectToAction("edit", new { controller = "ModulesEdit", id = answer.ModuleID});
+            return RedirectToAction("Index");
         }
 
         protected override void Dispose(bool disposing)
