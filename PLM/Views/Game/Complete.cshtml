@@ -1,4 +1,5 @@
-﻿@{
+﻿
+@{
     ViewBag.Title = "Complete";
 }
 
@@ -14,6 +15,10 @@
     }*@
     <p>YOUR SCORE:</p>
     <p>@Model</p>
+
+    Report this module
+    @Html.ActionLink("Report this module", "Create", new { controller = "Report", id = @ViewBag.ModuleID });
+
 
 </div>
 
