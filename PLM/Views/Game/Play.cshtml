@@ -28,9 +28,13 @@
         <div id="ScoreBoard">
             <p>Score:</p>
             <p id="displayScore">@Model.Score</p>
+            <br/>
+            <br />
+            <p>Time Left:</p>
+            <p id="clockdiv">@Model.Time.ToString()</p>
         </div>
 
-        <img id="picture" src="@Model.ImageURL" title="Image Courtesy of @Model.Attribution"/>
+        <img onerror="this.src='~/Content/images/home/ThinkGraphicColor.jpg';" id="picture" src="@Model.ImageURL" title="Image Courtesy of @Model.Attribution"/>
         <p id="StoredAnswer" hidden="hidden">@Model.Answer</p>
 
         <div>
@@ -49,6 +53,7 @@
         <br />
         <form method="post">
             <input id="Score" name="Score" hidden="hidden" type="number" value="@Model.Score" />
+            <input id="Time" name="Time" hidden="hidden" type="text" value="@Model.Time.ToString()" />
             <div id="nextButton" style="display:none;">
                 <button id="next" type="submit" value="">Next</button>
                 <h1 id="resultText">Correct</h1>

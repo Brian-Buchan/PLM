@@ -17,9 +17,35 @@ namespace PLM.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: /ModulesEDIT/
-        public ActionResult Index()
+        public ActionResult Index(string sortOrder, string searchString)
         {
-            return View(db.Modules.ToList());
+            ViewBag.NameSortParam = String.IsNullOrEmpty(sortOrder) ? "name_asc" : "";
+
+            var db = new ApplicationDbContext();
+            var modules = from u in db.Modules
+                        select u;
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                modules = modules.Where(m => m.Name.Contains(searchString));
+            }
+
+            switch (sortOrder)
+            {
+                case "name_asc":
+                    modules = modules.OrderBy(m => m.Name);
+                    break;
+            }
+
+            return View(modules);
+        }
+
+        public ActionResult ProfanityCheck()
+        {
+            var modules = from m in db.Modules
+                          select m;
+
+            return View(modules);
         }
 
         // GET: /ModulesEDIT/Details/5
@@ -57,7 +83,9 @@ namespace PLM.Controllers
                 //Make sure that a user is logged in to access this page
                 if (((User.IsInRole("User")) || (User.IsInRole("Admin"))))
                 {
-                    module.User = (ApplicationUser)User;
+                    var userID = User.Identity.GetUserId();
+                    ApplicationUser currentUser = (ApplicationUser)db.Users.Single(x => x.Id == userID);
+                    module.User = currentUser;
                 }
 
                 db.Modules.Add(module);

@@ -37,9 +37,10 @@ namespace PLM.Controllers
         }
 
         // GET: /Answers/Create
-        public ActionResult Create()
+        public ActionResult Create(int ID)
         {
-            ViewBag.ModuleID = new SelectList(db.Modules, "ModuleID", "Name");
+            ViewBag.ModuleID = ID;
+            //ViewBag.ModuleID = new SelectList(db.Modules, "ModuleID", "Name");
             return View();
         }
 
@@ -82,11 +83,16 @@ namespace PLM.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "AnswerID,AnswerString,ModuleID")] Answer answer)
+        public ActionResult Edit([Bind(Include = "AnswerID,AnswerString,ModuleID")] Answer answer, int? ModuleID)
         {
             if (ModelState.IsValid)
             {
+
                 db.Entry(answer).State = EntityState.Modified;
+                if (ModuleID != null)
+                {
+                    answer.ModuleID = (int)ModuleID;
+                }
                 db.SaveChanges();
                 return RedirectToAction("edit", new { controller = "ModulesEdit", id = answer.ModuleID });
             }
