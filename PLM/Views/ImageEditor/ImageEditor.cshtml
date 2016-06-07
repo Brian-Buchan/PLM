@@ -1,7 +1,33 @@
 ﻿
 @{
-    ViewBag.Title = "ImageEditor";
+    ViewBag.Title = "Image Editor";
 }
 
-<h2>ImageEditor</h2>
+<h2>Image Editor</h2>
 
+<img id="imgEdit" src="~/Content/Images/logo.png" alt="Photo To Edit" />
+
+<script data-preload="true" data-path="@Url.Content("~/pixie-image-editor/pixie")" src="@Url.Content("~/pixie-image-editor/pixie/pixie-integrate.js")"></script>
+
+<script>
+    var myPixie = Pixie.setOptions({
+        replaceOriginal: true,
+        appendTo: 'body',
+        onSave: function (data, img) {
+            $.ajax({
+                type: 'POST',
+                url: '/ImageEditor/ImageEditor',
+                data: { imgData: data },
+            }).success(function (response) {
+                alert('Image saved successfully!');
+            });
+        }
+    });
+
+    $('#imgEdit').on('click', function (e) {
+        myPixie.open({
+            url: e.target.src,
+            image: e.target
+        });
+    });
+</script>
