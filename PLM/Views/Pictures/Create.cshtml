@@ -42,7 +42,7 @@
     <div class="form-horizontal">
         @Html.ValidationSummary(true)
 
-    </div>
+            </div>
 }
 
 <div class="jumbotron">
@@ -65,6 +65,22 @@
             <br />
             <br />
 
+<div class="jumbotron">
+    <form action="~/Pictures/Create?id=@ViewBag.AnswerID" method="post" enctype="multipart/form-data" class="dropzone" id="dropzoneForm" style="width: 50px; background: none; border: none;" >
+        @Html.AntiForgeryToken()
+
+        @*<input type="text" name="attribution"/>*@
+
+        <div class="form-group" title="Attribution is needed to give credit to the original creator of the image">
+            @Html.LabelFor(model => model.Attribution, "Attribution", new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Attribution)
+                @Html.ValidationMessageFor(model => model.Attribution)
+            </div>
+        </div>
+
+        <div class="fallback">
+            <input name="file" type="file" multiple />
             <input type="submit" value="Upload"/>
         </div>
 

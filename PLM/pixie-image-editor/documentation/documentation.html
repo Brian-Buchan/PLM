@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+    <meta charset="utf-8">
+	<title>Pixie - Image Editor</title>
+	<meta name="author" content="Vebto">
+	<meta name="copyright" content="Vebto">
+	<meta name="date" content="2015-03-08">
+	
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+	
+    <link href='http://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
+    <link href="assets/css/bootstrap.min.css" rel="stylesheet">
+    <link href="assets/css/font-awesome.min.css" rel="stylesheet">
+    <link href="assets/css/docs.css" rel="stylesheet">
+    <link href="assets/js/bootstrap.min.js" rel="stylesheet">
+    <link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />
+    </head>
+
+    <body>
+        <div id="docs-row" class="clearfix">
+            <h1 class="col-sm-4">Documentation</h1>
+        </div>
+        <div class="container">
+            <div class="row">
+                <ul class="col-sm-3 sidebar list-unstyled">
+                    <li class="header"><i class="fa fa-gears"></i><span>Installation & Requirements</span></li>
+
+                    <li class="active"><a href="#requirements">Pixie Requirements</a></li>
+
+                    <li class="header"><i class="fa fa-tachometer"></i>Features</li>
+                    
+                    <li><a href="#basics">Basic Operations</a></li>
+                    <li><a href="#text">Adding Text</a></li>
+                    <li><a href="#drawing">Free Drawing</a></li>
+                    <li><a href="#shapes">Basic Shapes</a></li>
+                    <li><a href="#layers">Layers/Objects</a></li>
+                    <li><a href="#history">History</a></li>
+
+                    <li class='header'><i class="fa fa-life-ring"></i>Support</li>
+                    <li><a href="#support">Send a support request</a></li>
+                 </ul>
+
+                <div class="col-sm-9" id="docs-content">
+                    <section id="requirments">
+                    	<h2>Pixie Installations & Requirements</h2>
+
+                        <p><strong>Pixie</strong> is a fully javascript based application witch means no installation is needed. Simply upload it to your server and you are done. Any server will do, not requirements for it.</p>
+                        <p><strong>Pixie</strong> will most likely work without server as well, by simply opening index.html file with a browser, however several problems might arise due to strict security around using file:// protocol on several browsers, chrome most notably.</p>
+                    </section>
+
+                    </section>
+
+                    <section id="basics">
+                        <h2>Basic Image Operations</h2>
+
+                        <h3><span class="mark">#</span>Crop</h3>
+                        <p>To crop the image click on the corresponding icon in the basics panel. After croping square appears on the image position it where you want by dragging it then click crop to finish.</p>
+                        <img src="assets/images/crop-ex.png">
+
+                        <h3><span class="mark">#</span>Rotate</h3>
+                        <p>To rotate an image click on the <strong>rotate</strong> icon and use the slider to rotate the image, click apply after you are done.</p>
+
+                        <h3><span class="mark">#</span>Resize</h3>
+                        <p>To resize an image click on the <strong>resize</strong> icon and enter the image dimensions you wish to resize to. <strong>constrain proportions</strong> switch will assure that aspect ratio is preserved. You can also use the percentage slider to resize the image by certain percentage while keeping the aspect ratio.</p>
+
+                        <h3><span class="mark">#</span>Round Corners</h3>
+                        <p>To round image corners click on the <strong>round</strong> icon, select the radius you want and click apply. Note that currently rounded corners will appear jagged on chrome due to a bug in it so you should use firefox or IE if you need perfectly round corners.</p>
+
+                        <h3><span class="mark">#</span>Color</h3>
+                        <p>The color icon will change the canvas background. This will only work if your image doesn't fill the entire canvas.</p>
+
+                        <h3><span class="mark">#</span>Merge</h3>
+                        <p><strong>Merge</strong> will merge all the layers/objects, after this they will not be movable or modifiable, but you will be able to apply filters to everything instead of just the images.</p>
+
+                    </section>
+
+
+                    <section id="text">
+                        <h2>Adding text</h2>
+
+                        <p>To add text to your image open the text tab from the left sidebar and click on the font you want. You can filter the fonts by searching for them by name or selecting a category at the top of text tab and you can change to the next fonts page by using pagination at the bottom. You can choose from all 600+ goole fonts. Double click the text in the image to change its contents. You can change the page appearence from the panel that opens up when you click on text.</p>
+  	                    <img src="assets/images/text-ex.png">
+                    </section>
+
+                    <section id="drawing">
+                        <h2>Free Drawing</h2>
+
+                        <p>To draw select a brush you want from the free drawing panel and then simply click anywhere on the image and drag the mouse without releasing the mouse button. You will need to change the settings you want in the drawing panel before you start drawing as those settings will not be changable afterwards. Also don't forget to click apply after you are done otherwise the drawing will not be preserved.</p>
+                        <img src="assets/images/drawing_ex.png">
+                    </section>
+
+                     <section id="filters">
+                        <h2>Filters</h2>
+
+                        <p>To apply filters to images, open filters tab and the select the filters you want. You can click on the X icon to remove the filter and on gears icon to change it's settings. Note that filters will only be applied to images and not other objects like text and drawings, if you want to apply filters to everything you will need to first merge the layrs from basics tab.</p>
+                        <img src="assets/images/brightness_ex.png">
+                    </section>
+
+                    <section id="shapes">
+                        <h2>Basic Shapes</h2>
+
+                        <p>From the shapes tab you can add multiple shapes to your image, you can position the shape by clicking on it and dragging it around. You can change a variety of shape settings in the shape panel including applying a custom background to it.</p>
+                        <img src="assets/images/shapes_ex.png">
+                    </section>
+
+                    <section id="layers">
+                        <h2>Layers/Objects</h2>
+
+                        <p>You can manage all the objects in your image from the object panel on the right. Click on object to select it, click on the eye icon to toggle it's visibility, click on the trash icon to delete the object and click on the lock icon to lock object in place preventing it's movement via drag and drop. You can also control objects z-index by changing their order in the objects panel.</p>
+                        <img src="assets/images/objects_ex.png">
+                    </section>
+
+                    <section id="history">
+                        <h2>History</h2>
+
+                        <p>Almost all of your actions will create a new item in the history panel so you can easily jump around to various points in time in your project from it by click on a specific item.</p>
+                        <img src="assets/images/history_ex.png">
+                    </section>
+
+                    <section id="support">
+                        <h2>Support</h2>
+                        <p>If you have any problems or questions, please use the contact form on pixies codecanyon page support tab to send us a message instead of doing it in the comments, so we can resolive it as fast as possible, thanks!</p>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

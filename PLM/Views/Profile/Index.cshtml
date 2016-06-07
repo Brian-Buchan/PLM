@@ -5,7 +5,8 @@
     var name = User.Identity.GetFirstName() + " " + User.Identity.GetLastName();
     var instution = User.Identity.GetInstution();
     var email = User.Identity.GetUserName();
-    var location = User.Identity.GetLocation();
+    var location = ViewBag.location;
+
 }
 
 <head>
@@ -45,16 +46,9 @@
         </div>
     </form>
 </div>
-@*@using (Html.BeginForm("FileUpload", "Profile", FormMethod.Post,
-                            new { enctype = "multipart/form-data" }))
-{
-    <label for="file">Upload Image:</label>
-    <input type="file" name="file" id="file" style="width: 100%;" />
-    <input type="submit" value="Upload" class="submit" />
-}*@
-<!--/#action-->
 
-<img class="floatLeft" src="@location" onerror="this.src = '/Content/Images/ico/Title-logo.png';" alt="Profile Picture" height="200" width="200" />
+
+<img onerror="this.src='~/Content/images/home/ThinkGraphicColor.jpg';" class="floatLeft" src="@location" alt="Profile Picture" height="200" width="200" />
 
 <article>
     <h3>Name:</h3>
@@ -91,6 +85,7 @@
 
         @foreach (var item in Model)
         {
+ 
             <tr>
                 <td>
                     @Html.DisplayFor(modelItem => item.Name)

@@ -35,7 +35,8 @@
 <br />
 
 
-@using (Html.BeginForm()) 
+@if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated) {
+using (Html.BeginForm()) 
 {
     @Html.AntiForgeryToken()
     
@@ -110,7 +111,11 @@
         </div>
     </div>
 }
-
+}
+else
+{
+    <h1>You need to be logged in to Create a module</h1>
+}
 <div>
     @Html.ActionLink("Back to List", "Index", new { controller = "Profile"});
 </div>

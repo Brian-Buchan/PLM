@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using PLM;
 using System.IO;
+using PLM.Extensions;
 
 namespace PLM.Controllers
 {
@@ -52,19 +53,20 @@ namespace PLM.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(int id)
-        //[Bind(Include = "PictureID,Location,AnswerID")] Picture picture
+        public ActionResult Create([Bind(Include = "Attribution,PictureID")] Picture picture, int? id) 
         {
             if (ModelState.IsValid)
             {
+                //db.Entry(picture).State = EntityState.Modified;
                 var ans = db.Answers
                     .Where(a => a.AnswerID == id)
                     .ToList().First();
 
                 picture = new Picture();
                 picture.Answer = ans;
+                //picture.Attribution = attribution;
 
-                picture.AnswerID = id;
+                picture.AnswerID = (int)id;
 
                 picture.Location = "";
                 db.Pictures.Add(picture);
@@ -134,6 +136,8 @@ namespace PLM.Controllers
             {
                 return HttpNotFound();
             }
+
+            
             return View(picture);
         }
 
@@ -145,6 +149,7 @@ namespace PLM.Controllers
             Picture picture = db.Pictures.Find(id);
             db.Pictures.Remove(picture);
             db.SaveChanges();
+            FTPDirectoryWriter.FTPDelete(picture.Location);
             return RedirectToAction("edit", new { controller = "Answers", id = picture.AnswerID });
         }
 
@@ -157,6 +162,11 @@ namespace PLM.Controllers
             base.Dispose(disposing);
         }
 
+        /// <summary>
+        /// Save a picture to the server. Returns the relative path if successful, otherwise returns "FAILED"
+        /// </summary>
+        /// <param name="picture">The picture object to be saved</param>
+        /// <returns>string</returns>
         public string SaveUploadedFile(Picture picture)
         {
             Session["upload"] = picture.Answer.Module.Name;
@@ -187,6 +197,7 @@ namespace PLM.Controllers
             catch (Exception ex)
             {
                 isSavedSuccessfully = false;
+                
             }
 
             if (isSavedSuccessfully)
