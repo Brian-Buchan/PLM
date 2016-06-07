@@ -63,10 +63,6 @@
     @Html.ActionLink("Reset your password", "Manage", "Account", routeValues: null, htmlAttributes: new { title = "Manage" })
     <br /><br />
 </article>
-    <article>
-        @Html.ActionLink("Reset your password", "Manage", "Account", routeValues: null, htmlAttributes: new { title = "Manage" })
-
-    </article>
 
 
 <div>
@@ -89,8 +85,6 @@
         </tr>
 
         @foreach (var item in Model)
-        {
- 
             <tr>
                 <td>
                     @Html.DisplayFor(modelItem => item.Name)
