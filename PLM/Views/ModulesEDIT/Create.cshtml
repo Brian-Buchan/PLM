@@ -71,6 +71,8 @@ using (Html.BeginForm())
         <div class="form-group">
             @Html.LabelFor(model => model.DefaultNumAnswers, new { @class = "control-label col-md-2" })
             <div class="col-md-10">
+                @*<input type="range" id="numAnswers" name="numAnswers" step="3" min="3" max="15" value="12" oninput="outputUpdate(value, '#numAnswersOutput')" />
+                <output for="numAnswers" id="numAnswersOutput">12</output>*@
                 @Html.EditorFor(model => model.DefaultNumAnswers)
                 @Html.ValidationMessageFor(model => model.DefaultNumAnswers)
             </div>
