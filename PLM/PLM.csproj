@@ -174,14 +174,8 @@
     <Compile Include="Controllers\AnswersController.cs" />
     <Compile Include="Controllers\GameController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\IdentityRolesController.cs" />
     <Compile Include="Controllers\ModulesController.cs" />
     <Compile Include="Controllers\ModulesEDITController.cs" />
-    <Compile Include="Controllers\ReportController.cs" />
-    <Compile Include="Migrations\201606071719110_initial.cs" />
-    <Compile Include="Migrations\201606071719110_initial.Designer.cs">
-      <DependentUpon>201606071719110_initial.cs</DependentUpon>
-    </Compile>
     <Compile Include="Models\ModuleViewModel.cs" />
     <Compile Include="Controllers\PicturesController.cs" />
     <Compile Include="Controllers\ProfileController.cs" />
@@ -221,7 +215,6 @@
     <Compile Include="Models\PlayViewModel.cs" />
     <Compile Include="Models\PLMContext.cs" />
     <Compile Include="Models\ProfanityEnum.cs" />
-    <Compile Include="Models\Report.cs" />
     <Compile Include="Models\Score.cs" />
     <Compile Include="Models\UserGameSession.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -1189,23 +1182,7 @@
     <Content Include="Views\Game\Complete.cshtml" />
     <Content Include="Views\Home\FAQ.cshtml" />
     <Content Include="Views\Game\Setup.cshtml" />
-    <Content Include="Views\Home\Admin.cshtml" />
-    <Content Include="Views\Account\Create.cshtml" />
-    <Content Include="Views\Account\Edit.cshtml" />
-    <Content Include="Views\Account\Index.cshtml" />
-    <Content Include="Views\Account\Delete.cshtml" />
-    <Content Include="Views\IdentityRoles\Index.cshtml" />
-    <Content Include="Views\IdentityRoles\Create.cshtml" />
-    <Content Include="Views\IdentityRoles\Edit.cshtml" />
-    <Content Include="Views\IdentityRoles\Delete.cshtml" />
-    <Content Include="Views\Account\ViewUserRoles.cshtml" />
-    <Content Include="Views\Account\DeleteRoleForUser.cshtml" />
-    <Content Include="Views\Account\AddRoleToUser.cshtml" />
-    <Content Include="Views\Report\Create.cshtml" />
-    <Content Include="Views\Report\Delete.cshtml" />
-    <Content Include="Views\Report\Details.cshtml" />
-    <Content Include="Views\Report\Edit.cshtml" />
-    <Content Include="Views\Report\Index.cshtml" />
+    <Content Include="Views\ModulesEDIT\AddAnswer.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -1233,9 +1210,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201605251851268_Attribution.resx">
       <DependentUpon>201605251851268_Attribution.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201606071719110_initial.resx">
-      <DependentUpon>201606071719110_initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
