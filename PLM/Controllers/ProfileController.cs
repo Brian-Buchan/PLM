@@ -9,6 +9,7 @@ using Microsoft.AspNet.Identity;
 
 namespace PLM.Controllers
 {
+    [Authorize]
     public class ProfileController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
@@ -16,7 +17,14 @@ namespace PLM.Controllers
         public ActionResult Index()
         {
             ViewBag.UserID = User.Identity.Name;
-            return View(db.Modules.ToList());
+            var name = User.Identity.GetUserName();
+            ApplicationUser currentUser = (ApplicationUser)db.Users.Single(x => x.UserName == name);
+            var modules = db.Modules.ToList();
+            modules = (from m in modules
+                           where m.User == currentUser
+                           select m).ToList();
+
+            return View(modules);
         }
 
         [HttpPost]

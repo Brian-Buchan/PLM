@@ -17,6 +17,9 @@ namespace PLM.Controllers
         {
             ViewBag.CurrentSort = sortOrder;
             var modules = db.Modules.ToList();
+            modules = (from m in modules
+                            where m.isPrivate == false
+                            select m).ToList();
 
             if (searchString != null)
             {

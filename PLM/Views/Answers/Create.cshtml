@@ -16,26 +16,6 @@
     <link rel="shortcut icon" href="~/Content/images/ico/favicon.ico">
 </head><!--/head-->
 
-@*<header id="header">
-    <div class="navbar navbar-inverse" role="banner">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-
-                <a class="navbar-brand" href="@Url.Action("Index", "Modules")">
-                    <h1><img src="http://perceptuallearning.azurewebsites.net/Content/images/logo.png" alt="logo"></h1>
-                </a>
-            </div>
-        </div>
-    </div>
-</header>*@
-<!--/#header-->
-
 <section id="page-breadcrumb">
     <div class="vertical-center sun">
         <div class="container">
@@ -70,10 +50,10 @@
             </div>
         </div>
 
-        <div class="form-group">
+        <div class="form-group hidden">
             @Html.LabelFor(model => model.ModuleID, "ModuleID", new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownList("ModuleID", String.Empty)
+                @Html.TextBoxFor(model => model.ModuleID, new { @Value = ViewBag.ModuleID })
                 @Html.ValidationMessageFor(model => model.ModuleID)
             </div>
         </div>
@@ -83,14 +63,9 @@
 
         <div class="form-group">
             <div class="floatRight">
-                <div class="col-md-10">
-                <input type="submit" name="submit" value="Create" class="btn btn-submit" />
-            </div>
-            @*<div class="floatRight">
-                <input type="submit" name="submit" value="Add New Answer" class="btn btn-submit" />
-            </div>
-            <div class="floatRight">
-                <input type="submit" name="submit" value="Add Picture" class="btn btn-submit" />*@
+                <div>
+                    <input type="submit" name="submit" value="Create" class="btn btn-success" />
+                </div>
             </div>
         </div>
     </div>
