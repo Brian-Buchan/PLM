@@ -121,6 +121,7 @@ namespace PLM.Models
             this.Email = user.Email;
             this.Institution = user.Institution;
             this.Password = user.PasswordHash;
+            //this.ProfilePicture = user.ProfilePicture;
         }
 
         [Key]
