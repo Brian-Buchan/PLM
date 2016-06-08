@@ -5359,8 +5359,8 @@ a.badge:focus, a.badge:hover {
 }
 
 .jumbotron {
-    padding-top: 30px;
-    padding-bottom: 30px;
+    padding-top: 15px;
+    padding-bottom: 15px;
     margin-bottom: 30px;
     color: inherit;
     background-color: #eee;
@@ -5392,13 +5392,13 @@ a.badge:focus, a.badge:hover {
 
 @media screen and (min-width:768px) {
     .jumbotron {
-        padding-top: 48px;
-        padding-bottom: 48px;
+        padding-top: 24px;
+        padding-bottom: 24px;
     }
 
     .container .jumbotron, .container-fluid .jumbotron {
-        padding-right: 60px;
-        padding-left: 60px;
+        padding-right: 50px;
+        padding-left: 50px;
     }
 
     .jumbotron .h1, .jumbotron h1 {

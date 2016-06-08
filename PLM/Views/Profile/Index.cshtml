@@ -37,8 +37,8 @@
         </div>
     </div>
 </section>
-<div class="jumbotron">
-    <h2 class="header">Upload a profile picture</h2>
+<div st class="jumbotron" id="uploadPicture"style="padding-bottom:15px; padding-top:15px">
+    <h2 class="header" style="margin-top:10px">Upload a profile picture</h2>
     <form action="~/Profile/CreateProfile" method="post" enctype="multipart/form-data" class="dropzone" id="dropzoneForm" style="width: 50px; background: none; border: none;">
         @Html.AntiForgeryToken()
         <div class="fallback">
@@ -49,7 +49,7 @@
 </div>
 <div style="width: 100%;">
     <div class="panel-item" style="float: left; width: 30%;">
-        <img onerror="this.src='~/Content/images/home/ThinkGraphicColor.jpg';" class="floatLeft" src="@location" alt="Profile Picture" style="width: 150px;" />
+        <img onerror="this.src='~/Content/images/home/ThinkGraphicColor.jpg';" class="floatLeft" src="@location" alt="Profile Picture" id="ProfilePicture" style="width: 150px;" />
     </div>
     <div class="panel-item" style="float: left; width: 35%;">
         <article>
@@ -68,7 +68,12 @@
     </div>
     <div class="panel-item" style="float: left; width: 35%;">
         <h2 class="header">Settings</h2>
-        @Html.ActionLink("Change your password", "Manage", "Account", routeValues: null, htmlAttributes: new { title = "Manage" })
+        <ul>
+            <li class="items-list">@Html.ActionLink("Change your password", "Manage", "Account", routeValues: null, htmlAttributes: new { title = "Manage" })</li>
+            <li class="items-list">@Html.ActionLink("See Reported Issues with your modules", "Index", "Report", routeValues: null, htmlAttributes: new { title = "Manage" })</li>
+        </ul>
+       
+        
     </div>
     <br style="clear: left;" />
 </div>
@@ -94,7 +99,7 @@
 
 <div>
     <table class="table">
-        <caption>Courses Created:</caption>
+        <thead class="table-header">Courses Created:</thead>
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.Name)
