@@ -1,5 +1,7 @@
 ﻿@model PLM.Picture
-
+@{
+    ViewBag.Title = "Add Picture";
+}
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,6 +17,8 @@
 
     <link rel="shortcut icon" href="~/Content/images/ico/favicon.ico">
 </head>
+
+<br/>
 
 <section id="page-breadcrumb">
     <div class="vertical-center sun">
@@ -34,26 +38,19 @@
 <br />
 <br />
 
-
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
-
-    <div class="form-horizontal">
-        @Html.ValidationSummary(true)
-
-            </div>
-}
-
 <div class="jumbotron">
-    <form action="~/Pictures/Create?id=@ViewBag.AnswerID" method="post" enctype="multipart/form-data" class="dropzone" id="dropzoneForm" style="width: 50px; background: none; border: none;">
+    <form action="~/Pictures/Create?id=@ViewBag.AnswerID" method="post" enctype="multipart/form-data" class="dropzone" id="dropzoneForm" style="width: 50px; background: none; border: none;" >
         @Html.AntiForgeryToken()
+
+        @*<input type="text" name="attribution"/>*@
+
+        
+
         <div class="fallback">
-            <input name="file" type="file" multiple />
+            <input name="file" type="file" multiple /> 
+            <br/>
 
-            <br />
-
-            <div class="form-group">
+            <div class="form-group" title="Attribution is needed to give credit to the original creator of the image">
                 @Html.LabelFor(model => model.Attribution, "Attribution", new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
                     @Html.EditorFor(model => model.Attribution)
@@ -61,27 +58,10 @@
                 </div>
             </div>
 
-            <br />
-            <br />
-            <br />
-
-<div class="jumbotron">
-    <form action="~/Pictures/Create?id=@ViewBag.AnswerID" method="post" enctype="multipart/form-data" class="dropzone" id="dropzoneForm" style="width: 50px; background: none; border: none;" >
-        @Html.AntiForgeryToken()
-
-        @*<input type="text" name="attribution"/>*@
-
-        <div class="form-group" title="Attribution is needed to give credit to the original creator of the image">
-            @Html.LabelFor(model => model.Attribution, "Attribution", new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Attribution)
-                @Html.ValidationMessageFor(model => model.Attribution)
-            </div>
-        </div>
-
-        <div class="fallback">
-            <input name="file" type="file" multiple />
-            <input type="submit" value="Upload"/>
+            <br/>
+            <br/>
+            <br/>
+            <input type="submit" value="Upload" class="btn btn-success"/>
         </div>
 
     </form>
@@ -89,7 +69,7 @@
 
 
 <div>
-    @Html.ActionLink("Back to List", "Index", new { controller = "Profile" });
+    @Html.ActionLink("Back to List", "Index", new { controller = "Profile" })
 </div>
 
 @section Scripts {

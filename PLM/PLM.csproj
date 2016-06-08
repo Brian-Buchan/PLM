@@ -174,6 +174,8 @@
     <Compile Include="Controllers\AnswersController.cs" />
     <Compile Include="Controllers\GameController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\IdentityRolesController.cs" />
+    <Compile Include="Controllers\ImageEditorController.cs" />
     <Compile Include="Controllers\ModulesController.cs" />
     <Compile Include="Controllers\ModulesEDITController.cs" />
     <Compile Include="Controllers\ReportController.cs" />
@@ -305,6 +307,7 @@
     <Content Include="Content\Images\coming-soon3.png" />
     <Content Include="Content\Images\coming-soon4.png" />
     <Content Include="Content\Images\contact-bg.png" />
+    <Content Include="Content\Images\Error.bmp" />
     <Content Include="Content\Images\home\activeicon.png" />
     <Content Include="Content\Images\home\client1.png" />
     <Content Include="Content\Images\home\client2.png" />
@@ -1200,14 +1203,29 @@
     <Content Include="Views\Game\Complete.cshtml" />
     <Content Include="Views\Home\FAQ.cshtml" />
     <Content Include="Views\Game\Setup.cshtml" />
-    <Content Include="Views\ModulesEDIT\AddAnswer.cshtml" />
-    <Content Include="Views\Report\Create.cshtml" />
     <Content Include="Views\Report\Delete.cshtml" />
     <Content Include="Views\Report\Details.cshtml" />
     <Content Include="Views\Report\Edit.cshtml" />
     <Content Include="Views\Report\Index.cshtml" />
     <Content Include="Views\Home\Admin.cshtml" />
     <Content Include="Views\Home\TOU.cshtml" />
+    <Content Include="Views\Account\AddRoleToUser.cshtml" />
+    <Content Include="Views\Account\Create.cshtml" />
+    <Content Include="Views\Account\Delete.cshtml" />
+    <Content Include="Views\Account\Edit.cshtml" />
+    <Content Include="Views\Account\Index.cshtml" />
+    <Content Include="Views\Account\ViewUserRoles.cshtml" />
+    <Content Include="Views\IdentityRoles\Create.cshtml" />
+    <Content Include="Views\IdentityRoles\Delete.cshtml" />
+    <Content Include="Views\IdentityRoles\Edit.cshtml" />
+    <Content Include="Views\IdentityRoles\Index.cshtml" />
+    <Content Include="Views\ImageEditor\ImageEditor.cshtml" />
+    <Content Include="Views\Reports\Create.cshtml" />
+    <Content Include="Views\Reports\Delete.cshtml" />
+    <Content Include="Views\Reports\Details.cshtml" />
+    <Content Include="Views\Reports\Edit.cshtml" />
+    <Content Include="Views\Reports\Index.cshtml" />
+    <Content Include="Views\Report\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -17,6 +17,10 @@ namespace PLM.Controllers
         {
             return View();
         }
+        public ActionResult TOU()
+        {
+            return View();
+        }
                 
         public ActionResult AboutUs()
         {

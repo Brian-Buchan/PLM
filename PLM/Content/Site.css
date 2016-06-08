@@ -29,6 +29,14 @@ textarea {
     float:right;
 }
 
+.clearLeft{
+    clear:left;
+}
+
+.clearRight{
+    clear: right;
+}
+
 .accordianHeading{
     color: #0099AE;
 }
@@ -66,6 +74,30 @@ article{
     background-image: url("~/Content/images/home/under.png");
     background-size:100%;
 }
+
+a[type="button"] {
+  width: 100%;
+  background-color: #4fcccd;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 300;
+  letter-spacing: 5px;
+  text-transform: uppercase;
+  border-radius: 3px;
+  margin-top: 5px;
+  border-bottom: 3px solid #2f9697;
+  box-shadow: none;
+  padding: 10px;
+}
+
+a[type="button"] :hover, 
+a[type="button"] :focus{
+  color: #fff;
+  outline: none;
+  box-shadow: none;
+  opacity: .8;
+}
+
 
 input[type='range']::-webkit-slider-thumb {
 	 -moz-appearance: none;
