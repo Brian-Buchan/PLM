@@ -1,22 +1,53 @@
 ﻿@model PLM.Answer
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Edit Answer</title>
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet">
+    <link href="~/Content/font-awesome.min.css" rel="stylesheet">
+    <link href="~/Content/animate.min.css" rel="stylesheet">
+    <link href="~/Conetnt/lightbox.css" rel="stylesheet">
+    <link href="~/Content/main.css" rel="stylesheet">
+    <link href="~/Content/responsive.css" rel="stylesheet">
 
-@{
-    ViewBag.Title = "Edit Answer";
-}
+    <link rel="shortcut icon" href="~/Content/images/ico/favicon.ico">
+</head>
 
-<h2>Edit</h2>
+<br />
 
+<section id="page-breadcrumb">
+    <div class="vertical-center sun">
+        <div class="container">
+            <div class="row">
+                <div class="action">
+                    <div class="col-sm-12">
+                        <h1 class="title">Edit Answer</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<br/>
 
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
 
-    <div class="form-horizontal">
-        <div style="text-align:right; float:right">
+
+    <div class="floatRight">
+        @Html.ActionLink("Add Picture", "Create", new { Controller = "Pictures", id = Model.AnswerID, ModuleID = Model.ModuleID }, new { type = "button" })
+    </div>
+
+    <div class="form-horizontal floatLeft">
+        @*<div style="text-align:right; float:right">
             <a href="http://plmeditor.azurewebsites.net" target="_blank">Edit an image to upload.</a>
-        </div>
-        <h4>Answer</h4>
-        <hr />
+        </div>*@
+
+
         @Html.ValidationSummary(true)
         @Html.HiddenFor(model => model.AnswerID)
         <div class="form-group">
@@ -48,77 +79,32 @@
                     }*@
             </p>
             <div class="form-group, scroll-box, col-md-10">
-                                @foreach (Picture pic in Model.Pictures)
-                                 {
-                                 <a href="@Url.Action("Delete", "Pictures",new { Controller = "Pictures", id = pic.PictureID})">
-                                 <img onerror="this.src='~/Content/images/home/ThinkGraphicColor.jpg';" src="@pic.Location" alt="Answer Image" class="img-thumbnail" width="225" /></a>
-                 }
+                @foreach (Picture pic in Model.Pictures)
+                {
+                    <a href="@Url.Action("Delete", "Pictures",new { Controller = "Pictures", id = pic.PictureID})">
+                    <img onerror="this.src='~/Content/images/home/ThinkGraphicColor.jpg';" src="@pic.Location" alt="Answer Image" class="img-thumbnail" width="225" /></a>
+                }
                                      
-</div>
+            </div>
         </div>
 
         <br />
         <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
+            <div class="clearLeft floatRight">
                 <input type="submit" value="Save" class="btn btn-submit" />
             </div>
         </div>
     </div>
 }
 
-<div>
-    @Html.ActionLink("Add Picture", "Create", new { Controller = "Pictures", id = Model.AnswerID, ModuleID = Model.ModuleID });
-</div>
 
-@*<!-- HTML heavily inspired by http://blueimp.github.io/jQuery-File-Upload/ -->
-<div class="table table-striped" class="files" id="previews">
-
-    <div id="template" class="file-row">
-        <!-- This is used as the file preview template -->
-        <div>
-            <span class="preview"><img onerror="this.src='~/Content/images/home/ThinkGraphicColor.jpg';" data-dz-thumbnail /></span>
-        </div>
-        <div>
-            <p class="name" data-dz-name></p>
-            <strong class="error text-danger" data-dz-errormessage></strong>
-        </div>
-        <div>
-            <p class="size" data-dz-size></p>
-            <div class="progress progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
-                <div class="progress-bar progress-bar-success" style="width:0%;" data-dz-uploadprogress></div>
-            </div>
-        </div>
-        <div>
-            <button class="btn btn-primary start">
-                <i class="glyphicon glyphicon-upload"></i>
-                <span>Start</span>
-            </button>
-            <button data-dz-remove class="btn btn-warning cancel">
-                <i class="glyphicon glyphicon-ban-circle"></i>
-                <span>Cancel</span>
-            </button>
-            <button data-dz-remove class="btn btn-danger delete">
-                <i class="glyphicon glyphicon-trash"></i>
-                <span>Delete</span>
-            </button>
-        </div>
-    </div>
-
+@*<div style="text-align:right; float:right">
+    <a href="http://plmeditor.azurewebsites.net" target="_blank">Edit an image to upload.</a>
 </div>*@
-
-
-<div>
-    <div style="text-align:right; float:right">
-        <a href="http://plmeditor.azurewebsites.net" target="_blank">Edit an image to upload.</a>
-    </div>
-    @Html.ActionLink("Back to List", "edit", new { controller = "ModulesEdit", id = Model.ModuleID })
-</div>
+@*<div class="clearLeft floatRight">
+    @Html.ActionLink("Done", "Index", new { controller = "Profile" }, new { type = "button" })
+</div>*@
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }
-
-<script src="~/Content/dropzone.js"></script>
-<script src="~/Content/dropzone-amd-module.js"></script>
-<script src="~/Content/min/dropzone-amd-module.min.js"></script>
-<script src="~/Content/min/dropzone.min.js"></script>

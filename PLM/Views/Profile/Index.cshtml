@@ -137,7 +137,6 @@
                 </td>
                 <td>
                     @Html.ActionLink("Edit", "Edit", new { controller = "ModulesEDIT", id = item.ModuleID }) |
-                    @*@Html.ActionLink("Details", "Details", new { controller = "ModulesEDIT", id = item.ModuleID }) |*@
                     @Html.ActionLink("Delete", "Delete", new { controller = "ModulesEDIT", id = item.ModuleID })
                 </td>
             </tr>
@@ -149,8 +148,11 @@
 
 <br />
 <br />
-@Html.ActionLink("Create New", "Create", new { controller = "ModulesEDIT" })
+<div class="clearLeft floatRight">
+    @Html.ActionLink("Create New", "Create", new { controller = "ModulesEdit" }, new { type = "button" })
+</div>
 
-
+<br />
+<br />
 
 

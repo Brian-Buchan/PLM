@@ -64,7 +64,7 @@ namespace PLM.Controllers
             {
                 db.Answers.Add(answer);
                 db.SaveChanges();
-                return RedirectToAction("edit", new { controller = "ModulesEdit", id = answer.ModuleID });
+                return RedirectToAction("Create", new {id = answer.ModuleID });
             }
 
             ViewBag.ModuleID = new SelectList(db.Modules, "ModuleID", "Name");
