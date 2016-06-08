@@ -11,8 +11,14 @@ namespace PLM.Models
     {
         [Key]
         public int ID { get; set; }
+        [Required]
+        [Display(Name = "Module Reported")]
         public int moduleID { get; set; }
+        [Required]
+        [Display(Name = "Report info")]
         public string description { get; set;}
+        [Required]
+        [Display(Name = "User who reported the issue")]
         public int userID { get; set; }
     }
 }

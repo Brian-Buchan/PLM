@@ -1,5 +1,7 @@
 ﻿@model PLM.Module
-
+@{
+    ViewBag.Title = "Create New Module";
+}
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -44,7 +46,7 @@ using (Html.BeginForm())
     <div class="form-horizontal">
         @Html.ValidationSummary(true)
 
-        <div class="form-group">
+        <div class="form-group" title="Name of the module">
             @Html.LabelFor(model => model.Name, new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.Name)
@@ -52,7 +54,7 @@ using (Html.BeginForm())
             </div>
         </div>
 
-        <div class="form-group">
+        <div class="form-group" title="What category does the module belong to?">
             @Html.LabelFor(model => model.Category.CategoryName, new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.DropDownList("CategoryId", String.Empty)
@@ -60,7 +62,7 @@ using (Html.BeginForm())
             </div>
         </div>
 
-        <div class="form-group">
+        <div class="form-group" title="A quick description of the module">
             @Html.LabelFor(model => model.Description, new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.Description)
@@ -69,7 +71,7 @@ using (Html.BeginForm())
         </div>
 
 
-        <div class="form-group">
+        <div class="form-group" title="The number of answers per question to choose from provided.">
             @Html.LabelFor(model => model.DefaultNumAnswers, new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 <input type="range" id="numAnswers" name="DefaultNumAnswers" step="3" min="3" max="15" value="12" oninput="outputUpdate(value, '#numAnswersOutput')" />
@@ -79,7 +81,7 @@ using (Html.BeginForm())
             </div>
         </div>
 
-        <div class="form-group">
+        <div class="form-group" title="The default number of pictures shown to the user when playing the module">
             @Html.LabelFor(model => model.DefaultNumQuestions, new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 <input type="range" id="numQuestions" name="DefaultNumQuestions" step="5" min="5" max="260" value="50" oninput="outputUpdate(value, '#numQuestionsOutput')" />
@@ -89,7 +91,7 @@ using (Html.BeginForm())
             </div>
         </div>
 
-        <div class="form-group">
+        <div class="form-group" title="The number of minutes the user has to complete the module by default.">
             @Html.LabelFor(model => model.DefaultTime, new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 <input type="range" id="time" name="DefaultTime" value="30" min="15" max="135" step="15" oninput="outputUpdate(value, '#timeOutput')" />
@@ -99,7 +101,7 @@ using (Html.BeginForm())
             </div>
         </div>
 
-        <div class="form-group">
+        <div class="form-group" title="Check this if you don't want the module to be open to the public">
             @Html.LabelFor(model => model.isPrivate, new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.isPrivate)

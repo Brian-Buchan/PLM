@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<PLM.Module>
 @using Microsoft.AspNet.Identity
 @{
-    ViewBag.Title = "Profile";
+    ViewBag.Title = "Your Profile";
     var name = User.Identity.GetFirstName() + " " + User.Identity.GetLastName();
     var instution = User.Identity.GetInstution();
     var email = User.Identity.GetUserName();
