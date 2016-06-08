@@ -307,6 +307,7 @@
     <Content Include="Content\Images\coming-soon3.png" />
     <Content Include="Content\Images\coming-soon4.png" />
     <Content Include="Content\Images\contact-bg.png" />
+    <Content Include="Content\Images\Error.bmp" />
     <Content Include="Content\Images\home\activeicon.png" />
     <Content Include="Content\Images\home\client1.png" />
     <Content Include="Content\Images\home\client2.png" />
