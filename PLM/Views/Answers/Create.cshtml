@@ -37,7 +37,7 @@
 <h2>@ViewBag.ModuleName</h2>
 
 <br />
-
+<br/>
 
 @using (Html.BeginForm()) 
 {
@@ -65,8 +65,50 @@
     </div>
 }
 
-<div>
-    @Html.ActionLink("Back to List", "Index", new { controller = "Profile" });
+<br/>
+<br />
+
+<div class="form-group clearRight">
+    <table class="table ">
+        <tr>
+            <th>
+                Answer
+            </th>
+            <th>
+                Picture Count
+            </th>
+            <th></th>
+            <th></th>
+        </tr>
+
+        @foreach (Answer ans in ViewBag.ModuleAnsList)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => ans.AnswerString)
+
+                </td>
+                <td>
+                    @ans.Pictures.Count()
+                </td>
+                <td>
+                    @Html.ActionLink("Add Picture", "Create", new { controller = "Pictures", id = ans.AnswerID })
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { controller = "Answers", id = ans.AnswerID }) |
+                    @Html.ActionLink("Delete", "Delete", new { controller = "Answers", id = ans.AnswerID })
+                </td>
+            </tr>
+        }
+
+    </table>
+</div>
+
+<br/>
+<br/>
+
+<div class="clearLeft floatRight">
+    @Html.ActionLink("Done", "Index", new { controller = "Profile" }, new{ type = "button" })
 </div>
 
 @section Scripts {
