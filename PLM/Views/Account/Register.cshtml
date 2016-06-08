@@ -15,9 +15,30 @@
     //$('btn btn-default').prop('disabled', true);
     //$('input[type="submit"], input[type="button"], button').disable(true);
     //}).change(); 
-    $('#check').change(function () {
-        $('#btncheck').disabled(!('#check').checked)
-    }).change()
+    //$(document).ready(
+    ////$('#check').change(
+    //    function () {
+    //        $('#btncheck').disabled(!('#check').checked)
+    //    });
+    //}).change())
+    //$(document).ready(function () {
+    //    $('#check').change(
+    //    $('input[type="submit"]').removeAttr("disabled")
+    //    //$('#check').attr("disabled", "disabled")
+    //    )
+    //});
+
+    $(document).ready(function () {
+        $('#check').click(function () {
+            if ($(this).attr('checked') == false) {
+                $('#btncheck').attr("disabled", "disabled");
+            } else {
+                $('#btncheck').removeAttr('disabled');
+                $('#check').attr("disabled", "disabled");
+            }
+        });
+    });
+    //$(document).ready(function () { $('#btncheck').disabled(!('#check').checked); });
 </script>
 
 
@@ -70,7 +91,7 @@
         </div>
     <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" class="btn btn-default" id="btncheck" value="Register" @*disabled="disabled"*@ />
+                <input type="submit" class="btn btn-default" id="btncheck" value="Register" disabled="disabled" />
             </div>
         </div>
 
