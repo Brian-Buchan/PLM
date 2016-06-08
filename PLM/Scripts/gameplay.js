@@ -22,6 +22,9 @@ function getCookie(cname) {
     return "";
 }
 
+//Check if the user's guess is right
+//answer: the correct answer, from #StoredAnswer
+//guess: the user's guess (expects string)
 function isGuessRight(answer, guess) {
     if (answer == guess) {
         if (getCookie("muteSound") !== "true") {
@@ -42,7 +45,7 @@ function isGuessRight(answer, guess) {
         return false;
     }
 }
-//Still being worked on
+
 function ButtonClick(guess) {
     pictureAnswer = $("#StoredAnswer").text();
     if(!revealed) {
@@ -55,23 +58,10 @@ function ButtonClick(guess) {
     }
 }
 
-//legacy function
-//function ButtonClick(guess) {
-//    pictureAnswer = document.getElementById("StoredAnswer").innerText;
-
-//    if (isGuessRight(pictureAnswer, guess)) {
-//        Correct();
-//    }
-//    else {
-
-//    }
-//}
-
 function showNext() {
     document.getElementById("nextButton").style.display = "inline";
 }
 
-//Currently working on function
 function reveal() {
     pictureAnswer = $("#StoredAnswer").text();
 
@@ -86,19 +76,6 @@ function reveal() {
     });
     revealed = true;
 }
-
-//Legacy function
-//function reveal() {
-//    pictureAnswer = document.getElementById("StoredAnswer").innerText;
-
-//    $('.btn').each(function () {
-//        if (this.innerText == pictureAnswer) {
-//            this.style.backgroundColor = "green";
-//        } else {
-//            this.style.backgroundColor = "red";
-//        }
-//    });
-//}
 
 function Correct() {
     count = (parseInt(count) + 100);
@@ -117,4 +94,9 @@ function ToggleMute() {
         //otherwise, set muteSound to true
         setCookie("muteSound", "true", 365);
     }
+}
+
+function CheckIn() {
+    $('#Time').val($('#clockdiv').text());
+    return true;
 }

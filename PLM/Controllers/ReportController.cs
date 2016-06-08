@@ -16,9 +16,17 @@ namespace PLM.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: /Report/
+
+        //public ActionResult Index(int? userID)
         public ActionResult Index()
         {
-            return View(db.Reports.ToList());
+            var Reports = from u in db.Reports
+                          select u;
+            //if (userID !=null)
+            //{
+            //    Reports = Reports.Where(m => m.moduleID.Equals(userID));
+            //}
+            return View(Reports.ToList());
         }
 
         // GET: /Report/Details/5

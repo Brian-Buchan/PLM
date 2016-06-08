@@ -30,6 +30,34 @@ $('input[type="range"]').each(function () {
             nq = $('#numQuestions');
             nm = $('#time');
 
+            //The generic formula used to determine the number z opposite the number x, 
+            //given number m is the midpoint between x and z is:
+            //
+            //(m - x) + m = z
+            //
+            //for example, we need to find the number opposite 17, if our range is 2-68.
+            //The midpoint between these two numbers is (2 + 68)/2, or 35.
+            //subtract 17 from 35 to get 18.
+            //then add 35 to 18 to get 53.
+            //thus, 53 is the number directly opposite 17 if 35 is the midpoint, 
+            //as moving 18 steps in either direction on a number line will get you 17 or 53.
+            //
+            //to find the opposite number within any range, where
+            //x = the minimum value of the range,
+            //y = the maximum value of the range,
+            //i = the inputted number,
+            //and z is the output,
+            //the formula is:
+            //(((x + y) / 2) - x) + ((x + y) / 2)
+            //
+            //For these functions, I subtract a value from each value to let me use a zero-based range.
+            //For example, the first range on the setup page, used to set Number of Answers, goes from 3 to 15.
+            //This would be a pain to convert to a range from 0 to 255 (for color values), 
+            //so before I do anything else, I subtract 3 from the given value for that slider, 
+            //so that the range is now from 0 to 12 instead.
+            //I then divide that number by 12 to get a ratio.
+            //Multiplying that ratio by 255 gets me a useable color value proportional to the value of the range.
+
             //Number of Answers range slider
             r1 = ((na.val() - 3) / 12); //gets a ratio (0, 3, 6, 9, or 12 twelfths)
             r1 = (r1 * 255); //convert to a usable value
