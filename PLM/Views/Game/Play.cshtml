@@ -26,6 +26,9 @@
                     + ('0' + dur.minutes()).slice(-2) + ':'
                     + ('0' + dur.seconds()).slice(-2)
                     );
+                if (dur.hours() == 0 & dur.minutes() == 0 & dur.seconds() == 0) {
+                    document.getElementById("GameForm").submit();
+                }
             }, 1000);
         }
     </script>
@@ -67,7 +70,7 @@
             <p>@Model.Attribution</p>
         </div>
         <br />
-        @using (Html.BeginForm("Play", "Game", FormMethod.Post, new { onsubmit = "return CheckIn();" }))
+        @using (Html.BeginForm("Play", "Game", FormMethod.Post, new {id = "GameForm", onsubmit = "return CheckIn();" }))
         {
             <input id="Score" name="Score" hidden="hidden" type="number" value="@Model.Score" />
             <input id="Time" name="Time" hidden="hidden" type="text" value="@Model.Time.ToString()" />
