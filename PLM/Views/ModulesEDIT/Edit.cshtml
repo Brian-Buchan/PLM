@@ -65,7 +65,8 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Description, new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Description)
+                @*@Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "LargeTextBox" } })*@
+                @Html.TextAreaFor(model => model.Description, new { rows="5", cols="25"})
                 @Html.ValidationMessageFor(model => model.Description)
             </div>
         </div>
