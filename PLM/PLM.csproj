@@ -1201,7 +1201,6 @@
     <Content Include="Views\Game\Complete.cshtml" />
     <Content Include="Views\Home\FAQ.cshtml" />
     <Content Include="Views\Game\Setup.cshtml" />
-    <Content Include="Views\ModulesEDIT\AddAnswer.cshtml" />
     <Content Include="Views\Report\Create.cshtml" />
     <Content Include="Views\Report\Delete.cshtml" />
     <Content Include="Views\Report\Details.cshtml" />
@@ -1224,6 +1223,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Content\Images\Profile\" />
+    <Folder Include="Views\Reports\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

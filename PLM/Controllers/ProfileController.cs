@@ -18,20 +18,21 @@ namespace PLM.Controllers
         {
             if (!System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
             {
-                RedirectToAction("index", "home");
+                RedirectToAction("Index", "Home");
                 return View(db.Modules.ToList());
             }
-            else{ 
-            ViewBag.UserID = User.Identity.Name;
-            var name = User.Identity.GetUserName();
-            ApplicationUser currentUser = (ApplicationUser)db.Users.Single(x => x.UserName == name);
-            var modules = db.Modules.ToList();
-            modules = (from m in modules
-                           where m.User == currentUser
-                           select m).ToList();
+            else
+            { 
+                ViewBag.UserID = User.Identity.Name;
+                var name = User.Identity.GetUserName();
+                ApplicationUser currentUser = (ApplicationUser)db.Users.Single(x => x.UserName == name);
+                var modules = db.Modules.ToList();
+                modules = (from m in modules
+                               where m.User == currentUser
+                               select m).ToList();
 
-            return View(modules);
-        }
+                return View(modules);
+            }
         }
 
         [HttpPost]
