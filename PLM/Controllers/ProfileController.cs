@@ -23,6 +23,7 @@ namespace PLM.Controllers
             }
             else
             { 
+               
                 ViewBag.UserID = User.Identity.Name;
                 var name = User.Identity.GetUserName();
                 ApplicationUser currentUser = (ApplicationUser)db.Users.Single(x => x.UserName == name);
@@ -30,7 +31,7 @@ namespace PLM.Controllers
                 modules = (from m in modules
                                where m.User == currentUser
                                select m).ToList();
-
+                ViewBag.location = currentUser.ProfilePicture;
                 return View(modules);
             }
         }
