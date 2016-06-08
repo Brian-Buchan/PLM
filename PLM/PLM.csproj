@@ -185,6 +185,10 @@
     <Compile Include="Migrations\201606071832334_Name-Normalization.Designer.cs">
       <DependentUpon>201606071832334_Name-Normalization.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201606081520502_g.cs" />
+    <Compile Include="Migrations\201606081520502_g.Designer.cs">
+      <DependentUpon>201606081520502_g.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\ModuleViewModel.cs" />
     <Compile Include="Controllers\PicturesController.cs" />
     <Compile Include="Controllers\ProfileController.cs" />
@@ -1201,6 +1205,8 @@
     <Content Include="Views\Report\Details.cshtml" />
     <Content Include="Views\Report\Edit.cshtml" />
     <Content Include="Views\Report\Index.cshtml" />
+    <Content Include="Views\Home\Admin.cshtml" />
+    <Content Include="Views\Home\TOU.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -1235,6 +1241,9 @@
     <EmbeddedResource Include="Migrations\201606071832334_Name-Normalization.resx">
       <DependentUpon>201606071832334_Name-Normalization.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201606081520502_g.resx">
+      <DependentUpon>201606081520502_g.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
@@ -1250,7 +1259,7 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>True</UseIIS>
+          <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>43001</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
