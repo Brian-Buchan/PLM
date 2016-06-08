@@ -75,7 +75,7 @@ namespace PLM.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include="ModuleID,Name,CategoryId,Description,DefaultNumAnswers,DefaultTime,DefaultNumPictures,isPrivate")] Module module)
+        public ActionResult Create([Bind(Include="ModuleID,Name,CategoryId,Description,DefaultNumAnswers,DefaultTime,DefaultNumQuestions,isPrivate")] Module module)
         {
             if (ModelState.IsValid)
             {
@@ -118,7 +118,7 @@ namespace PLM.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ModuleID,Name,CategoryId,Description,DefaultNumAnswers,DefaultTime,DefaultNumPictures,isPrivate")] Module module)
+        public ActionResult Edit([Bind(Include = "ModuleID,Name,CategoryId,Description,DefaultNumAnswers,DefaultTime,DefaultNumQuestions,isPrivate")] Module module)
         {
             if (ModelState.IsValid)
             {
@@ -127,20 +127,6 @@ namespace PLM.Controllers
                 return RedirectToAction("Index", new { controller = "Profile" });
             }
             PopulateCategoryDropDownList(module.CategoryId);
-            return View(module);
-        }
-
-        public ActionResult AddAnswer(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Module module = db.Modules.Find(id);
-            if (module == null)
-            {
-                return HttpNotFound();
-            }
             return View(module);
         }
 

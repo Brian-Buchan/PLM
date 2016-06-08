@@ -23,8 +23,8 @@ namespace PLM
         [Display(Name = "Default Time")]
         public int DefaultTime { get; set; }
 
-        [Display(Name = "Default Number of Pictures")]
-        public int DefaultNumPictures { get; set; }
+        [Display(Name = "Default Number of Questions")]
+        public int DefaultNumQuestions { get; set; }
         public virtual List<Answer> Answers { get; set; }
         public virtual ApplicationUser User { get; set; }
         public bool isPrivate { get; set; }

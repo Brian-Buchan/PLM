@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="">
-    <title>Create Answer</title>
+    <title>Add Answer</title>
     <link href="~/Content/bootstrap.min.css" rel="stylesheet">
     <link href="~/Content/font-awesome.min.css" rel="stylesheet">
     <link href="~/Content/animate.min.css" rel="stylesheet">
@@ -16,25 +16,7 @@
     <link rel="shortcut icon" href="~/Content/images/ico/favicon.ico">
 </head><!--/head-->
 
-@*<header id="header">
-    <div class="navbar navbar-inverse" role="banner">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-
-                <a class="navbar-brand" href="@Url.Action("Index", "Modules")">
-                    <h1><img src="http://perceptuallearning.azurewebsites.net/Content/images/logo.png" alt="logo"></h1>
-                </a>
-            </div>
-        </div>
-    </div>
-</header>*@
-<!--/#header-->
+<br/>
 
 <section id="page-breadcrumb">
     <div class="vertical-center sun">
@@ -42,7 +24,7 @@
             <div class="row">
                 <div class="action">
                     <div class="col-sm-12">
-                        <h1 class="title">Create Answer</h1>
+                        <h1 class="title">Add Answer</h1>
                     </div>
                 </div>
             </div>
@@ -51,7 +33,9 @@
 </section>
 
 <br />
-<br />
+
+<h2>@ViewBag.ModuleName</h2>
+
 <br />
 
 
@@ -67,6 +51,7 @@
             <div class="col-md-10">
                 @Html.EditorFor(model => model.AnswerString)
                 @Html.ValidationMessageFor(model => model.AnswerString)
+                <input type="submit" name="submit" value="Add Answer" class="btn btn-success" />
             </div>
         </div>
 
@@ -75,17 +60,6 @@
             <div class="col-md-10">
                 @Html.TextBoxFor(model => model.ModuleID, new { @Value = ViewBag.ModuleID })
                 @Html.ValidationMessageFor(model => model.ModuleID)
-            </div>
-        </div>
-
-        <br/>
-        <br/>
-
-        <div class="form-group">
-            <div class="floatRight">
-                <div>
-                    <input type="submit" name="submit" value="Create" class="btn btn-success" />
-            </div>
             </div>
         </div>
     </div>

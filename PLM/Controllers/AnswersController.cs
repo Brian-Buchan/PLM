@@ -40,6 +40,15 @@ namespace PLM.Controllers
         public ActionResult Create(int ID)
         {
             ViewBag.ModuleID = ID;
+
+            var modules = db.Modules.ToList();
+
+            ViewBag.ModuleName = modules.Find(x => x.ModuleID == ID).Name;
+
+            var answers = db.Answers.ToList();
+            ViewBag.ModuleAnsList = (from a in answers
+                                     where a.ModuleID == ID
+                                     select a).ToList();
             //ViewBag.ModuleID = new SelectList(db.Modules, "ModuleID", "Name");
             return View();
         }

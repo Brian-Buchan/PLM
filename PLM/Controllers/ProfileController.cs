@@ -9,7 +9,7 @@ using Microsoft.AspNet.Identity;
 
 namespace PLM.Controllers
 {
-    //[Authorize]
+    [Authorize]
     public class ProfileController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();

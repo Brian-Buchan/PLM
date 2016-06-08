@@ -101,7 +101,7 @@
                     @Html.DisplayFor(modelItem => item.isPrivate)
                 </td>
                 <td>
-                    @Html.ActionLink("Add Answer", "AddAnswer", new { controller = "ModulesEDIT", id = item.ModuleID })
+                    @Html.ActionLink("Add Answer", "Create", new { controller = "Answers", id = item.ModuleID })
                 </td>
                 <td>
                     @Html.ActionLink("Edit", "Edit", new { controller = "ModulesEDIT", id = item.ModuleID }) |

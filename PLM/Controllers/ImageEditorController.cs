@@ -18,8 +18,11 @@ namespace PLM.Controllers
         }
 
         [HttpPost]
-        public ActionResult ImageEditor(string imageBase64)
+        [ActionName("ImageEditor")]
+        public ActionResult ImageEditorPOST()
         {
+            string imageBase64 = Request.Form.Get("imgData");
+            imageBase64 = imageBase64.Substring(imageBase64.LastIndexOf(',') + 1);
             byte[] img = Convert.FromBase64String(imageBase64);
             using (MemoryStream ms = new MemoryStream(img,0,img.Length))
             {
