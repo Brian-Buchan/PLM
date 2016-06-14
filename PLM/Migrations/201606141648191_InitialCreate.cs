@@ -204,7 +204,7 @@ namespace PLM.Migrations
                         ID = c.Int(nullable: false, identity: true),
                         moduleID = c.Int(nullable: false),
                         description = c.String(nullable: false),
-                        userID = c.Int(nullable: false),
+                        userID = c.String(nullable: false),
                     })
                 .PrimaryKey(t => t.ID);
             
