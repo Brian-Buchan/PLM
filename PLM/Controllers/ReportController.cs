@@ -16,7 +16,19 @@ namespace PLM.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: /Report/
-
+        public ActionResult YourReports()
+        {
+            var name = User.Identity.GetUserName();
+            ApplicationUser currentUser = (ApplicationUser)db.Users.Single(x => x.UserName == name);
+            var Reports = from u in db.Reports
+                          where u.userID == currentUser.Id
+                          select u;
+            //if (userID !=null)
+            //{
+            //    Reports = Reports.Where(m => m.moduleID.Equals(userID));
+            //}
+            return View(Reports.ToList());
+        }
         //public ActionResult Index(int? userID)
         public ActionResult Index()
         {
@@ -28,7 +40,16 @@ namespace PLM.Controllers
             //}
             return View(Reports.ToList());
         }
-
+        public ActionResult YourModulesReported()
+        {
+            var Reports = from u in db.Reports
+                          select u;
+            //if (userID !=null)
+            //{
+            //    Reports = Reports.Where(m => m.moduleID.Equals(userID));
+            //}
+            return View(Reports.ToList());
+        }
         // GET: /Report/Details/5
         public ActionResult Details(int? id)
         {

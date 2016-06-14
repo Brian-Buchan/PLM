@@ -1217,6 +1217,7 @@
     <Content Include="Views\ImageEditor\ImageEditor.cshtml" />
     <Content Include="Views\Report\Create.cshtml" />
     <Content Include="Views\Shared\Info.cshtml" />
+    <Content Include="Views\Report\YourReports.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
