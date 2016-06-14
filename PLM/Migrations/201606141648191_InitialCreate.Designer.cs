@@ -13,7 +13,7 @@ namespace PLM.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "201606081947456_InitialCreate"; }
+            get { return "201606141648191_InitialCreate"; }
         }
         
         string IMigrationMetadata.Source

@@ -195,18 +195,11 @@
     <Compile Include="Controllers\ModulesController.cs" />
     <Compile Include="Controllers\ModulesEDITController.cs" />
     <Compile Include="Controllers\ReportController.cs" />
-    <Compile Include="Migrations\201606081947456_InitialCreate.cs" />
-    <Compile Include="Migrations\201606081947456_InitialCreate.Designer.cs">
-      <DependentUpon>201606081947456_InitialCreate.cs</DependentUpon>
+    <Compile Include="Migrations\201606141648191_InitialCreate.cs" />
+    <Compile Include="Migrations\201606141648191_InitialCreate.Designer.cs">
+      <DependentUpon>201606141648191_InitialCreate.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201606071832334_Name-Normalization.cs" />
-    <Compile Include="Migrations\201606071832334_Name-Normalization.Designer.cs">
-      <DependentUpon>201606071832334_Name-Normalization.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201606081520502_g.cs" />
-    <Compile Include="Migrations\201606081520502_g.Designer.cs">
-      <DependentUpon>201606081520502_g.cs</DependentUpon>
-    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\ModuleViewModel.cs" />
     <Compile Include="Controllers\PicturesController.cs" />
     <Compile Include="Controllers\ProfileController.cs" />
@@ -1222,11 +1215,6 @@
     <Content Include="Views\IdentityRoles\Edit.cshtml" />
     <Content Include="Views\IdentityRoles\Index.cshtml" />
     <Content Include="Views\ImageEditor\ImageEditor.cshtml" />
-    <Content Include="Views\Reports\Create.cshtml" />
-    <Content Include="Views\Reports\Delete.cshtml" />
-    <Content Include="Views\Reports\Details.cshtml" />
-    <Content Include="Views\Reports\Edit.cshtml" />
-    <Content Include="Views\Reports\Index.cshtml" />
     <Content Include="Views\Report\Create.cshtml" />
     <Content Include="Views\Shared\Info.cshtml" />
   </ItemGroup>
@@ -1245,11 +1233,8 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201606081947456_InitialCreate.resx">
-      <DependentUpon>201606081947456_InitialCreate.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201606141619174_123.resx">
-      <DependentUpon>201606141619174_123.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201606141648191_InitialCreate.resx">
+      <DependentUpon>201606141648191_InitialCreate.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
