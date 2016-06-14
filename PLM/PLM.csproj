@@ -1218,6 +1218,7 @@
     <Content Include="Views\Report\Create.cshtml" />
     <Content Include="Views\Shared\Info.cshtml" />
     <Content Include="Views\Report\YourReports.cshtml" />
+    <Content Include="Views\Report\YourModulesReported.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
