@@ -18,8 +18,12 @@
                 type: 'POST',
                 url: '/ImageEditor/ImageEditor',
                 data: { imgData: data },
-            }).success(function (response) {
-                alert('Image saved successfully!');
+                success: function (response) {
+                    alert('Image saved successfully!');
+                },
+                //error: function (xhr, status, text) {
+                //    alert(text);
+                //}
             });
         }
     });

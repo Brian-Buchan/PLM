@@ -9,6 +9,7 @@ using System.Web.Mvc;
 using PLM;
 using Microsoft.AspNet.Identity;
 using System.Data.Entity.Infrastructure;
+using PLM.CutomAttributes;
 
 namespace PLM.Controllers
 {
@@ -17,6 +18,7 @@ namespace PLM.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: /ModulesEDIT/
+        [AuthorizeOrRedirectAttribute(Roles = "Admin")]
         public ActionResult Index(string sortOrder, string searchString, string userSearchString)
         {
             ViewBag.NameSortParam = String.IsNullOrEmpty(sortOrder) ? "name_asc" : "";

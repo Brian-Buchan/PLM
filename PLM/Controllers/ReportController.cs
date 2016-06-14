@@ -9,6 +9,7 @@ using System.Web.Mvc;
 using PLM.Models;
 using PLM;
 using Microsoft.AspNet.Identity;
+using PLM.CutomAttributes;
 namespace PLM.Controllers
 {
     public class ReportController : Controller
@@ -30,6 +31,7 @@ namespace PLM.Controllers
             return View(Reports.ToList());
         }
         //public ActionResult Index(int? userID)
+        [AuthorizeOrRedirectAttribute(Roles = "Admin")]
         public ActionResult Index()
         {
             var Reports = from u in db.Reports
