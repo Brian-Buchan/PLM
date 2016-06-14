@@ -24,7 +24,7 @@ namespace PLM.Models
             var myMessage = new SendGridMessage();
             myMessage.AddTo(message.Destination);
             myMessage.From = new System.Net.Mail.MailAddress(
-                                "Joe@contoso.com", "Joe S.");
+                                "radtke18@mail.nmc.edu", "Mark and Tom");
             myMessage.Subject = message.Subject;
             myMessage.Text = message.Body;
             myMessage.Html = message.Body;
