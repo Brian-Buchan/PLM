@@ -105,8 +105,14 @@ namespace PLM.Controllers
             ((UserGameSession)Session["userGameSession"]).numAnswers = ugs.numAnswers;
             ((UserGameSession)Session["userGameSession"]).numQuestions = ugs.numQuestions;
             ((UserGameSession)Session["userGameSession"]).time = ugs.time;
-            //((UserGameSession)Session["userGameSession"]).timeLeft = new TimeSpan(timeHours, timeMinutes, 0);
-            ((UserGameSession)Session["userGameSession"]).timeLeft = new TimeSpan(0, 0, 30);
+            ((UserGameSession)Session["userGameSession"]).timeLeft = new TimeSpan(timeHours, timeMinutes, 0);
+            
+            //This line is for testing the "Complete" action and the timer functionality.
+            //Comment out the line of code just above it, then uncomment this code to enter "testing mode",
+            //where the timer will always start at 30 seconds.
+
+            //((UserGameSession)Session["userGameSession"]).timeLeft = new TimeSpan(0, 0, 30);
+
             return RedirectToAction("Play");
         }
 

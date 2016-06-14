@@ -9,22 +9,23 @@ namespace PLM.Migrations
     {
         public Configuration()
         {
-            AutomaticMigrationsEnabled = true;
+            AutomaticMigrationsEnabled = false;
         }
 
         protected override void Seed(PLM.ApplicationDbContext context)
         {
             //  This method will be called after migrating to the latest version.
 
-              //You can use the DbSet<T>.AddOrUpdate() helper extension method 
-              //to avoid creating duplicate seed data. E.g.
-            
-                //context.Modules.AddOrUpdate(
-                //  m => m.Name,
-                //  new Module { Name = "Games", CategoryId = "Games", ModuleID = 1 },
-                //  new Module { Name = "Food", CategoryId = "Food", ModuleID = 2 },
-                //  new Module { Name = "Shows", CategoryId = "Shows", ModuleID = 3 }
-                //);
+            //  You can use the DbSet<T>.AddOrUpdate() helper extension method 
+            //  to avoid creating duplicate seed data. E.g.
+            //
+            //    context.People.AddOrUpdate(
+            //      p => p.FullName,
+            //      new Person { FullName = "Andrew Peters" },
+            //      new Person { FullName = "Brice Lambson" },
+            //      new Person { FullName = "Rowan Miller" }
+            //    );
+            //
         }
     }
 }
