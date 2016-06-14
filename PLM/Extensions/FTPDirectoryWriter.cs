@@ -11,9 +11,9 @@ namespace PLM.Extensions
         public static bool FTPNewDirectory(string directory)
         {
 
-            WebRequest request = WebRequest.Create("waws-prod-hk1-017.ftp.azurewebsites.windows.net" + directory);
+            WebRequest request = WebRequest.Create("plm.nmc.edu" + directory);
             request.Method = WebRequestMethods.Ftp.MakeDirectory;
-            request.Credentials = new NetworkCredential("PLMBeta\\$PLMBeta", "jEdRCP0G3DxglPTxGeTPTHcXuschgCEl0awntxe1RlPZ5iqvJEpPnotM0PtD");
+            request.Credentials = new NetworkCredential("PLMAdmin", "Password1");
             using (var resp = (FtpWebResponse)request.GetResponse())
             {
                 if (resp.StatusCode == FtpStatusCode.CommandOK)
@@ -29,10 +29,10 @@ namespace PLM.Extensions
         }
         public static bool FTPDelete(string directory)
         {
-            FtpWebRequest request = (FtpWebRequest)WebRequest.Create("waws-prod-hk1-017.ftp.azurewebsites.windows.net/site/wwwroot" + directory);
+            FtpWebRequest request = (FtpWebRequest)WebRequest.Create("plm.nmc.edu" + directory);
 
             //If you need to use network credentials
-            request.Credentials = new NetworkCredential("PLMBeta\\$PLMBeta", "jEdRCP0G3DxglPTxGeTPTHcXuschgCEl0awntxe1RlPZ5iqvJEpPnotM0PtD");
+            request.Credentials = new NetworkCredential("PLMAdmin", "Password1");
             //additionally, if you want to use the current user's network credentials, just use:
             //System.Net.CredentialCache.DefaultNetworkCredentials
 
