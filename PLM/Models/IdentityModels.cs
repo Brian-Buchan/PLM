@@ -56,7 +56,7 @@ namespace PLM
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public ApplicationDbContext()
-            : base("DefaultConnection", throwIfV1Schema: false)
+            : base("NMCSQLSERVER", throwIfV1Schema: false)
         {
         }
 

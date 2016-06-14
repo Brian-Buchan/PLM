@@ -179,18 +179,11 @@
     <Compile Include="Controllers\ModulesController.cs" />
     <Compile Include="Controllers\ModulesEDITController.cs" />
     <Compile Include="Controllers\ReportController.cs" />
-    <Compile Include="Migrations\201606071719110_initial.cs" />
-    <Compile Include="Migrations\201606071719110_initial.Designer.cs">
-      <DependentUpon>201606071719110_initial.cs</DependentUpon>
+    <Compile Include="Migrations\201606081947456_InitialCreate.cs" />
+    <Compile Include="Migrations\201606081947456_InitialCreate.Designer.cs">
+      <DependentUpon>201606081947456_InitialCreate.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201606071832334_Name-Normalization.cs" />
-    <Compile Include="Migrations\201606071832334_Name-Normalization.Designer.cs">
-      <DependentUpon>201606071832334_Name-Normalization.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201606081520502_g.cs" />
-    <Compile Include="Migrations\201606081520502_g.Designer.cs">
-      <DependentUpon>201606081520502_g.cs</DependentUpon>
-    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\ModuleViewModel.cs" />
     <Compile Include="Controllers\PicturesController.cs" />
     <Compile Include="Controllers\ProfileController.cs" />
@@ -199,23 +192,6 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201604131536493_intialCreate.cs" />
-    <Compile Include="Migrations\201604131536493_intialCreate.Designer.cs">
-      <DependentUpon>201604131536493_intialCreate.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201604181456498_UserModelUpdate.cs" />
-    <Compile Include="Migrations\201604181456498_UserModelUpdate.Designer.cs">
-      <DependentUpon>201604181456498_UserModelUpdate.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201605171735403_ModelUpdate.cs" />
-    <Compile Include="Migrations\201605171735403_ModelUpdate.Designer.cs">
-      <DependentUpon>201605171735403_ModelUpdate.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201605251851268_Attribution.cs" />
-    <Compile Include="Migrations\201605251851268_Attribution.Designer.cs">
-      <DependentUpon>201605251851268_Attribution.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Answer.cs" />
     <Compile Include="Extensions\Extensions.cs" />
@@ -1148,7 +1124,9 @@
     <Content Include="Scripts\w.gif" />
     <Content Include="Scripts\wow.min.js" />
     <Content Include="Scripts\_references.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -1241,26 +1219,8 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201604131536493_intialCreate.resx">
-      <DependentUpon>201604131536493_intialCreate.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201604181456498_UserModelUpdate.resx">
-      <DependentUpon>201604181456498_UserModelUpdate.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201605171735403_ModelUpdate.resx">
-      <DependentUpon>201605171735403_ModelUpdate.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201605251851268_Attribution.resx">
-      <DependentUpon>201605251851268_Attribution.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201606071719110_initial.resx">
-      <DependentUpon>201606071719110_initial.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201606071832334_Name-Normalization.resx">
-      <DependentUpon>201606071832334_Name-Normalization.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201606081520502_g.resx">
-      <DependentUpon>201606081520502_g.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201606081947456_InitialCreate.resx">
+      <DependentUpon>201606081947456_InitialCreate.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
