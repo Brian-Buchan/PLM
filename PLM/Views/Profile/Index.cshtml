@@ -1,57 +1,86 @@
 ﻿@model IEnumerable<PLM.Module>
-@using Microsoft.AspNet.Identity
-@{
-    ViewBag.Title = "Your Profile";
-    var name = User.Identity.GetFirstName() + " " + User.Identity.GetLastName();
-    var instution = User.Identity.GetInstution();
-    var email = User.Identity.GetUserName();
-    var location = ViewBag.location;
+    @using Microsoft.AspNet.Identity
+    @{
+        ViewBag.Title = "Your Profile";
+        var name = User.Identity.GetFirstName() + " " + User.Identity.GetLastName();
+        var instution = User.Identity.GetInstution();
+        var email = User.Identity.GetUserName();
+        var location = ViewBag.location;
 
-}
+    }
 
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <title>Modules</title>
-    <link href="~/Content/bootstrap.min.css" rel="stylesheet">
-    <link href="~/Content/font-awesome.min.css" rel="stylesheet">
-    <link href="~/Content/animate.min.css" rel="stylesheet">
-    <link href="~/Conetnt/lightbox.css" rel="stylesheet">
-    <link href="~/Content/main.css" rel="stylesheet">
-    <link href="~/Content/responsive.css" rel="stylesheet">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="">
+        <meta name="author" content="">
+        <title>Modules</title>
+        <link href="~/Content/bootstrap.min.css" rel="stylesheet">
+        <link href="~/Content/font-awesome.min.css" rel="stylesheet">
+        <link href="~/Content/animate.min.css" rel="stylesheet">
+        <link href="~/Conetnt/lightbox.css" rel="stylesheet">
+        <link href="~/Content/main.css" rel="stylesheet">
+        <link href="~/Content/responsive.css" rel="stylesheet">
 
-</head><!--/head-->
+    </head><!--/head-->
 
-<section id="page-breadcrumb">
-    <div class="vertical-center sun">
-        <div class="container">
-            <div class="row">
-                <div class="action">
-                    <div class="col-sm-12">
-                        <h1 class="title">Your Profile</h1>
+    <section id="page-breadcrumb">
+        <div class="vertical-center sun">
+            <div class="container">
+                <div class="row">
+                    <div class="action">
+                        <div class="col-sm-12">
+                            <h1 class="title">Your Profile</h1>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
+    </section>
+    <div st class="jumbotron" id="uploadPicture" style="padding-bottom:15px; padding-top:15px">
+        <h2 class="header" style="margin-top:10px">Upload a profile picture</h2>
+        <form action="~/Profile/CreateProfile" method="post" enctype="multipart/form-data" class="dropzone" id="dropzoneForm" style="width: 50px; background: none; border: none;">
+            @Html.AntiForgeryToken()
+            <div class="fallback">
+                <input name="file" type="file" multiple />
+                <input type="submit" value="Upload" />
+            </div>
+        </form>
     </div>
-</section>
-<div st class="jumbotron" id="uploadPicture"style="padding-bottom:15px; padding-top:15px">
-    <h2 class="header" style="margin-top:10px">Upload a profile picture</h2>
-    <form action="~/Profile/CreateProfile" method="post" enctype="multipart/form-data" class="dropzone" id="dropzoneForm" style="width: 50px; background: none; border: none;">
-        @Html.AntiForgeryToken()
-        <div class="fallback">
-            <input name="file" type="file" multiple />
-            <input type="submit" value="Upload" />
+    <div style="width: 100%;">
+        <div class="panel-item" style="float: left; width: 30%;">
+            <img onerror="this.src='/Content/images/Error.bmp';" class="floatLeft" src="@location" alt="Profile Picture" style="width: 150px;" />
         </div>
-    </form>
-</div>
-<div style="width: 100%;">
-    <div class="panel-item" style="float: left; width: 30%;">
-        <img onerror="this.src='~/Content/images/home/ThinkGraphicColor.jpg';" class="floatLeft" src="@location" alt="Profile Picture" id="ProfilePicture" style="width: 150px;" />
+        <div class="panel-item" style="float: left; width: 35%;">
+            <article>
+                <h3 class="accordianHeading">Name:</h3>
+                <p>@name</p>
+
+                <h3 class="accordianHeading">Email:</h3>
+                <p>@email</p>
+
+                <h3 class="accordianHeading">Institution:</h3>
+                <p>@instution</p>
+
+                @*@Html.ActionLink("Reset your password", "Manage", "Account", routeValues: null, htmlAttributes: new { title = "Manage" })*@
+                <br /><br />
+            </article>
+        </div>
+        <div class="panel-item" style="float: left; width: 35%;">
+            <h2 class="accordianHeading">Settings</h2>
+            <ul>
+                <li class="items-list">@Html.ActionLink("Change your password", "Manage", "Account", routeValues: null, htmlAttributes: new { title = "Manage" })</li>
+                <li class="items-list">@Html.ActionLink("See Reported Issues with your modules", "Index", "Report", routeValues: null, htmlAttributes: new { title = "Manage" })</li>
+            </ul>
+
+        </div>
+        <br style="clear: left;" />
     </div>
-    <div class="panel-item" style="float: left; width: 35%;">
+    <hr class="line-through" />
+
+
+    @*<img onerror="this.src='/Content/images/Error.bmp';" class="floatLeft" src="@location" alt="Profile Picture" height="200" width="200" />
+
         <article>
             <h3 class="accordianHeading">Name:</h3>
             <p>@name</p>
@@ -62,97 +91,67 @@
             <h3 class="accordianHeading">Institution:</h3>
             <p>@instution</p>
 
-            @*@Html.ActionLink("Reset your password", "Manage", "Account", routeValues: null, htmlAttributes: new { title = "Manage" })*@
+            @Html.ActionLink("Reset your password", "Manage", "Account", routeValues: null, htmlAttributes: new { title = "Manage" })
             <br /><br />
-        </article>
-    </div>
-    <div class="panel-item" style="float: left; width: 35%;">
-        <h2 class="header">Settings</h2>
-        <ul>
-            <li class="items-list">@Html.ActionLink("Change your password", "Manage", "Account", routeValues: null, htmlAttributes: new { title = "Manage" })</li>
-            <li class="items-list">@Html.ActionLink("See Reported Issues with your modules", "Index", "Report", routeValues: null, htmlAttributes: new { title = "Manage" })</li>
-        </ul>
-       
-        
-    </div>
-    <br style="clear: left;" />
-</div>
-<hr class="line-through"/>
+        </article>*@
 
 
-@*<img onerror="this.src='~/Content/images/home/ThinkGraphicColor.jpg';" class="floatLeft" src="@location" alt="Profile Picture" height="200" width="200" />
-
-<article>
-    <h3 class="accordianHeading">Name:</h3>
-    <p>@name</p>
-
-    <h3 class="accordianHeading">Email:</h3>
-    <p>@email</p>
-
-    <h3 class="accordianHeading">Institution:</h3>
-    <p>@instution</p>
-
-    @Html.ActionLink("Reset your password", "Manage", "Account", routeValues: null, htmlAttributes: new { title = "Manage" })
-    <br /><br />
-</article>*@
-
-
-<div>
-    <table class="table">
-        <thead class="table-header">Courses Created:</thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CategoryId)
-            </th>
-            <th>
-                Answer Count
-            </th>
-            <th>
-                Private
-            </th>
-            <th></th>
-            <th></th>
-        </tr>
-
-        @foreach (var item in Model)
-        { 
+    <div>
+        <table class="table">
+            <thead class="table-header">Courses Created:</thead>
             <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Category.CategoryName)
-                </td>
-                <td>
-                    @item.Answers.Count()
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.isPrivate)
-                </td>
-                <td>
-                    @Html.ActionLink("Add Answer", "Create", new { controller = "Answers", id = item.ModuleID })
-                </td>
-                <td>
-                    @Html.ActionLink("Edit", "Edit", new { controller = "ModulesEDIT", id = item.ModuleID }) |
-                    @Html.ActionLink("Delete", "Delete", new { controller = "ModulesEDIT", id = item.ModuleID })
-                </td>
+                <th>
+                    @Html.DisplayNameFor(model => model.Name)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.CategoryId)
+                </th>
+                <th>
+                    Answer Count
+                </th>
+                <th>
+                    Private
+                </th>
+                <th></th>
+                <th></th>
             </tr>
-        }
 
-    </table>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Category.CategoryName)
+                    </td>
+                    <td>
+                        @item.Answers.Count()
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.isPrivate)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Add Answer", "Create", new { controller = "Answers", id = item.ModuleID })
+                    </td>
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", new { controller = "ModulesEDIT", id = item.ModuleID }) |
+                        @Html.ActionLink("Delete", "Delete", new { controller = "ModulesEDIT", id = item.ModuleID })
+                    </td>
+                </tr>
+            }
 
-</div>
+        </table>
 
-<br />
-<br />
-<div class="clearLeft floatRight">
-    @Html.ActionLink("Create New", "Create", new { controller = "ModulesEdit" }, new { type = "button" })
-</div>
+    </div>
 
-<br />
-<br />
+    <br />
+    <br />
+    <div class="clearLeft floatRight">
+        @Html.ActionLink("Create New", "Create", new { controller = "ModulesEdit" }, new { type = "button" })
+    </div>
+
+    <br />
+    <br />
 
 
