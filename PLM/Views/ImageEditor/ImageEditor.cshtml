@@ -21,9 +21,10 @@
                 success: function (response) {
                     alert('Image saved successfully!');
                 },
-                //error: function (xhr, status, text) {
-                //    alert(text);
-                //}
+                error: function (xhr, status, text) {
+                    alert(text);
+                    myPixie.close();
+                }
             });
         }
     });
