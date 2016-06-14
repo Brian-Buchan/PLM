@@ -17,20 +17,20 @@
     <link href="~/Content/test.css" rel="stylesheet">
     <script type="text/javascript" src="~/Scripts/moment.js"></script>
     <script type="text/javascript">
-        function startCountdown(time) {
-            var dur = moment.duration(time);
-            setInterval(function() {
-                dur = dur.subtract(1,'s');
-                $('#clockdiv').text(
-                    ('0' + dur.hours()).slice(-2) + ':'
-                    + ('0' + dur.minutes()).slice(-2) + ':'
-                    + ('0' + dur.seconds()).slice(-2)
-                    );
-                if (dur.hours() == 0 & dur.minutes() == 0 & dur.seconds() == 0) {
-                    document.getElementById("GameForm").submit();
-                }
-            }, 1000);
-        }
+        //function startCountdown(time) {
+        //    var dur = moment.duration(time);
+        //    setInterval(function() {
+        //        dur = dur.subtract(1,'s');
+        //        $('#clockdiv').text(
+        //            ('0' + dur.hours()).slice(-2) + ':'
+        //            + ('0' + dur.minutes()).slice(-2) + ':'
+        //            + ('0' + dur.seconds()).slice(-2)
+        //            );
+        //        if (dur.hours() == 0 & dur.minutes() == 0 & dur.seconds() == 0) {
+        //            document.getElementById("GameForm").submit();
+        //        }
+        //    }, 1000);
+        //}
     </script>
 
 </head>

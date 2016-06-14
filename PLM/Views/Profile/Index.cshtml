@@ -1,4 +1,4 @@
-﻿@model IEnumerable<plm.module>
+﻿@model IEnumerable<PLM.Module>
     @using Microsoft.AspNet.Identity
     @{
         ViewBag.Title = "Your Profile";
@@ -67,7 +67,7 @@
             </article>
         </div>
         <div class="panel-item" style="float: left; width: 35%;">
-            <h2 class="header">Settings</h2>
+            <h2 class="accordianHeading">Settings</h2>
             <ul>
                 <li class="items-list">@Html.ActionLink("Change your password", "Manage", "Account", routeValues: null, htmlAttributes: new { title = "Manage" })</li>
                 <li class="items-list">@Html.ActionLink("See Reported Issues with your modules", "Index", "Report", routeValues: null, htmlAttributes: new { title = "Manage" })</li>
