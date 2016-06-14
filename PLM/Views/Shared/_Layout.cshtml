@@ -24,10 +24,10 @@
                 <ul class="nav navbar-nav">
                     <li><a href="@Url.Action("Index", "Home")"><img onerror="this.src='/Content/images/Error.bmp';" src="~/Content/Images/logo.png" class="navbar-brand" id="navImg" alt="Our Logo" /></a></li>
                     @*<li>@Html.ActionLink("Home", "Index", "Home")</li>*@
-                    @if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
+                    @*@if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
                     {
                     <li>@Html.ActionLink("Profile", "Index", "Profile")</li>
-                    }   
+                    }*@   
                     <li>@Html.ActionLink("Modules", "Index", "Modules")</li>
                     <li>@Html.ActionLink("About Us", "AboutUs", "Home")</li>
                     <li>@Html.ActionLink("Contact Us", "ContactUs", "Home")</li>

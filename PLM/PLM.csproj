@@ -394,7 +394,6 @@
     <Content Include="Content\Images\services\2.png" />
     <Content Include="Content\Images\services\3.png" />
     <Content Include="Content\Images\services\4.png" />
-    <Content Include="Content\jquery.countdown.css" />
     <Content Include="Content\lightbox.css" />
     <Content Include="Content\main.css" />
     <Content Include="Content\min\basic.min.css" />
@@ -975,7 +974,6 @@
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Content\bootstrap.min.css.map" />
     <Content Include="Content\bootstrap.css.map" />
-    <Content Include="Scripts\coundown-timer.js" />
     <Content Include="Scripts\gmaps.js" />
     <Content Include="Scripts\holder.js" />
     <Content Include="Scripts\html5shiv.js" />
@@ -1121,7 +1119,6 @@
     <None Include="Scripts\jquery-2.2.3.intellisense.js" />
     <Content Include="Scripts\jquery-2.2.3.js" />
     <Content Include="Scripts\jquery-2.2.3.min.js" />
-    <Content Include="Scripts\jquery.countdown.min.js" />
     <Content Include="Scripts\jquery.countTo.js" />
     <Content Include="Scripts\jquery.fitvids.js" />
     <Content Include="Scripts\jquery.isotope.min.js" />
@@ -1138,6 +1135,10 @@
     <Content Include="Scripts\masonry.min.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Scripts\moment-with-locales.js" />
+    <Content Include="Scripts\moment-with-locales.min.js" />
+    <Content Include="Scripts\moment.js" />
+    <Content Include="Scripts\moment.min.js" />
     <Content Include="Scripts\player-graphics.gif" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.js" />
@@ -1202,7 +1203,6 @@
     <Content Include="Views\Game\Complete.cshtml" />
     <Content Include="Views\Home\FAQ.cshtml" />
     <Content Include="Views\Game\Setup.cshtml" />
-    <Content Include="Views\Report\Create.cshtml" />
     <Content Include="Views\Report\Delete.cshtml" />
     <Content Include="Views\Report\Details.cshtml" />
     <Content Include="Views\Report\Edit.cshtml" />
@@ -1220,11 +1220,16 @@
     <Content Include="Views\IdentityRoles\Edit.cshtml" />
     <Content Include="Views\IdentityRoles\Index.cshtml" />
     <Content Include="Views\ImageEditor\ImageEditor.cshtml" />
+    <Content Include="Views\Reports\Create.cshtml" />
+    <Content Include="Views\Reports\Delete.cshtml" />
+    <Content Include="Views\Reports\Details.cshtml" />
+    <Content Include="Views\Reports\Edit.cshtml" />
+    <Content Include="Views\Reports\Index.cshtml" />
+    <Content Include="Views\Report\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Content\Images\Profile\" />
-    <Folder Include="Views\Reports\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
