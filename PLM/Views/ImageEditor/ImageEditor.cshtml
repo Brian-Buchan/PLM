@@ -5,7 +5,7 @@
 
 <h2>Image Editor</h2>
 
-<img id="imgEdit" src="~/Content/Images/logo.png" alt="Photo To Edit" />
+<img onerror="this.src='/Content/images/Error.bmp';" id="imgEdit" src="~/Content/Images/logo.png" alt="Photo To Edit" />
 
 <script data-preload="true" data-path="@Url.Content("~/pixie-image-editor/pixie")" src="@Url.Content("~/pixie-image-editor/pixie/pixie-integrate.js")"></script>
 
