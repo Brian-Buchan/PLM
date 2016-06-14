@@ -13,6 +13,10 @@ using Owin;
 using PLM.Models;
 using System.Net;
 using System.Data.Entity;
+using SendGrid;
+using System.Configuration;
+using System.Diagnostics;
+using PLM.CutomAttributes;
 
 namespace PLM.Controllers
 {
@@ -69,6 +73,7 @@ namespace PLM.Controllers
             return View(model);
         }
 
+        [AuthorizeOrRedirectAttribute(Roles = "Admin")]
         public ActionResult Create()
         {
             return View();
@@ -76,6 +81,7 @@ namespace PLM.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [AuthorizeOrRedirectAttribute(Roles = "Admin")]
         public async Task<ActionResult> Create(CreateUserViewModel model)
         {
             if (ModelState.IsValid)
@@ -94,6 +100,7 @@ namespace PLM.Controllers
             return View(model);
         }
 
+        [AuthorizeOrRedirectAttribute(Roles = "Admin")]
         public ActionResult Edit(string userName = null)
         {
             if (userName == null)
@@ -115,6 +122,7 @@ namespace PLM.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [AuthorizeOrRedirectAttribute(Roles = "Admin")]
         public ActionResult Edit([Bind(Include = "UserName, LastName, FirstName, Institution, Email, Password, ConfirmPassword")] EditUserViewModel userModel)
         {
             if (ModelState.IsValid)
@@ -137,6 +145,7 @@ namespace PLM.Controllers
             return View(userModel);
         }
 
+        [AuthorizeOrRedirectAttribute(Roles = "Admin")]
         public ActionResult Delete(string userName = null)
         {
             var db = new ApplicationDbContext();
@@ -153,6 +162,7 @@ namespace PLM.Controllers
 
         [ValidateAntiForgeryToken]
         [HttpPost, ActionName("Delete")]
+        [AuthorizeOrRedirectAttribute(Roles = "Admin")]
         public ActionResult DeleteConfirmed(string userName)
         {
             var db = new ApplicationDbContext();
@@ -162,6 +172,7 @@ namespace PLM.Controllers
             return RedirectToAction("Index");
         }
 
+        [AuthorizeOrRedirectAttribute(Roles = "Admin")]
         public ActionResult ViewUserRoles(string userName = null)
         {
             if (!string.IsNullOrWhiteSpace(userName))
@@ -195,6 +206,7 @@ namespace PLM.Controllers
             return View();
         }
 
+        [AuthorizeOrRedirectAttribute(Roles = "Admin")]
         public ActionResult DeleteRoleForUser(string userName = null, string roleName = null)
         {
             if ((!string.IsNullOrWhiteSpace(userName)) || (!string.IsNullOrWhiteSpace(roleName)))
@@ -239,7 +251,7 @@ namespace PLM.Controllers
             }
         }
 
-
+        [AuthorizeOrRedirectAttribute(Roles = "Admin")]
         public ActionResult AddRoleToUser(string userName = null)
         {
             List<string> roles;
@@ -259,6 +271,7 @@ namespace PLM.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [AuthorizeOrRedirectAttribute(Roles = "Admin")]
         public ActionResult AddRoleToUser(string roleName, string userName)
         {
             List<string> roles;
@@ -352,8 +365,14 @@ namespace PLM.Controllers
                 var user = await UserManager.FindAsync(model.Email, model.Password);
                 if (user != null)
                 {
-                    await SignInAsync(user, model.RememberMe);
-                    return RedirectToLocal(returnUrl);
+                    //if (!await UserManager.IsEmailConfirmedAsync(user.Id))
+                    //{
+                        //string callbackUrl = await SendEmailConfirmationTokenAsync(user.Id, "Confirm your account-Resend");
+                        ViewBag.errorMessage = "You must have a confirmed email to log on.";
+                        //return View("Error");
+                        await SignInAsync(user, model.RememberMe);
+                        return RedirectToLocal(returnUrl);
+                    //}
                 }
                 else
                 {
@@ -386,15 +405,24 @@ namespace PLM.Controllers
                 IdentityResult result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-                    await SignInAsync(user, isPersistent: false);
+                    //await SignInAsync(user, isPersistent: false);
 
-                    // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
-                    // Send an email with this link
-                    // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-                    // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                    // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+                    //string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+                    //var callbackUrl = Url.Action("ConfirmEmail", "Account",
+                    //   new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+                    //await UserManager.SendEmailAsync(user.Id,
+                    //   "Confirm your account", "Please confirm your account by clicking <a href=\""
+                    //   + callbackUrl + "\">here</a>");
 
-                    return RedirectToAction("Index", "Home");
+                    UserManager.AddToRole(user.Id, "User");
+
+                    string callbackUrl = await SendEmailConfirmationTokenAsync(user.Id, "Confirm your account");
+
+                    ViewBag.Message = "Check your email and confirm your account, you must be confirmed "
+                        + "before you can log in.";
+
+                    return View("Info");
+                    //return RedirectToAction("Index", "Home");
                 }
                 else
                 {
@@ -455,10 +483,10 @@ namespace PLM.Controllers
 
                 // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
                 // Send an email with this link
-                // string code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
-                // var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);		
-                // await UserManager.SendEmailAsync(user.Id, "Reset Password", "Please reset your password by clicking <a href=\"" + callbackUrl + "\">here</a>");
-                // return RedirectToAction("ForgotPasswordConfirmation", "Account");
+                string code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
+                var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+                await UserManager.SendEmailAsync(user.Id, "Reset Password", "Please reset your password by clicking <a href=\"" + callbackUrl + "\">here</a>");
+                return RedirectToAction("ForgotPasswordConfirmation", "Account");
             }
 
             // If we got this far, something failed, redisplay form
@@ -847,6 +875,18 @@ namespace PLM.Controllers
                 context.HttpContext.GetOwinContext().Authentication.Challenge(properties, LoginProvider);
             }
         }
+
+        private async Task<string> SendEmailConfirmationTokenAsync(string userID, string subject)
+        {
+            string code = await UserManager.GenerateEmailConfirmationTokenAsync(userID);
+            var callbackUrl = Url.Action("ConfirmEmail", "Account",
+               new { userId = userID, code = code }, protocol: Request.Url.Scheme);
+            await UserManager.SendEmailAsync(userID, subject,
+               "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+
+            return callbackUrl;
+        }
+
         #endregion
     }
 }

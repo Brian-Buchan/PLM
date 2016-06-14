@@ -37,16 +37,23 @@
     @using (Html.BeginForm())
     {
         <p>
-            Find by name: @Html.TextBox("SearchString")
+            Find by Module Name: @Html.TextBox("SearchString")
             <input type="submit" value="Search" />
         </p>
     }
-    @using (Html.BeginForm())
+    @*@using (Html.BeginForm())
+    {
+        <p>
+            Find by Username: @Html.TextBox("UserSearchString")
+            <input type="submit" value="Search" />
+        </p>
+    }*@
+    @*@using (Html.BeginForm())
     {
         <p>
             Find Profanity: <input type="submit" value="Search" />
         </p>
-    }
+    }*@
     <table class="table">
         <tr>
             <th>

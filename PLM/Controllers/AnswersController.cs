@@ -103,7 +103,7 @@ namespace PLM.Controllers
                     answer.ModuleID = (int)ModuleID;
                 }
                 db.SaveChanges();
-                return RedirectToAction("edit", new { controller = "ModulesEdit", id = answer.ModuleID });
+                return RedirectToAction("Create", new { controller = "Answers", id = answer.ModuleID });
             }
             ViewBag.ModuleID = new SelectList(db.Modules, "ModuleID", "Name");
             return View(answer);

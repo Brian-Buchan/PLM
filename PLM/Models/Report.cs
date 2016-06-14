@@ -19,6 +19,6 @@ namespace PLM.Models
         public string description { get; set;}
         [Required]
         [Display(Name = "User who reported the issue")]
-        public int userID { get; set; }
+        public string userID { get; set; }
     }
 }
