@@ -183,14 +183,14 @@ namespace PLM.Controllers
                     fName = file.FileName;
                     if (file != null && file.ContentLength > 0)
                     {
-                        string moduleDirectory = (Path.Combine(Server.MapPath("~/Content/Images/PLM/" + Session["upload"].ToString() + "/")));
+                        string moduleDirectory = ("Content/Images/PLM/" + Session["upload"].ToString() + "/");
                         if (!Directory.Exists(moduleDirectory))
                         {
                             Directory.CreateDirectory(moduleDirectory);
                         }
                         path = moduleDirectory + fName;
-                        relpath = ("/Content/Images/PLM/" + Session["upload"].ToString() + "/" + fName);
-                        file.SaveAs(path);
+                        relpath = ("Content/Images/PLM/" + Session["upload"].ToString() + "/" + fName);
+                        file.SaveAs("~/" + path);
                     }
                 }
             }
