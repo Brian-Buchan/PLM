@@ -105,8 +105,8 @@ namespace PLM.Controllers
             ((UserGameSession)Session["userGameSession"]).numAnswers = ugs.numAnswers;
             ((UserGameSession)Session["userGameSession"]).numQuestions = ugs.numQuestions;
             ((UserGameSession)Session["userGameSession"]).time = ugs.time;
-            ((UserGameSession)Session["userGameSession"]).timeLeft = new TimeSpan(timeHours, timeMinutes, 0);
-            //((UserGameSession)Session["userGameSession"]).timeLeft = new TimeSpan(0, 0, 30);
+            //((UserGameSession)Session["userGameSession"]).timeLeft = new TimeSpan(timeHours, timeMinutes, 0);
+            ((UserGameSession)Session["userGameSession"]).timeLeft = new TimeSpan(0, 0, 30);
             return RedirectToAction("Play");
         }
 

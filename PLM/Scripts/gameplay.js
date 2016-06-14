@@ -2,6 +2,7 @@
 var pictureAnswer = "default";
 var count = Number(document.getElementById("displayScore").innerText);
 var revealed = false;
+var intervalID;
 
 //These cookie functions are from w3schools
 function setCookie(cname, cvalue, exdays) {
@@ -48,7 +49,9 @@ function isGuessRight(answer, guess) {
 
 function ButtonClick(guess) {
     pictureAnswer = $("#StoredAnswer").text();
-    if(!revealed) {
+    if (!revealed) {
+        //if the answer is not yet revealed, stop the timer and reveal the correct answer.
+        clearInterval(intervalID);
         if (isGuessRight(pictureAnswer, guess)) {
             Correct();
         }
@@ -99,4 +102,30 @@ function ToggleMute() {
 function CheckIn() {
     $('#Time').val($('#clockdiv').text());
     return true;
+}
+
+function startCountdown(time) {
+    var dur = moment.duration(time);
+    //Global variable intervalID is used to index the interval
+    intervalID = setInterval(function () {
+        //subtract a single second
+        dur = dur.subtract(1, 's');
+        //forces a leading zero if there is only one digit in the time by 
+        //taking the last two characters of a string: 
+        //"0" + "1" becomes "01", while "0" + "12" becomes 12
+        $('#clockdiv').text(
+            ('0' + dur.hours()).slice(-2) + ':'
+            + ('0' + dur.minutes()).slice(-2) + ':'
+            + ('0' + dur.seconds()).slice(-2)
+            );
+        //If time is up
+        if (dur.hours() == 0 & dur.minutes() == 0 & dur.seconds() == 0) {
+            //stop the timer
+            clearInterval(intervalID);
+            //update the data
+            CheckIn();
+            //submit the form
+            document.getElementById("GameForm").submit();
+        }
+    }, 1000);
 }
