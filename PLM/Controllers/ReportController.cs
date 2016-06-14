@@ -47,9 +47,15 @@ namespace PLM.Controllers
         // GET: /Report/Create
         public ActionResult Create()
         {
+            Report placeholder = new Report();
+            ViewBag.UserID = User.Identity.Name;
+            var name = User.Identity.GetUserName();
+            ApplicationUser currentUser = (ApplicationUser)db.Users.Single(x => x.UserName == name);
+            placeholder.userID = currentUser.Id;
             //ViewBag.module = moduleID;
+
             //ViewBag.user = User.Identity.GetUserName();
-            return View();
+            return View(placeholder);
         }
 
         // POST: /Report/Create

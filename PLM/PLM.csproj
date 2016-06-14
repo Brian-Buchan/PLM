@@ -191,6 +191,10 @@
     <Compile Include="Migrations\201606081520502_g.Designer.cs">
       <DependentUpon>201606081520502_g.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201606141619174_123.cs" />
+    <Compile Include="Migrations\201606141619174_123.Designer.cs">
+      <DependentUpon>201606141619174_123.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\ModuleViewModel.cs" />
     <Compile Include="Controllers\PicturesController.cs" />
     <Compile Include="Controllers\ProfileController.cs" />
@@ -1262,6 +1266,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201606081520502_g.resx">
       <DependentUpon>201606081520502_g.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201606141619174_123.resx">
+      <DependentUpon>201606141619174_123.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
