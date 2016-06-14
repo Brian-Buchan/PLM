@@ -1198,11 +1198,6 @@
     <Content Include="Views\IdentityRoles\Edit.cshtml" />
     <Content Include="Views\IdentityRoles\Index.cshtml" />
     <Content Include="Views\ImageEditor\ImageEditor.cshtml" />
-    <Content Include="Views\Reports\Create.cshtml" />
-    <Content Include="Views\Reports\Delete.cshtml" />
-    <Content Include="Views\Reports\Details.cshtml" />
-    <Content Include="Views\Reports\Edit.cshtml" />
-    <Content Include="Views\Reports\Index.cshtml" />
     <Content Include="Views\Report\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
