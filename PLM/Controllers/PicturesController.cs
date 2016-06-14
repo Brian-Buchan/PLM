@@ -190,7 +190,7 @@ namespace PLM.Controllers
                         }
                         path = moduleDirectory + fName;
                         relpath = ("Content/Images/PLM/" + Session["upload"].ToString() + "/" + fName);
-                        file.SaveAs(path);
+                        file.SaveAs("~/" + path);
                     }
                 }
             }
