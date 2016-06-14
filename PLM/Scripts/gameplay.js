@@ -2,6 +2,7 @@
 var pictureAnswer = "default";
 var count = Number(document.getElementById("displayScore").innerText);
 var revealed = false;
+var intervalID;
 
 //These cookie functions are from w3schools
 function setCookie(cname, cvalue, exdays) {
@@ -22,6 +23,9 @@ function getCookie(cname) {
     return "";
 }
 
+//Check if the user's guess is right
+//answer: the correct answer, from #StoredAnswer
+//guess: the user's guess (expects string)
 function isGuessRight(answer, guess) {
     if (answer == guess) {
         if (getCookie("muteSound") !== "true") {
@@ -42,10 +46,12 @@ function isGuessRight(answer, guess) {
         return false;
     }
 }
-//Still being worked on
+
 function ButtonClick(guess) {
     pictureAnswer = $("#StoredAnswer").text();
-    if(!revealed) {
+    if (!revealed) {
+        //if the answer is not yet revealed, stop the timer and reveal the correct answer.
+        clearInterval(intervalID);
         if (isGuessRight(pictureAnswer, guess)) {
             Correct();
         }
@@ -55,23 +61,10 @@ function ButtonClick(guess) {
     }
 }
 
-//legacy function
-//function ButtonClick(guess) {
-//    pictureAnswer = document.getElementById("StoredAnswer").innerText;
-
-//    if (isGuessRight(pictureAnswer, guess)) {
-//        Correct();
-//    }
-//    else {
-
-//    }
-//}
-
 function showNext() {
     document.getElementById("nextButton").style.display = "inline";
 }
 
-//Currently working on function
 function reveal() {
     pictureAnswer = $("#StoredAnswer").text();
 
@@ -86,19 +79,6 @@ function reveal() {
     });
     revealed = true;
 }
-
-//Legacy function
-//function reveal() {
-//    pictureAnswer = document.getElementById("StoredAnswer").innerText;
-
-//    $('.btn').each(function () {
-//        if (this.innerText == pictureAnswer) {
-//            this.style.backgroundColor = "green";
-//        } else {
-//            this.style.backgroundColor = "red";
-//        }
-//    });
-//}
 
 function Correct() {
     count = (parseInt(count) + 100);
@@ -117,4 +97,35 @@ function ToggleMute() {
         //otherwise, set muteSound to true
         setCookie("muteSound", "true", 365);
     }
+}
+
+function CheckIn() {
+    $('#Time').val($('#clockdiv').text());
+    return true;
+}
+
+function startCountdown(time) {
+    var dur = moment.duration(time);
+    //Global variable intervalID is used to index the interval
+    intervalID = setInterval(function () {
+        //subtract a single second
+        dur = dur.subtract(1, 's');
+        //forces a leading zero if there is only one digit in the time by 
+        //taking the last two characters of a string: 
+        //"0" + "1" becomes "01", while "0" + "12" becomes 12
+        $('#clockdiv').text(
+            ('0' + dur.hours()).slice(-2) + ':'
+            + ('0' + dur.minutes()).slice(-2) + ':'
+            + ('0' + dur.seconds()).slice(-2)
+            );
+        //If time is up
+        if (dur.hours() == 0 & dur.minutes() == 0 & dur.seconds() == 0) {
+            //stop the timer
+            clearInterval(intervalID);
+            //update the data
+            CheckIn();
+            //submit the form
+            document.getElementById("GameForm").submit();
+        }
+    }, 1000);
 }

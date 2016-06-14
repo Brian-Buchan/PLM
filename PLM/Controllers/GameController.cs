@@ -106,6 +106,13 @@ namespace PLM.Controllers
             ((UserGameSession)Session["userGameSession"]).numQuestions = ugs.numQuestions;
             ((UserGameSession)Session["userGameSession"]).time = ugs.time;
             ((UserGameSession)Session["userGameSession"]).timeLeft = new TimeSpan(timeHours, timeMinutes, 0);
+            
+            //This line is for testing the "Complete" action and the timer functionality.
+            //Comment out the line of code just above it, then uncomment this code to enter "testing mode",
+            //where the timer will always start at 30 seconds.
+
+            //((UserGameSession)Session["userGameSession"]).timeLeft = new TimeSpan(0, 0, 30);
+
             return RedirectToAction("Play");
         }
 
@@ -122,7 +129,7 @@ namespace PLM.Controllers
         }
 
         /// <summary>
-        /// Check if the user has completed the game. If the user is not done 
+        /// Check if the user has completed the game or has run out of time. If the user is not done 
         /// and there are no more questions, reshuffle the PictureIndices and continue 
         /// </summary>
         /// <returns>Bool</returns>
@@ -130,9 +137,12 @@ namespace PLM.Controllers
         {
             currentModule = ((UserGameSession)Session["userGameSession"]).currentModule;
             
+            //if the question or time limit has been reached
             if (((UserGameSession)Session["userGameSession"]).currentQuestion
                 //subtract 1 from number of questions since current guess is zero based
-                >= (((UserGameSession)Session["userGameSession"]).numQuestions -1))
+                >= (((UserGameSession)Session["userGameSession"]).numQuestions -1)
+                |
+                (((UserGameSession)Session["userGameSession"]).timeLeft.CompareTo(new TimeSpan(0,0,0)) < 1 ))
             //if (((UserGameSession)Session["userGameSession"]).currentQuestion >= (((UserGameSession)Session["userGameSession"]).PictureIndices.Count))
             {
                 return true;
