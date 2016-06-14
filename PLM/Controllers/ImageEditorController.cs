@@ -85,10 +85,12 @@ namespace PLM.Controllers
                 //sets up the filename, guid part taken from Mark Synowiec at http://stackoverflow.com/questions/730268/unique-random-string-generation
                 Guid g = Guid.NewGuid();
                 string TempFileName = Convert.ToBase64String(g.ToByteArray());
+                //replace invalid characters with valid ones.
                 TempFileName = TempFileName.Replace("=", "");
                 TempFileName = TempFileName.Replace("+", "");
                 TempFileName = TempFileName.Replace(@"/", "");
 
+                //add the file extension
                 TempFileName = TempFileName + "." + imageFormat;
 
                 using (MemoryStream ms = new MemoryStream(img, 0, img.Length))
