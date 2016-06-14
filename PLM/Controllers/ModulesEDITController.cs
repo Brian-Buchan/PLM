@@ -17,7 +17,7 @@ namespace PLM.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: /ModulesEDIT/
-        public ActionResult Index(string sortOrder, string searchString)
+        public ActionResult Index(string sortOrder, string searchString, string userSearchString)
         {
             ViewBag.NameSortParam = String.IsNullOrEmpty(sortOrder) ? "name_asc" : "";
 
@@ -28,6 +28,11 @@ namespace PLM.Controllers
             if (!String.IsNullOrEmpty(searchString))
             {
                 modules = modules.Where(m => m.Name.Contains(searchString));
+            }
+
+            if (!String.IsNullOrEmpty(userSearchString))
+            {
+                modules = modules.Where(m => m.User.UserName.Contains(searchString));
             }
 
             switch (sortOrder)
