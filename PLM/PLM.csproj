@@ -1113,6 +1113,7 @@
     <None Include="Properties\PublishProfiles\PerceptualLearning.pubxml" />
     <None Include="Properties\PublishProfiles\PerceptualLearningBeta.pubxml" />
     <None Include="Properties\PublishProfiles\PerceptualLearningEDU.pubxml" />
+    <None Include="Properties\PublishProfiles\plm-test.pubxml" />
     <None Include="Properties\PublishProfiles\PLMAlpha - FTP %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\PLMAlpha - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\PLMAlpha - Web Deploy %282%29.pubxml" />
@@ -1247,6 +1248,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Content\Images\Profile\" />
+    <Folder Include="Content\Images\tempUploads\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
