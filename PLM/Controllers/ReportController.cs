@@ -31,7 +31,7 @@ namespace PLM.Controllers
             return View(Reports.ToList());
         }
         //public ActionResult Index(int? userID)
-        [AuthorizeOrRedirectAttribute(Roles = "Admin")]
+        //[AuthorizeOrRedirectAttribute(Roles = "Admin")]
         public ActionResult Index()
         {
             var Reports = from u in db.Reports
