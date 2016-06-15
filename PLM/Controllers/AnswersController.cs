@@ -120,19 +120,20 @@ namespace PLM.Controllers
             //where "[IMAGEDATA]" is a base64 string that converts to a jpeg image.
             //Otherwise, if the image is saved as a png, the post results in: "data:image/png;base64,[IMAGEDATA]",
             //where "[IMAGEDATA]" is a base64 string that converts to a png image.
-            //string result = SaveImage(Request.Form.Get("imgData"));
+            
+            string result = SaveImage(Request.Form.Get("imgData"));
 
-            //if (result == "FAILED")
-            //{
-            //    return new HttpStatusCodeResult(HttpStatusCode.InternalServerError,
-            //            "Something went wrong with your request. Contact an administrator");
-            //}
-            //else if (result == "TOO LARGE")
-            //{
-            //    return new HttpStatusCodeResult(HttpStatusCode.RequestEntityTooLarge,
-            //    "Image file size larger than 200 KB. Try lowering the quality when you save," +
-            //    " or resize the image to a smaller size.");
-            //}
+            if (result == "FAILED")
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.InternalServerError,
+                        "Something went wrong with your request. Contact an administrator");
+            }
+            else if (result == "TOO LARGE")
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.RequestEntityTooLarge,
+                "Image file size larger than 200 KB. Try lowering the quality when you save," +
+                " or resize the image to a smaller size.");
+            }
 
             return new HttpStatusCodeResult(HttpStatusCode.OK);
         }
