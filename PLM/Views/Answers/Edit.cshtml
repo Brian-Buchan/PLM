@@ -76,7 +76,7 @@
                         <div class="portfolio-wrapper defaultHeight">
                             <div class="portfolio-single">
                                 <div class="portfolio-thumb img-hover">
-                                    <img onerror="this.src = 'Content/images/Error.bmp';" src="@pic.Location" class="img-responsive moduleImage" alt="Answer Image">
+                                    <img onerror="this.src = '/PerceptualLearning/Content/images/Error.bmp';" src="@pic.Location" class="img-responsive moduleImage" alt="Answer Image">
                                 </div>
                             </div>
                             <div class="portfolio-info ">
@@ -117,6 +117,7 @@
             $.ajax({
                 type: 'POST',
                 url: '/Answers/UpdateImage',
+                //need to somehow pass ID of image that was modified.
                 data: { imgData: data },
                 success: function (response) {
                     alert('Image saved successfully!');
