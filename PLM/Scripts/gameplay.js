@@ -112,7 +112,7 @@ function startCountdown(time) {
         dur = dur.subtract(1, 's');
         //forces a leading zero if there is only one digit in the time by 
         //taking the last two characters of a string: 
-        //"0" + "1" becomes "01", while "0" + "12" becomes 12
+        //"0" + "1" becomes "01", while "0" + "12" becomes "12"
         $('#clockdiv').text(
             ('0' + dur.hours()).slice(-2) + ':'
             + ('0' + dur.minutes()).slice(-2) + ':'
