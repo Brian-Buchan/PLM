@@ -72,7 +72,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Attribution, "Attribution", new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Attribution)
+                @Html.TextAreaFor(model => model.Attribution, new { rows = "5", cols = "25" })
                 @Html.ValidationMessageFor(model => model.Attribution)
             </div>
         </div>
