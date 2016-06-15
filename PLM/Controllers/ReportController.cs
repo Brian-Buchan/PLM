@@ -44,8 +44,18 @@ namespace PLM.Controllers
         }
         public ActionResult YourModulesReported()
         {
+            var name = User.Identity.GetUserName();
+            ApplicationUser currentUser = (ApplicationUser)db.Users.Single(x => x.UserName == name);
+
+            var modules = (from i in db.Modules
+                           where i.User == currentUser
+                           select i.ModuleID); //gets moduleID's for modules owned by current user
             var Reports = from u in db.Reports
+                          where u.moduleID == modules
                           select u;
+            modules(from u in db.Reports
+                             //where u.moduleID == modules
+                             select u.moduleID);
             //if (userID !=null)
             //{
             //    Reports = Reports.Where(m => m.moduleID.Equals(userID));
