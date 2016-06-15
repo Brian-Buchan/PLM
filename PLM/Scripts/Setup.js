@@ -30,10 +30,10 @@ $('input[type="range"]').each(function () {
             nq = $('#numQuestions');
             nm = $('#time');
 
-            //The generic formula used to determine the number z opposite the number x, 
-            //given number m is the midpoint between x and z is:
+            //The generic formula used to determine the number z opposite the number i, 
+            //given number m is the midpoint between i and z is:
             //
-            //(m - x) + m = z
+            //(m - i) + m = z
             //
             //for example, we need to find the number opposite 17, if our range is 2-68.
             //The midpoint between these two numbers is (2 + 68)/2, or 35.
@@ -48,7 +48,7 @@ $('input[type="range"]').each(function () {
             //i = the inputted number,
             //and z is the output,
             //the formula is:
-            //(((x + y) / 2) - i) + ((x + y) / 2)
+            //(((x + y) / 2) - i) + ((x + y) / 2) = z
             //
             //For these functions, I subtract a value from each value to let me use a zero-based range.
             //For example, the first range on the setup page, used to set Number of Answers, goes from 3 to 15.
