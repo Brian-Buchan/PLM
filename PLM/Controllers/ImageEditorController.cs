@@ -29,7 +29,10 @@ namespace PLM.Controllers
             //where "[IMAGEDATA]" is a base64 string that converts to a jpeg image.
             //Otherwise, if the image is saved as a png, the post results in: "data:image/png;base64,[IMAGEDATA]",
             //where "[IMAGEDATA]" is a base64 string that converts to a png image.
-            string result = SaveImage(Request.Form.Get("imgData"));
+
+            string src = Request.Form.Get("imgTag");
+
+            string result = SaveImage(Request.Form.Get("imgData"), "1");
             
             if (result == "FAILED")
             {
@@ -57,7 +60,7 @@ namespace PLM.Controllers
         /// where [FILEEXTENSION] is either "jpeg" or "png", and [IMAGEDATA] is an image in Base64 encoding.</param>
         /// <returns>string</returns>
         [NonAction]
-        private string SaveImage(string fromPost)
+        private string SaveImage(string fromPost, string TempFileName)
         {
             try
             {
@@ -81,13 +84,15 @@ namespace PLM.Controllers
                     return "TOO LARGE";
                 }
 
-                //sets up the filename, guid part taken from Mark Synowiec at http://stackoverflow.com/questions/730268/unique-random-string-generation
-                Guid g = Guid.NewGuid();
-                string TempFileName = Convert.ToBase64String(g.ToByteArray());
-                //replace invalid characters with valid ones.
-                TempFileName = TempFileName.Replace("=", "");
-                TempFileName = TempFileName.Replace("+", "");
-                TempFileName = TempFileName.Replace(@"/", "");
+                //string TempFileName = "1";
+
+                ////sets up the filename, guid part taken from Mark Synowiec at http://stackoverflow.com/questions/730268/unique-random-string-generation
+                //Guid g = Guid.NewGuid();
+                //string TempFileName = Convert.ToBase64String(g.ToByteArray());
+                ////replace invalid characters with valid ones.
+                //TempFileName = TempFileName.Replace("=", "");
+                //TempFileName = TempFileName.Replace("+", "");
+                //TempFileName = TempFileName.Replace(@"/", "");
 
                 //add the file extension
                 TempFileName = TempFileName + "." + imageFormat;
