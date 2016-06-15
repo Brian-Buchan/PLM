@@ -51,11 +51,8 @@ namespace PLM.Controllers
                            where i.User == currentUser
                            select i.ModuleID); //gets moduleID's for modules owned by current user
             var Reports = from u in db.Reports
-                          where u.moduleID == modules
+                          where modules.Contains(u.moduleID)
                           select u;
-            modules(from u in db.Reports
-                             //where u.moduleID == modules
-                             select u.moduleID);
             //if (userID !=null)
             //{
             //    Reports = Reports.Where(m => m.moduleID.Equals(userID));
