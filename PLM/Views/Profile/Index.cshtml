@@ -137,7 +137,8 @@
                     </td>
                     <td>
                         @Html.ActionLink("Edit", "Edit", new { controller = "ModulesEDIT", id = item.ModuleID }) |
-                        @Html.ActionLink("Delete", "Delete", new { controller = "ModulesEDIT", id = item.ModuleID })
+                        @Html.ActionLink("Delete", "Delete", new { controller = "ModulesEDIT", id = item.ModuleID }) |
+                        @Html.ActionLink("Play Game","Setup", "Game", new { PLMid = item.ModuleID }, null)
                     </td>
                 </tr>
             }
