@@ -29,6 +29,8 @@ namespace PLM.Controllers
         {
         }
 
+
+        [AuthorizeOrRedirectAttribute(Roles = "Admin")]
         public ActionResult Index(string sortOrder, string searchString)
         {
             ViewBag.UsernameSortParam = String.IsNullOrEmpty(sortOrder) ? "username_asc" : "";
@@ -353,8 +355,8 @@ namespace PLM.Controllers
             return View();
         }
 
-        //
-        // POST: /Account/Login
+        
+         //POST: /Account/Login
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
@@ -407,16 +409,16 @@ namespace PLM.Controllers
                 {
                     //await SignInAsync(user, isPersistent: false);
 
-                    //string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-                    //var callbackUrl = Url.Action("ConfirmEmail", "Account",
-                    //   new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                    //await UserManager.SendEmailAsync(user.Id,
-                    //   "Confirm your account", "Please confirm your account by clicking <a href=\""
-                    //   + callbackUrl + "\">here</a>");
+                    string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+                    var callbackUrl = Url.Action("ConfirmEmail", "Account",
+                       new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+                    await UserManager.SendEmailAsync(user.Id,
+                       "Confirm your account", "Please confirm your account by clicking <a href=\""
+                       + callbackUrl + "\">here</a>");
 
                     UserManager.AddToRole(user.Id, "User");
 
-                    string callbackUrl = await SendEmailConfirmationTokenAsync(user.Id, "Confirm your account");
+                    //string callbackUrl = await SendEmailConfirmationTokenAsync(user.Id, "Confirm your account");
 
                     ViewBag.Message = "Check your email and confirm your account, you must be confirmed "
                         + "before you can log in.";
