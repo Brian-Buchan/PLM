@@ -30,7 +30,7 @@ namespace PLM.Controllers
         }
 
 
-        [AuthorizeOrRedirectAttribute(Roles = "Admin")]
+        ////[AuthorizeOrRedirectAttribute(Roles = "Admin")]
         public ActionResult Index(string sortOrder, string searchString)
         {
             ViewBag.UsernameSortParam = String.IsNullOrEmpty(sortOrder) ? "username_asc" : "";
@@ -75,7 +75,7 @@ namespace PLM.Controllers
             return View(model);
         }
 
-        [AuthorizeOrRedirectAttribute(Roles = "Admin")]
+        //[AuthorizeOrRedirectAttribute(Roles = "Admin")]
         public ActionResult Create()
         {
             return View();
@@ -83,7 +83,7 @@ namespace PLM.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [AuthorizeOrRedirectAttribute(Roles = "Admin")]
+        //[AuthorizeOrRedirectAttribute(Roles = "Admin")]
         public async Task<ActionResult> Create(CreateUserViewModel model)
         {
             if (ModelState.IsValid)
@@ -102,7 +102,7 @@ namespace PLM.Controllers
             return View(model);
         }
 
-        [AuthorizeOrRedirectAttribute(Roles = "Admin")]
+        //[AuthorizeOrRedirectAttribute(Roles = "Admin")]
         public ActionResult Edit(string userName = null)
         {
             if (userName == null)
@@ -124,7 +124,7 @@ namespace PLM.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [AuthorizeOrRedirectAttribute(Roles = "Admin")]
+        //[AuthorizeOrRedirectAttribute(Roles = "Admin")]
         public ActionResult Edit([Bind(Include = "UserName, LastName, FirstName, Institution, Email, Password, ConfirmPassword")] EditUserViewModel userModel)
         {
             if (ModelState.IsValid)
@@ -147,7 +147,7 @@ namespace PLM.Controllers
             return View(userModel);
         }
 
-        [AuthorizeOrRedirectAttribute(Roles = "Admin")]
+        //[AuthorizeOrRedirectAttribute(Roles = "Admin")]
         public ActionResult Delete(string userName = null)
         {
             var db = new ApplicationDbContext();
@@ -164,7 +164,7 @@ namespace PLM.Controllers
 
         [ValidateAntiForgeryToken]
         [HttpPost, ActionName("Delete")]
-        [AuthorizeOrRedirectAttribute(Roles = "Admin")]
+        //[AuthorizeOrRedirectAttribute(Roles = "Admin")]
         public ActionResult DeleteConfirmed(string userName)
         {
             var db = new ApplicationDbContext();
@@ -174,7 +174,7 @@ namespace PLM.Controllers
             return RedirectToAction("Index");
         }
 
-        [AuthorizeOrRedirectAttribute(Roles = "Admin")]
+        //[AuthorizeOrRedirectAttribute(Roles = "Admin")]
         public ActionResult ViewUserRoles(string userName = null)
         {
             if (!string.IsNullOrWhiteSpace(userName))
@@ -208,7 +208,7 @@ namespace PLM.Controllers
             return View();
         }
 
-        [AuthorizeOrRedirectAttribute(Roles = "Admin")]
+        //[AuthorizeOrRedirectAttribute(Roles = "Admin")]
         public ActionResult DeleteRoleForUser(string userName = null, string roleName = null)
         {
             if ((!string.IsNullOrWhiteSpace(userName)) || (!string.IsNullOrWhiteSpace(roleName)))
@@ -253,7 +253,7 @@ namespace PLM.Controllers
             }
         }
 
-        [AuthorizeOrRedirectAttribute(Roles = "Admin")]
+        //[AuthorizeOrRedirectAttribute(Roles = "Admin")]
         public ActionResult AddRoleToUser(string userName = null)
         {
             List<string> roles;
@@ -273,7 +273,7 @@ namespace PLM.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [AuthorizeOrRedirectAttribute(Roles = "Admin")]
+        //[AuthorizeOrRedirectAttribute(Roles = "Admin")]
         public ActionResult AddRoleToUser(string roleName, string userName)
         {
             List<string> roles;
