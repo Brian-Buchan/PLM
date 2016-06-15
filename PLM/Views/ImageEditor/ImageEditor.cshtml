@@ -17,7 +17,7 @@
             $.ajax({
                 type: 'POST',
                 url: '/ImageEditor/ImageEditor',
-                data: { imgData: data, imgTag: img.id },
+                data: { imgData: data, imgId: img.id },
                 success: function (response) {
                     alert('Image saved successfully!');
                 },

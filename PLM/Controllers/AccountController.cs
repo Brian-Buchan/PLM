@@ -409,12 +409,12 @@ namespace PLM.Controllers
                 {
                     //await SignInAsync(user, isPersistent: false);
 
-                    string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-                    var callbackUrl = Url.Action("ConfirmEmail", "Account",
-                       new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                    await UserManager.SendEmailAsync(user.Id,
-                       "Confirm your account", "Please confirm your account by clicking <a href=\""
-                       + callbackUrl + "\">here</a>");
+                    //string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+                    //var callbackUrl = Url.Action("ConfirmEmail", "Account",
+                    //   new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+                    //await UserManager.SendEmailAsync(user.Id,
+                    //   "Confirm your account", "Please confirm your account by clicking <a href=\""
+                    //   + callbackUrl + "\">here</a>");
 
                     UserManager.AddToRole(user.Id, "User");
 
@@ -423,8 +423,8 @@ namespace PLM.Controllers
                     ViewBag.Message = "Check your email and confirm your account, you must be confirmed "
                         + "before you can log in.";
 
-                    return View("Info");
-                    //return RedirectToAction("Index", "Home");
+                    //return View("Info");
+                    return RedirectToAction("Index", "Home");
                 }
                 else
                 {
