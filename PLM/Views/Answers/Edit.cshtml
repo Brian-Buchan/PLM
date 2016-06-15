@@ -117,6 +117,7 @@
             $.ajax({
                 type: 'POST',
                 url: '/Answers/UpdateImage',
+                //need to somehow pass ID of image that was modified.
                 data: { imgData: data },
                 success: function (response) {
                     alert('Image saved successfully!');
