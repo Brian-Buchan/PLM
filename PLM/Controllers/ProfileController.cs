@@ -83,7 +83,7 @@ namespace PLM.Controllers
                             Directory.CreateDirectory(moduleDirectory);
                         }
                         path = moduleDirectory + fName;
-                        relpath = ("PERCEPTUAL-LEARNING/Content/Images/PLM/" + Session["upload"].ToString() + "/" + fName);
+                        relpath = ("Content/Images/PLM/" + Session["upload"].ToString() + "/" + fName);
                         file.SaveAs(path);
                     }
                 }
