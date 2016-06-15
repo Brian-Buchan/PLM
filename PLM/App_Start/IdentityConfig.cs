@@ -9,6 +9,8 @@ using System.Net;
 using System.Configuration;
 using System.Diagnostics;
 using System.Web.Script.Serialization;
+using System.Net.Mail;
+using System.Resources;
 
 namespace PLM
 {
@@ -70,13 +72,13 @@ namespace PLM
             await configSendGridasync(message);
         }
 
-        // Use NuGet to install SendGrid (Basic C# client lib) 
+         //Use NuGet to install SendGrid (Basic C# client lib) 
         private async Task configSendGridasync(IdentityMessage message)
         {
             var myMessage = new SendGridMessage();
             myMessage.AddTo(message.Destination);
             myMessage.From = new System.Net.Mail.MailAddress(
-                                "JacquelineRadtke@gmail.com", "Jacqueline R.");
+                                "plm.nmc.edu", "Jacqueline R.");
             myMessage.Subject = message.Subject;
             myMessage.Text = message.Body;
             myMessage.Html = message.Body;
@@ -100,6 +102,30 @@ namespace PLM
                 await Task.FromResult(0);
             }
         }
+        //private async Task configSendGridasync(IdentityMessage message)
+        //{
+        //    var smtp = new SmtpClient(Properties.Resources.SendGridURL, 587);
+
+        //    var creds = new NetworkCredential(Properties.Resources.SendGridUser, Properties.Resources.SendGridPassword);
+
+        //    smtp.UseDefaultCredentials = false;
+        //    smtp.Credentials = creds;
+        //    smtp.EnableSsl = false;
+
+        //    var to = new MailAddress(message.Destination);
+        //    var from = new MailAddress("jacquelineradtke@gmail.com", "Your Contractor Connection");
+
+        //    var msg = new MailMessage();
+
+        //    msg.To.Add(to);
+        //    msg.From = from;
+        //    msg.IsBodyHtml = true;
+        //    msg.Subject = message.Subject;
+        //    msg.Body = message.Body;
+
+        //    await smtp.SendMailAsync(msg);
+        //}
+
 
     }
 
