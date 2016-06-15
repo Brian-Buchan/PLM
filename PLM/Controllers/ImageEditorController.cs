@@ -61,7 +61,6 @@ namespace PLM.Controllers
         {
             try
             {
-                Image image;
                 string dirPath = (Path.Combine(Server.MapPath("~/Content/Images/tempUploads/")));
 
                 //gets the post data
@@ -95,15 +94,18 @@ namespace PLM.Controllers
 
                 using (MemoryStream ms = new MemoryStream(img, 0, img.Length))
                 {
+                    Image image;
                     image = Image.FromStream(ms, true);
 
                     if (imageFormat == "jpeg")
                     {
                         image.Save(dirPath + TempFileName, ImageFormat.Jpeg);
+                        image.Dispose();
                     }
                     else if (imageFormat == "png")
                     {
                         image.Save(dirPath + TempFileName, ImageFormat.Png);
+                        image.Dispose();
                     }
                     else
                     {

@@ -48,7 +48,7 @@ $('input[type="range"]').each(function () {
             //i = the inputted number,
             //and z is the output,
             //the formula is:
-            //(((x + y) / 2) - x) + ((x + y) / 2)
+            //(((x + y) / 2) - i) + ((x + y) / 2)
             //
             //For these functions, I subtract a value from each value to let me use a zero-based range.
             //For example, the first range on the setup page, used to set Number of Answers, goes from 3 to 15.
