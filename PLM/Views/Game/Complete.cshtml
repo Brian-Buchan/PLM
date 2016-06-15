@@ -40,7 +40,7 @@
         <div>
             <div>
                 <ul>
-                    <li>@Html.ActionLink("Report this module", "Create", "Report")</li>
+                    <li>@Html.ActionLink("Report this module", "Create", "Report", new { id = Model.ID })</li>
                     <li>@Html.ActionLink("Play this module again", "Setup", "Game")</li>
                     <li>@Html.ActionLink("Return to module select", "Index", "Modules")</li>
                 </ul>

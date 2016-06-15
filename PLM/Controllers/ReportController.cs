@@ -44,8 +44,18 @@ namespace PLM.Controllers
         }
         public ActionResult YourModulesReported()
         {
+            var name = User.Identity.GetUserName();
+            ApplicationUser currentUser = (ApplicationUser)db.Users.Single(x => x.UserName == name);
+
+            var modules = (from i in db.Modules
+                           where i.User == currentUser
+                           select i.ModuleID); //gets moduleID's for modules owned by current user
             var Reports = from u in db.Reports
+                          where u.moduleID == modules
                           select u;
+            modules(from u in db.Reports
+                             //where u.moduleID == modules
+                             select u.moduleID);
             //if (userID !=null)
             //{
             //    Reports = Reports.Where(m => m.moduleID.Equals(userID));
@@ -68,13 +78,14 @@ namespace PLM.Controllers
         }
 
         // GET: /Report/Create
-        public ActionResult Create()
+        public ActionResult Create(int? id)
         {
             Report placeholder = new Report();
             ViewBag.UserID = User.Identity.Name;
             var name = User.Identity.GetUserName();
             ApplicationUser currentUser = (ApplicationUser)db.Users.Single(x => x.UserName == name);
             placeholder.userID = currentUser.Id;
+            placeholder.moduleID = (int)id;
             //ViewBag.module = moduleID;
 
             //ViewBag.user = User.Identity.GetUserName();
