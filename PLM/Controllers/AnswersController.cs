@@ -181,6 +181,7 @@ namespace PLM.Controllers
         /// </summary>
         /// <param name="fromPost">The POST data in the following format: "data:image/[FILEEXTENSION];base64,[IMAGEDATA]",
         /// where [FILEEXTENSION] is either "jpeg" or "png", and [IMAGEDATA] is an image in Base64 encoding.</param>
+        /// <param name="id">UPCOMING PARAM: The id of the image that was edited. Will be used to discriminate which image to overwrite.</param>
         /// <returns>string</returns>
         [NonAction]
         private string SaveImage(string fromPost)
