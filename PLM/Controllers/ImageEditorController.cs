@@ -93,6 +93,9 @@ namespace PLM.Controllers
                 TempFileName = TempFileName.Replace("+", "");
                 TempFileName = TempFileName.Replace(@"/", "");
 
+                //add the image ID, with a discriminating exclamation point (!)
+                TempFileName = TempFileName + "!" + id;
+
                 //add the file extension
                 TempFileName = TempFileName + "." + imageFormat;
 
