@@ -24,4 +24,4 @@ namespace PLM.Models
         public string userID { get; set; }
         public virtual ReportCategoryEnum.reportCategory category {get; set;}
     }
-}
+} 
