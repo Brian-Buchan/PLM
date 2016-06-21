@@ -150,7 +150,7 @@ namespace PLM.Controllers
             db.Pictures.Remove(picture);
             db.SaveChanges();
             FTPDirectoryWriter.FTPDelete(picture.Location);
-            return RedirectToAction("edit", new { controller = "Answers", id = picture.AnswerID });
+            return RedirectToAction("edit", new { controller = "Answers", id = picture.AnswerID});
         }
 
         protected override void Dispose(bool disposing)
@@ -189,7 +189,7 @@ namespace PLM.Controllers
                             Directory.CreateDirectory(moduleDirectory);
                         }
                         path = moduleDirectory + fName;
-                        relpath = (Path.Combine(Server.MapPath("~/Content/Images/PLM/"),Session["upload"].ToString(),"/",fName));
+                        relpath = ("/PerceptualLearning/Content/Images/PLM/" + Session["upload"].ToString() + "/" + fName);
                         file.SaveAs(path);
                     }
                 }

@@ -216,13 +216,17 @@
     <Compile Include="Migrations\201606141648191_InitialCreate.Designer.cs">
       <DependentUpon>201606141648191_InitialCreate.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201606211851547_reports.cs" />
+    <Compile Include="Migrations\201606211851547_reports.Designer.cs">
+      <DependentUpon>201606211851547_reports.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AdminViewModel.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\ModuleViewModel.cs" />
     <Compile Include="Controllers\PicturesController.cs" />
     <Compile Include="Controllers\ProfileController.cs" />
-    <Compile Include="CutomAttributes\AuthorizeOrRedirectAttribute.cs" />
+    <Compile Include="CustomAttributes\AuthorizeOrRedirectAttribute.cs" />
     <Compile Include="Extensions\FTPDirectoryWriter.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -242,6 +246,7 @@
     <Compile Include="Models\PLMContext.cs" />
     <Compile Include="Models\ProfanityEnum.cs" />
     <Compile Include="Models\Report.cs" />
+    <Compile Include="Models\ReportCategoryEnum.cs" />
     <Compile Include="Models\Score.cs" />
     <Compile Include="Models\UserGameSession.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -1261,6 +1266,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201606141648191_InitialCreate.resx">
       <DependentUpon>201606141648191_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201606211851547_reports.resx">
+      <DependentUpon>201606211851547_reports.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
