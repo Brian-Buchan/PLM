@@ -56,7 +56,9 @@
 
 
         <div id="container">
-            <img onerror="this.src='Content/images/Error.bmp';" @*id="picture"*@ src="@Model.ImageURL" title="Image Courtesy of @Model.Attribution" />
+            <span class="helper">
+                <img onerror="this.src='Content/images/Error.bmp';" @*id="picture"*@ src="@Model.ImageURL" title="Image Courtesy of @Model.Attribution" />
+            </span>
         </div>
             <p id="StoredAnswer" hidden="hidden">@Model.Answer</p>
 
