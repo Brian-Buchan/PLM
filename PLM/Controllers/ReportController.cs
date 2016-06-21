@@ -123,6 +123,7 @@ namespace PLM.Controllers
             {
                 return HttpNotFound();
             }
+            
             return View(report);
         }
 
@@ -135,6 +136,7 @@ namespace PLM.Controllers
         {
             if (ModelState.IsValid)
             {
+
                 db.Entry(report).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");

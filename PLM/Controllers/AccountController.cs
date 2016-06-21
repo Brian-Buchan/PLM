@@ -138,7 +138,7 @@ namespace PLM.Controllers
 
                 PasswordHasher ph = new PasswordHasher();
                 user.PasswordHash = ph.HashPassword(userModel.Password);
-
+                
                 db.Entry(user).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");

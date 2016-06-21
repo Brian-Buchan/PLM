@@ -17,7 +17,7 @@
     <link href="~/Content/Site.css" rel="stylesheet"/>
 
     <link rel="shortcut icon" href="~/Content/images/ico/favicon.ico">
-</head><!--/head-->
+</head>
 
 <section id="page-breadcrumb">
     <div class="vertical-center sun">
@@ -65,7 +65,7 @@ using (Html.BeginForm())
         <div class="form-group" title="A quick description of the module">
             @Html.LabelFor(model => model.Description, new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.TextAreaFor(model => model.Description, new { rows = "5", cols = "25" })
+                @Html.TextAreaFor(model => model.Description, new { rows = "5", cols = "25", maxlength = 200 })
                 @Html.ValidationMessageFor(model => model.Description)
             </div>
         </div>

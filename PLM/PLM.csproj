@@ -222,7 +222,7 @@
     <Compile Include="Models\ModuleViewModel.cs" />
     <Compile Include="Controllers\PicturesController.cs" />
     <Compile Include="Controllers\ProfileController.cs" />
-    <Compile Include="CutomAttributes\AuthorizeOrRedirectAttribute.cs" />
+    <Compile Include="CustomAttributes\AuthorizeOrRedirectAttribute.cs" />
     <Compile Include="Extensions\FTPDirectoryWriter.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -242,6 +242,7 @@
     <Compile Include="Models\PLMContext.cs" />
     <Compile Include="Models\ProfanityEnum.cs" />
     <Compile Include="Models\Report.cs" />
+    <Compile Include="Models\ReportCategoryEnum.cs" />
     <Compile Include="Models\Score.cs" />
     <Compile Include="Models\UserGameSession.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
