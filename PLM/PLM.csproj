@@ -1243,6 +1243,7 @@
     <Content Include="Views\Account\VerifyCode.cshtml" />
     <Content Include="Views\Account\SendCode.cshtml" />
     <Content Include="Views\Account\DisplayEmail.cshtml" />
+    <Content Include="Views\Report\View.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
