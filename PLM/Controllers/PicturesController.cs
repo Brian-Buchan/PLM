@@ -150,7 +150,7 @@ namespace PLM.Controllers
             db.Pictures.Remove(picture);
             db.SaveChanges();
             FTPDirectoryWriter.FTPDelete(picture.Location);
-            return RedirectToAction("Create", new { controller = "Answers", id = picture.Answer});
+            return RedirectToAction("edit", new { controller = "Answers", id = picture.AnswerID});
         }
 
         protected override void Dispose(bool disposing)
