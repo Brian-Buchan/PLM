@@ -99,7 +99,7 @@ namespace PLM.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include="ID,moduleID,description,userID")] Report report)
+        public ActionResult Create([Bind(Include="ID,moduleID,description,userID,category")] Report report)
         {
             if (ModelState.IsValid)
             {
@@ -132,7 +132,7 @@ namespace PLM.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include="ID,moduleID,description,userID")] Report report)
+        public ActionResult Edit([Bind(Include="ID,moduleID,description,userID,category")] Report report)
         {
             if (ModelState.IsValid)
             {
