@@ -149,7 +149,7 @@ namespace PLM.Controllers
             Picture picture = db.Pictures.Find(id);
             db.Pictures.Remove(picture);
             db.SaveChanges();
-            FTPDirectoryWriter.FTPDelete(picture.Location);
+            Directory.Delete(picture.Location);
             return RedirectToAction("edit", new { controller = "Answers", id = picture.AnswerID});
         }
 
