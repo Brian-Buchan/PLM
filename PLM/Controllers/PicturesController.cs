@@ -149,7 +149,7 @@ namespace PLM.Controllers
             Picture picture = db.Pictures.Find(id);
             db.Pictures.Remove(picture);
             db.SaveChanges();
-            FTPDirectoryWriter.FTPDelete(picture.Location);
+            Directory.Delete(picture.Location);
             return RedirectToAction("edit", new { controller = "Answers", id = picture.AnswerID});
         }
 
@@ -183,7 +183,7 @@ namespace PLM.Controllers
                     fName = file.FileName;
                     if (file != null && file.ContentLength > 0)
                     {
-                        string moduleDirectory = ("/PERCEPTUAL-LEARNING/Content/Images/PLM/" + Session["upload"].ToString() + "/");
+                        string moduleDirectory = ("/PerceptualLearning/Content/Images/PLM/" + Session["upload"].ToString() + "/");
                         if (!Directory.Exists(moduleDirectory))
                         {
                             Directory.CreateDirectory(moduleDirectory);
