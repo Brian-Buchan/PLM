@@ -164,23 +164,8 @@ namespace PLM.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Module module = db.Modules.Find(id);
+            CascadeDeleter.DeleteModule(id);
 
-            for (int m = module.Answers.Count; m < 0; m--)
-            {
-                Answer ansToDelete = db.Answers.Find(module.Answers.ElementAt(m - 1).AnswerID);
-
-                for (int a = answer.Pictures.Count; a > 0; a--)
-                {
-                    Picture picToDelete = db.Pictures.Find(answer.Pictures.ElementAt(a - 1).PictureID);
-                    db.Pictures.Remove(picToDelete);
-                    System.IO.File.Delete(picToDelete.Location);
-                }
-            }
-
-
-            db.Modules.Remove(module);
-            db.SaveChanges();
             return RedirectToAction("Index", new { controller = "Profile" });
         }
 

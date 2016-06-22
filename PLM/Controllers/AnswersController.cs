@@ -160,15 +160,7 @@ namespace PLM.Controllers
         {
             Answer answer = db.Answers.Find(id);
 
-            for (int i = answer.Pictures.Count; i > 0; i--)
-            {
-                Picture picToDelete = db.Pictures.Find(answer.Pictures.ElementAt(i - 1).PictureID);
-                db.Pictures.Remove(picToDelete);
-                System.IO.File.Delete(picToDelete.Location);
-            }
-
-            db.Answers.Remove(answer);
-            db.SaveChanges();
+            CascadeDeleter.DeleteAnswer(id);
             return RedirectToAction("edit", new { controller = "ModulesEdit", id = answer.ModuleID});
         }
 
