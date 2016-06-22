@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.IO;
 using System.Security.Claims;
 using System.Security.Principal;
 using Microsoft.AspNet.Identity;
@@ -45,6 +46,85 @@ namespace PLM
             scores.Where(y => y.User.Id == userID);
             scores.OrderBy(x => (x.TotalAnswers / x.CorrectAnswers)).ToList();
             return((List<Score>)scores.Take(10));
+        }
+    }
+
+    public static class FileManipExtensions
+    {
+        /// <summary>
+        /// Move a number of files to a single directory, keeping their names
+        /// and overwriting if the switch is toggled.
+        /// Will ignore nonexistent files, and return false if the specified directory does not exist.
+        /// Returns true if it succeeded, false if it did not.
+        /// </summary>
+        /// <param name="filePaths">An array of filepath strings, </param>
+        /// <param name="saveDirectory">The path to the directory to use</param>
+        /// <param name="overWrite">Optional, defaults to false. Whether or not 
+        /// to overwrite any existing files with the same name in the new directory. 
+        /// If false, skips files that already exist in destination.</param>
+        /// <returns>bool</returns>
+        public static bool MoveSpecificFiles(string[] filePaths, string saveDirectory, bool overWrite = false)
+        {
+            //If the directory doesn't exist, error out.
+            if (!Directory.Exists(saveDirectory))
+            {
+                return false;
+            }
+            string fileName;
+
+            try
+            {
+                foreach (string filePath in filePaths)
+                {
+                    //Check if the file to be moved exists. If it doesn't, skip it and go to the next one.
+                    if (File.Exists(filePath))
+                    {
+                        fileName = Path.GetFileName(filePath);
+
+                        //if the overwrite flag is set to true and the file exists in the directory, delete it.
+                        if (overWrite && File.Exists(saveDirectory + fileName))
+                        {
+                            File.Delete(saveDirectory + fileName);
+                        }
+                        //If the file to be moved does not exist in the new location, move it there.
+                        //This means that duplicate files will not be moved.
+                        if (!File.Exists(saveDirectory + fileName))
+                        {
+                            File.Move(filePath, saveDirectory + fileName);
+                        }
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+            return true;
+        }
+
+        /// <summary>
+        /// Delete multiple specific files. Returns true if it succeeds, false otherwise
+        /// </summary>
+        /// <param name="filePaths">An array of filepath strings that 
+        /// each refer to a file to be deleted</param>
+        /// <returns>bool</returns>
+        public static bool DeleteSpecificFiles(string[] filePaths)
+        {
+            try
+            {
+                foreach (string filePath in filePaths)
+                {
+                    if (File.Exists(filePath))
+                    {
+                        File.Delete(filePath);
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+            return true;
         }
     }
 

@@ -77,7 +77,7 @@ namespace PLM.Controllers
                     //fName = file.FileName;
                     if (file != null && file.ContentLength > 0)
                     {
-                        string moduleDirectory = ("/PERCEPTUAL-LEARNING/Content/Images/PLM/" + Session["upload"].ToString() + "/");
+                        string moduleDirectory = ("/PerceptualLearning/Content/Images/PLM/" + Session["upload"].ToString() + "/");
                         if (!Directory.Exists(moduleDirectory))
                         {
                             Directory.CreateDirectory(moduleDirectory);

@@ -224,7 +224,14 @@ namespace PLM.Controllers
             currentGuess.Answer = currentModule.Answers.ElementAt(answerIndex).AnswerString;
             currentGuess.ImageURL = currentModule.Answers.ElementAt(answerIndex).Pictures.ElementAt(pictureIndex).Location;
             currentGuess.possibleAnswers.Add(currentModule.Answers.ElementAt(answerIndex).AnswerString);
-            currentGuess.Attribution = currentModule.Answers.ElementAt(answerIndex).Pictures.ElementAt(pictureID).Attribution;
+            if (currentModule.Answers.ElementAt(answerIndex).Pictures.ElementAt(pictureID).Attribution == null)
+            {
+                currentGuess.Attribution = "";
+            }
+            else
+            {
+                currentGuess.Attribution = currentModule.Answers.ElementAt(answerIndex).Pictures.ElementAt(pictureID).Attribution;
+            }
 
             GeneratedGuessIDs.Add(answerIndex);
             GenerateWrongAnswers();
