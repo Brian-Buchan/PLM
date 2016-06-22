@@ -7,6 +7,7 @@ using System.IO;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Net;
+using PLM.Extensions;
 
 namespace PLM.Controllers
 {
@@ -50,15 +51,41 @@ namespace PLM.Controllers
             return new HttpStatusCodeResult(HttpStatusCode.OK);
         }
 
+        [HttpPost]
+        public ActionResult Save()
+        {
+            bool willSave;
+            string valueFromPost = Request.Form.Get("willSave");
+
+            //try and parse the value sent from the form
+            if (Boolean.TryParse(valueFromPost, out willSave))
+            {
+                if (willSave)
+                {
+                    string result = PermaSave(HttpContext.Session.SessionID);
+                    return new HttpStatusCodeResult(HttpStatusCode.OK);
+                }
+                //TODO: Discard Changes
+                else
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.OK);
+                }
+            }
+            else return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+        }
+
         /// <summary>
         /// Saves an image from data obtained from a POST.
         /// Returns the filepath if it succeeds.
         /// Returns "FAILED" if there is an exception, or the specified file format isn't supported.
         /// Returns "TOO LARGE" if the image size is greater that 200000 bytes (200KB).
         /// </summary>
-        /// <param name="fromPost">The POST data in the following format: "data:image/[FILEEXTENSION];base64,[IMAGEDATA]",
-        /// where [FILEEXTENSION] is either "jpeg" or "png", and [IMAGEDATA] is an image in Base64 encoding.</param>
-        /// <param name="id">The id of the image that was edited. Will be used to discriminate which image to overwrite.</param>
+        /// <param name="fromPost">The POST data in the following format: 
+        /// "data:image/[FILEEXTENSION];base64,[IMAGEDATA]",
+        /// where [FILEEXTENSION] is either "jpeg" or "png", and 
+        /// [IMAGEDATA] is an image in Base64 encoding.</param>
+        /// <param name="id">The id of the image that was edited. 
+        /// Will be used to discriminate which image to overwrite.</param>
         /// <returns>string</returns>
         [NonAction]
         private string SaveImage(string fromPost, string id)
@@ -96,6 +123,9 @@ namespace PLM.Controllers
                 //add the image ID, with a discriminating exclamation point (!)
                 TempFileName = TempFileName + "!" + id;
 
+                //add the user's sessionID, with a discriminating caret (^)
+                TempFileName = HttpContext.Session.SessionID + "^" + TempFileName;
+
                 //add the file extension
                 TempFileName = TempFileName + "." + imageFormat;
 
@@ -125,6 +155,36 @@ namespace PLM.Controllers
             {
                 return "FAILED";
             }
+        }
+
+        /// <summary>
+        /// Permanently save files in the tempUpload folder that contain 
+        /// the given session ID to the permUploads folder.
+        /// Returns "SAVED" if successful, 
+        /// "NO FILES" if there were no files found, 
+        /// or "FAILED" otherwise.
+        /// </summary>
+        /// <param name="sessionId">The session ID of the user.</param>
+        /// <returns>string</returns>
+        [NonAction]
+        private string PermaSave(string sessionId)
+        {
+            string dirPath = (Path.Combine(Server.MapPath("~/Content/Images/tempUploads/")));
+            string newDirPath = (Path.Combine(Server.MapPath("~/Content/Images/permUploads/")));
+
+            string[] filesToSave = Directory.GetFiles(dirPath, "*" + sessionId + "*");
+
+            if (filesToSave.Length == 0)
+            {
+                return "NO FILES";
+            }
+
+            if (FileManipExtensions.MoveSpecificFiles(filesToSave, newDirPath, true))
+            {
+                Session.Abandon();
+                return "SAVED";
+            }
+            else return "FAILED";
         }
     }
 }

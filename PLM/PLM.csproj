@@ -1250,6 +1250,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Content\Images\permUploads\" />
     <Folder Include="Content\Images\Profile\" />
     <Folder Include="Content\Images\tempUploads\" />
   </ItemGroup>
