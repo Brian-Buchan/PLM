@@ -149,7 +149,7 @@ namespace PLM.Controllers
             Picture picture = db.Pictures.Find(id);
             db.Pictures.Remove(picture);
             db.SaveChanges();
-            Directory.Delete(picture.Location);
+            System.IO.File.Delete(picture.Location);
             return RedirectToAction("edit", new { controller = "Answers", id = picture.AnswerID});
         }
 

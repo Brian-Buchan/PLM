@@ -25,7 +25,7 @@ namespace PLM.Controllers
 
             var db = new ApplicationDbContext();
             var modules = from u in db.Modules
-                        select u;
+                          select u;
 
             if (!String.IsNullOrEmpty(searchString))
             {
@@ -82,7 +82,7 @@ namespace PLM.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include="ModuleID,Name,CategoryId,Description,DefaultNumAnswers,DefaultTime,DefaultNumQuestions,isPrivate")] Module module)
+        public ActionResult Create([Bind(Include = "ModuleID,Name,CategoryId,Description,DefaultNumAnswers,DefaultTime,DefaultNumQuestions,isPrivate")] Module module)
         {
             if (ModelState.IsValid)
             {
@@ -98,7 +98,7 @@ namespace PLM.Controllers
                 db.Modules.Add(module);
                 db.SaveChanges();
                 PopulateCategoryDropDownList(module.CategoryId);
-                return RedirectToAction("Index", new { controller = "Profile"});
+                return RedirectToAction("Index", new { controller = "Profile" });
             }
 
             return View(module);
@@ -165,6 +165,20 @@ namespace PLM.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             Module module = db.Modules.Find(id);
+
+            for (int m = module.Answers.Count; m < 0; m--)
+            {
+                Answer ansToDelete = db.Answers.Find(module.Answers.ElementAt(m - 1).AnswerID);
+
+                for (int a = answer.Pictures.Count; a > 0; a--)
+                {
+                    Picture picToDelete = db.Pictures.Find(answer.Pictures.ElementAt(a - 1).PictureID);
+                    db.Pictures.Remove(picToDelete);
+                    System.IO.File.Delete(picToDelete.Location);
+                }
+            }
+
+
             db.Modules.Remove(module);
             db.SaveChanges();
             return RedirectToAction("Index", new { controller = "Profile" });
