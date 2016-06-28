@@ -190,12 +190,14 @@ namespace PLM.Controllers
                             Directory.CreateDirectory(moduleDirectory);
                         }
                         path = moduleDirectory + fName;
-                        relpath = ("/PerceptualLearning/Content/Images/PLM/" + Session["upload"].ToString() + "/" + fName);
+
+                        System.IO.File.Create(path);
+
                         file.SaveAs(path);
 
                         string newfName = (picture.Answer.AnswerString + "-" + picture.Answer.PictureCount.ToString());
-                        string newpath = ("/PerceptualLearning/Content/Images/PLM/" + Session["upload"].ToString() + "/" + newfName);
-                        System.IO.File.Copy(path, newpath);
+                        relpath = ("/PerceptualLearning/Content/Images/PLM/" + Session["upload"].ToString() + "/" + newfName + ".jpg");
+                        System.IO.File.Copy(path, relpath);
                         System.IO.File.Delete(path);
 
                         db.SaveChanges();
