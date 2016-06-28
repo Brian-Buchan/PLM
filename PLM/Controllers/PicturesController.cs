@@ -191,6 +191,7 @@ namespace PLM.Controllers
                         path = moduleDirectory + fName;
                         // Saves the file through the HttpPostedFileBase class
                         file.SaveAs(path);
+                        //string filetype = file.ContentType;
 
                         // Then renames that image to the correct name based off the answer
                         // And number of picturs per answer, then deletes the old picture
