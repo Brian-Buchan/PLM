@@ -182,7 +182,7 @@ namespace PLM.Controllers
                     //Save file content goes here
                     //fName = file.FileName;
                     picture.Answer.PictureCount++;
-                    fName = (picture.Answer.AnswerString + picture.Answer.PictureCount.ToString());
+                    fName = (picture.Answer.AnswerString + "-" + picture.Answer.PictureCount.ToString());
                     if (file != null && file.ContentLength > 0)
                     {
                         string moduleDirectory = ("/PerceptualLearning/Content/Images/PLM/" + Session["upload"].ToString() + "/");
