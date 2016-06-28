@@ -193,10 +193,10 @@ namespace PLM.Controllers
                         relpath = ("/PerceptualLearning/Content/Images/PLM/" + Session["upload"].ToString() + "/" + fName);
                         file.SaveAs(path);
 
-                        //string newfName = (picture.Answer.AnswerString + "-" + picture.Answer.PictureCount.ToString());
-                        //string newpath = ()
-                        //System.IO.File.
-
+                        string newfName = (picture.Answer.AnswerString + "-" + picture.Answer.PictureCount.ToString());
+                        string newpath = ("/PerceptualLearning/Content/Images/PLM/" + Session["upload"].ToString() + "/" + newfName);
+                        System.IO.File.Copy(path, newpath);
+                        System.IO.File.Delete(path);
 
                         db.SaveChanges();
                     }
