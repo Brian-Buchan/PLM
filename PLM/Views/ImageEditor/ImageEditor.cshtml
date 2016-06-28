@@ -11,6 +11,7 @@
         src="@Url.Content("~/pixie-image-editor/pixie/pixie-integrate.js")"></script>
 
 <button id="save" name="save" onclick="saveAll()">Save Changes</button>
+<button id="discard" name="discard" onclick="discardChanges()">Discard Changes</button>
 
 <script>
     function saveAll() {
@@ -20,6 +21,23 @@
             data: { willSave: "True" },
             success: function (response) {
                 alert('Images saved successfully!');
+            },
+            error: function (xhr, status, text) {
+                alert(text);
+            }
+        });
+    }
+
+    function discardChanges() {
+        $.ajax({
+            type: "POST",
+            url: '/ImageEditor/Save',
+            data: { willSave: "False" },
+            success: function (response) {
+                alert('Changes Discarded');
+            },
+            error: function (xhr, status, text) {
+                alert(text);
             }
         });
     }

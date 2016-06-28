@@ -31,7 +31,7 @@ function isGuessRight(answer, guess) {
         if (getCookie("muteSound") !== "true") {
             document.getElementById("audioCorrect").play();
         }
-        $("#resultText").text("Indubitably, the correct answer is in fact " + answer);
+        $("#resultText").text("Yes, the correct answer is " + answer);
         reveal();
         showNext();
         return true;
@@ -40,7 +40,7 @@ function isGuessRight(answer, guess) {
         if (getCookie("muteSound") !== "true") {
             document.getElementById("audioIncorrect").play();
         }
-        $("#resultText").text("Preposterous, the correct answer was actually " + answer);
+        $("#resultText").text("Sorry, the correct answer was actually " + answer);
         reveal();
         showNext();
         return false;
