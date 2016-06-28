@@ -105,7 +105,7 @@ namespace PLM.Controllers
             {
                 db.Reports.Add(report);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("YourReports");
             }
 
             return View(report);
@@ -139,7 +139,7 @@ namespace PLM.Controllers
 
                 db.Entry(report).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("YourReports");
             }
             return View(report);
         }
@@ -167,7 +167,7 @@ namespace PLM.Controllers
             Report report = db.Reports.Find(id);
             db.Reports.Remove(report);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("YourReports");
         }
 
         protected override void Dispose(bool disposing)

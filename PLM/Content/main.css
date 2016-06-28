@@ -655,7 +655,7 @@ ul.sub-menu {
   display: table-cell;
   vertical-align: middle;
   width: 100%;
-  position: statice;
+  position: static;
 }
 
 

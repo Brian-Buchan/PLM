@@ -194,8 +194,8 @@ namespace PLM.Controllers
 
                         // Then renames that image to the correct name based off the answer
                         // And number of picturs per answer, then deletes the old picture
-                        string newfName = (picture.Answer.AnswerString + "-" + picture.Answer.PictureCount.ToString());
-                        relpath = ("/PerceptualLearning/Content/Images/PLM/" + Session["upload"].ToString() + "/" + newfName + ".jpg");
+                        string newfName = (picture.Answer.AnswerString + "-" + picture.Answer.PictureCount.ToString() + ".jpg");
+                        relpath = (moduleDirectory + newfName);
                         System.IO.File.Copy(path, relpath);
                         System.IO.File.Delete(path);
 

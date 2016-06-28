@@ -65,33 +65,35 @@ namespace PLM.Controllers
         {
             Session["upload"] = UserId;
             bool isSavedSuccessfully = true;
-            string fName = "profilePicture.jpg";
+            string fName = "";
             string path = "";
             string relpath = "";
-            //try
-            //{
+            try
+            {
                 foreach (string fileName in Request.Files)
                 {
                     HttpPostedFileBase file = Request.Files[fileName];
-                    //Save file content goes here
-                    //fName = file.FileName;
+                    fName = file.FileName;
                     if (file != null && file.ContentLength > 0)
                     {
-                        string moduleDirectory = ("/PerceptualLearning/Content/Images/PLM/" + Session["upload"].ToString() + "/");
-                        if (!Directory.Exists(moduleDirectory))
+                        string imageDirectory = ("/PerceptualLearning/Content/Images/Profiles/" + Session["upload"].ToString() + "/");
+                        if (!Directory.Exists(imageDirectory))
                         {
-                            Directory.CreateDirectory(moduleDirectory);
+                            Directory.CreateDirectory(imageDirectory);
                         }
-                        path = moduleDirectory + fName;
-                        relpath = ("Content/Images/PLM/" + Session["upload"].ToString() + "/" + fName);
+                        path = imageDirectory + fName;
                         file.SaveAs(path);
+                        
+                        relpath = (imageDirectory + "profilePicture.jpg");
+                        System.IO.File.Copy(path, relpath, true);
+                        System.IO.File.Delete(path);
                     }
                 }
-            //}
-            //catch (Exception ex)
-            //{
-            //    isSavedSuccessfully = false;
-            //}
+            }
+            catch (Exception ex)
+            {
+                isSavedSuccessfully = false;
+            }
 
             if (isSavedSuccessfully)
             {
