@@ -68,7 +68,7 @@ namespace PLM.Controllers
         {
             //Update the user's score and time
             ((UserGameSession)Session["userGameSession"]).Score = Score;
-            ViewBag.Progress = ((UserGameSession)Session["userGameSession"]).currentQuestion;
+            ViewBag.Progress = ((UserGameSession)Session["userGameSession"]).currentQuestion + 1;
             ViewBag.TotalQuestions = ((UserGameSession)Session["userGameSession"]).numQuestions;
             ((UserGameSession)Session["userGameSession"]).timeLeft = TimeSpan.Parse(Time);
             if (IsGameDone())
