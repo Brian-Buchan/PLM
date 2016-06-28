@@ -38,13 +38,13 @@ namespace PLM.Controllers
             if (result == "FAILED")
             {
                 return new HttpStatusCodeResult(HttpStatusCode.InternalServerError,
-                        "Something went wrong with your request. Contact an administrator");
+                        "Something went wrong with your request. \nContact an administrator.");
             }
             else if (result=="TOO LARGE")
             {
                 return new HttpStatusCodeResult(HttpStatusCode.RequestEntityTooLarge, 
-                "Image file size larger than 200 KB. Try lowering the quality when you save," + 
-                " or resize the image to a smaller size.");
+                "Image file size larger than 200 KB. \nTry lowering the quality when you save," + 
+                " \nor resize the image to a smaller size.");
             }
 
             //return View();
@@ -63,15 +63,46 @@ namespace PLM.Controllers
                 if (willSave)
                 {
                     string result = PermaSave(HttpContext.Session.SessionID);
-                    return new HttpStatusCodeResult(HttpStatusCode.OK);
+
+                    switch (result)
+                    {
+                        case "NO FILES":
+                            return new HttpStatusCodeResult(HttpStatusCode.BadRequest, 
+                                "There are no files to save.");
+
+                        case "SAVED":
+                            return new HttpStatusCodeResult(HttpStatusCode.OK, 
+                                "Files Saved. Refreshing page.");
+
+                        case "FAILED":
+                            return new HttpStatusCodeResult(HttpStatusCode.InternalServerError, 
+                                "There was an error processing your request. \nContact an administrator.");
+                        default:
+                            return new HttpStatusCodeResult(HttpStatusCode.InternalServerError,
+                                "Something went wrong, and we're not sure what. \nContact an administrator immediately.");
+                    }
                 }
-                //TODO: Discard Changes
                 else
                 {
-                    return new HttpStatusCodeResult(HttpStatusCode.OK);
+                    string result = DiscardChanges(HttpContext.Session.SessionID);
+
+                    switch (result)
+                    {
+                        case "DONE":
+                            return new HttpStatusCodeResult(HttpStatusCode.OK, 
+                                "Changes Discarded. Refreshing page.");
+                        case "ERROR":
+                            return new HttpStatusCodeResult(HttpStatusCode.InternalServerError,
+                                "There was an error processing your request. \nContact an administrator.");
+
+                        default:
+                            return new HttpStatusCodeResult(HttpStatusCode.InternalServerError,
+                                "Something went wrong, and we're not sure what. \nContact an administrator immediately.");
+                    }
                 }
             }
-            else return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            else return new HttpStatusCodeResult(HttpStatusCode.BadRequest, 
+                "There was an error processing your request. \nContact an administrator.");
         }
 
         /// <summary>
@@ -181,10 +212,27 @@ namespace PLM.Controllers
 
             if (FileManipExtensions.MoveSpecificFiles(filesToSave, newDirPath, true))
             {
-                Session.Abandon();
                 return "SAVED";
             }
             else return "FAILED";
+        }
+
+        /// <summary>
+        /// Discard all the images in the temp folder with the given sessionID.
+        /// Returns "DONE" if successful, "ERROR" if the deletion fails at any point.
+        /// </summary>
+        /// <param name="sessionId">The sessionID to use when deleting files</param>
+        /// <returns>string</returns>
+        [NonAction]
+        private string DiscardChanges(string sessionId)
+        {
+            string dirPath = (Path.Combine(Server.MapPath("~/Content/Images/tempUploads/")));
+            string[] filesToDiscard = Directory.GetFiles(dirPath, "*" + sessionId + "*");
+            if (FileManipExtensions.DeleteSpecificFiles(filesToDiscard))
+            {
+                return "DONE";
+            }
+            else return "ERROR";
         }
     }
 }
