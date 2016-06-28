@@ -1,10 +1,10 @@
 ﻿@model PLM.Models.Report
 
 @{
-    ViewBag.Title = "Create";
+    ViewBag.Title = "Report Module";
 }
 
-<h2>Create</h2>
+<h2>Report a Module</h2>
 
 
 @using (Html.BeginForm()) 
@@ -12,7 +12,6 @@
     @Html.AntiForgeryToken()
     //model.userID = ViewBag.UserID;
     <div class="form-horizontal" >
-        <h4>Report</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group" style="visibility:hidden">

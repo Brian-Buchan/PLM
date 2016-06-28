@@ -22,6 +22,7 @@ namespace PLM.Models
         [Required]
         [Display(Name = "User who reported the issue")]
         public string userID { get; set; }
+        [Display(Name = "Type of report")]
         public virtual ReportCategoryEnum.reportCategory category {get; set;}
     }
 } 
