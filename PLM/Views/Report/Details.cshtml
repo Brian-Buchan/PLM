@@ -18,7 +18,7 @@
             @Html.DisplayFor(model => model.moduleID)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.userID)
+            User who reported it
         </dt>
 
         <dd>
@@ -31,7 +31,9 @@
         <dd>
             @Html.DisplayFor(model => model.category)
         </dd>
+        
     </dl>
+    <hr />
     <h1>@Html.DisplayNameFor(model => model.description)</h1>
     <div class="descriptionBox">
         @Html.DisplayFor(model => model.description)
