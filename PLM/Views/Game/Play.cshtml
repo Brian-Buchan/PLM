@@ -102,7 +102,7 @@
             </div>
         }
         <br />
-        @Html.ActionLink("Quit Module", "Index", "Modules")
+        @Html.ActionLink("Quit Game", "Quit", "Game", null, new { onclick = "return confirm('Are you sure? Your progress will not be saved.');"})
         <br />
         <button onclick="ToggleMute()">Mute/Unmute</button>
         <script type="text/javascript" src="~/Scripts/gameplay.js"></script>
