@@ -83,7 +83,7 @@ namespace PLM.Controllers
                         }
                         path = imageDirectory + fName;
                         file.SaveAs(path);
-                        string filetype = file.ContentType;
+                        string filetype = Path.GetExtension(path);
                         
                         relpath = (imageDirectory + "profilePicture" + filetype);
                         System.IO.File.Copy(path, relpath, true);
