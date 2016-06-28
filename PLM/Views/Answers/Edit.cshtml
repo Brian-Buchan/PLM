@@ -79,7 +79,7 @@
                         <div class="portfolio-wrapper defaultHeight">
                             <div class="portfolio-single">
                                 <div class="portfolio-thumb img-hover">
-                                    <img onerror="this.src = '/PerceptualLearning/Content/images/Error.bmp';" src="@pic.Location" id="@pic.PictureID" class="img-responsive moduleImage" alt="Answer Image">
+                                    <img onerror="this.src = '/PerceptualLearning/Content/images/Error.bmp';" src="@pic.Location" id="@pic.PictureID" title="@pic.AnswerID" class="img-responsive moduleImage" alt="Answer Image">
                                 </div>
                             </div>
                             <div class="portfolio-info ">
@@ -113,17 +113,45 @@
 <script data-preload="true" data-path="@Url.Content("~/pixie-image-editor/pixie")" src="@Url.Content("~/pixie-image-editor/pixie/pixie-integrate.js")"></script>
 
 <script>
+    function saveAll() {
+        $.ajax({
+            type: "POST",
+            url: '/ImageEditor/Save',
+            data: { willSave: "True" },
+            success: function (response) {
+                alert('Images saved successfully!');
+            },
+            error: function (xhr, status, text) {
+                alert(text);
+            }
+        });
+    }
+
+    function discardChanges() {
+        $.ajax({
+            type: "POST",
+            url: '/ImageEditor/Save',
+            data: { willSave: "False" },
+            success: function (response) {
+                alert('Changes Discarded');
+            },
+            error: function (xhr, status, text) {
+                alert(text);
+            }
+        });
+    }
+
     var myPixie = Pixie.setOptions({
         replaceOriginal: true,
         appendTo: 'body',
         onSave: function (data, img) {
             $.ajax({
                 type: 'POST',
-                url: '/Answers/UpdateImage',
-                //need to somehow pass ID of image that was modified.
-                data: { imgData: data },
+                url: '/ImageEditor/ImageEditor',
+                data: { imgData: data, imgId: img.id },
                 success: function (response) {
-                    alert('Image saved successfully!');
+                    alert('Image changes have been saved successfully. \nRemember to ' +
+                    'click the save button to finalize your changes.');
                 },
                 error: function (xhr, status, text) {
                     alert(text);
@@ -133,7 +161,7 @@
         }
     });
 
-    $('.moduleImage').on('click', function (e) {
+    $('#imgEdit').on('click', function (e) {
         myPixie.open({
             url: e.target.src,
             image: e.target
