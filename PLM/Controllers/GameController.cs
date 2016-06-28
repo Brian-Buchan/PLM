@@ -40,8 +40,7 @@ namespace PLM.Controllers
         public ActionResult Complete(int score)
         {
             ViewBag.UserID = User.Identity.GetUserId();
-            //ViewBag.ModuleID = currentModule.ModuleID;
-            ViewBag.ModuleID = 1;
+            ViewBag.ModuleID = currentModule.ModuleID;
             //SaveScore(score);
 
             return View(score);
@@ -100,22 +99,32 @@ namespace PLM.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Setup([Bind(Include="numAnswers,numQuestions,time")] UserGameSession ugs)
         {
-            int timeHours = (ugs.time / 60);
-            int timeMinutes = (ugs.time % 60);
-            ((UserGameSession)Session["userGameSession"]).numAnswers = ugs.numAnswers;
-            ((UserGameSession)Session["userGameSession"]).numQuestions = ugs.numQuestions;
-            ((UserGameSession)Session["userGameSession"]).time = ugs.time;
-            ((UserGameSession)Session["userGameSession"]).timeLeft = new TimeSpan(timeHours, timeMinutes, 0);
-            
-            //This line is for testing the "Complete" action and the timer functionality.
-            //Comment out the line of code just above it, then uncomment this code to enter "testing mode",
-            //where the timer will always start at 30 seconds.
+            try
+            {
+                int timeHours = (ugs.time / 60);
+                int timeMinutes = (ugs.time % 60);
+                ((UserGameSession)Session["userGameSession"]).numAnswers = ugs.numAnswers;
+                ((UserGameSession)Session["userGameSession"]).numQuestions = ugs.numQuestions;
+                ((UserGameSession)Session["userGameSession"]).time = ugs.time;
+                ((UserGameSession)Session["userGameSession"]).timeLeft = new TimeSpan(timeHours, timeMinutes, 0);
 
-            //((UserGameSession)Session["userGameSession"]).timeLeft = new TimeSpan(0, 0, 30);
+                //This line is for testing the "Complete" action and the timer functionality.
+                //Comment out the line of code just above it, then uncomment this code to enter "testing mode",
+                //where the timer will always start at 30 seconds.
 
+                //((UserGameSession)Session["userGameSession"]).timeLeft = new TimeSpan(0, 0, 30);
+            }
+            catch(Exception)
+            {
+                RedirectToAction("Error");
+            }
             return RedirectToAction("Play");
         }
 
+        public ActionResult Error()
+        {
+            return View();
+        }
         /// <summary>
         /// Check to make sure that there are enough answers to generate the required amount.
         /// If not, set the default number of answers to something that will not break the program.

@@ -162,3 +162,11 @@ input[type='range']::-webkit-slider-thumb {
     height: 100%;
     vertical-align: middle;
 }
+.descriptionBox{
+    width:400px; 
+    height:100px; 
+    overflow:hidden;
+}
+dl{
+
+}
