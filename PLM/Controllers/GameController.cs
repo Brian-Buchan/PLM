@@ -40,7 +40,7 @@ namespace PLM.Controllers
         public ActionResult Complete(int score)
         {
             ViewBag.UserID = User.Identity.GetUserId();
-            ViewBag.ModuleID = currentGameSession.currentModule.ModuleID;
+            ViewBag.ModuleID = ((UserGameSession)Session["userGameSession"]).currentModule.ModuleID;
             //SaveScore(score);
 
             return View(score);
