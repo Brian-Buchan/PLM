@@ -113,33 +113,33 @@
 <script data-preload="true" data-path="@Url.Content("~/pixie-image-editor/pixie")" src="@Url.Content("~/pixie-image-editor/pixie/pixie-integrate.js")"></script>
 
 <script>
-    function saveAll() {
-        $.ajax({
-            type: "POST",
-            url: '/ImageEditor/Save',
-            data: { willSave: "True" },
-            success: function (response) {
-                alert('Images saved successfully!');
-            },
-            error: function (xhr, status, text) {
-                alert(text);
-            }
-        });
-    }
+    //function saveAll() {
+    //    $.ajax({
+    //        type: "POST",
+    //        url: '/ImageEditor/Save',
+    //        data: { willSave: "True" },
+    //        success: function (response) {
+    //            alert('Images saved successfully!');
+    //        },
+    //        error: function (xhr, status, text) {
+    //            alert(text);
+    //        }
+    //    });
+    //}
 
-    function discardChanges() {
-        $.ajax({
-            type: "POST",
-            url: '/ImageEditor/Save',
-            data: { willSave: "False" },
-            success: function (response) {
-                alert('Changes Discarded');
-            },
-            error: function (xhr, status, text) {
-                alert(text);
-            }
-        });
-    }
+    //function discardChanges() {
+    //    $.ajax({
+    //        type: "POST",
+    //        url: '/ImageEditor/Save',
+    //        data: { willSave: "False" },
+    //        success: function (response) {
+    //            alert('Changes Discarded');
+    //        },
+    //        error: function (xhr, status, text) {
+    //            alert(text);
+    //        }
+    //    });
+    //}
 
     var myPixie = Pixie.setOptions({
         replaceOriginal: true,
@@ -148,7 +148,7 @@
             $.ajax({
                 type: 'POST',
                 url: '/ImageEditor/ImageEditor',
-                data: { imgData: data, imgId: img.id },
+                data: { imgData: data },
                 success: function (response) {
                     alert('Image changes have been saved successfully. \nRemember to ' +
                     'click the save button to finalize your changes.');

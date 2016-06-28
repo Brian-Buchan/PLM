@@ -155,11 +155,12 @@ input[type='range']::-webkit-slider-thumb {
 
 #container img {
    width: 100%;
+   height: 480px;
    vertical-align: middle;
 }
 .helper{
      display: inline-block;
-    height: 100%;
+    height: 480px;
     vertical-align: middle;
     width:100%;
 }
