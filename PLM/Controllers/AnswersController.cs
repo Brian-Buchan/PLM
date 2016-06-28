@@ -121,9 +121,7 @@ namespace PLM.Controllers
             //Otherwise, if the image is saved as a png, the post results in: "data:image/png;base64,[IMAGEDATA]",
             //where "[IMAGEDATA]" is a base64 string that converts to a png image.
 
-            string imgId = Request.Form.Get("imgId");
-
-            string result = SaveImage(Request.Form.Get("imgData"), imgId);
+            string result = SaveImage(Request.Form.Get("imgData"));
 
             if (result == "FAILED")
             {
@@ -139,60 +137,6 @@ namespace PLM.Controllers
 
             //return View();
             return new HttpStatusCodeResult(HttpStatusCode.OK);
-        }
-
-        [HttpPost]
-        public ActionResult Save()
-        {
-            bool willSave;
-            string valueFromPost = Request.Form.Get("willSave");
-
-            //try and parse the value sent from the form
-            if (Boolean.TryParse(valueFromPost, out willSave))
-            {
-                if (willSave)
-                {
-                    string result = PermaSave(HttpContext.Session.SessionID);
-
-                    switch (result)
-                    {
-                        case "NO FILES":
-                            return new HttpStatusCodeResult(HttpStatusCode.BadRequest,
-                                "There are no files to save.");
-
-                        case "SAVED":
-                            return new HttpStatusCodeResult(HttpStatusCode.OK,
-                                "Files Saved. Refreshing page.");
-
-                        case "FAILED":
-                            return new HttpStatusCodeResult(HttpStatusCode.InternalServerError,
-                                "There was an error processing your request. \nContact an administrator.");
-                        default:
-                            return new HttpStatusCodeResult(HttpStatusCode.InternalServerError,
-                                "Something went wrong, and we're not sure what. \nContact an administrator immediately.");
-                    }
-                }
-                else
-                {
-                    string result = DiscardChanges(HttpContext.Session.SessionID);
-
-                    switch (result)
-                    {
-                        case "DONE":
-                            return new HttpStatusCodeResult(HttpStatusCode.OK,
-                                "Changes Discarded. Refreshing page.");
-                        case "ERROR":
-                            return new HttpStatusCodeResult(HttpStatusCode.InternalServerError,
-                                "There was an error processing your request. \nContact an administrator.");
-
-                        default:
-                            return new HttpStatusCodeResult(HttpStatusCode.InternalServerError,
-                                "Something went wrong, and we're not sure what. \nContact an administrator immediately.");
-                    }
-                }
-            }
-            else return new HttpStatusCodeResult(HttpStatusCode.BadRequest,
-                "There was an error processing your request. \nContact an administrator.");
         }
         
         // GET: /Answers/Delete/5
@@ -244,7 +188,7 @@ namespace PLM.Controllers
         /// Will be used to discriminate which image to overwrite.</param>
         /// <returns>string</returns>
         [NonAction]
-        private string SaveImage(string fromPost, string id)
+        private string SaveImage(string fromPost)
         {
             try
             {
@@ -276,12 +220,6 @@ namespace PLM.Controllers
                 TempFileName = TempFileName.Replace("+", "");
                 TempFileName = TempFileName.Replace(@"/", "");
 
-                //add the image ID, with a discriminating exclamation point (!)
-                TempFileName = TempFileName + "!" + id;
-
-                //add the user's sessionID, with a discriminating caret (^)
-                TempFileName = HttpContext.Session.SessionID + "^" + TempFileName;
-
                 //add the file extension
                 TempFileName = TempFileName + "." + imageFormat;
 
@@ -311,53 +249,6 @@ namespace PLM.Controllers
             {
                 return "FAILED";
             }
-        }
-
-        /// <summary>
-        /// Permanently save files in the tempUpload folder that contain 
-        /// the given session ID to the permUploads folder.
-        /// Returns "SAVED" if successful, 
-        /// "NO FILES" if there were no files found, 
-        /// or "FAILED" otherwise.
-        /// </summary>
-        /// <param name="sessionId">The session ID of the user.</param>
-        /// <returns>string</returns>
-        [NonAction]
-        private string PermaSave(string sessionId)
-        {
-            string dirPath = (Path.Combine(Server.MapPath("~/Content/Images/tempUploads/")));
-            string newDirPath = (Path.Combine(Server.MapPath("~/Content/Images/permUploads/")));
-
-            string[] filesToSave = Directory.GetFiles(dirPath, "*" + sessionId + "*");
-
-            if (filesToSave.Length == 0)
-            {
-                return "NO FILES";
-            }
-
-            if (FileManipExtensions.MoveSpecificFiles(filesToSave, newDirPath, true))
-            {
-                return "SAVED";
-            }
-            else return "FAILED";
-        }
-
-        /// <summary>
-        /// Discard all the images in the temp folder with the given sessionID.
-        /// Returns "DONE" if successful, "ERROR" if the deletion fails at any point.
-        /// </summary>
-        /// <param name="sessionId">The sessionID to use when deleting files</param>
-        /// <returns>string</returns>
-        [NonAction]
-        private string DiscardChanges(string sessionId)
-        {
-            string dirPath = (Path.Combine(Server.MapPath("~/Content/Images/tempUploads/")));
-            string[] filesToDiscard = Directory.GetFiles(dirPath, "*" + sessionId + "*");
-            if (FileManipExtensions.DeleteSpecificFiles(filesToDiscard))
-            {
-                return "DONE";
-            }
-            else return "ERROR";
         }
     }
 }
