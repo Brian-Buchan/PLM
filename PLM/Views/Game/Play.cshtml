@@ -48,7 +48,7 @@
             <p id="displayScore">@Model.Score</p>
             <br/>
             <p>Question @ViewBag.Progress out of @ViewBag.TotalQuestions</p>
-            <br />
+            <br/>
             <p>Time Left:</p>
             <p><div id="clockdiv">@Model.Time.ToString()</div></p>
             
@@ -79,7 +79,7 @@
             }());
         </script>
         <div>
-            <div id="answerButtons">
+            <div id="answerButtons" tabindex="0">
                 @for (int i = 0; i < Model.possibleAnswers.Count; i++)
                 {
                     @*the javascript "this" keyword is used in the function call to refer to the sender, instead of an id.*@

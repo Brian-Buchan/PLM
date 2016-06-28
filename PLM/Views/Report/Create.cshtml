@@ -18,7 +18,7 @@
         <div class="form-group" style="visibility:hidden">
             @Html.LabelFor(model => model.moduleID, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.moduleID, new { htmlAttributes = new { disabled = "disabled", @class = "form-control" } })
+                @Html.EditorFor(model => model.moduleID, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.moduleID, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -35,7 +35,7 @@
         <div class="form-group" style="visibility:hidden">
             @Html.LabelFor(model => model.userID, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.userID, new { htmlAttributes = new { disabled = "disabled", @class = "form-control" } })
+                @Html.EditorFor(model => model.userID, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.userID, "", new { @class = "text-danger" })
             </div>
         </div>

@@ -179,10 +179,8 @@ namespace PLM.Controllers
                 foreach (string fileName in Request.Files)
                 {
                     HttpPostedFileBase file = Request.Files[fileName];
-                    //Save file content goes here
-                    //fName = file.FileName;
+                    fName = file.FileName;
                     picture.Answer.PictureCount++;
-                    fName = (picture.Answer.AnswerString + picture.Answer.PictureCount.ToString());
                     if (file != null && file.ContentLength > 0)
                     {
                         string moduleDirectory = ("/PerceptualLearning/Content/Images/PLM/" + Session["upload"].ToString() + "/");
@@ -191,8 +189,16 @@ namespace PLM.Controllers
                             Directory.CreateDirectory(moduleDirectory);
                         }
                         path = moduleDirectory + fName;
-                        relpath = ("/PerceptualLearning/Content/Images/PLM/" + Session["upload"].ToString() + "/" + fName);
+                        // Saves the file through the HttpPostedFileBase class
                         file.SaveAs(path);
+
+                        // Then renames that image to the correct name based off the answer
+                        // And number of picturs per answer, then deletes the old picture
+                        string newfName = (picture.Answer.AnswerString + "-" + picture.Answer.PictureCount.ToString());
+                        relpath = ("/PerceptualLearning/Content/Images/PLM/" + Session["upload"].ToString() + "/" + newfName + ".jpg");
+                        System.IO.File.Copy(path, relpath);
+                        System.IO.File.Delete(path);
+
                         db.SaveChanges();
                     }
                 }
