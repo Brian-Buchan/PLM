@@ -60,12 +60,8 @@
     </form>
 </div>
 
-
 <div>
-    @{
-        Answer ans = Model.Answer;
-        Html.ActionLink("Back to List", "Create", "Answers", new { id = ans.AnswerID });
-    }
+    @Html.ActionLink("Back to List", "Create", "Answers", new { id = Model.Answer.Module.ModuleID }, null)
 </div>
 
 @section Scripts {
