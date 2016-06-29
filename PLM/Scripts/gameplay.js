@@ -4,6 +4,8 @@ var count = Number(document.getElementById("displayScore").innerText);
 var revealed = false;
 var intervalID;
 
+window.onload = CheckMute;
+
 //These cookie functions are from w3schools
 function setCookie(cname, cvalue, exdays) {
     var d = new Date();
@@ -86,16 +88,28 @@ function Correct() {
     document.getElementById("displayScore").innerText = count;
 }
 
+//This image only implementation of a mute button is from Tarun at 
+//http://stackoverflow.com/questions/22918220/how-to-create-a-only-mute-unmute-button-like-youtube-in-html
 //Toggle whether sound will play
-function ToggleMute() {
+function ToggleMute(img) {
     //if the muteSound cookie is set to true
     if (getCookie("muteSound") === "true") {
-        //set the cookie to false
+        //set the cookie to false and display the speaker symbol
         setCookie("muteSound", "false", 365);
+        img.src = "/Content/Images/speaker.png";
     }
     else {
-        //otherwise, set muteSound to true
+        //otherwise, set muteSound to true and display the mute symbol
         setCookie("muteSound", "true", 365);
+        img.src = "/Content/Images/mute.png";
+    }
+}
+
+function CheckMute() {
+    if (getCookie("muteSound") === "true") {
+        document.getElementById('soundToggle').setAttribute('src', '~/Content/Images/mute.png');
+    } else {
+        document.getElementById('soundToggle').setAttribute('src', '~/Content/Images/speaker.png');
     }
 }
 
