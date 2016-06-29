@@ -1,5 +1,6 @@
 ﻿@model PLM.Picture
 @{
+    int ModuleID = Model.Answer.ModuleID;
     ViewBag.Title = "Add Picture";
 }
 <head>
@@ -8,13 +9,6 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <title>Add Picture</title>
-    <link href="~/Content/bootstrap.min.css" rel="stylesheet">
-    <link href="~/Content/font-awesome.min.css" rel="stylesheet">
-    <link href="~/Content/animate.min.css" rel="stylesheet">
-    <link href="~/Conetnt/lightbox.css" rel="stylesheet">
-    <link href="~/Content/main.css" rel="stylesheet">
-    <link href="~/Content/responsive.css" rel="stylesheet">
-
     <link rel="shortcut icon" href="~/Content/images/ico/favicon.ico">
 </head>
 
@@ -69,7 +63,7 @@
 
 
 <div>
-    @Html.ActionLink("Back to List", "Index", new { controller = "Profile" })
+    @Html.ActionLink("Back to List", "Create", "Answers", new { id = ModuleID })
 </div>
 
 @section Scripts {

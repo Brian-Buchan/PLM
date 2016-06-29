@@ -14,7 +14,6 @@ namespace PLM.Controllers
 {
     public class PicturesController : Controller
     {
-        private Picture picture;
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: /Pictures/
@@ -55,6 +54,7 @@ namespace PLM.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Attribution,PictureID")] Picture picture, int? id) 
         {
+            ViewBag.AnswerID = id;
             if (ModelState.IsValid)
             {
                 //db.Entry(picture).State = EntityState.Modified;
