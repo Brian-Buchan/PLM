@@ -32,10 +32,8 @@ namespace PLM.Controllers
         //Module currentModule;
         //
         // GET: /Game/
-        public ActionResult Index()
-        {
-            return View();
-        }
+
+
 
         public ActionResult Complete(int score)
         {
@@ -66,7 +64,7 @@ namespace PLM.Controllers
         [HttpPost]
         public ActionResult Play(int Score, string Time)
         {
-            //Update the user's score and time
+            //Update the user's score, progress, and time
             ((UserGameSession)Session["userGameSession"]).Score = Score;
             ViewBag.Progress = ((UserGameSession)Session["userGameSession"]).currentQuestion + 1;
             ViewBag.TotalQuestions = ((UserGameSession)Session["userGameSession"]).numQuestions;
@@ -127,6 +125,13 @@ namespace PLM.Controllers
         {
             return View();
         }
+
+        public ActionResult Quit()
+        {
+            Session["userGameSession"] = null;
+            return RedirectToAction("Index", "Modules");
+        }
+
         /// <summary>
         /// Check to make sure that there are enough answers to generate the required amount.
         /// If not, set the default number of answers to something that will not break the program.
