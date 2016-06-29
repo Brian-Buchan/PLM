@@ -29,7 +29,10 @@ namespace PLM
         public virtual List<Answer> Answers { get; set; }
         public virtual ApplicationUser User { get; set; }
         public bool isPrivate { get; set; }
-
+        [Display(Name = "Response for correct answer")]
+        public string rightAnswerString { get; set; }
+        [Display(Name = "Response for incorrect answer")]
+        public string wrongAnswerString { get; set; }
         public virtual Category Category { get; set; }
     }
 }
