@@ -392,6 +392,7 @@
     <Content Include="Content\Images\lightbox\next.png" />
     <Content Include="Content\Images\lightbox\prev.png" />
     <Content Include="Content\Images\logo.png" />
+    <Content Include="Content\Images\mute.png" />
     <Content Include="Content\Images\portfolio-details\1.jpg" />
     <Content Include="Content\Images\portfolio\1.jpg" />
     <Content Include="Content\Images\portfolio\10.jpg" />
@@ -432,6 +433,7 @@
     <Content Include="Content\Images\services\2.png" />
     <Content Include="Content\Images\services\3.png" />
     <Content Include="Content\Images\services\4.png" />
+    <Content Include="Content\Images\speaker.png" />
     <Content Include="Content\lightbox.css" />
     <Content Include="Content\main.css" />
     <Content Include="Content\min\basic.min.css" />
