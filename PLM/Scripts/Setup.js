@@ -83,15 +83,25 @@ $('input[type="range"]').each(function () {
                 ',inset 16px 0 20px rgb(' + r2 + ',' + g2 + ',0)');
 
             //Time range slider
-            r3 = (nm.val() - 15); //sets the value for red between 0 and 120
-            r3 = ((60 - r3) + 60); //gets the value that's the opposite of the green number
-            r3 = (r3 / 120); //gets the ratio for that number (reducible to 0-8 eigths)
-            r3 = (r3 * 255); //convert to a useable value
-            r3 = Math.ceil(r3); //round up
+            //r3 = (nm.val() - 15); //sets the value for red between 0 and 120
+            //r3 = ((60 - r3) + 60); //gets the value that's the opposite of the green number
+            //r3 = (r3 / 120); //gets the ratio for that number (reducible to 0-8 eigths)
+            //r3 = (r3 * 255); //convert to a useable value
+            //r3 = Math.ceil(r3); //round up
 
-            g3 = ((nm.val() - 15) / 120); //gets a ratio (reducible to 0-8 eigths)
-            g3 = (g3 * 255); //convert to a useable value
-            g3 = Math.ceil(g3); //round up
+            //g3 = ((nm.val() - 15) / 120); //gets a ratio (reducible to 0-8 eigths)
+            //g3 = (g3 * 255); //convert to a useable value
+            //g3 = Math.ceil(g3); //round up
+
+            r3 = (nm.val() - 2); //red between 0 and 30 (16 steps)
+            r3 = ((15 - r3) + 15); //opposite
+            r3 = (r3 / 30); //gets ratio (fifteenths)
+            r3 = (r3 * 255);
+            r3 = Math.ceil(r3);
+
+            g3 = ((nm.val() - 2) / 30);
+            g3 = (g3 * 255);
+            g3 = Math.ceil(g3);
 
             nm.css('box-shadow', 'inset 0 0 16px rgb(' + r3 + ',' + g3 + ',0)' +
                 ',inset 16px 0 20px rgb(' + r3 + ',' + g3 + ',0)');

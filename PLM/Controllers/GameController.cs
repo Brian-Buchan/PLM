@@ -62,12 +62,24 @@ namespace PLM.Controllers
         }
 
         [HttpPost]
-        public ActionResult Play(int Score, string Time)
+        public ActionResult Play(int Score, string Time, string isCorrect)
         {
+            bool BoolIsCorrect;
+
             //Update the user's score, progress, and time
+
+            //If the isCorrect string is correctly parsed 
+            if (Boolean.TryParse(isCorrect, out BoolIsCorrect))
+            {
+                //If the question was answered correctly
+                if (BoolIsCorrect)
+                {
+                    //Increase the correct questions counter
+                    ((UserGameSession)Session["userGameSession"]).numCorrect += 1;
+                }
+            }
+
             ((UserGameSession)Session["userGameSession"]).Score = Score;
-            ViewBag.Progress = ((UserGameSession)Session["userGameSession"]).currentQuestion + 1;
-            ViewBag.TotalQuestions = ((UserGameSession)Session["userGameSession"]).numQuestions;
             ((UserGameSession)Session["userGameSession"]).timeLeft = TimeSpan.Parse(Time);
             if (IsGameDone())
             {
@@ -75,6 +87,9 @@ namespace PLM.Controllers
                 return RedirectToAction("Complete", new { Score = Score });
             }
             GenerateQuestionONEperPIC();
+            ViewBag.Progress = ((UserGameSession)Session["userGameSession"]).currentQuestion;
+            ViewBag.TotalQuestions = ((UserGameSession)Session["userGameSession"]).numQuestions;
+            ViewBag.numCorrect = ((UserGameSession)Session["userGameSession"]).numCorrect;
             currentGuess.Score = Score;
             currentGuess.Time = ((UserGameSession)Session["userGameSession"]).timeLeft;
             return View(currentGuess);
@@ -165,7 +180,7 @@ namespace PLM.Controllers
             }
             else
             {
-                //if the game is not over, and the list of pictures is exhausted
+                //if the game is not over, and the list of pictures is exhausted, reshuffle. Otherwise, continue.
             if (((UserGameSession)Session["userGameSession"]).currentQuestion.IsDivisible(
                 ((UserGameSession)Session["userGameSession"]).PictureIndices.Count - 1))
                 {

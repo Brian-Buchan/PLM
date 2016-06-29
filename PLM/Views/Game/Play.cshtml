@@ -16,23 +16,6 @@
     <link href="~/Content/responsive.css" rel="stylesheet">
     <link href="~/Content/test.css" rel="stylesheet">
     <script type="text/javascript" src="~/Scripts/moment.js"></script>
-    <script type="text/javascript">
-        //function startCountdown(time) {
-        //    var dur = moment.duration(time);
-        //    setInterval(function() {
-        //        dur = dur.subtract(1,'s');
-        //        $('#clockdiv').text(
-        //            ('0' + dur.hours()).slice(-2) + ':'
-        //            + ('0' + dur.minutes()).slice(-2) + ':'
-        //            + ('0' + dur.seconds()).slice(-2)
-        //            );
-        //        if (dur.hours() == 0 & dur.minutes() == 0 & dur.seconds() == 0) {
-        //            document.getElementById("GameForm").submit();
-        //        }
-        //    }, 1000);
-        //}
-    </script>
-
 </head>
 <body onload="startCountdown('@Model.Time.ToString()')">
     <audio id="audioCorrect" preload="auto">
@@ -48,13 +31,13 @@
             <p id="displayScore">@Model.Score</p>
             <br/>
             <p>Question @ViewBag.Progress out of @ViewBag.TotalQuestions</p>
+            <br />
+            <p>@ViewBag.numCorrect correct out of @ViewBag.TotalQuestions</p>
             <br/>
             <p>Time Left:</p>
             <p><div id="clockdiv">@Model.Time.ToString()</div></p>
             
         </div>
-
-
 
         <div id="container">
             <div class="helper">
@@ -62,22 +45,6 @@
             </div>
         </div>
             <p id="StoredAnswer" hidden="hidden">@Model.Answer</p>
-
-
-
-        <script type="text/javascript">
-            (function () {
-
-                var img = document.getElementById('container').firstChild;
-                img.onload = function () {
-                    if (img.height > img.width) {
-                        img.height = '100%';
-                        img.width = 'auto';
-                    }
-                };
-
-            }());
-        </script>
         <div>
             <div id="answerButtons" tabindex="0">
                 @for (int i = 0; i < Model.possibleAnswers.Count; i++)
@@ -96,6 +63,9 @@
         {
             <input id="Score" name="Score" hidden="hidden" type="number" value="@Model.Score" />
             <input id="Time" name="Time" hidden="hidden" type="text" value="@Model.Time.ToString()" />
+            <input type="radio" name="isCorrect" value="True" hidden="hidden" />
+            <input type="radio" name="isCorrect" value="False" hidden="hidden" checked="checked"/>
+
             <div id="nextButton" style="display:none;">
                 <button id="next" type="submit" value="">Next</button>
                 <h1 id="resultText">Correct</h1>

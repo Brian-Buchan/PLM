@@ -80,6 +80,8 @@ function reveal() {
 
 function Correct() {
     count = (parseInt(count) + 100);
+    //check the unchecked radio button (set "Correct" to true)
+    $('input[type="radio"]').not(':checked').prop("checked", true);
     document.getElementById("Score").value = count;
     document.getElementById("displayScore").innerText = count;
 }
@@ -130,3 +132,15 @@ function startCountdown(time) {
         }
     }, 1000);
 }
+
+(function () {
+
+    var img = document.getElementById('container').firstChild;
+    img.onload = function () {
+        if (img.height > img.width) {
+            img.height = '100%';
+            img.width = 'auto';
+        }
+    };
+
+}());
