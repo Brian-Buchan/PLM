@@ -233,6 +233,10 @@
     <Compile Include="Migrations\201606291608228_answerString.Designer.cs">
       <DependentUpon>201606291608228_answerString.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201606291641268_AccountTypeAndStatus.cs" />
+    <Compile Include="Migrations\201606291641268_AccountTypeAndStatus.Designer.cs">
+      <DependentUpon>201606291641268_AccountTypeAndStatus.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AdminViewModel.cs" />
     <Compile Include="Models\ConfirmViewModel.cs" />
@@ -1292,6 +1296,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201606291608228_answerString.resx">
       <DependentUpon>201606291608228_answerString.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201606291641268_AccountTypeAndStatus.resx">
+      <DependentUpon>201606291641268_AccountTypeAndStatus.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
