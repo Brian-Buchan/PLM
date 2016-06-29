@@ -100,8 +100,8 @@ using (Html.BeginForm())
         <div class="form-group" title="The number of minutes the user has to complete the module by default.">
             @Html.LabelFor(model => model.DefaultTime, new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                <input type="range" id="time" name="DefaultTime" value="30" min="15" max="135" step="15" oninput="outputUpdate(value, '#timeOutput')" />
-                <output for="time" id="timeOutput">30</output>
+                <input type="range" id="time" name="DefaultTime" value="6" min="2" max="32" step="2" oninput="outputUpdate(value, '#timeOutput')" />
+                <output for="time" id="timeOutput">2</output>
                 @*@Html.EditorFor(model => model.DefaultTime)
                 @Html.ValidationMessageFor(model => model.DefaultTime)*@
             </div>

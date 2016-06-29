@@ -1271,8 +1271,8 @@
     <Content Include="Views\Account\DisplayEmail.cshtml" />
     <Content Include="Views\Game\Error.cshtml" />
     <Content Include="Views\ImageEditor\Confirm.cshtml" />
-    <Content Include="Views\Account\AccountDisabled.cshtml" />
     <Content Include="Views\Home\FreeUseImages.cshtml" />
+    <Content Include="Views\Account\AccountDisabled.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

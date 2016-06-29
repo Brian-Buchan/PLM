@@ -29,15 +29,15 @@
         <div id="ScoreBoard">
             <p>Score:</p>
             <p id="displayScore">@Model.Score</p>
-            <br/>
-            <p>Question @ViewBag.Progress out of @ViewBag.TotalQuestions</p>
             <br />
-            <p>@ViewBag.numCorrect correct out of @ViewBag.TotalQuestions</p>
-            <br/>
             <p>Time Left:</p>
             <p><div id="clockdiv">@Model.Time.ToString()</div></p>
-            
         </div>
+
+        <p>Question @Model.CurrentQuestion out of @Model.TotalQuestions</p>
+        <br />
+        <p>@Model.NumCorrect correct out of @Model.TotalQuestions</p>
+        <br />
 
         <div id="container">
             <div class="helper">
