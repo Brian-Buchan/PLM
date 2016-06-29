@@ -40,6 +40,24 @@ namespace PLM
 
         public int OverrideNumberOfAnswers { get; set; }
 
+        public enum AccountType
+        {
+            Free,
+            Premium            
+        }
+
+        public enum AccountStatus
+        {
+            Pending,
+            Active,
+            Disabled
+        }
+
+        [Display(Name = "Account Type")]
+        public AccountType Type { get; set; }
+
+        [Display(Name = "Account Status")]
+        public AccountStatus Status { get; set; }
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {
