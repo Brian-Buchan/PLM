@@ -8,13 +8,6 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <title>Add Picture</title>
-    <link href="~/Content/bootstrap.min.css" rel="stylesheet">
-    <link href="~/Content/font-awesome.min.css" rel="stylesheet">
-    <link href="~/Content/animate.min.css" rel="stylesheet">
-    <link href="~/Conetnt/lightbox.css" rel="stylesheet">
-    <link href="~/Content/main.css" rel="stylesheet">
-    <link href="~/Content/responsive.css" rel="stylesheet">
-
     <link rel="shortcut icon" href="~/Content/images/ico/favicon.ico">
 </head>
 
@@ -49,7 +42,7 @@
         <div class="fallback">
             <input name="file" type="file" multiple /> 
             <br/>
-
+            @Html.ActionLink("Sources for free use images", "FreeUseImages", "Home");
             <div class="form-group" title="Attribution is needed to give credit to the original creator of the image">
                 @Html.LabelFor(model => model.Attribution, "Attribution", new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
@@ -69,7 +62,10 @@
 
 
 <div>
-    @Html.ActionLink("Back to List", "Index", new { controller = "Profile" })
+    @{
+        Answer ans = Model.Answer;
+        Html.ActionLink("Back to List", "Create", "Answers", new { id = ans.AnswerID });
+    }
 </div>
 
 @section Scripts {
