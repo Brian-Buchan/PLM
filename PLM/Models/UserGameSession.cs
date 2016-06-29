@@ -59,10 +59,16 @@ namespace PLM
         /// </summary>
         public TimeSpan timeLeft { get; set; }
 
+        /// <summary>
+        /// The number of questions answered correctly this session.
+        /// </summary>
+        public int numCorrect { get; set; }
+
         public UserGameSession()
         {
             currentModule = new Module();
             PictureIndices = new List<AnsPicIndex>();
+            numCorrect = 0;
         }
     }
 }
