@@ -8,6 +8,7 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.Net;
 using PLM.Extensions;
+using PLM.Models;
 
 namespace PLM.Controllers
 {
@@ -19,7 +20,6 @@ namespace PLM.Controllers
         {
             return View();
         }
-
         
         [HttpPost]
         [ActionName("ImageEditor")]
@@ -49,6 +49,25 @@ namespace PLM.Controllers
 
             //return View();
             return new HttpStatusCodeResult(HttpStatusCode.OK);
+        }
+
+        [HttpGet]
+        
+        public ActionResult Confirm()
+        {
+            ConfirmViewModel model = (ConfirmViewModel)TempData["model"];
+            return View(model);
+        }
+
+        [HttpPost]
+        [ActionName("Confirm")]
+        public ActionResult ConfirmPOST()
+        {
+            string b64Img = Request.Form.Get("imgData");
+            string origUrl = Request.Form.Get("origUrl");
+            ConfirmViewModel model = new ConfirmViewModel(b64Img, origUrl);
+            TempData["model"] = model;
+            return RedirectToAction("Confirm");
         }
 
         [HttpPost]

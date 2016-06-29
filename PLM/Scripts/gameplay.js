@@ -50,8 +50,6 @@ function isGuessRight(answer, guess) {
 function ButtonClick(guess) {
     pictureAnswer = $("#StoredAnswer").text();
     if (!revealed) {
-        //if the answer is not yet revealed, stop the timer and reveal the correct answer.
-        clearInterval(intervalID);
         if (isGuessRight(pictureAnswer, guess)) {
             Correct();
         }
@@ -100,6 +98,9 @@ function ToggleMute() {
 }
 
 function CheckIn() {
+    //Stop the timer when you click the "Next" button.
+    clearInterval(intervalID);
+    //Then get the time remaining.
     $('#Time').val($('#clockdiv').text());
     return true;
 }

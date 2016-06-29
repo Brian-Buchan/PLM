@@ -5,7 +5,7 @@
 
 <h2>Image Editor</h2>
 
-<img onerror="this.src='Content/images/Error.bmp';" id="imgEdit" src="~/Content/Images/logo.png" alt="Photo To Edit" />
+<img onerror="this.src='Content/images/Error.bmp';" id="imgEdit" src="~/Content/Images/logo.png" title="~/Content/Images/logo.png" alt="Photo To Edit" />
 
 <script data-preload="true" data-path="@Url.Content("~\\pixie-image-editor\\pixie")" 
         src="@Url.Content("~/pixie-image-editor/pixie/pixie-integrate.js")"></script>
@@ -48,8 +48,8 @@
         onSave: function (data, img) {
             $.ajax({
                 type: 'POST',
-                url: '/ImageEditor/ImageEditor',
-                data: { imgData: data, imgId: img.id },
+                url: '/ImageEditor/Confirm',
+                data: { imgData: data, imgId: img.id, origUrl: img.title },
                 success: function (response) {
                     alert('Image changes have been saved successfully. \nRemember to ' +
                     'click the save button to finalize your changes.');
