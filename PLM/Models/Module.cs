@@ -34,5 +34,8 @@ namespace PLM
         [Display(Name = "Response for incorrect answer")]
         public string wrongAnswerString { get; set; }
         public virtual Category Category { get; set; }
+
+        [Display(Name = "Is Disabled")]
+        public bool isDisabled { get; set; }
     }
 }

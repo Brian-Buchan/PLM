@@ -88,7 +88,9 @@ namespace PLM.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser() { UserName = model.Email, Email = model.Email, FirstName = model.FirstName, LastName = model.LastName, Institution = model.Institution };
+                //Sets user Account Type to Free and Account Status to Active
+                var user = new ApplicationUser() { UserName = model.Email, Email = model.Email, FirstName = model.FirstName, LastName = model.LastName, Institution = model.Institution, 
+                    Type = ApplicationUser.AccountType.Free, Status = ApplicationUser.AccountStatus.Active };
 
                 IdentityResult result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
@@ -365,6 +367,10 @@ namespace PLM.Controllers
             if (ModelState.IsValid)
             {
                 var user = await UserManager.FindAsync(model.Email, model.Password);
+                if (user.Status == ApplicationUser.AccountStatus.Disabled)
+                {
+                    return RedirectToAction("AccountDisabled");
+                }
                 if (user != null)
                 {
                     //if (!await UserManager.IsEmailConfirmedAsync(user.Id))
@@ -386,6 +392,10 @@ namespace PLM.Controllers
             return View(model);
         }
 
+        public ActionResult AccountDisabled()
+        {
+            return View();
+        }
         //
         // GET: /Account/Register
         [AllowAnonymous]
@@ -403,7 +413,9 @@ namespace PLM.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser() { UserName = model.Email, Email = model.Email, FirstName = model.FirstName, LastName = model.LastName, Institution = model.Institution };
+                //Sets account to Free Accont Type and Active Account Status
+                var user = new ApplicationUser() { UserName = model.Email, Email = model.Email, FirstName = model.FirstName, LastName = model.LastName, Institution = model.Institution, 
+                    Type = ApplicationUser.AccountType.Free, Status = ApplicationUser.AccountStatus.Active};
                 IdentityResult result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {

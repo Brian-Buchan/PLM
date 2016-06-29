@@ -49,6 +49,7 @@ namespace PLM
         public enum AccountStatus
         {
             Pending,
+            PendingInstrustorRole,
             Active,
             Disabled
         }
