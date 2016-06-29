@@ -40,6 +40,10 @@ namespace PLM.Controllers
         {
             return View();
         }
+        public ActionResult FreeUseImages()
+        {
+            return View();
+        }
 
         public ActionResult Blog()
         {

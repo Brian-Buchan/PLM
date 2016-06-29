@@ -42,7 +42,7 @@
         <div class="fallback">
             <input name="file" type="file" multiple /> 
             <br/>
-
+            @Html.ActionLink("Sources for free use images", "FreeUseImages", "Home");
             <div class="form-group" title="Attribution is needed to give credit to the original creator of the image">
                 @Html.LabelFor(model => model.Attribution, "Attribution", new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
