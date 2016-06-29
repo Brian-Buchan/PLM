@@ -1,6 +1,5 @@
 ﻿@model PLM.Picture
 @{
-    int ModuleID = Model.Answer.ModuleID;
     ViewBag.Title = "Add Picture";
 }
 <head>
@@ -70,7 +69,10 @@
 
 
 <div>
-    @Html.ActionLink("Back to List", "Create", "Answers", new { id = ModuleID })
+    @{
+        Answer ans = Model.Answer;
+        Html.ActionLink("Back to List", "Create", "Answers", new { id = ans.AnswerID });
+    }
 </div>
 
 @section Scripts {
