@@ -10,6 +10,7 @@ using PLM;
 using System.IO;
 using System.Drawing;
 using System.Drawing.Imaging;
+using PLM.CutomAttributes;
 
 namespace PLM.Controllers
 {
@@ -40,6 +41,7 @@ namespace PLM.Controllers
         }
 
         // GET: /Answers/Create
+        [AuthorizeOrRedirectAttribute(Roles = "Instructor")]
         public ActionResult Create(int ID)
         {
             ViewBag.ModuleID = ID;
@@ -61,6 +63,7 @@ namespace PLM.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [AuthorizeOrRedirectAttribute(Roles = "Instructor")]
         public ActionResult Create([Bind(Include = "AnswerID,AnswerString,ModuleID")] Answer answer)
         {
             if (ModelState.IsValid)
@@ -75,6 +78,7 @@ namespace PLM.Controllers
         }
 
         // GET: /Answers/Edit/5
+        [AuthorizeOrRedirectAttribute(Roles = "Instructor")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -95,6 +99,7 @@ namespace PLM.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [AuthorizeOrRedirectAttribute(Roles = "Instructor")]
         public ActionResult Edit([Bind(Include = "AnswerID,AnswerString,ModuleID")] Answer answer, int? ModuleID)
         {
             if (ModelState.IsValid)
@@ -140,6 +145,7 @@ namespace PLM.Controllers
         }
         
         // GET: /Answers/Delete/5
+        [AuthorizeOrRedirectAttribute(Roles = "Instructor")]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -157,6 +163,7 @@ namespace PLM.Controllers
         // POST: /Answers/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [AuthorizeOrRedirectAttribute(Roles = "Instructor")]
         public ActionResult DeleteConfirmed(int id)
         {
             Answer answer = db.Answers.Find(id);

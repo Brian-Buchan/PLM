@@ -11,8 +11,10 @@ namespace PLM
     public class Module
     {
         public int ModuleID { get; set; }
-         [Display(Name = "Module name")]
+        
+        [Display(Name = "Module Name")]
         public string Name { get; set; }
+
         public string Description { get; set; }
 
         [Display(Name = "Category")]
@@ -37,5 +39,23 @@ namespace PLM
 
         [Display(Name = "Is Disabled")]
         public bool isDisabled { get; set; }
+
+        [Display(Name = "Note")]
+        public string DisableModuleNote { get; set; }
+
+        public enum ModuleDisableReason
+        {
+            AccountNotPaid,
+            AgainstTermsOfUse,
+            CopyWriteInfringment,
+            InappropriateContent,
+            Other
+        }
+
+        [Display(Name = "Reason")]
+        public ModuleDisableReason DisableModuleReason { get; set; }
+
     }
+
+    
 }
