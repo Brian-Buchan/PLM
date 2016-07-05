@@ -46,11 +46,11 @@
             @Html.LabelFor(model => model.AnswerString, new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.AnswerString)
+                <input type="submit" name="submit" value="Add Answer" class="btn btn-success" /><br />
                 @Html.ValidationMessageFor(model => model.AnswerString)
-                <input type="submit" name="submit" value="Add Answer" class="btn btn-success" />
             </div>
         </div>
-
+        <hr />
         <div class="form-group hidden">
             @Html.LabelFor(model => model.ModuleID, "ModuleID", new { @class = "control-label col-md-2" })
             <div class="col-md-10">
