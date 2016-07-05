@@ -12,6 +12,7 @@ namespace PLM
         public int AnswerID { get; set; }
         [Display(Name="Answer Text")]
         [MaxLength(25)]
+        [Required]
         public string AnswerString { get; set; }
         [Display(Name="Module")]
         public int ModuleID { get; set; }
