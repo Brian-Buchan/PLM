@@ -23,12 +23,17 @@ textarea {
 
 .floatLeft{
     float:left;
+    width:33%;
 }
 
 .floatRight{
     float:right;
+    width:33%;
 }
-
+.halfPanel{
+    width:50%;
+    float:left
+}
 .clearLeft{
     clear:left;
 }

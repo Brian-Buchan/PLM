@@ -4,8 +4,10 @@ var count = Number(document.getElementById("displayScore").innerText);
 var revealed = false;
 var intervalID;
 
-window.onload = CheckMute;
-
+function windowOnload(timeLeft) {
+    CheckMute();
+    startCountdown(timeLeft);
+}
 //These cookie functions are from w3schools
 function setCookie(cname, cvalue, exdays) {
     var d = new Date();
@@ -96,20 +98,20 @@ function ToggleMute(img) {
     if (getCookie("muteSound") === "true") {
         //set the cookie to false and display the speaker symbol
         setCookie("muteSound", "false", 365);
-        img.src = "/Content/Images/speaker.png";
+        img.src = '/Content/Images/speaker.png';
     }
     else {
         //otherwise, set muteSound to true and display the mute symbol
         setCookie("muteSound", "true", 365);
-        img.src = "/Content/Images/mute.png";
+        img.src = '/Content/Images/mute.png';
     }
 }
 
 function CheckMute() {
     if (getCookie("muteSound") === "true") {
-        document.getElementById('soundToggle').setAttribute('src', 'PerceptualLearning/Content/Images/mute.png');
+        document.getElementById('soundToggle').setAttribute('src', '/Content/Images/mute.png');
     } else {
-        document.getElementById('soundToggle').setAttribute('src', 'PerceptualLearning/Content/Images/speaker.png');
+        document.getElementById('soundToggle').setAttribute('src', '/Content/Images/speaker.png');
     }
 }
 
@@ -147,14 +149,9 @@ function startCountdown(time) {
     }, 1000);
 }
 
-(function () {
-
-    var img = document.getElementById('container').firstChild;
-    img.onload = function () {
-        if (img.height > img.width) {
-            img.height = '100%';
-            img.width = 'auto';
-        }
-    };
-
-}());
+function fixAspect(img) {
+    if (img.height > img.width) {
+        img.height = '100%';
+        img.width = 'auto';
+    }
+}
