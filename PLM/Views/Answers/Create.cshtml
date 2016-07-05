@@ -47,7 +47,7 @@
             <div class="col-md-10">
                 @Html.EditorFor(model => model.AnswerString, new { htmlAttributes = new { @class = "form-control" } })
                 <input type="submit" name="submit" value="Add Answer" class="btn btn-success" /><br />
-                @Html.ValidationMessageFor(model => model.AnswerString)
+                @Html.ValidationMessageFor(model => model.AnswerString, "", new { @class = "text-danger" })
             </div>
         </div>
         <hr />
@@ -55,7 +55,7 @@
             @Html.LabelFor(model => model.ModuleID, "ModuleID", new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.TextBoxFor(model => model.ModuleID, new { @Value = ViewBag.ModuleID })
-                @Html.ValidationMessageFor(model => model.ModuleID)
+                @Html.ValidationMessageFor(model => model.ModuleID, "", new { @class = "text-danger" })
             </div>
         </div>
     </div>

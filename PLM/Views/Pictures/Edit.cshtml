@@ -43,7 +43,7 @@
             @Html.LabelFor(model => model.Location, new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.Location)
-                @Html.ValidationMessageFor(model => model.Location)
+                @Html.ValidationMessageFor(model => model.Location, "", new { @class = "text-danger" })
             </div>
         </div>
 
@@ -51,7 +51,7 @@
             @Html.LabelFor(model => model.AnswerID, "AnswerID", new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.DropDownList("AnswerID", String.Empty)
-                @Html.ValidationMessageFor(model => model.AnswerID)
+                @Html.ValidationMessageFor(model => model.AnswerID, "", new { @class = "text-danger" })
             </div>
         </div>
 
@@ -66,7 +66,7 @@
             @Html.LabelFor(model => model.Attribution, "Attribution", new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.TextAreaFor(model => model.Attribution, new { rows = "5", cols = "25" })
-                @Html.ValidationMessageFor(model => model.Attribution)
+                @Html.ValidationMessageFor(model => model.Attribution, "", new { @class = "text-danger" })
             </div>
         </div>
 
