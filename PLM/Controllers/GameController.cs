@@ -101,16 +101,23 @@ namespace PLM.Controllers
         [HttpGet]
         public ActionResult Setup(int? PLMid)
         {
-            int IDtoPASS = 1;
-            if (PLMid != null)
-        {
-                // Attempts to set nullable value, If null sets to itself (DEFAULT IS 0 - AMERICAN GEO PLM)
-                IDtoPASS = PLMid ?? 1;
-            }
+            try
+            {
+                int IDtoPASS = 1;
+                if (PLMid != null)
+                {
+                    // Attempts to set nullable value, If null sets to itself (DEFAULT IS 0 - AMERICAN GEO PLM)
+                    IDtoPASS = PLMid ?? 1;
+                }
 
-            if (PLMgenerated == false)
-                GenerateModule(IDtoPASS);
-            return View();
+                if (PLMgenerated == false)
+                    GenerateModule(IDtoPASS);
+                return View();
+            }
+            catch (ArgumentOutOfRangeException)
+            {
+                RedirectToAction("Error", "Shared");
+            }
         }
 
         [HttpPost]
