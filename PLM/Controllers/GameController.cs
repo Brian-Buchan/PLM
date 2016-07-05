@@ -101,8 +101,8 @@ namespace PLM.Controllers
         [HttpGet]
         public ActionResult Setup(int? PLMid)
         {
-            try
-            {
+  
+
                 int IDtoPASS = 1;
                 if (PLMid != null)
                 {
@@ -113,11 +113,9 @@ namespace PLM.Controllers
                 if (PLMgenerated == false)
                     GenerateModule(IDtoPASS);
                 return View();
-            }
-            catch (ArgumentOutOfRangeException)
-            {
-                RedirectToAction("Error", "Shared");
-            }
+ 
+
+
         }
 
         [HttpPost]
