@@ -75,7 +75,10 @@ namespace PLM
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public ApplicationDbContext()
-            : base("NMCSQLSERVER", throwIfV1Schema: false)
+            //Production
+            : base("Production", throwIfV1Schema: false)
+        //Development
+        //: base("Development", throwIfV1Schema: false)
         {
         }
 
