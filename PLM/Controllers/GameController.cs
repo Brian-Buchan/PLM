@@ -54,10 +54,13 @@ namespace PLM.Controllers
             db.SaveChanges();
         }
 
-        public ActionResult Play(int? PLMid)
+        public ActionResult Play()
         {
             GenerateQuestionONEperPIC();
             currentGuess.Time = ((UserGameSession)Session["userGameSession"]).timeLeft;
+            currentGuess.CurrentQuestion = ((UserGameSession)Session["userGameSession"]).currentQuestion +1;
+            currentGuess.TotalQuestions = ((UserGameSession)Session["userGameSession"]).numQuestions;
+            currentGuess.NumCorrect = ((UserGameSession)Session["userGameSession"]).numCorrect;
             return View(currentGuess);
         }
 
@@ -87,9 +90,9 @@ namespace PLM.Controllers
                 return RedirectToAction("Complete", new { Score = Score });
             }
             GenerateQuestionONEperPIC();
-            ViewBag.Progress = ((UserGameSession)Session["userGameSession"]).currentQuestion;
-            ViewBag.TotalQuestions = ((UserGameSession)Session["userGameSession"]).numQuestions;
-            ViewBag.numCorrect = ((UserGameSession)Session["userGameSession"]).numCorrect;
+            currentGuess.CurrentQuestion = ((UserGameSession)Session["userGameSession"]).currentQuestion;
+            currentGuess.TotalQuestions = ((UserGameSession)Session["userGameSession"]).numQuestions;
+            currentGuess.NumCorrect = ((UserGameSession)Session["userGameSession"]).numCorrect;
             currentGuess.Score = Score;
             currentGuess.Time = ((UserGameSession)Session["userGameSession"]).timeLeft;
             return View(currentGuess);
@@ -114,8 +117,6 @@ namespace PLM.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Setup([Bind(Include="numAnswers,numQuestions,time")] UserGameSession ugs)
         {
-            try
-            {
                 int timeHours = (ugs.time / 60);
                 int timeMinutes = (ugs.time % 60);
                 ((UserGameSession)Session["userGameSession"]).numAnswers = ugs.numAnswers;
@@ -128,11 +129,6 @@ namespace PLM.Controllers
                 //where the timer will always start at 30 seconds.
 
                 //((UserGameSession)Session["userGameSession"]).timeLeft = new TimeSpan(0, 0, 30);
-            }
-            catch(Exception)
-            {
-                RedirectToAction("Error");
-            }
             return RedirectToAction("Play");
         }
 
@@ -153,9 +149,9 @@ namespace PLM.Controllers
         /// </summary>
         private void CheckMaxAnswers()
         {
-            if (currentModule.Answers.Count <= currentModule.DefaultNumAnswers)
+            if (currentModule.Answers.Count <= ((UserGameSession)Session["userGameSession"]).numAnswers)
             {
-                currentModule.DefaultNumAnswers = currentModule.Answers.Count - 2;
+                ((UserGameSession)Session["userGameSession"]).numAnswers = currentModule.Answers.Count - 2;
             }
         }
 
@@ -170,7 +166,7 @@ namespace PLM.Controllers
             
             //if the question or time limit has been reached
             if (((UserGameSession)Session["userGameSession"]).currentQuestion
-                //subtract 1 from number of questions since current guess is zero based
+                //subtract 1 from number of questions since currentQuestion is zero based
                 >= (((UserGameSession)Session["userGameSession"]).numQuestions -1)
                 |
                 (((UserGameSession)Session["userGameSession"]).timeLeft.CompareTo(new TimeSpan(0,0,0)) < 1 ))

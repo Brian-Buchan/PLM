@@ -22,7 +22,7 @@ namespace PLM
 
             db.Modules.Remove(module);
 
-            Directory.Delete("/PerceptualLearning/Content/Images/PLM/" + module.Name);
+            Directory.Delete(DevPro.baseFileDirectory + "PLM/" + module.Name);
             db.SaveChanges();
         }
 

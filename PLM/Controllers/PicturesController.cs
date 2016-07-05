@@ -44,9 +44,12 @@ namespace PLM.Controllers
         public ActionResult Create(int? id)
         {
             ViewBag.AnswerID = id;
+            Picture picture = new Picture();
+            picture.Answer = db.Answers
+                    .Where(a => a.AnswerID == id)
+                    .ToList().First();
 
-            //ViewBag.AnswerID = new SelectList(db.Answers, "AnswerID", "AnswerString");
-            return View();
+            return View(picture);
         }
 
         // POST: /Pictures/Create
@@ -61,12 +64,10 @@ namespace PLM.Controllers
             if (ModelState.IsValid)
             {
                 //db.Entry(picture).State = EntityState.Modified;
-                var ans = db.Answers
+                picture = new Picture();
+                picture.Answer = db.Answers
                     .Where(a => a.AnswerID == id)
                     .ToList().First();
-
-                picture = new Picture();
-                picture.Answer = ans;
                 //picture.Attribution = attribution;
 
                 picture.AnswerID = (int)id;
@@ -190,7 +191,7 @@ namespace PLM.Controllers
                     picture.Answer.PictureCount++;
                     if (file != null && file.ContentLength > 0)
                     {
-                        string moduleDirectory = ("/PerceptualLearning/Content/Images/PLM/" + Session["upload"].ToString() + "/");
+                        string moduleDirectory = (DevPro.baseFileDirectory + "PLM/" + Session["upload"].ToString() + "/");
                         if (!Directory.Exists(moduleDirectory))
                         {
                             Directory.CreateDirectory(moduleDirectory);
