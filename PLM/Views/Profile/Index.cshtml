@@ -60,11 +60,12 @@
             </article>
         </div>
         <div class="panel-item" style="float: left; width: 35%;">
-            <h2 class="accordianHeading">Settings</h2>
+            <h3 class="accordianHeading">Settings</h3>
             <ul>
                 <li class="items-list">@Html.ActionLink("Change your password", "Manage", "Account", routeValues: null, htmlAttributes: new { title = "Manage" })</li>
                 <li class="items-list">@Html.ActionLink("See your open reports", "YourReports", "Report", routeValues: null, htmlAttributes: new { title = "Manage" })</li>
                 <li class="items-list">@Html.ActionLink("See reports of issues with your modules", "YourModulesReported", "Report", routeValues: null, htmlAttributes: new { title = "Manage" })</li>
+                <li class="items-list">@Html.ActionLink("Request Instructor status for your account", "StatusRequest")</li>
             </ul>
 
         </div>
