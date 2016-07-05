@@ -73,6 +73,7 @@
                     <div class="row">
                         @foreach (Module module in Model)
                         {
+                            try { 
                             Answer answer = module.Answers.ElementAt(0);
                             Picture picture = answer.Pictures.ElementAt(0);
                             <div class="col-xs-6 col-sm-6 col-md-4 portfolio-item branded logos">
@@ -94,6 +95,10 @@
                                     </div>
                                 </div>
                             </div>
+                            }
+                            catch(ArgumentOutOfRangeException){
+                                
+                            }
                         }                  
                     </div>
 
