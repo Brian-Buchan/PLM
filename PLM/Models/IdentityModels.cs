@@ -13,14 +13,17 @@ namespace PLM
     {
         [Required]
         [Display(Name = "First Name")]
+        [MaxLength(25)]
         public string FirstName { get; set; }
 
         [Required]
         [Display(Name = "Last Name")]
+        [MaxLength(25)]
         public string LastName { get; set; }
 
         [Required]
         [Display(Name = "Institution")]
+        [MaxLength(40)]
         public string Institution { get; set; }
 
         [Display(Name = "Avatar Url")]
