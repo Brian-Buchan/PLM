@@ -107,9 +107,9 @@ function ToggleMute(img) {
 
 function CheckMute() {
     if (getCookie("muteSound") === "true") {
-        document.getElementById('soundToggle').setAttribute('src', '~/Content/Images/mute.png');
+        document.getElementById('soundToggle').setAttribute('src', 'PerceptualLearning/Content/Images/mute.png');
     } else {
-        document.getElementById('soundToggle').setAttribute('src', '~/Content/Images/speaker.png');
+        document.getElementById('soundToggle').setAttribute('src', 'PerceptualLearning/Content/Images/speaker.png');
     }
 }
 

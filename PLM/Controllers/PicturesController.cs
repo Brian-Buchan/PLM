@@ -184,7 +184,7 @@ namespace PLM.Controllers
                     picture.Answer.PictureCount++;
                     if (file != null && file.ContentLength > 0)
                     {
-                        string moduleDirectory = ("/PerceptualLearning/Content/Images/PLM/" + Session["upload"].ToString() + "/");
+                        string moduleDirectory = (DevPro.baseFileDirectory + "PLM/" + Session["upload"].ToString() + "/");
                         if (!Directory.Exists(moduleDirectory))
                         {
                             Directory.CreateDirectory(moduleDirectory);
