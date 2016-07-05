@@ -7,13 +7,13 @@ namespace PLM.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class scoreIDAutoIncrement : IMigrationMetadata
+    public sealed partial class DropCourseAssignments : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(scoreIDAutoIncrement));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(DropCourseAssignments));
         
         string IMigrationMetadata.Id
         {
-            get { return "201607051817349_scoreIDAutoIncrement"; }
+            get { return "201607051842102_DropCourseAssignments"; }
         }
         
         string IMigrationMetadata.Source

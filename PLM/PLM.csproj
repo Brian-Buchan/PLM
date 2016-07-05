@@ -250,9 +250,9 @@
     <Compile Include="Migrations\201607051725540_DisableModuleAccount.Designer.cs">
       <DependentUpon>201607051725540_DisableModuleAccount.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201607051817349_scoreIDAutoIncrement.cs" />
-    <Compile Include="Migrations\201607051817349_scoreIDAutoIncrement.Designer.cs">
-      <DependentUpon>201607051817349_scoreIDAutoIncrement.cs</DependentUpon>
+    <Compile Include="Migrations\201607051842102_DropCourseAssignments.cs" />
+    <Compile Include="Migrations\201607051842102_DropCourseAssignments.Designer.cs">
+      <DependentUpon>201607051842102_DropCourseAssignments.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AdminViewModel.cs" />
@@ -1210,7 +1210,6 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Profile\Index.cshtml" />
     <Content Include="Views\Modules\Index.cshtml" />
-    <Content Include="Views\Home\Blog.cshtml" />
     <Content Include="Views\Game\Play.cshtml" />
     <Content Include="Views\Account\ConfirmEmail.cshtml" />
     <Content Include="Views\Account\ExternalLoginConfirmation.cshtml" />
@@ -1283,6 +1282,7 @@
     <Folder Include="Content\Images\permUploads\" />
     <Folder Include="Content\Images\Profile\" />
     <Folder Include="Content\Images\tempUploads\" />
+    <Folder Include="Migrations\201607051833265_removeCourseWork\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -1319,8 +1319,8 @@
     <EmbeddedResource Include="Migrations\201607051725540_DisableModuleAccount.resx">
       <DependentUpon>201607051725540_DisableModuleAccount.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201607051817349_scoreIDAutoIncrement.resx">
-      <DependentUpon>201607051817349_scoreIDAutoIncrement.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201607051842102_DropCourseAssignments.resx">
+      <DependentUpon>201607051842102_DropCourseAssignments.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

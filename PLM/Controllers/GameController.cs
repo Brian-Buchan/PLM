@@ -39,19 +39,23 @@ namespace PLM.Controllers
         {
             ViewBag.UserID = User.Identity.GetUserId();
             ViewBag.ModuleID = ((UserGameSession)Session["userGameSession"]).currentModule.ModuleID;
-            //SaveScore(score);
+            Score newScore = SaveScore(score);
 
-            return View(score);
+            return View(newScore);
         }
 
-        private void SaveScore(int score)
+        private Score SaveScore(int score)
         {
             Score newScore = new Score();
             newScore.CorrectAnswers = (score / 100);
             newScore.Module = currentModule;
+            newScore.User = ((UserGameSession)Session["userGameSession"]).currentUser;
+            newScore.TotalAnswers = ((UserGameSession)Session["userGameSession"]).numQuestions;
 
             db.Scores.Add(newScore);
             db.SaveChanges();
+
+            return newScore;
         }
 
         public ActionResult Play()

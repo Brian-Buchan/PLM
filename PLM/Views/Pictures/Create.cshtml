@@ -26,11 +26,7 @@
         </div>
     </div>
 </section>
-
 <br />
-<br />
-<br />
-
 <div class="jumbotron">
     <form action="~/Pictures/Create?id=@ViewBag.AnswerID" method="post" enctype="multipart/form-data" class="dropzone" id="dropzoneForm" style="width: 50px; background: none; border: none;" >
         @Html.AntiForgeryToken()
@@ -39,7 +35,7 @@
 
         
 
-        <div class="fallback">
+        <div class="fallback" style="width:400px;">
             <input name="file" type="file" multiple /> 
             <br/>
             @Html.ActionLink("Sources for free use images", "FreeUseImages", "Home");
