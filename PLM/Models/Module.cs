@@ -12,8 +12,8 @@ namespace PLM
     public class Module
     {
         public int ModuleID { get; set; }
-         [Display(Name = "Module name")]
-         [MaxLength(25)]
+        [Display(Name = "Module name")]
+        [MaxLength(25)]
         public string Name { get; set; }
         [MaxLength(200)]
         public string Description { get; set; }

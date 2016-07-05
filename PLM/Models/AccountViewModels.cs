@@ -173,7 +173,6 @@ namespace PLM.Models
         [Display(Name = "User Name")]
         public string UserName { get; set; }
 
-        [Required]
         [Display(Name = "Reason")]
         public ApplicationUser.Reason DisableAccountReason{get; set;}
 
