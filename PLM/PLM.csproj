@@ -250,9 +250,13 @@
     <Compile Include="Migrations\201607051725540_DisableModuleAccount.Designer.cs">
       <DependentUpon>201607051725540_DisableModuleAccount.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201607051842102_DropCourseAssignments.cs" />
-    <Compile Include="Migrations\201607051842102_DropCourseAssignments.Designer.cs">
-      <DependentUpon>201607051842102_DropCourseAssignments.cs</DependentUpon>
+    <Compile Include="Migrations\201607051913527_DisableModuleChange.cs" />
+    <Compile Include="Migrations\201607051913527_DisableModuleChange.Designer.cs">
+      <DependentUpon>201607051913527_DisableModuleChange.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201607051924147_DropCourseWork.cs" />
+    <Compile Include="Migrations\201607051924147_DropCourseWork.Designer.cs">
+      <DependentUpon>201607051924147_DropCourseWork.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AdminViewModel.cs" />
@@ -1320,8 +1324,11 @@
     <EmbeddedResource Include="Migrations\201607051725540_DisableModuleAccount.resx">
       <DependentUpon>201607051725540_DisableModuleAccount.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201607051842102_DropCourseAssignments.resx">
-      <DependentUpon>201607051842102_DropCourseAssignments.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201607051913527_DisableModuleChange.resx">
+      <DependentUpon>201607051913527_DisableModuleChange.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201607051924147_DropCourseWork.resx">
+      <DependentUpon>201607051924147_DropCourseWork.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

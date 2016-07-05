@@ -105,8 +105,8 @@ namespace PLM
         public DbSet<Picture> Pictures { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Course> Courses { get; set; }
-        //public DbSet<CourseWork> CourseWork { get; set; }
-        //public DbSet<Assignment> Assignments { get; set; }
+        public DbSet<CourseWork> CourseWork { get; set; }
+        public DbSet<Assignment> Assignments { get; set; }
         public DbSet<Score> Scores { get; set; }
         public DbSet<PLM.Models.Report> Reports { get; set; }
 
