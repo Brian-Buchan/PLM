@@ -4,6 +4,8 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.IO;
+using Microsoft.AspNet.Identity;
+using PLM.CutomAttributes;
 
 namespace PLM.Controllers
 {
@@ -35,7 +37,7 @@ namespace PLM.Controllers
 
             return View();
         }
-
+        [AuthorizeOrRedirectAttribute(Roles = "Admin")]
         public ActionResult Admin()
         {
             return View();
