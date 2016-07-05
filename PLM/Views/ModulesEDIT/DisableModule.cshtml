@@ -1,0 +1,53 @@
+﻿@model PLM.DisableModuleViewModel
+
+@{
+    ViewBag.Title = "DisableModule";
+}
+
+<h2>DisableModule</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>DisableModuleViewModel</h4>
+        <hr />
+        @Html.ValidationSummary(true)
+        @Html.HiddenFor(model => model.Name)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.isDisabled, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.isDisabled)
+                @Html.ValidationMessageFor(model => model.isDisabled)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.DisableModuleNote, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.DisableModuleNote)
+                @Html.ValidationMessageFor(model => model.DisableModuleNote)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.DisableModuleReason, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.DisableModuleReason)
+                @Html.ValidationMessageFor(model => model.DisableModuleReason)
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>

@@ -78,7 +78,9 @@
                     @Html.ActionLink("Roles", "ViewUserRoles", new { userName = item.UserName }) |
                     @Html.ActionLink("Delete", "Delete", new { userName = item.UserName })
                 </td>
-                <th></th>
+                <th>
+                    @Html.ActionLink("Disable Account", "AccountDisable", new { userName = item.UserName })
+                </th>
             </tr>
         }
 

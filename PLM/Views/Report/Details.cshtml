@@ -40,5 +40,14 @@
     </div>
 </div>
 <p>
-    @Html.ActionLink("Back to List", "Index")
+    @{
+        if (User.IsInRole("Admin"))
+        {
+            @Html.ActionLink("Back to List", "Index")
+        }
+        else
+        {
+            @Html.ActionLink("Back to List", "YourReports")
+        }
+    }
 </p>

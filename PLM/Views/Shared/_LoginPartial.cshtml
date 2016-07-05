@@ -10,7 +10,7 @@
             @Html.ActionLink("Hello " + User.Identity.GetFirstName() + " " + User.Identity.GetLastName(), "Index", "Profile")
         </li>
 
-        @if (User.IsInRole("User"))
+        @if (User.IsInRole("Admin"))
         {
             <li>@Html.ActionLink("Admin", "Admin", "Home")</li>
         }
