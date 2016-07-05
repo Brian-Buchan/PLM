@@ -1214,7 +1214,6 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Profile\Index.cshtml" />
     <Content Include="Views\Modules\Index.cshtml" />
-    <Content Include="Views\Home\Blog.cshtml" />
     <Content Include="Views\Game\Play.cshtml" />
     <Content Include="Views\Account\ConfirmEmail.cshtml" />
     <Content Include="Views\Account\ExternalLoginConfirmation.cshtml" />
@@ -1281,6 +1280,7 @@
     <Content Include="Views\Account\AccountDisabled.cshtml" />
     <Content Include="Views\Account\AccountDisable.cshtml" />
     <Content Include="Views\ModulesEDIT\DisableModule.cshtml" />
+    <Content Include="Views\Profile\StatusRequest.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

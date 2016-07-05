@@ -21,7 +21,7 @@ namespace PLM
         public DisableModuleViewModel(Module module)
         {
             this.Name = module.Name;
-            this.Reason = module.DisableReason;
+            this.DisableReason = module.DisableReason;
             this.DisableModuleNote = module.DisableModuleNote;
             this.isDisabled = module.isDisabled;
         }
@@ -37,6 +37,6 @@ namespace PLM
         public string DisableModuleNote { get; set; }
 
         [Display(Name = "Reason")]
-        public Module.DisableModuleReason Reason { get; set; }
+        public Module.DisableModuleReason DisableReason { get; set; }
     }
 }
