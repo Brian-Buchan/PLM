@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using PLM.Models;
 
 namespace PLM
 {
@@ -14,6 +16,16 @@ namespace PLM
 
     public class DisableModuleViewModel
     {
+        public DisableModuleViewModel() { }
+
+        public DisableModuleViewModel(Module module)
+        {
+            this.Name = module.Name;
+            this.Reason = module.DisableReason;
+            this.DisableModuleNote = module.DisableModuleNote;
+            this.isDisabled = module.isDisabled;
+        }
+
         [Key]
         [Display(Name = "Module Name")]
         public string Name { get; set; }
@@ -24,16 +36,7 @@ namespace PLM
         [Display(Name = "Note")]
         public string DisableModuleNote { get; set; }
 
-        public enum DisableReason
-        {
-            AccountNotPaid,
-            AgainstTermsOfUse,
-            CopyWriteInfringment,
-            InappropriateContent,
-            Other
-        }
-
         [Display(Name = "Reason")]
-        public DisableReason DisableModuleReason { get; set; }
+        public Module.DisableModuleReason Reason { get; set; }
     }
 }

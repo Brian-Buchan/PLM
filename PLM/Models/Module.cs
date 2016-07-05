@@ -5,6 +5,7 @@ using System.Web;
 using System.IO;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel;
 
 namespace PLM
 {
@@ -43,17 +44,21 @@ namespace PLM
         [Display(Name = "Note")]
         public string DisableModuleNote { get; set; }
 
-        public enum ModuleDisableReason
+        public enum DisableModuleReason
         {
+            [Description("Account Not Paid")]
             AccountNotPaid,
+            [Description("Against Terms of Use")]
             AgainstTermsOfUse,
+            [Description("Copywrite Infringment")]
             CopyWriteInfringment,
+            [Description("Inappropiate Content")]
             InappropriateContent,
             Other
         }
 
         [Display(Name = "Reason")]
-        public ModuleDisableReason DisableModuleReason { get; set; }
+        public DisableModuleReason DisableReason { get; set; }
 
     }
 
