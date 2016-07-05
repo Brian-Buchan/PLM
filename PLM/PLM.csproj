@@ -216,6 +216,7 @@
     <Compile Include="Controllers\ModulesController.cs" />
     <Compile Include="Controllers\ModulesEDITController.cs" />
     <Compile Include="Controllers\ReportController.cs" />
+    <Compile Include="DevPro Resources\DevPro.cs" />
     <Compile Include="Extensions\CascadeDeleter.cs" />
     <Compile Include="Migrations\201606141648191_InitialCreate.cs" />
     <Compile Include="Migrations\201606141648191_InitialCreate.Designer.cs">
@@ -1281,7 +1282,6 @@
     <Folder Include="Content\Images\permUploads\" />
     <Folder Include="Content\Images\Profile\" />
     <Folder Include="Content\Images\tempUploads\" />
-    <Folder Include="DevPro Resources\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

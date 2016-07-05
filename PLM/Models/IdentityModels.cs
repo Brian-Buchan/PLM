@@ -78,10 +78,7 @@ namespace PLM
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public ApplicationDbContext()
-            //Production
-            : base("Production", throwIfV1Schema: false)
-        //Development
-        //: base("Development", throwIfV1Schema: false)
+            : base(DevPro.connectionStringName, throwIfV1Schema: false)
         {
         }
 

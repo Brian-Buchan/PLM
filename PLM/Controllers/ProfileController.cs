@@ -76,7 +76,7 @@ namespace PLM.Controllers
                     fName = file.FileName;
                     if (file != null && file.ContentLength > 0)
                     {
-                        string imageDirectory = ("/PerceptualLearning/Content/Images/Profiles/" + Session["upload"].ToString() + "/");
+                        string imageDirectory = (DevPro.baseFileDirectory + "Profiles/" + Session["upload"].ToString() + "/");
                         if (!Directory.Exists(imageDirectory))
                         {
                             Directory.CreateDirectory(imageDirectory);
