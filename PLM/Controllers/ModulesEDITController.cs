@@ -19,7 +19,7 @@ namespace PLM.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: /ModulesEDIT/
-        ////[AuthorizeOrRedirectAttribute(Roles = "Admin")]
+       [AuthorizeOrRedirectAttribute(Roles = "Admin")]
         public ActionResult Index(string sortOrder, string searchString, string userSearchString)
         {
             ViewBag.NameSortParam = String.IsNullOrEmpty(sortOrder) ? "name_asc" : "";
