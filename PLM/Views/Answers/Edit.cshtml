@@ -38,7 +38,7 @@
         @Html.ActionLink("Add Picture", "Create", new { Controller = "Pictures", id = Model.AnswerID, ModuleID = Model.ModuleID }, new { type = "button" })
     </div>
 
-    <div class="form-horizontal floatLeft">
+    <div class="form-horizontal floatLeft" style="width:100%;">
         @*<div style="text-align:right; float:right">
             <a href="http://plmeditor.azurewebsites.net" target="_blank">Edit an image to upload.</a>
         </div>*@
@@ -50,7 +50,7 @@
             @Html.LabelFor(model => model.AnswerString, new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.AnswerString, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.AnswerString)
+                @Html.ValidationMessageFor(model => model.AnswerString, "", new { @class = "text-danger" })
             </div>
         </div>
 
@@ -58,7 +58,7 @@
             @Html.LabelFor(model => model.ModuleID, "ModuleID", new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.ModuleID, Model.ModuleID)
-                @Html.ValidationMessageFor(model => model.ModuleID)
+                @Html.ValidationMessageFor(model => model.ModuleID, "", new { @class = "text-danger" })
             </div>
         </div>
 
@@ -76,10 +76,10 @@
                                 </div>
                             </div>
                             <div class="portfolio-info ">
-                                <div class="floatLeft">
+                                <div class="halfPanel">
                                     @Html.ActionLink("Attribution", "Edit", new { controller = "Pictures", id = pic.PictureID }, new { type = "button-square" })
                                 </div>
-                                <div class="floatRight">
+                                <div class="halfPanel">
                                     @Html.ActionLink("Delete", "Delete", new { controller = "Pictures", id = pic.PictureID }, new { type = "button-square" })
                                 </div>
                                 @*<h2><a href="@Url.Action("Edit", "Pictures",new { Controller = "Pictures", id = pic.PictureID})">Attribution</a></h2>
