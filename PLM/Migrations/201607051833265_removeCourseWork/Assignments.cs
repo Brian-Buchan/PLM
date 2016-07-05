@@ -3,7 +3,7 @@ namespace PLM.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class scoreIDAutoIncrement : DbMigration
+    public partial class removeCourseWorkAssignments : DbMigration
     {
         public override void Up()
         {
