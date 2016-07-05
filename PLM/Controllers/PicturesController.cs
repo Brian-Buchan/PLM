@@ -9,6 +9,7 @@ using System.Web.Mvc;
 using PLM;
 using System.IO;
 using PLM.Extensions;
+using PLM.CutomAttributes;
 
 namespace PLM.Controllers
 {
@@ -39,6 +40,7 @@ namespace PLM.Controllers
         }
 
         // GET: /Pictures/Create
+        [AuthorizeOrRedirectAttribute(Roles = "Instructor")]
         public ActionResult Create(int? id)
         {
             ViewBag.AnswerID = id;
@@ -55,6 +57,7 @@ namespace PLM.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [AuthorizeOrRedirectAttribute(Roles = "Instructor")]
         public ActionResult Create([Bind(Include = "Attribution,PictureID")] Picture picture, int? id) 
         {
             ViewBag.AnswerID = id;
@@ -93,6 +96,7 @@ namespace PLM.Controllers
         }
 
         // GET: /Pictures/Edit/5
+        [AuthorizeOrRedirectAttribute(Roles = "Instructor")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -113,6 +117,7 @@ namespace PLM.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [AuthorizeOrRedirectAttribute(Roles = "Instructor")]
         public ActionResult Edit([Bind(Include = "PictureID,Location,AnswerID")] Picture picture)
         {
             if (ModelState.IsValid)
@@ -126,6 +131,7 @@ namespace PLM.Controllers
         }
 
         // GET: /Pictures/Delete/5
+        [AuthorizeOrRedirectAttribute(Roles = "Instructor")]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -145,6 +151,7 @@ namespace PLM.Controllers
         // POST: /Pictures/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [AuthorizeOrRedirectAttribute(Roles = "Instructor")]
         public ActionResult DeleteConfirmed(int id)
         {
             Picture picture = db.Pictures.Find(id);

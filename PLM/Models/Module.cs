@@ -39,5 +39,23 @@ namespace PLM
 
         [Display(Name = "Is Disabled")]
         public bool isDisabled { get; set; }
+
+        [Display(Name = "Note")]
+        public string DisableModuleNote { get; set; }
+
+        public enum ModuleDisableReason
+        {
+            AccountNotPaid,
+            AgainstTermsOfUse,
+            CopyWriteInfringment,
+            InappropriateContent,
+            Other
+        }
+
+        [Display(Name = "Reason")]
+        public ModuleDisableReason DisableModuleReason { get; set; }
+
     }
+
+    
 }
