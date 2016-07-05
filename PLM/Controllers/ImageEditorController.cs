@@ -32,8 +32,9 @@ namespace PLM.Controllers
             //where "[IMAGEDATA]" is a base64 string that converts to a png image.
 
             string imgId = Request.Form.Get("imgId");
+            string answerId = Request.Form.Get("answerId");
 
-            string result = SaveImage(Request.Form.Get("imgData"), imgId);
+            string result = SaveImage(Request.Form.Get("imgData"), imgId, answerId);
             
             if (result == "FAILED")
             {
@@ -52,7 +53,6 @@ namespace PLM.Controllers
         }
 
         [HttpGet]
-        
         public ActionResult Confirm()
         {
             ConfirmViewModel model = (ConfirmViewModel)TempData["model"];
@@ -70,60 +70,6 @@ namespace PLM.Controllers
             return RedirectToAction("Confirm");
         }
 
-        [HttpPost]
-        public ActionResult Save()
-        {
-            bool willSave;
-            string valueFromPost = Request.Form.Get("willSave");
-
-            //try and parse the value sent from the form
-            if (Boolean.TryParse(valueFromPost, out willSave))
-            {
-                if (willSave)
-                {
-                    string result = PermaSave(HttpContext.Session.SessionID);
-
-                    switch (result)
-                    {
-                        case "NO FILES":
-                            return new HttpStatusCodeResult(HttpStatusCode.BadRequest, 
-                                "There are no files to save.");
-
-                        case "SAVED":
-                            return new HttpStatusCodeResult(HttpStatusCode.OK, 
-                                "Files Saved. Refreshing page.");
-
-                        case "FAILED":
-                            return new HttpStatusCodeResult(HttpStatusCode.InternalServerError, 
-                                "There was an error processing your request. \nContact an administrator.");
-                        default:
-                            return new HttpStatusCodeResult(HttpStatusCode.InternalServerError,
-                                "Something went wrong, and we're not sure what. \nContact an administrator immediately.");
-                    }
-                }
-                else
-                {
-                    string result = DiscardChanges(HttpContext.Session.SessionID);
-
-                    switch (result)
-                    {
-                        case "DONE":
-                            return new HttpStatusCodeResult(HttpStatusCode.OK, 
-                                "Changes Discarded. Refreshing page.");
-                        case "ERROR":
-                            return new HttpStatusCodeResult(HttpStatusCode.InternalServerError,
-                                "There was an error processing your request. \nContact an administrator.");
-
-                        default:
-                            return new HttpStatusCodeResult(HttpStatusCode.InternalServerError,
-                                "Something went wrong, and we're not sure what. \nContact an administrator immediately.");
-                    }
-                }
-            }
-            else return new HttpStatusCodeResult(HttpStatusCode.BadRequest, 
-                "There was an error processing your request. \nContact an administrator.");
-        }
-
         /// <summary>
         /// Saves an image from data obtained from a POST.
         /// Returns the filepath if it succeeds.
@@ -134,11 +80,12 @@ namespace PLM.Controllers
         /// "data:image/[FILEEXTENSION];base64,[IMAGEDATA]",
         /// where [FILEEXTENSION] is either "jpeg" or "png", and 
         /// [IMAGEDATA] is an image in Base64 encoding.</param>
-        /// <param name="id">The id of the image that was edited. 
+        /// <param name="imgId">The id of the image that was edited. 
         /// Will be used to discriminate which image to overwrite.</param>
+        /// <param name="answerId">The id of the answer. Used to select which answer the image belongs to.</param>
         /// <returns>string</returns>
         [NonAction]
-        private string SaveImage(string fromPost, string id)
+        private string SaveImage(string fromPost, string imgId, string answerId)
         {
             try
             {
@@ -170,14 +117,17 @@ namespace PLM.Controllers
                 TempFileName = TempFileName.Replace("+", "");
                 TempFileName = TempFileName.Replace(@"/", "");
 
-                //add the image ID, with a discriminating exclamation point (!)
-                TempFileName = TempFileName + "!" + id;
+                //add the image ID, with discriminating curly braces ("{" and "}")
+                TempFileName = "{" + imgId + "}" + TempFileName;
 
-                //add the user's sessionID, with a discriminating caret (^)
-                TempFileName = HttpContext.Session.SessionID + "^" + TempFileName;
+                //add the answerID, with discriminating brackets ("[" and "]")
+                TempFileName = "[" + answerId + "]" + TempFileName;
 
                 //add the file extension
                 TempFileName = TempFileName + "." + imageFormat;
+
+                //The filename for "answer 1 image 3", for example, would thus look like: 
+                // "[1]{3}khsial3ihvbsliuygal.png"
 
                 using (MemoryStream ms = new MemoryStream(img, 0, img.Length))
                 {
@@ -208,21 +158,21 @@ namespace PLM.Controllers
         }
 
         /// <summary>
-        /// Permanently save files in the tempUpload folder that contain 
-        /// the given session ID to the permUploads folder.
+        /// Permanently save the file with the given name in the tempUpload folder
+        /// to the permUploads folder.
         /// Returns "SAVED" if successful, 
         /// "NO FILES" if there were no files found, 
         /// or "FAILED" otherwise.
         /// </summary>
-        /// <param name="sessionId">The session ID of the user.</param>
+        /// <param name="filename">The filename to permanently save</param>
         /// <returns>string</returns>
         [NonAction]
-        private string PermaSave(string sessionId)
+        private string PermaSave(string filename)
         {
             string dirPath = (Path.Combine(Server.MapPath("~/Content/Images/tempUploads/")));
             string newDirPath = (Path.Combine(Server.MapPath("~/Content/Images/permUploads/")));
 
-            string[] filesToSave = Directory.GetFiles(dirPath, "*" + sessionId + "*");
+            string[] filesToSave = Directory.GetFiles(dirPath, filename);
 
             if (filesToSave.Length == 0)
             {
@@ -237,16 +187,16 @@ namespace PLM.Controllers
         }
 
         /// <summary>
-        /// Discard all the images in the temp folder with the given sessionID.
+        /// Discard all the images in the temp folder with the given filename.
         /// Returns "DONE" if successful, "ERROR" if the deletion fails at any point.
         /// </summary>
-        /// <param name="sessionId">The sessionID to use when deleting files</param>
+        /// <param name="filename">The name of the file to delete</param>
         /// <returns>string</returns>
         [NonAction]
-        private string DiscardChanges(string sessionId)
+        private string DiscardChanges(string filename)
         {
             string dirPath = (Path.Combine(Server.MapPath("~/Content/Images/tempUploads/")));
-            string[] filesToDiscard = Directory.GetFiles(dirPath, "*" + sessionId + "*");
+            string[] filesToDiscard = Directory.GetFiles(dirPath, filename);
             if (FileManipExtensions.DeleteSpecificFiles(filesToDiscard))
             {
                 return "DONE";
