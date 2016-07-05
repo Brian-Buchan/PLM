@@ -36,6 +36,11 @@ namespace PLM.Controllers
             }
         }
 
+        public ActionResult StatusRequest()
+        {
+            return View();
+        }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult CreateProfile()

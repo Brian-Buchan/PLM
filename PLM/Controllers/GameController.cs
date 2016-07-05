@@ -39,19 +39,23 @@ namespace PLM.Controllers
         {
             ViewBag.UserID = User.Identity.GetUserId();
             ViewBag.ModuleID = ((UserGameSession)Session["userGameSession"]).currentModule.ModuleID;
-            //SaveScore(score);
+            Score newScore = SaveScore(score);
 
-            return View(score);
+            return View(newScore);
         }
 
-        private void SaveScore(int score)
+        private Score SaveScore(int score)
         {
             Score newScore = new Score();
             newScore.CorrectAnswers = (score / 100);
             newScore.Module = currentModule;
+            newScore.User = ((UserGameSession)Session["userGameSession"]).currentUser;
+            newScore.TotalAnswers = ((UserGameSession)Session["userGameSession"]).numQuestions;
 
             db.Scores.Add(newScore);
             db.SaveChanges();
+
+            return newScore;
         }
 
         public ActionResult Play()
@@ -101,16 +105,21 @@ namespace PLM.Controllers
         [HttpGet]
         public ActionResult Setup(int? PLMid)
         {
-            int IDtoPASS = 1;
-            if (PLMid != null)
-        {
-                // Attempts to set nullable value, If null sets to itself (DEFAULT IS 0 - AMERICAN GEO PLM)
-                IDtoPASS = PLMid ?? 1;
-            }
+  
 
-            if (PLMgenerated == false)
-                GenerateModule(IDtoPASS);
-            return View();
+                int IDtoPASS = 1;
+                if (PLMid != null)
+                {
+                    // Attempts to set nullable value, If null sets to itself (DEFAULT IS 0 - AMERICAN GEO PLM)
+                    IDtoPASS = PLMid ?? 1;
+                }
+
+                if (PLMgenerated == false)
+                    GenerateModule(IDtoPASS);
+                return View();
+ 
+
+
         }
 
         [HttpPost]

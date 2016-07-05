@@ -1,4 +1,5 @@
-﻿@{
+﻿@model PLM.Score
+@{
     ViewBag.Title = "Results";
 }
 <head>
@@ -34,8 +35,8 @@
     </section>
     <div style="width:100%">
     <div class="about-us" style="width:50%; float:left">
-        <h1>Your Score: @Model</h1>
-        <h2>X out of Y Correct </h2>
+        <h1>Your Score: @{(Model.CorrectAnswers / Model.TotalAnswers) *100})</h1>
+        <h2> @Model.CorrectAnswers out of @Model.TotalAnswers Correct </h2>
         <hr />
         <div>
             <div>
