@@ -49,7 +49,7 @@ using (Html.BeginForm())
         <div class="form-group" title="What category does the module belong to?">
             @Html.LabelFor(model => model.Category.CategoryName, new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownList("CategoryId", String.Empty)
+                @Html.DropDownList("CategoryId", "Other")
                 @Html.ValidationMessageFor(model => model.CategoryId)
             </div>
         </div>
