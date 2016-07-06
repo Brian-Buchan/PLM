@@ -48,7 +48,7 @@ namespace PLM.Controllers
             newScore.TotalAnswers = ((UserGameSession)Session["userGameSession"]).numQuestions;
 
             //db.Scores.Add(newScore);
-            //db.SaveChanges();
+            db.SaveChanges();
 
             return newScore;
         }
