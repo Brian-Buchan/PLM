@@ -254,9 +254,9 @@
     <Compile Include="Migrations\201607051913527_DisableModuleChange.Designer.cs">
       <DependentUpon>201607051913527_DisableModuleChange.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201607051924147_DropCourseWork.cs" />
-    <Compile Include="Migrations\201607051924147_DropCourseWork.Designer.cs">
-      <DependentUpon>201607051924147_DropCourseWork.cs</DependentUpon>
+    <Compile Include="Migrations\201607061600524_CategoryRequired.cs" />
+    <Compile Include="Migrations\201607061600524_CategoryRequired.Designer.cs">
+      <DependentUpon>201607061600524_CategoryRequired.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AdminViewModel.cs" />
@@ -1288,7 +1288,6 @@
     <Folder Include="Content\Images\permUploads\" />
     <Folder Include="Content\Images\Profile\" />
     <Folder Include="Content\Images\tempUploads\" />
-    <Folder Include="Migrations\201607051833265_removeCourseWork\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -1328,8 +1327,8 @@
     <EmbeddedResource Include="Migrations\201607051913527_DisableModuleChange.resx">
       <DependentUpon>201607051913527_DisableModuleChange.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201607051924147_DropCourseWork.resx">
-      <DependentUpon>201607051924147_DropCourseWork.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201607061600524_CategoryRequired.resx">
+      <DependentUpon>201607061600524_CategoryRequired.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

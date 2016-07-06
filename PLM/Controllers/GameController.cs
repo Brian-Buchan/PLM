@@ -14,9 +14,8 @@ namespace PLM.Controllers
     public class GameController : Controller
     {
         private static Random rand = new Random();
-
-        private UserGameSession currentGameSession;
         private ApplicationDbContext db = new ApplicationDbContext();
+        private UserGameSession currentGameSession;
         private Module currentModule = new Module();
         private List<int> GeneratedGuessIDs = new List<int>();
         private PlayViewModel currentGuess = new PlayViewModel();
@@ -33,14 +32,12 @@ namespace PLM.Controllers
         //
         // GET: /Game/
 
-
-
         public ActionResult Complete(int score)
         {
             ViewBag.UserID = User.Identity.GetUserId();
             ViewBag.ModuleID = ((UserGameSession)Session["userGameSession"]).currentModule.ModuleID;
             Score newScore = SaveScore(score);
-
+            ViewBag.score = ((UserGameSession)Session["userGameSession"]).Score;
             return View(newScore);
         }
 
@@ -52,12 +49,8 @@ namespace PLM.Controllers
             newScore.User = ((UserGameSession)Session["userGameSession"]).currentUser;
             newScore.TotalAnswers = ((UserGameSession)Session["userGameSession"]).numQuestions;
 
-            using (db = new ApplicationDbContext())
-            {
-                db.Scores.Add(newScore);
-                db.SaveChanges();
-
-            }
+            db.Scores.Add(newScore);
+            db.SaveChanges();
 
             return newScore;
         }
@@ -109,8 +102,6 @@ namespace PLM.Controllers
         [HttpGet]
         public ActionResult Setup(int? PLMid)
         {
-
-
             int IDtoPASS = 1;
             if (PLMid != null)
             {
@@ -121,9 +112,6 @@ namespace PLM.Controllers
             if (PLMgenerated == false)
                 GenerateModule(IDtoPASS);
             return View();
-
-
-
         }
 
         [HttpPost]

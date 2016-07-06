@@ -20,7 +20,7 @@ namespace PLM
 
         [MaxLength(200)]
         public string Description { get; set; }
-
+        [Required]
         [Display(Name = "Category")]
         public virtual int CategoryId { get; set; }
 

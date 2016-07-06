@@ -7,13 +7,13 @@ namespace PLM.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class DropCourseWork : IMigrationMetadata
+    public sealed partial class CategoryRequired : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(DropCourseWork));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(CategoryRequired));
         
         string IMigrationMetadata.Id
         {
-            get { return "201607051924147_DropCourseWork"; }
+            get { return "201607061600524_CategoryRequired"; }
         }
         
         string IMigrationMetadata.Source
