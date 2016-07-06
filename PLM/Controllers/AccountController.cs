@@ -24,7 +24,7 @@ namespace PLM.Controllers
     public class AccountController : Controller
     {
         private ApplicationUserManager _userManager;
-
+        private ApplicationDbContext db = new ApplicationDbContext();
         public AccountController()
         {
         }
@@ -73,6 +73,31 @@ namespace PLM.Controllers
                 model.Add(u);
             }
             return View(model);
+        }
+
+        public ActionResult RoleRequest()
+        {
+            var db = new ApplicationDbContext();
+            var users = from u in db.Users
+                        where u.Status == ApplicationUser.AccountStatus.PendingInstrustorRole
+                        select u;
+            
+            return View(users);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        //[AuthorizeOrRedirectAttribute(Roles = "Admin")]
+        public ActionResult RoleRequest(ApplicationUser model)
+        {
+            if (ModelState.IsValid)
+            {
+                model.Status = ApplicationUser.AccountStatus.Active;
+                UserManager.AddToRole(model.Id, "Instructor");
+                db.Entry(model).State = EntityState.Modified;
+                db.SaveChanges();
+            }           
+            return RedirectToAction("RoleRequest", "Account");
         }
 
         //[AuthorizeOrRedirectAttribute(Roles = "Admin")]
@@ -127,7 +152,7 @@ namespace PLM.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         //[AuthorizeOrRedirectAttribute(Roles = "Admin")]
-        public ActionResult Edit([Bind(Include = "UserName, LastName, FirstName, Institution, Email, Password, ConfirmPassword")] EditUserViewModel userModel)
+        public ActionResult Edit([Bind(Include = "UserName, LastName, FirstName, Institution, Email")] EditUserViewModel userModel)
         {
             if (ModelState.IsValid)
             {
@@ -138,8 +163,8 @@ namespace PLM.Controllers
                 user.LastName = userModel.LastName;
                 user.Email = userModel.Email;
 
-                PasswordHasher ph = new PasswordHasher();
-                user.PasswordHash = ph.HashPassword(userModel.Password);
+                //PasswordHasher ph = new PasswordHasher();
+                //user.PasswordHash = ph.HashPassword(userModel.Password);
                 
                 db.Entry(user).State = EntityState.Modified;
                 db.SaveChanges();

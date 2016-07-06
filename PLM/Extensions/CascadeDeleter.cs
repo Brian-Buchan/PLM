@@ -22,7 +22,10 @@ namespace PLM
 
             db.Modules.Remove(module);
 
-            Directory.Delete(DevPro.baseFileDirectory + "PLM/" + module.Name);
+            if (Directory.Exists((DevPro.baseFileDirectory + "PLM/" + module.Name).ToString()))
+            {
+                Directory.Delete((DevPro.baseFileDirectory + "PLM/" + module.Name).ToString());
+            }
             db.SaveChanges();
         }
 

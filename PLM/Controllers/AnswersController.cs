@@ -44,18 +44,11 @@ namespace PLM.Controllers
         [AuthorizeOrRedirectAttribute(Roles = "Instructor")]
         public ActionResult Create(int ID)
         {
-            ViewBag.ModuleID = ID;
+            var module = db.Modules.Find(ID);
+            Answer ansToPass = new Answer();
+            ansToPass.Module = module;
 
-            var modules = db.Modules.ToList();
-
-            ViewBag.ModuleName = modules.Find(x => x.ModuleID == ID).Name;
-
-            var answers = db.Answers.ToList();
-            ViewBag.ModuleAnsList = (from a in answers
-                                     where a.ModuleID == ID
-                                     select a).ToList();
-            //ViewBag.ModuleID = new SelectList(db.Modules, "ModuleID", "Name");
-            return View();
+            return View(ansToPass);
         }
 
         // POST: /Answers/Create
@@ -73,8 +66,8 @@ namespace PLM.Controllers
                 return RedirectToAction("Create", new {id = answer.ModuleID });
             }
 
-            ViewBag.ModuleID = new SelectList(db.Modules, "ModuleID", "Name");
-            return View(answer);
+            answer.Module = db.Modules.Find(3);
+            return View(answer.Module);
         }
 
         // GET: /Answers/Edit/5
