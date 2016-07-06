@@ -52,13 +52,14 @@ namespace PLM
     public static class FileManipExtensions
     {
         /// <summary>
-        /// Rename a specific file. Outputs the newfilepath if it succeeds. 
+        /// Rename a specific file. Outputs the newfilepath if it succeeds.
+        /// Will rollback changes if it fails at any point.
         /// Will overwrite only if overWrite flag is set to true.
         /// </summary>
         /// <param name="filePath">The full path of the file to rename.</param>
-        /// <param name="newFileName">The new filename. Ignores new file extensions</param>
+        /// <param name="newFileName">The new filename. Ignores new file extensions, and expects only the new filename.</param>
         /// <param name="newfilepath">The new filepath of the renamed file. Returns an empty 
-        /// string if the rename fails.</param>
+        /// string if the rename fails at any point.</param>
         /// <param name="overWrite">Optional, defaults to false. Whether or not 
         /// to overwrite any existing files with the same name as the renamed file.</param>
         /// <returns>bool</returns>
@@ -66,7 +67,7 @@ namespace PLM
         {
             string dirPath = new FileInfo(filePath).Directory.FullName;
             string fileExt = new FileInfo(filePath).Extension;
-            string possibleFilePath = dirPath + newFileName + fileExt;
+            string possibleFilePath = Path.Combine(dirPath, newFileName + fileExt);
             newfilepath = "";
             if (!Directory.Exists(dirPath))
             {
@@ -77,14 +78,42 @@ namespace PLM
             {
                 if (File.Exists(filePath))
                 {
-                    File.Copy(filePath, newFileName, overWrite);
+                    File.Copy(filePath, possibleFilePath, overWrite);
                 }   
             }
-            catch (IOException)
+            //catch (IOException)
+            //{
+            //    //TODO: find some way to log this exception
+            //    return false;
+            //}
+            catch (Exception)
             {
-                return false;
+                throw;
+                //return false;
             }
-            return false;
+
+            //Then try deleting the old file. If this fails, rollback changes and return false.
+            try
+            {
+                if (File.Exists(filePath))
+                {
+                    File.Delete(filePath);
+                }
+            }
+            //catch (IOException)
+            //{
+            //    //TODO: find some way to log this exception
+            //    File.Delete(possibleFilePath);
+            //    return false;
+            //}
+            catch (Exception)
+            {
+                File.Delete(possibleFilePath);
+                throw;
+                //return false;
+            }
+            newfilepath = possibleFilePath;
+            return true;
         }
 
         /// <summary>
@@ -117,7 +146,7 @@ namespace PLM
                     {
                         fileName = Path.GetFileName(filePath);
 
-                        //if the overwrite flag is set to true and the file exists in the directory, delete it.
+                        //if the overwrite flag is set to true and the file exists in the new directory, delete it.
                         if (overWrite && File.Exists(saveDirectory + fileName))
                         {
                             File.Delete(saveDirectory + fileName);

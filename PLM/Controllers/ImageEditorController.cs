@@ -49,7 +49,7 @@ namespace PLM.Controllers
             }
 
             //return View();
-            return new HttpStatusCodeResult(HttpStatusCode.OK);
+            return new HttpStatusCodeResult(HttpStatusCode.OK, result);
         }
 
         [HttpGet]
@@ -60,14 +60,42 @@ namespace PLM.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         [ActionName("Confirm")]
         public ActionResult ConfirmPOST()
         {
             string b64Img = Request.Form.Get("imgData");
             string origUrl = Request.Form.Get("origUrl");
-            ConfirmViewModel model = new ConfirmViewModel(b64Img, origUrl);
+            string imgID = Request.Form.Get("imgId");
+            string answerID = Request.Form.Get("answerId");
+            string tempUrl = Request.Form.Get("tempUrl");
+            ConfirmViewModel model = new ConfirmViewModel(b64Img, origUrl, imgID, answerID, tempUrl);
             TempData["model"] = model;
             return RedirectToAction("Confirm");
+        }
+
+        [HttpPost]
+        public ActionResult Save()
+        {
+            string origUrl = Request.Form.Get("origUrl");
+            string tempUrl = Request.Form.Get("tempUrl");
+            string temporaryFileName = Path.GetFileName(tempUrl);
+            string newFileName = Path.GetFileNameWithoutExtension(origUrl);
+
+            PermaSave(temporaryFileName, newFileName);
+
+            return RedirectToAction("Index", "Home");
+        }
+
+        [HttpPost]
+        public ActionResult Discard()
+        {
+            string tempUrl = Request.Form.Get("tempUrl");
+            string temporaryFileName = Path.GetFileName(tempUrl);
+
+            DiscardChanges(temporaryFileName);
+
+            return RedirectToAction("Index", "Home");
         }
 
         /// <summary>
@@ -159,31 +187,79 @@ namespace PLM.Controllers
 
         /// <summary>
         /// Permanently save the file with the given name in the tempUpload folder
-        /// to the permUploads folder.
+        /// to the permUploads folder, with a new name.
+        /// If there are multiple files found with the same name for whatever reason,
+        /// takes the last one found.
         /// Returns "SAVED" if successful, 
         /// "NO FILES" if there were no files found, 
         /// or "FAILED" otherwise.
         /// </summary>
-        /// <param name="filename">The filename to permanently save</param>
+        /// <param name="filename">The file to permanently save. Expects only 
+        /// the filename and its extension, not a path</param>
+        /// <param name="newFileName">The new name for the saved file. 
+        /// Expects only the name, not the path or extension</param>
         /// <returns>string</returns>
         [NonAction]
-        private string PermaSave(string filename)
+        private string PermaSave(string filename, string newFileName)
         {
+            List<string> filesToMove = new List<string>();
             string dirPath = (Path.Combine(Server.MapPath("~/Content/Images/tempUploads/")));
             string newDirPath = (Path.Combine(Server.MapPath("~/Content/Images/permUploads/")));
+
+            //if the selected file doesn't exist in the temp folder
+            if (!(System.IO.File.Exists(dirPath + filename)))
+            {
+                //If this code is reached, the passed in filename could not be accessed. 
+                //It may have been moved, deleted, or did not exist in the first place.
+                //The passed in filename may have also contained illegal characters, 
+                //referenced a location on a failing/missing disk, 
+                //or the program might not have read permissions for that specific file.
+                return "BAD LOCATION";
+            }
 
             string[] filesToSave = Directory.GetFiles(dirPath, filename);
 
             if (filesToSave.Length == 0)
             {
-                return "NO FILES";
+                //If this code is reached, GetFiles didn't find any matching files.
+                return "NO FILES FOUND";
             }
 
-            if (FileManipExtensions.MoveSpecificFiles(filesToSave, newDirPath, true))
+            //for each file to be saved, 
+            foreach (string filePath in filesToSave)
+            {
+                string newFilePath;
+                if (FileManipExtensions.TryRenameFile(filePath, newFileName, out newFilePath, true))
+                {
+                    filesToMove.Add(newFilePath);
+                }
+            }
+
+            //Make sure that filepaths were actually moved to the filesToMove list.
+            if (filesToMove.Count == 0)
+            {
+                //If this code is reached, there is a problem within the TryRenameFile method.
+                //Another process may have been accessing the file at the time of the renaming.
+                return "BAD MOVE ON RENAME";
+            }
+
+            string[] filesMove = filesToMove.ToArray();
+
+            //Verify that all the filepaths were moved to the array intact
+
+            //if filesMove.Length is either zero or unequal to filesToMove.Count
+            if (filesMove.Length == 0 || filesMove.Length != filesToMove.Count)
+            {
+                //If this code is reached, something happened that nulled 
+                //or removed some or all elements from the filesMove array
+                return "BAD MOVE DURING TRANSFER";
+            }
+
+            if (FileManipExtensions.MoveSpecificFiles(filesMove, newDirPath, true))
             {
                 return "SAVED";
             }
-            else return "FAILED";
+            else return "FAILED ON FILE MOVE";
         }
 
         /// <summary>

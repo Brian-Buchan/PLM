@@ -10,7 +10,7 @@
         <div class="portfolio-single">
             <div class="portfolio-thumb img-hover">
                 <figure>
-                    <img src="@Model.originalUrl" alt="Original Image" />
+                    <img src="@Url.Content(Model.originalUrl)" alt="Original Image" />
                     <figcaption>Original Image</figcaption>
                 </figure>
             </div>
@@ -32,6 +32,16 @@
 </div>
 
 <p>Are these changes OK? You won't be able to undo these changes any further.</p>
-<button name="Save" id="Save">Save</button>
-<button name="Save" id="Save">Discard</button>
+@using (Html.BeginForm("Save", "ImageEditor", FormMethod.Post))
+{
+    <input type="text" name="origUrl" value="@Model.originalUrl" hidden="hidden" />
+    <input type="text" name="tempUrl" value="@Model.tempUrl" hidden="hidden" />
+    <input type="submit" value="Save" />
+}
+
+@using (Html.BeginForm("Discard", "ImageEditor", FormMethod.Post))
+{
+    <input type="text" name="tempUrl" value="@Model.tempUrl" hidden="hidden" />
+    <input type="submit" value="Discard" />
+}
 
