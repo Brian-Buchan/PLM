@@ -51,6 +51,20 @@
             </div>
         </div>
         <hr />
+        @{
+            if (Model.Module.Answers.Count <= 3)
+            {
+                <p class ="text-danger">You need More answers for this to be a valid PLM</p>
+            }
+            foreach (Answer ans in ViewBag.ModuleAnsList)
+            {
+                if (ans.Pictures.Count == 0)
+                {
+                        <p class="text-danger">ans.AnswerString needs pictures added to be a valid answer.</p>
+                }
+            }
+         }
+        
         <div class="form-group hidden">
             @Html.LabelFor(model => model.ModuleID, "ModuleID", new { @class = "control-label col-md-2" })
             <div class="col-md-10">
