@@ -30,7 +30,7 @@
 
 <br />
 
-<h2>@ViewBag.ModuleName</h2>
+<h2>@Model.Module.Name</h2>
 
 <br />
 <br/>
@@ -91,7 +91,7 @@
             <th></th>
         </tr>
 
-        @foreach (Answer ans in ViewBag.ModuleAnsList)
+        @foreach (Answer ans in Model.Module.Answers)
         {
             <tr>
                 <td>

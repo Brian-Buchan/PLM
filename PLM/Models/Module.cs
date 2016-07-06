@@ -13,7 +13,7 @@ namespace PLM
     public class Module
     {
         public int ModuleID { get; set; }
-
+        [Required]
          [Display(Name = "Module name")]
          [MaxLength(25)]
         public string Name { get; set; }
