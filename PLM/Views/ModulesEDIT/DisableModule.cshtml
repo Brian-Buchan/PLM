@@ -1,54 +1,71 @@
 ﻿@model PLM.DisableModuleViewModel
 @using System.Data.Entity;
-@{
-    ViewBag.Title = "DisableModule";
-}
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Disable Module</title>
+</head>
 
-<h2>DisableModule</h2>
-
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        <h4>DisableModuleViewModel</h4>
-        <hr />
-        @Html.ValidationSummary(true)
-        @Html.HiddenFor(model => model.Name)
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.isDisabled, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.isDisabled)
-                @Html.ValidationMessageFor(model => model.isDisabled)
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.DisableModuleNote, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.DisableModuleNote)
-                @Html.ValidationMessageFor(model => model.DisableModuleNote)
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.DisableReason, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @*@Html.DropDownList(model => model.DisableReason, new { htmlAttributes = new { @class = "form-control" } })*@
-                @Html.DropDownList("DisableReason", EnumHelper.GetSelectList(typeof(ApplicationUser.Reason)), "Select My Type", new {@class = "form-control"})
-                @Html.ValidationMessageFor(model => model.DisableReason)
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
+<br /><br />
+<section id="page-breadcrumb">
+    <div class="vertical-center sun">
+        <div class="container">
+            <div class="row">
+                <div class="action">
+                    <div class="col-sm-12">
+                        <h1 class="title">Disable Module</h1>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-}
+</section>
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+            <h4>DisableModuleViewModel</h4>
+            <hr />
+            @Html.ValidationSummary(true)
+            @Html.HiddenFor(model => model.Name)
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.isDisabled, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.isDisabled)
+                    @Html.ValidationMessageFor(model => model.isDisabled)
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.DisableModuleNote, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.DisableModuleNote)
+                    @Html.ValidationMessageFor(model => model.DisableModuleNote)
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.DisableReason, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @*@Html.DropDownList(model => model.DisableReason, new { htmlAttributes = new { @class = "form-control" } })*@
+                    @Html.DropDownList("DisableReason", EnumHelper.GetSelectList(typeof(ApplicationUser.Reason)), "Select My Type", new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.DisableReason)
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Save" class="btn btn-default" />
+                </div>
+            </div>
+        </div>
+    }
+
+    <div>
+        @Html.ActionLink("Back to List", "Index")
+    </div>

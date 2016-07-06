@@ -191,9 +191,9 @@ namespace PLM.Controllers
                     picture.Answer.PictureCount++;
                     if (file.ContentLength >= 10971520)
                     {
-                        RedirectToAction("InvalidImage");
+                        RedirectToAction("InvalidImage","Pictures");
                     }else if(!((file.ContentType=="image/jpeg")||(file.ContentType=="image/bmp")||(file.ContentType=="image/png"))){
-                        RedirectToAction("InvalidImage");
+                        RedirectToAction("InvalidImage","Pictures");
                     }
                     else
                     {

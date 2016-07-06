@@ -52,10 +52,10 @@
         </div>
         <hr />
         @{
-            if (Model.Module.Answers.Count <= 3)
+            @*if (Model.Module. <= 3)
             {
                 <p class ="text-danger">You need More answers for this to be a valid PLM</p>
-            }
+            }*@
             foreach (Answer ans in ViewBag.ModuleAnsList)
             {
                 if (ans.Pictures.Count == 0)

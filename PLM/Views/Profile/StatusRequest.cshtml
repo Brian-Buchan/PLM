@@ -28,7 +28,7 @@
 
 <div class="clearLeft floatRight">
 
-    <form action="~/Profile/MakeRequest?id=@ViewBag.User" method="post">
+    <form action="~/Profile/StatusRequest?id=@ViewBag.User" method="post">
         @Html.AntiForgeryToken()
         <button name="subject" type="submit" value="fav_CSS">Make Request</button>
     </form>
