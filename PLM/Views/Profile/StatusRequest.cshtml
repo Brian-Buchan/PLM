@@ -1,7 +1,4 @@
-﻿@{
-    ViewBag.Title = "Instructor Status Request";
-    }
-<head>
+﻿<head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
@@ -30,7 +27,9 @@
 <br/>
 
 <div class="clearLeft floatRight">
-    @Html.ActionLink("Confirm", "ChangeToInstrustor", new { type = "button" })
+    <form action="~/Profile/MakeRequest?id=@ViewBag.User" method="post">
+        <button name="subject" type="submit" value="fav_CSS">Make Request</button>
+    </form>
 </div>
 
 <div>

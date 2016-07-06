@@ -1281,6 +1281,7 @@
     <Content Include="Views\Account\AccountDisable.cshtml" />
     <Content Include="Views\ModulesEDIT\DisableModule.cshtml" />
     <Content Include="Views\Profile\StatusRequest.cshtml" />
+    <Content Include="Views\Account\RoleRequest.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
