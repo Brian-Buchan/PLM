@@ -34,10 +34,8 @@ namespace PLM.Controllers
 
         public ActionResult Complete(int score)
         {
-            ViewBag.UserID = User.Identity.GetUserId();
-            ViewBag.ModuleID = ((UserGameSession)Session["userGameSession"]).currentModule.ModuleID;
-            Score newScore = SaveScore(score);
-            ViewBag.score = ((UserGameSession)Session["userGameSession"]).Score;
+            Score newScore = new Score();
+            newScore = SaveScore(score);
             return View(newScore);
         }
 
@@ -49,8 +47,8 @@ namespace PLM.Controllers
             newScore.User = ((UserGameSession)Session["userGameSession"]).currentUser;
             newScore.TotalAnswers = ((UserGameSession)Session["userGameSession"]).numQuestions;
 
-            db.Scores.Add(newScore);
-            db.SaveChanges();
+            //db.Scores.Add(newScore);
+            //db.SaveChanges();
 
             return newScore;
         }
