@@ -27,7 +27,9 @@
 <br/>
 
 <div class="clearLeft floatRight">
-    @Html.ActionLink("Comfirm", "ChangeToInstrustor", new { type = "button" })
+    <form action="~/Profile/MakeRequest?id=@ViewBag.User" method="post">
+        <button name="subject" type="submit" value="fav_CSS">Make Request</button>
+    </form>
 </div>
 
 <div>

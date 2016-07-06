@@ -75,6 +75,25 @@ namespace PLM.Controllers
             return View(model);
         }
 
+        public ActionResult RoleRequest()
+        {
+            var db = new ApplicationDbContext();
+            var users = from u in db.Users
+                        where u.Status == ApplicationUser.AccountStatus.PendingInstrustorRole
+                        select u;
+            
+            return View(users);
+        }
+
+        [ValidateAntiForgeryToken]
+        //[AuthorizeOrRedirectAttribute(Roles = "Admin")]
+        public void AcceptInstructorRequest(ApplicationUser model)
+        {
+            model.Status = ApplicationUser.AccountStatus.Active;
+            UserManager.AddToRole(model.Id, "Instructor");
+            RedirectToAction("RoleRequest", "Account");
+        }
+
         //[AuthorizeOrRedirectAttribute(Roles = "Admin")]
         public ActionResult Create()
         {
