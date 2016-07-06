@@ -55,6 +55,9 @@ namespace PLM.Controllers
                                      where a.ModuleID == ID
                                      select a).ToList();
 
+
+            //var module = db.Modules.Find(ID);
+            
             return View();
         }
 
