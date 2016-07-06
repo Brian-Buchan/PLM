@@ -109,7 +109,7 @@ namespace PLM.Controllers
 
             if (PLMgenerated == false)
                 GenerateModule(IDtoPASS);
-            return View();
+            return View(((UserGameSession)Session["userGameSession"]).currentModule);
         }
 
         [HttpPost]

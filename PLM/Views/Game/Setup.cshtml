@@ -1,4 +1,5 @@
-﻿@{
+﻿@model PLM.Module
+@{
     ViewBag.Title = "Setup";
 }
 
@@ -36,16 +37,16 @@
     @Html.AntiForgeryToken()
     <div class="form-horizontal col-lg-offset-1">
         <label>Number of Answers per Question</label>
-        <input type="range" id="numAnswers" name="numAnswers" step="3" min="3" max="15" value="12" oninput="outputUpdate(value, '#numAnswersOutput')" />
-        <output for="numAnswers" id="numAnswersOutput">12</output>
+        <input type="range" id="numAnswers" name="numAnswers" step="3" min="3" max="15" value="@Model.DefaultNumAnswers" oninput="outputUpdate(value, '#numAnswersOutput')" />
+        <output for="numAnswers" id="numAnswersOutput">@Model.DefaultNumAnswers</output>
 
         <label>Number of Questions</label>
-        <input type="range" id="numQuestions" name="numQuestions" step="5" min="5" max="260" value="50" oninput="outputUpdate(value, '#numQuestionsOutput')" />
-        <output for="numQuestions" id="numQuestionsOutput">50</output>
+        <input type="range" id="numQuestions" name="numQuestions" step="5" min="5" max="260" value="@Model.DefaultNumQuestions" oninput="outputUpdate(value, '#numQuestionsOutput')" />
+        <output for="numQuestions" id="numQuestionsOutput">@Model.DefaultNumQuestions</output>
 
         <label>Time Limit</label>
-        <input type="range" id="time" name="time" value="6" min="2" max="32" step="2" oninput="outputUpdate(value, '#timeOutput')" />
-        <output for="time" id="timeOutput">6</output>
+        <input type="range" id="time" name="time" value="@Model.DefaultTime" min="2" max="32" step="2" oninput="outputUpdate(value, '#timeOutput')" />
+        <output for="time" id="timeOutput">@Model.DefaultTime</output>
         <br />
         <input type="submit" name="btnPlay" value="Play" class="btn btn-success"/>
     </div>
