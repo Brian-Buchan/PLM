@@ -32,9 +32,7 @@ namespace PLM.Controllers
         //Module currentModule;
         //
         // GET: /Game/
-
-
-
+        
         public ActionResult Complete(int score)
         {
             ViewBag.UserID = User.Identity.GetUserId();
