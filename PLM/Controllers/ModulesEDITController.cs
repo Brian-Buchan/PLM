@@ -151,11 +151,12 @@ namespace PLM.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Module module = db.Modules.Find(id);
+            var model = new DisableModuleViewModel(module);
             if (module == null)
             {
                 return HttpNotFound();
             }
-            return View(module);
+            return View(model);
         }
 
         // POST: /ModulesEDIT/ModuleDisable/5

@@ -24,7 +24,7 @@ namespace PLM.Controllers
     public class AccountController : Controller
     {
         private ApplicationUserManager _userManager;
-
+        private ApplicationDbContext db = new ApplicationDbContext();
         public AccountController()
         {
         }
@@ -85,13 +85,19 @@ namespace PLM.Controllers
             return View(users);
         }
 
+        [HttpPost]
         [ValidateAntiForgeryToken]
         //[AuthorizeOrRedirectAttribute(Roles = "Admin")]
-        public void AcceptInstructorRequest(ApplicationUser model)
+        public ActionResult RoleRequest(ApplicationUser model)
         {
-            model.Status = ApplicationUser.AccountStatus.Active;
-            UserManager.AddToRole(model.Id, "Instructor");
-            RedirectToAction("RoleRequest", "Account");
+            if (ModelState.IsValid)
+            {
+                model.Status = ApplicationUser.AccountStatus.Active;
+                UserManager.AddToRole(model.Id, "Instructor");
+                db.Entry(model).State = EntityState.Modified;
+                db.SaveChanges();
+            }           
+            return RedirectToAction("RoleRequest", "Account");
         }
 
         //[AuthorizeOrRedirectAttribute(Roles = "Admin")]
