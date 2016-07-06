@@ -45,11 +45,13 @@ namespace PLM.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult StatusRequest(ApplicationUser user)
+        public ActionResult StatusRequest(ApplicationUser userModel)
         {
             if (ModelState.IsValid)
             {
+                var user = db.Users.First(u => u.UserName == userModel.UserName);
                 user.Status = ApplicationUser.AccountStatus.PendingInstrustorRole;
+
                 db.Entry(user).State = EntityState.Modified;
                 db.SaveChanges();
             }  
