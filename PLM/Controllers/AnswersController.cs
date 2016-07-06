@@ -54,7 +54,7 @@ namespace PLM.Controllers
             ViewBag.ModuleAnsList = (from a in answers
                                      where a.ModuleID == ID
                                      select a).ToList();
-            //ViewBag.ModuleID = new SelectList(db.Modules, "ModuleID", "Name");
+
             return View();
         }
 
