@@ -38,7 +38,16 @@ namespace PLM.Controllers
 
         public ActionResult StatusRequest()
         {
+            ViewBag.User = User.Identity.GetUserId();
             return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult MakeRequest(ApplicationUser user)
+        {
+            user.Status = ApplicationUser.AccountStatus.PendingInstrustorRole;
+            return View("Profile", "Index");
         }
 
         [HttpPost]

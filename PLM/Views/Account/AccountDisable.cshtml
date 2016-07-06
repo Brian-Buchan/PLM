@@ -43,7 +43,7 @@
             <div class="form-group">
                 @Html.LabelFor(model => model.DisableAccountReason, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
-                    @Html.DropDownListFor(model => model.DisableAccountReason, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.DropDownList(model => model.DisableAccountReason, new { htmlAttributes = new { @class = "form-control" } })
                     @Html.ValidationMessageFor(model => model.DisableAccountReason, "", new { @class = "text-danger" })
                 </div>
             </div>
