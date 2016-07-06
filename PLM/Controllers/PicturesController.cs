@@ -189,26 +189,33 @@ namespace PLM.Controllers
                     HttpPostedFileBase file = Request.Files[fileName];
                     fName = file.FileName;
                     picture.Answer.PictureCount++;
-                    if (file != null && file.ContentLength > 0)
+                    if (file.ContentLength >= 10971520)
                     {
-                        string moduleDirectory = (DevPro.baseFileDirectory + "PLM/" + Session["upload"].ToString() + "/");
-                        if (!Directory.Exists(moduleDirectory))
+                        RedirectToAction("InvalidImage");
+                    }
+                    else
+                    {
+                        if (file != null && file.ContentLength > 0)
                         {
-                            Directory.CreateDirectory(moduleDirectory);
+                            string moduleDirectory = (DevPro.baseFileDirectory + "PLM/" + Session["upload"].ToString() + "/");
+                            if (!Directory.Exists(moduleDirectory))
+                            {
+                                Directory.CreateDirectory(moduleDirectory);
+                            }
+                            path = moduleDirectory + fName;
+                            // Saves the file through the HttpPostedFileBase class
+                            file.SaveAs(path);
+                            string filetype = Path.GetExtension(path);
+
+                            // Then renames that image to the correct name based off the answer
+                            // And number of picturs per answer, then deletes the old picture
+                            string newfName = (picture.Answer.AnswerString + "-" + picture.Answer.PictureCount.ToString() + filetype);
+                            relpath = (moduleDirectory + newfName);
+                            System.IO.File.Copy(path, relpath);
+                            System.IO.File.Delete(path);
+
+                            db.SaveChanges();
                         }
-                        path = moduleDirectory + fName;
-                        // Saves the file through the HttpPostedFileBase class
-                        file.SaveAs(path);
-                        string filetype = Path.GetExtension(path);
-
-                        // Then renames that image to the correct name based off the answer
-                        // And number of picturs per answer, then deletes the old picture
-                        string newfName = (picture.Answer.AnswerString + "-" + picture.Answer.PictureCount.ToString() + filetype);
-                        relpath = (moduleDirectory + newfName);
-                        System.IO.File.Copy(path, relpath);
-                        System.IO.File.Delete(path);
-
-                        db.SaveChanges();
                     }
                 }
             }
