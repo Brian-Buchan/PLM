@@ -184,6 +184,34 @@ namespace PLM.Models
 
     }
 
+    public class InstructorRoleRequest
+    {
+        public InstructorRoleRequest() { }
+
+        public InstructorRoleRequest(ApplicationUser user)
+        {
+            this.UserName = user.UserName;
+            this.Status = user.Status;
+        }
+
+        [Key]
+        [Required]
+        [Display(Name = "User Name")]
+        public string UserName { get; set; }
+
+        [Display(Name = "First Name")]
+        public string FirstName { get; set; }
+
+        [Display(Name = "Last Name")]
+        public string LastName { get; set; }
+
+        public string Institution { get; set; }
+
+        [Display(Name = "Account Status")]
+        public ApplicationUser.AccountStatus Status { get; set; }
+
+    }
+
     public class CreateUserViewModel
     {
         public CreateUserViewModel() { }

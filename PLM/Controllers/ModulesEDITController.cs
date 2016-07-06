@@ -165,15 +165,20 @@ namespace PLM.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [AuthorizeOrRedirectAttribute(Roles = "Admin")]
-        public ActionResult DisableModule([Bind(Include = "Name, isDisabled, DisableModuleNote, DisableModuleReason")] DisableModuleViewModel module)
+        public ActionResult DisableModule([Bind(Include = "Name, isDisabled, DisableModuleNote, DisableReason")] DisableModuleViewModel userModule)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(module).State = EntityState.Modified;
+                var module = db.Modules.First(m => m.Name == userModule.Name);
+                module.isDisabled = userModule.isDisabled;
+                module.DisableModuleNote = userModule.DisableModuleNote;
+                module.DisableReason = userModule.DisableReason;
+
+                db.Entry(userModule).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index", new { controller = "Profile" });
             }
-            return View(module);
+            return View(userModule);
         }
 
         private void PopulateCategoryDropDownList(object selectedCategory = null)
