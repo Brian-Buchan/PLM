@@ -101,7 +101,7 @@ namespace PLM.Controllers
                 db.Modules.Add(module);
                 db.SaveChanges();
                 PopulateCategoryDropDownList(module.CategoryId);
-                return RedirectToAction("Create", "Answers", module.ModuleID);
+                return RedirectToAction("Create", "Answers", new { id = module.ModuleID });
             }
 
             return View(module);
