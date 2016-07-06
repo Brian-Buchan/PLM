@@ -44,20 +44,20 @@ namespace PLM.Controllers
 
         private Score SaveScore(int score)
         {
-            Score newScore = new Score();
-            newScore.CorrectAnswers = (score / 100);
-            newScore.Module = ((UserGameSession)Session["userGameSession"]).currentModule;
-            newScore.User = ((UserGameSession)Session["userGameSession"]).currentUser;
-            newScore.TotalAnswers = ((UserGameSession)Session["userGameSession"]).numQuestions;
+            Score newScore2 = new Score();
+            newScore2.CorrectAnswers = (score / 100);
+            newScore2.Module = ((UserGameSession)Session["userGameSession"]).currentModule;
+            newScore2.User = ((UserGameSession)Session["userGameSession"]).currentUser;
+            newScore2.TotalAnswers = ((UserGameSession)Session["userGameSession"]).numQuestions;
 
             using (db = new ApplicationDbContext())
             {
-                db.Scores.Add(newScore);
+                db.Scores.Add(newScore2);
                 db.SaveChanges();
 
             }
 
-            return newScore;
+            return newScore2;
         }
 
         public ActionResult Play()
