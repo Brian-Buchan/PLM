@@ -5,7 +5,9 @@
     <meta name="author" content="">
     <title>Request Status Change</title>
 </head>
-
+@{
+    ViewBag.Title = "Request Status Change";
+}
 <section id="page-breadcrumb">
     <div class="vertical-center sun">
         <div class="container">
@@ -35,5 +37,5 @@
 </div>
 
 <div>
-    @Html.ActionLink("Back to Profile Page", "Index", new { controller = "Profile" });
+    @Html.ActionLink("Back to Profile Page", "Index", new { controller = "Profile" })
 </div>
