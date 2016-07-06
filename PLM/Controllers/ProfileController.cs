@@ -47,7 +47,8 @@ namespace PLM.Controllers
         public ActionResult MakeRequest(ApplicationUser user)
         {
             user.Status = ApplicationUser.AccountStatus.PendingInstrustorRole;
-            return View("Profile", "Index");
+            db.SaveChanges();
+            return RedirectToAction("Index");
         }
 
         [HttpPost]
