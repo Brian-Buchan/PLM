@@ -72,6 +72,7 @@
         </td>
         <td>
             <form action="~/Account/AcceptInstructorRequest?id=@item.Id" method="post">
+                @Html.AntiForgeryToken()
                 <button name="subject" type="submit" value="fav_CSS">Approve</button>
             </form>
         </td>
