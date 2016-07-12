@@ -5,7 +5,7 @@
     <meta name="author" content="">
     <title>Add Role</title>
 </head>
-
+@ViewBag.Title ="Add Role to User";
 <body>
 
     <section id="page-breadcrumb">
@@ -42,5 +42,5 @@
         @Html.Hidden("userName", ViewBag.UserName as string)
 
         <input type="submit" value="Save" />
-    }
+    }<a href="~/Account/Index">Click here to return to the list of users.</a>
 </body>

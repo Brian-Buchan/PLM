@@ -36,11 +36,11 @@
 { 
     @Html.AntiForgeryToken()
     <div class="form-horizontal col-lg-offset-1">
-        <label>Number of Answers per Question</label>
+        <label>Number of Answers to Choose From per Question</label>
         <input type="range" id="numAnswers" name="numAnswers" step="3" min="3" max="15" value="@Model.DefaultNumAnswers" oninput="outputUpdate(value, '#numAnswersOutput')" />
         <output for="numAnswers" id="numAnswersOutput">@Model.DefaultNumAnswers</output>
 
-        <label>Number of Questions</label>
+        <label>Number of Questions to Ask</label>
         <input type="range" id="numQuestions" name="numQuestions" step="5" min="5" max="260" value="@Model.DefaultNumQuestions" oninput="outputUpdate(value, '#numQuestionsOutput')" />
         <output for="numQuestions" id="numQuestionsOutput">@Model.DefaultNumQuestions</output>
 
