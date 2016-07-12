@@ -14,5 +14,6 @@ namespace PLM.Migrations
         {
             AlterColumn("dbo.Modules", "Name", c => c.String(maxLength: 25));
         }
+
     }
 }
