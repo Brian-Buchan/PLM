@@ -36,6 +36,7 @@ namespace PLM.Controllers
         {
             Score newScore = new Score();
             newScore = SaveScore(score);
+            ViewBag.ModuleID = ((UserGameSession)Session["userGameSession"]).currentModule.ModuleID;
             return View(newScore);
         }
 
