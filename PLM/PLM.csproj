@@ -258,6 +258,10 @@
     <Compile Include="Migrations\201607061600524_CategoryRequired.Designer.cs">
       <DependentUpon>201607061600524_CategoryRequired.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201607121527318_ModuleNameLength.cs" />
+    <Compile Include="Migrations\201607121527318_ModuleNameLength.Designer.cs">
+      <DependentUpon>201607121527318_ModuleNameLength.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AdminViewModel.cs" />
     <Compile Include="Models\ConfirmViewModel.cs" />
@@ -1330,6 +1334,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201607061600524_CategoryRequired.resx">
       <DependentUpon>201607061600524_CategoryRequired.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201607121527318_ModuleNameLength.resx">
+      <DependentUpon>201607121527318_ModuleNameLength.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
