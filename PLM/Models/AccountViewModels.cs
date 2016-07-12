@@ -156,6 +156,62 @@ namespace PLM.Models
 
     }
 
+    public class DisableUserViewModel
+    {
+        public DisableUserViewModel() { }
+
+        public DisableUserViewModel(ApplicationUser user)
+        {
+            this.UserName = user.UserName;
+            this.DisableAccountReason = user.DisableAccountReason;
+            this.DisableAccountNote = user.DisableAccountNote;
+            this.Status = user.Status;
+        }
+
+        [Key]
+        [Required]
+        [Display(Name = "User Name")]
+        public string UserName { get; set; }
+
+        [Display(Name = "Reason")]
+        public ApplicationUser.Reason DisableAccountReason{get; set;}
+
+        [Display(Name = "Note")]
+        public string DisableAccountNote { get; set; }
+
+        [Display(Name = "Account Status")]
+        public ApplicationUser.AccountStatus Status { get; set; }
+
+    }
+
+    public class InstructorRoleRequest
+    {
+        public InstructorRoleRequest() { }
+
+        public InstructorRoleRequest(ApplicationUser user)
+        {
+            this.UserName = user.UserName;
+            this.Status = user.Status;
+        }
+
+        [Key]
+        [Required]
+        [Display(Name = "User Name")]
+        public string UserName { get; set; }
+
+        [Display(Name = "First Name")]
+        public string FirstName { get; set; }
+
+        [Display(Name = "Last Name")]
+        public string LastName { get; set; }
+
+        public string Institution { get; set; }
+
+        [Display(Name = "Account Status")]
+        public ApplicationUser.AccountStatus Status { get; set; }
+
+    }
+
     public class CreateUserViewModel
     {
         public CreateUserViewModel() { }

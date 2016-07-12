@@ -52,6 +52,71 @@ namespace PLM
     public static class FileManipExtensions
     {
         /// <summary>
+        /// Rename a specific file. Outputs the newfilepath if it succeeds.
+        /// Will rollback changes if it fails at any point.
+        /// Will overwrite only if overWrite flag is set to true.
+        /// </summary>
+        /// <param name="filePath">The full path of the file to rename.</param>
+        /// <param name="newFileName">The new filename. Ignores new file extensions, and expects only the new filename.</param>
+        /// <param name="newfilepath">The new filepath of the renamed file. Returns an empty 
+        /// string if the rename fails at any point.</param>
+        /// <param name="overWrite">Optional, defaults to false. Whether or not 
+        /// to overwrite any existing files with the same name as the renamed file.</param>
+        /// <returns>bool</returns>
+        public static bool TryRenameFile(string filePath, string newFileName, out string newfilepath, bool overWrite = false)
+        {
+            string dirPath = new FileInfo(filePath).Directory.FullName;
+            string fileExt = new FileInfo(filePath).Extension;
+            string possibleFilePath = Path.Combine(dirPath, newFileName + fileExt);
+            newfilepath = "";
+            if (!Directory.Exists(dirPath))
+            {
+                return false;
+            }
+            //try copying the file, using the new filename.
+            try
+            {
+                if (File.Exists(filePath))
+                {
+                    File.Copy(filePath, possibleFilePath, overWrite);
+                }   
+            }
+            //catch (IOException)
+            //{
+            //    //TODO: find some way to log this exception
+            //    return false;
+            //}
+            catch (Exception)
+            {
+                throw;
+                //return false;
+            }
+
+            //Then try deleting the old file. If this fails, rollback changes and return false.
+            try
+            {
+                if (File.Exists(filePath))
+                {
+                    File.Delete(filePath);
+                }
+            }
+            //catch (IOException)
+            //{
+            //    //TODO: find some way to log this exception
+            //    File.Delete(possibleFilePath);
+            //    return false;
+            //}
+            catch (Exception)
+            {
+                File.Delete(possibleFilePath);
+                throw;
+                //return false;
+            }
+            newfilepath = possibleFilePath;
+            return true;
+        }
+
+        /// <summary>
         /// Move a number of files to a single directory, keeping their names
         /// and overwriting if the switch is toggled.
         /// Will ignore nonexistent files, and return false if the specified directory does not exist.
@@ -81,7 +146,7 @@ namespace PLM
                     {
                         fileName = Path.GetFileName(filePath);
 
-                        //if the overwrite flag is set to true and the file exists in the directory, delete it.
+                        //if the overwrite flag is set to true and the file exists in the new directory, delete it.
                         if (overWrite && File.Exists(saveDirectory + fileName))
                         {
                             File.Delete(saveDirectory + fileName);
@@ -125,6 +190,25 @@ namespace PLM
                 return false;
             }
             return true;
+        }
+    }
+
+    public static class StringExtensions
+    {
+        //This function originated from user "artfulhacker"
+        //at http://stackoverflow.com/questions/378415/how-do-i-extract-text-that-lies-between-parentheses-round-brackets,
+        //and was originally called "GetSubstringByString"
+        
+        /// <summary>
+        /// Gets the substring from between the first two instances of the specified marker strings.
+        /// </summary>
+        /// <param name="str">The string this method is executing on. Does not need to be declared.</param>
+        /// <param name="markerOne">The marker string to start at.</param>
+        /// <param name="markerTwo">The marker string to end at.</param>
+        /// <returns>string</returns>
+        public static string FromInBetween(this string str, string markerOne, string markerTwo)
+        {
+            return str.Substring((str.IndexOf(markerOne) + markerOne.Length), (str.IndexOf(markerTwo) - str.IndexOf(markerOne) - markerOne.Length));
         }
     }
 

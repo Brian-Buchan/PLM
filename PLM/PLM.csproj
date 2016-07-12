@@ -246,6 +246,18 @@
     <Compile Include="Migrations\201607051632302_AnsStringReq.Designer.cs">
       <DependentUpon>201607051632302_AnsStringReq.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201607051725540_DisableModuleAccount.cs" />
+    <Compile Include="Migrations\201607051725540_DisableModuleAccount.Designer.cs">
+      <DependentUpon>201607051725540_DisableModuleAccount.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201607051913527_DisableModuleChange.cs" />
+    <Compile Include="Migrations\201607051913527_DisableModuleChange.Designer.cs">
+      <DependentUpon>201607051913527_DisableModuleChange.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201607061600524_CategoryRequired.cs" />
+    <Compile Include="Migrations\201607061600524_CategoryRequired.Designer.cs">
+      <DependentUpon>201607061600524_CategoryRequired.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AdminViewModel.cs" />
     <Compile Include="Models\ConfirmViewModel.cs" />
@@ -1202,7 +1214,6 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Profile\Index.cshtml" />
     <Content Include="Views\Modules\Index.cshtml" />
-    <Content Include="Views\Home\Blog.cshtml" />
     <Content Include="Views\Game\Play.cshtml" />
     <Content Include="Views\Account\ConfirmEmail.cshtml" />
     <Content Include="Views\Account\ExternalLoginConfirmation.cshtml" />
@@ -1267,6 +1278,11 @@
     <Content Include="Views\ImageEditor\Confirm.cshtml" />
     <Content Include="Views\Home\FreeUseImages.cshtml" />
     <Content Include="Views\Account\AccountDisabled.cshtml" />
+    <Content Include="Views\Account\AccountDisable.cshtml" />
+    <Content Include="Views\ModulesEDIT\DisableModule.cshtml" />
+    <Content Include="Views\Profile\StatusRequest.cshtml" />
+    <Content Include="Views\Account\RoleRequest.cshtml" />
+    <Content Include="Views\Pictures\InvalidImage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -1305,6 +1321,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201607051632302_AnsStringReq.resx">
       <DependentUpon>201607051632302_AnsStringReq.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201607051725540_DisableModuleAccount.resx">
+      <DependentUpon>201607051725540_DisableModuleAccount.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201607051913527_DisableModuleChange.resx">
+      <DependentUpon>201607051913527_DisableModuleChange.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201607061600524_CategoryRequired.resx">
+      <DependentUpon>201607061600524_CategoryRequired.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

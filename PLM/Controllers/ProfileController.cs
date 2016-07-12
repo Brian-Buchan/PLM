@@ -6,6 +6,7 @@ using System.Web;
 using System.Web.Mvc;
 using PLM;
 using Microsoft.AspNet.Identity;
+using System.Data.Entity;
 
 namespace PLM.Controllers
 {
@@ -34,6 +35,27 @@ namespace PLM.Controllers
                 ViewBag.location = currentUser.ProfilePicture;
                 return View(modules);
             }
+        }
+
+        public ActionResult StatusRequest()
+        {
+            ViewBag.User = User.Identity.GetUserId();
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult StatusRequest(ApplicationUser userModel)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = db.Users.First(u => u.UserName == userModel.UserName);
+                user.Status = ApplicationUser.AccountStatus.PendingInstrustorRole;
+
+                db.Entry(user).State = EntityState.Modified;
+                db.SaveChanges();
+            }  
+            return RedirectToAction("Index");
         }
 
         [HttpPost]

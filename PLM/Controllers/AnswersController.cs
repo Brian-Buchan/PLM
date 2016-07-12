@@ -10,6 +10,7 @@ using PLM;
 using System.IO;
 using System.Drawing;
 using System.Drawing.Imaging;
+using PLM.CutomAttributes;
 
 namespace PLM.Controllers
 {
@@ -40,20 +41,14 @@ namespace PLM.Controllers
         }
 
         // GET: /Answers/Create
+        [AuthorizeOrRedirectAttribute(Roles = "Instructor")]
         public ActionResult Create(int ID)
         {
-            ViewBag.ModuleID = ID;
+            var module = db.Modules.Find(ID);
+            Answer ansToPass = new Answer();
+            ansToPass.Module = module;
 
-            var modules = db.Modules.ToList();
-
-            ViewBag.ModuleName = modules.Find(x => x.ModuleID == ID).Name;
-
-            var answers = db.Answers.ToList();
-            ViewBag.ModuleAnsList = (from a in answers
-                                     where a.ModuleID == ID
-                                     select a).ToList();
-            //ViewBag.ModuleID = new SelectList(db.Modules, "ModuleID", "Name");
-            return View();
+            return View(ansToPass);
         }
 
         // POST: /Answers/Create
@@ -61,6 +56,7 @@ namespace PLM.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [AuthorizeOrRedirectAttribute(Roles = "Instructor")]
         public ActionResult Create([Bind(Include = "AnswerID,AnswerString,ModuleID")] Answer answer)
         {
             if (ModelState.IsValid)
@@ -70,11 +66,12 @@ namespace PLM.Controllers
                 return RedirectToAction("Create", new {id = answer.ModuleID });
             }
 
-            ViewBag.ModuleID = new SelectList(db.Modules, "ModuleID", "Name");
-            return View(answer);
+            answer.Module = db.Modules.Find(3);
+            return View(answer.Module);
         }
 
         // GET: /Answers/Edit/5
+        [AuthorizeOrRedirectAttribute(Roles = "Instructor")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -95,6 +92,7 @@ namespace PLM.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [AuthorizeOrRedirectAttribute(Roles = "Instructor")]
         public ActionResult Edit([Bind(Include = "AnswerID,AnswerString,ModuleID")] Answer answer, int? ModuleID)
         {
             if (ModelState.IsValid)
@@ -140,6 +138,7 @@ namespace PLM.Controllers
         }
         
         // GET: /Answers/Delete/5
+        [AuthorizeOrRedirectAttribute(Roles = "Instructor")]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -157,6 +156,7 @@ namespace PLM.Controllers
         // POST: /Answers/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [AuthorizeOrRedirectAttribute(Roles = "Instructor")]
         public ActionResult DeleteConfirmed(int id)
         {
             Answer answer = db.Answers.Find(id);

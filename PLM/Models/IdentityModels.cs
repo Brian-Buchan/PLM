@@ -63,6 +63,19 @@ namespace PLM
         [Display(Name = "Account Status")]
         public AccountStatus Status { get; set; }
 
+        [Display(Name = "Note")]
+        public string DisableAccountNote { get; set; }
+
+        public enum Reason
+        {
+            AccountNotPaid, 
+            AgainstTermsOfUser,
+            Other
+        }
+
+        [Display(Name = "Reason")]
+        public Reason DisableAccountReason { get; set; }
+
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {
             // Note the authenticationType must match the one defined in CookieAuthenticationOptions.AuthenticationType
@@ -96,5 +109,9 @@ namespace PLM
         public DbSet<Assignment> Assignments { get; set; }
         public DbSet<Score> Scores { get; set; }
         public DbSet<PLM.Models.Report> Reports { get; set; }
+
+        public System.Data.Entity.DbSet<PLM.DisableModuleViewModel> DisableModuleViewModels { get; set; }
+
+        //public System.Data.Entity.DbSet<PLM.ApplicationUser> ApplicationUsers { get; set; }
     }
 }

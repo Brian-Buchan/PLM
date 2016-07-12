@@ -14,9 +14,8 @@ namespace PLM.Controllers
     public class GameController : Controller
     {
         private static Random rand = new Random();
-
-        private UserGameSession currentGameSession;
         private ApplicationDbContext db = new ApplicationDbContext();
+        private UserGameSession currentGameSession;
         private Module currentModule = new Module();
         private List<int> GeneratedGuessIDs = new List<int>();
         private PlayViewModel currentGuess = new PlayViewModel();
@@ -33,32 +32,32 @@ namespace PLM.Controllers
         //
         // GET: /Game/
 
-
-
         public ActionResult Complete(int score)
         {
-            ViewBag.UserID = User.Identity.GetUserId();
-            ViewBag.ModuleID = ((UserGameSession)Session["userGameSession"]).currentModule.ModuleID;
-            //SaveScore(score);
-
-            return View(score);
+            Score newScore = new Score();
+            newScore = SaveScore(score);
+            return View(newScore);
         }
 
-        private void SaveScore(int score)
+        private Score SaveScore(int score)
         {
             Score newScore = new Score();
             newScore.CorrectAnswers = (score / 100);
-            newScore.Module = currentModule;
+            newScore.Module = ((UserGameSession)Session["userGameSession"]).currentModule;
+            newScore.User = ((UserGameSession)Session["userGameSession"]).currentUser;
+            newScore.TotalAnswers = ((UserGameSession)Session["userGameSession"]).numQuestions;
 
-            db.Scores.Add(newScore);
+            //db.Scores.Add(newScore);
             db.SaveChanges();
+
+            return newScore;
         }
 
         public ActionResult Play()
         {
             GenerateQuestionONEperPIC();
             currentGuess.Time = ((UserGameSession)Session["userGameSession"]).timeLeft;
-            currentGuess.CurrentQuestion = ((UserGameSession)Session["userGameSession"]).currentQuestion +1;
+            currentGuess.CurrentQuestion = ((UserGameSession)Session["userGameSession"]).currentQuestion + 1;
             currentGuess.TotalQuestions = ((UserGameSession)Session["userGameSession"]).numQuestions;
             currentGuess.NumCorrect = ((UserGameSession)Session["userGameSession"]).numCorrect;
             return View(currentGuess);
@@ -103,32 +102,32 @@ namespace PLM.Controllers
         {
             int IDtoPASS = 1;
             if (PLMid != null)
-        {
+            {
                 // Attempts to set nullable value, If null sets to itself (DEFAULT IS 0 - AMERICAN GEO PLM)
                 IDtoPASS = PLMid ?? 1;
             }
 
             if (PLMgenerated == false)
                 GenerateModule(IDtoPASS);
-            return View();
+            return View(((UserGameSession)Session["userGameSession"]).currentModule);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Setup([Bind(Include="numAnswers,numQuestions,time")] UserGameSession ugs)
+        public ActionResult Setup([Bind(Include = "numAnswers,numQuestions,time")] UserGameSession ugs)
         {
-                int timeHours = (ugs.time / 60);
-                int timeMinutes = (ugs.time % 60);
-                ((UserGameSession)Session["userGameSession"]).numAnswers = ugs.numAnswers;
-                ((UserGameSession)Session["userGameSession"]).numQuestions = ugs.numQuestions;
-                ((UserGameSession)Session["userGameSession"]).time = ugs.time;
-                ((UserGameSession)Session["userGameSession"]).timeLeft = new TimeSpan(timeHours, timeMinutes, 0);
+            int timeHours = (ugs.time / 60);
+            int timeMinutes = (ugs.time % 60);
+            ((UserGameSession)Session["userGameSession"]).numAnswers = ugs.numAnswers;
+            ((UserGameSession)Session["userGameSession"]).numQuestions = ugs.numQuestions;
+            ((UserGameSession)Session["userGameSession"]).time = ugs.time;
+            ((UserGameSession)Session["userGameSession"]).timeLeft = new TimeSpan(timeHours, timeMinutes, 0);
 
-                //This line is for testing the "Complete" action and the timer functionality.
-                //Comment out the line of code just above it, then uncomment this code to enter "testing mode",
-                //where the timer will always start at 30 seconds.
+            //This line is for testing the "Complete" action and the timer functionality.
+            //Comment out the line of code just above it, then uncomment this code to enter "testing mode",
+            //where the timer will always start at 30 seconds.
 
-                //((UserGameSession)Session["userGameSession"]).timeLeft = new TimeSpan(0, 0, 30);
+            //((UserGameSession)Session["userGameSession"]).timeLeft = new TimeSpan(0, 0, 30);
             return RedirectToAction("Play");
         }
 
@@ -163,13 +162,13 @@ namespace PLM.Controllers
         private bool IsGameDone()
         {
             currentModule = ((UserGameSession)Session["userGameSession"]).currentModule;
-            
+
             //if the question or time limit has been reached
             if (((UserGameSession)Session["userGameSession"]).currentQuestion
                 //subtract 1 from number of questions since currentQuestion is zero based
-                >= (((UserGameSession)Session["userGameSession"]).numQuestions -1)
+                >= (((UserGameSession)Session["userGameSession"]).numQuestions - 1)
                 |
-                (((UserGameSession)Session["userGameSession"]).timeLeft.CompareTo(new TimeSpan(0,0,0)) < 1 ))
+                (((UserGameSession)Session["userGameSession"]).timeLeft.CompareTo(new TimeSpan(0, 0, 0)) < 1))
             //if (((UserGameSession)Session["userGameSession"]).currentQuestion >= (((UserGameSession)Session["userGameSession"]).PictureIndices.Count))
             {
                 return true;
@@ -177,13 +176,13 @@ namespace PLM.Controllers
             else
             {
                 //if the game is not over, and the list of pictures is exhausted, reshuffle. Otherwise, continue.
-            if (((UserGameSession)Session["userGameSession"]).currentQuestion.IsDivisible(
-                ((UserGameSession)Session["userGameSession"]).PictureIndices.Count - 1))
+                if (((UserGameSession)Session["userGameSession"]).currentQuestion.IsDivisible(
+                    ((UserGameSession)Session["userGameSession"]).PictureIndices.Count - 1))
                 {
                     Reshuffle();
                 }
             }
-                return false;
+            return false;
         }
 
         /// <summary>
@@ -191,10 +190,10 @@ namespace PLM.Controllers
         /// </summary>
         private void Reshuffle()
         {
-                //shuffle the picture indices
-                ((UserGameSession)Session["userGameSession"]).PictureIndices.Shuffle();
-                //reset the iterated guess counter
-                ((UserGameSession)Session["userGameSession"]).iteratedQuestion = -1;
+            //shuffle the picture indices
+            ((UserGameSession)Session["userGameSession"]).PictureIndices.Shuffle();
+            //reset the iterated guess counter
+            ((UserGameSession)Session["userGameSession"]).iteratedQuestion = -1;
         }
 
         /// <summary>
@@ -228,7 +227,7 @@ namespace PLM.Controllers
             currentGameSession.PictureIndices.Shuffle();
             Session["userGameSession"] = currentGameSession;
         }
-        
+
         /// <summary>
         /// Generate a question, loops through each picture in each answer
         /// The same answer will be chosen multiple times with different pictures
@@ -238,7 +237,7 @@ namespace PLM.Controllers
             //increment guess counters
             ((UserGameSession)Session["UserGameSession"]).currentQuestion += 1;
             ((UserGameSession)Session["UserGameSession"]).iteratedQuestion += 1;
-            currentGuessNum=((UserGameSession)Session["UserGameSession"]).iteratedQuestion;
+            currentGuessNum = ((UserGameSession)Session["UserGameSession"]).iteratedQuestion;
             //currentGuessNum = (((UserGameSession)Session["userGameSession"]).currentQuestion++);
             currentModule = ((UserGameSession)Session["userGameSession"]).currentModule;
             int[] indicies = GetPictureID(currentGuessNum);
@@ -333,7 +332,7 @@ namespace PLM.Controllers
 
             //shuffle the list of possible answers so that the first answer isn't always the right one.
             currentGuess.possibleAnswers.Shuffle();
-        } 
+        }
         #endregion
 
 

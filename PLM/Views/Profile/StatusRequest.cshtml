@@ -1,0 +1,41 @@
+﻿<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Request Status Change</title>
+</head>
+@{
+    ViewBag.Title = "Request Status Change";
+}
+<section id="page-breadcrumb">
+    <div class="vertical-center sun">
+        <div class="container">
+            <div class="row">
+                <div class="action">
+                    <div class="col-sm-12">
+                        <h1 class="title">Request Status Change</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<p>Press the comfirm button to request instructor status for creating modules of your own!</p>
+<p>Otherwise press the back to profile link to cancel.</p>
+
+<br />
+<br/>
+
+<div class="clearLeft floatRight">
+
+    <form action="~/Profile/StatusRequest?id=@ViewBag.User" method="post">
+        @Html.AntiForgeryToken()
+        <button name="subject" type="submit" value="fav_CSS">Make Request</button>
+    </form>
+</div>
+
+<div>
+    @Html.ActionLink("Back to Profile Page", "Index", new { controller = "Profile" })
+</div>

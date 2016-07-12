@@ -9,6 +9,7 @@ using System.Web.Mvc;
 using PLM;
 using System.IO;
 using PLM.Extensions;
+using PLM.CutomAttributes;
 
 namespace PLM.Controllers
 {
@@ -39,6 +40,7 @@ namespace PLM.Controllers
         }
 
         // GET: /Pictures/Create
+        [AuthorizeOrRedirectAttribute(Roles = "Instructor")]
         public ActionResult Create(int? id)
         {
             ViewBag.AnswerID = id;
@@ -55,6 +57,7 @@ namespace PLM.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [AuthorizeOrRedirectAttribute(Roles = "Instructor")]
         public ActionResult Create([Bind(Include = "Attribution,PictureID")] Picture picture, int? id) 
         {
             ViewBag.AnswerID = id;
@@ -93,6 +96,7 @@ namespace PLM.Controllers
         }
 
         // GET: /Pictures/Edit/5
+        [AuthorizeOrRedirectAttribute(Roles = "Instructor")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -113,6 +117,7 @@ namespace PLM.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [AuthorizeOrRedirectAttribute(Roles = "Instructor")]
         public ActionResult Edit([Bind(Include = "PictureID,Location,AnswerID")] Picture picture)
         {
             if (ModelState.IsValid)
@@ -126,6 +131,7 @@ namespace PLM.Controllers
         }
 
         // GET: /Pictures/Delete/5
+        [AuthorizeOrRedirectAttribute(Roles = "Instructor")]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -145,6 +151,7 @@ namespace PLM.Controllers
         // POST: /Pictures/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [AuthorizeOrRedirectAttribute(Roles = "Instructor")]
         public ActionResult DeleteConfirmed(int id)
         {
             Picture picture = db.Pictures.Find(id);
@@ -182,26 +189,35 @@ namespace PLM.Controllers
                     HttpPostedFileBase file = Request.Files[fileName];
                     fName = file.FileName;
                     picture.Answer.PictureCount++;
-                    if (file != null && file.ContentLength > 0)
+                    if (file.ContentLength >= 10971520)
                     {
-                        string moduleDirectory = (DevPro.baseFileDirectory + "PLM/" + Session["upload"].ToString() + "/");
-                        if (!Directory.Exists(moduleDirectory))
+                        RedirectToAction("InvalidImage","Pictures");
+                    }else if(!((file.ContentType=="image/jpeg")||(file.ContentType=="image/bmp")||(file.ContentType=="image/png"))){
+                        RedirectToAction("InvalidImage","Pictures");
+                    }
+                    else
+                    {
+                        if (file != null && file.ContentLength > 0)
                         {
-                            Directory.CreateDirectory(moduleDirectory);
+                            string moduleDirectory = (DevPro.baseFileDirectory + "PLM/" + Session["upload"].ToString() + "/");
+                            if (!Directory.Exists(moduleDirectory))
+                            {
+                                Directory.CreateDirectory(moduleDirectory);
+                            }
+                            path = moduleDirectory + fName;
+                            // Saves the file through the HttpPostedFileBase class
+                            file.SaveAs(path);
+                            string filetype = Path.GetExtension(path);
+
+                            // Then renames that image to the correct name based off the answer
+                            // And number of picturs per answer, then deletes the old picture
+                            string newfName = (picture.Answer.AnswerString + "-" + picture.Answer.PictureCount.ToString() + filetype);
+                            relpath = (moduleDirectory + newfName);
+                            System.IO.File.Copy(path, relpath);
+                            System.IO.File.Delete(path);
+
+                            db.SaveChanges();
                         }
-                        path = moduleDirectory + fName;
-                        // Saves the file through the HttpPostedFileBase class
-                        file.SaveAs(path);
-                        string filetype = Path.GetExtension(path);
-
-                        // Then renames that image to the correct name based off the answer
-                        // And number of picturs per answer, then deletes the old picture
-                        string newfName = (picture.Answer.AnswerString + "-" + picture.Answer.PictureCount.ToString() + filetype);
-                        relpath = (moduleDirectory + newfName);
-                        System.IO.File.Copy(path, relpath);
-                        System.IO.File.Delete(path);
-
-                        db.SaveChanges();
                     }
                 }
             }

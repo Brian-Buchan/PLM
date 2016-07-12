@@ -30,7 +30,7 @@
 
 <br />
 
-<h2>@ViewBag.ModuleName</h2>
+<h2>@Model.Module.Name</h2>
 
 <br />
 <br/>
@@ -47,15 +47,29 @@
             <div class="col-md-10">
                 @Html.EditorFor(model => model.AnswerString, new { htmlAttributes = new { @class = "form-control" } })
                 <input type="submit" name="submit" value="Add Answer" class="btn btn-success" /><br />
-                @Html.ValidationMessageFor(model => model.AnswerString)
+                @Html.ValidationMessageFor(model => model.AnswerString, "", new { @class = "text-danger" })
             </div>
         </div>
         <hr />
+        @{
+            @*if (Model.Module. <= 3)
+            {
+                <p class ="text-danger">You need More answers for this to be a valid PLM</p>
+            }*@
+            foreach (Answer ans in Model.Module.Answers)
+            {
+                if (ans.Pictures.Count == 0)
+                {
+                        <p class="text-danger">ans.AnswerString needs pictures added to be a valid answer.</p>
+                }
+            }
+         }
+        
         <div class="form-group hidden">
             @Html.LabelFor(model => model.ModuleID, "ModuleID", new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.TextBoxFor(model => model.ModuleID, new { @Value = ViewBag.ModuleID })
-                @Html.ValidationMessageFor(model => model.ModuleID)
+                @Html.ValidationMessageFor(model => model.ModuleID, "", new { @class = "text-danger" })
             </div>
         </div>
     </div>
@@ -77,7 +91,7 @@
             <th></th>
         </tr>
 
-        @foreach (Answer ans in ViewBag.ModuleAnsList)
+        @foreach (Answer ans in Model.Module.Answers)
         {
             <tr>
                 <td>

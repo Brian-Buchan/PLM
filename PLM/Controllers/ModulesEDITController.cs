@@ -13,12 +13,13 @@ using PLM.CutomAttributes;
 
 namespace PLM.Controllers
 {
+
     public class ModulesEDITController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: /ModulesEDIT/
-        ////[AuthorizeOrRedirectAttribute(Roles = "Admin")]
+       [AuthorizeOrRedirectAttribute(Roles = "Admin")]
         public ActionResult Index(string sortOrder, string searchString, string userSearchString)
         {
             ViewBag.NameSortParam = String.IsNullOrEmpty(sortOrder) ? "name_asc" : "";
@@ -71,6 +72,7 @@ namespace PLM.Controllers
         }
 
         // GET: /ModulesEDIT/Create
+        [AuthorizeOrRedirectAttribute(Roles = "Instructor")]
         public ActionResult Create()
         {
             PopulateCategoryDropDownList();
@@ -82,13 +84,14 @@ namespace PLM.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [AuthorizeOrRedirectAttribute(Roles = "Instructor")]
         public ActionResult Create([Bind(Include = "ModuleID,Name,CategoryId,Description,DefaultNumAnswers,DefaultTime,DefaultNumQuestions,isPrivate")] Module module)
         {
             if (ModelState.IsValid)
             {
                 //**********NOTE****************//
                 //Make sure that a user is logged in to access this page
-                if (((User.IsInRole("User")) || (User.IsInRole("Admin"))))
+                if (((User.IsInRole("Learner")) || (User.IsInRole("Admin"))))
                 {
                     var userID = User.Identity.GetUserId();
                     ApplicationUser currentUser = (ApplicationUser)db.Users.Single(x => x.Id == userID);
@@ -98,13 +101,15 @@ namespace PLM.Controllers
                 db.Modules.Add(module);
                 db.SaveChanges();
                 PopulateCategoryDropDownList(module.CategoryId);
-                return RedirectToAction("Index", new { controller = "Profile" });
-            }
+                if (module.CategoryId != null) { return RedirectToAction("Create", "Answers", new { id = module.ModuleID }); }
+                else{return RedirectToAction("Create", "ModulesEDIT");}
 
+            }
             return View(module);
         }
 
         // GET: /ModulesEDIT/Edit/5
+        [AuthorizeOrRedirectAttribute(Roles = "Instructor")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -125,6 +130,7 @@ namespace PLM.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [AuthorizeOrRedirectAttribute(Roles = "Instructor")]
         public ActionResult Edit([Bind(Include = "ModuleID,Name,CategoryId,Description,DefaultNumAnswers,DefaultTime,DefaultNumQuestions,isPrivate")] Module module)
         {
             if (ModelState.IsValid)
@@ -137,6 +143,43 @@ namespace PLM.Controllers
             return View(module);
         }
 
+        [AuthorizeOrRedirectAttribute(Roles = "Admin")]
+        public ActionResult DisableModule(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Module module = db.Modules.Find(id);
+            if (module == null)
+            {
+                return HttpNotFound();
+            }
+            return View(module);
+        }
+
+        // POST: /ModulesEDIT/ModuleDisable/5
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [AuthorizeOrRedirectAttribute(Roles = "Admin")]
+        public ActionResult DisableModule([Bind(Include = "Name, isDisabled, DisableModuleNote, DisableReason")] DisableModuleViewModel userModule)
+        {
+            if (ModelState.IsValid)
+            {
+                var module = db.Modules.First(m => m.Name == userModule.Name);
+                module.isDisabled = userModule.isDisabled;
+                module.DisableModuleNote = userModule.DisableModuleNote;
+                module.DisableReason = userModule.DisableReason;
+
+                db.Entry(userModule).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("Index", new { controller = "Profile" });
+            }
+            return View(userModule);
+        }
+
         private void PopulateCategoryDropDownList(object selectedCategory = null)
         {
             var categoryQuery = from c in db.Categories
@@ -145,6 +188,7 @@ namespace PLM.Controllers
         }
 
         // GET: /ModulesEDIT/Delete/5
+        [AuthorizeOrRedirectAttribute(Roles = "Instructor")]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -162,6 +206,7 @@ namespace PLM.Controllers
         // POST: /ModulesEDIT/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [AuthorizeOrRedirectAttribute(Roles = "Instructor")]
         public ActionResult DeleteConfirmed(int id)
         {
             CascadeDeleter.DeleteModule(id);

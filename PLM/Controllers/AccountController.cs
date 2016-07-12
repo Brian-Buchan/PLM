@@ -24,7 +24,7 @@ namespace PLM.Controllers
     public class AccountController : Controller
     {
         private ApplicationUserManager _userManager;
-
+        private ApplicationDbContext db = new ApplicationDbContext();
         public AccountController()
         {
         }
@@ -75,6 +75,31 @@ namespace PLM.Controllers
             return View(model);
         }
 
+        public ActionResult RoleRequest()
+        {
+            var db = new ApplicationDbContext();
+            var users = from u in db.Users
+                        where u.Status == ApplicationUser.AccountStatus.PendingInstrustorRole
+                        select u;
+            
+            return View(users);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        //[AuthorizeOrRedirectAttribute(Roles = "Admin")]
+        public ActionResult RoleRequest(ApplicationUser model)
+        {
+            if (ModelState.IsValid)
+            {
+                model.Status = ApplicationUser.AccountStatus.Active;
+                UserManager.AddToRole(model.Id, "Instructor");
+                db.Entry(model).State = EntityState.Modified;
+                db.SaveChanges();
+            }           
+            return RedirectToAction("RoleRequest", "Account");
+        }
+
         //[AuthorizeOrRedirectAttribute(Roles = "Admin")]
         public ActionResult Create()
         {
@@ -95,7 +120,7 @@ namespace PLM.Controllers
                 IdentityResult result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-                    UserManager.AddToRole(user.Id, "User");
+                    UserManager.AddToRole(user.Id, "Learner");
 
                     return RedirectToAction("Index", "Account");
                 }
@@ -127,7 +152,7 @@ namespace PLM.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         //[AuthorizeOrRedirectAttribute(Roles = "Admin")]
-        public ActionResult Edit([Bind(Include = "UserName, LastName, FirstName, Institution, Email, Password, ConfirmPassword")] EditUserViewModel userModel)
+        public ActionResult Edit([Bind(Include = "UserName, LastName, FirstName, Institution, Email")] EditUserViewModel userModel)
         {
             if (ModelState.IsValid)
             {
@@ -138,8 +163,8 @@ namespace PLM.Controllers
                 user.LastName = userModel.LastName;
                 user.Email = userModel.Email;
 
-                PasswordHasher ph = new PasswordHasher();
-                user.PasswordHash = ph.HashPassword(userModel.Password);
+                //PasswordHasher ph = new PasswordHasher();
+                //user.PasswordHash = ph.HashPassword(userModel.Password);
                 
                 db.Entry(user).State = EntityState.Modified;
                 db.SaveChanges();
@@ -392,10 +417,54 @@ namespace PLM.Controllers
             return View(model);
         }
 
+        //User View
         public ActionResult AccountDisabled()
         {
             return View();
         }
+
+        //Admin options page
+        public ActionResult AccountDisable(string userName = null)
+        {
+            if (userName == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            var db = new ApplicationDbContext();
+            var user = db.Users.First(u => u.UserName == userName);
+            var model = new EditUserViewModel(user);
+
+            if (user == null)
+            {
+                return HttpNotFound();
+            }
+
+            return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        //[AuthorizeOrRedirectAttribute(Roles = "Admin")]
+        public ActionResult AccountDisable([Bind(Include = "UserName, DisableAccountReason, DisableAccountNote, Status")] DisableUserViewModel userModel)
+        {
+            if (ModelState.IsValid)
+            {
+                var db = new ApplicationDbContext();
+                var user = db.Users.First(u => u.UserName == userModel.UserName);
+
+                user.DisableAccountReason = userModel.DisableAccountReason;
+                user.DisableAccountNote = userModel.DisableAccountNote;
+                user.Status = userModel.Status;
+
+                db.Entry(user).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+
+            return View(userModel);
+        }
+
         //
         // GET: /Account/Register
         [AllowAnonymous]
@@ -428,7 +497,7 @@ namespace PLM.Controllers
                     //   "Confirm your account", "Please confirm your account by clicking <a href=\""
                     //   + callbackUrl + "\">here</a>");
 
-                    UserManager.AddToRole(user.Id, "User");
+                    UserManager.AddToRole(user.Id, "Learner");
 
                     //string callbackUrl = await SendEmailConfirmationTokenAsync(user.Id, "Confirm your account");
 
