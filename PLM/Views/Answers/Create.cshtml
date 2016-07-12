@@ -2,6 +2,7 @@
 
 @{
     ViewBag.Title = "Add Answer";
+    int defaultPictureCount = 0;
 }
 <head>
     <meta charset="utf-8">
@@ -30,7 +31,7 @@
 
 <br />
 
-<h2>@Model.Module.Name</h2>
+<h2>@ViewBag.ModuleName</h2>
 
 <br />
 <br/>
@@ -50,19 +51,20 @@
                 @Html.ValidationMessageFor(model => model.AnswerString, "", new { @class = "text-danger" })
             </div>
         </div>
+
         <hr />
         @{
             @*if (Model.Module. <= 3)
             {
                 <p class ="text-danger">You need More answers for this to be a valid PLM</p>
             }*@
-            foreach (Answer ans in Model.Module.Answers)
+            @*foreach (Answer ans in ViewBag.ModuleAnsList)
             {
                 if (ans.Pictures.Count == 0)
                 {
                         <p class="text-danger">ans.AnswerString needs pictures added to be a valid answer.</p>
                 }
-            }
+            }*@
          }
         
         <div class="form-group hidden">
@@ -73,7 +75,14 @@
             </div>
         </div>
     </div>
-}
+
+    <div class="form-group" hidden="hidden">
+        @Html.LabelFor(model => model.PictureCount, new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(model => defaultPictureCount, new { htmlAttributes = new { @class = "form-control" } })
+        </div>
+    </div>
+            }
 
 <br/>
 <br />
@@ -91,7 +100,7 @@
             <th></th>
         </tr>
 
-        @foreach (Answer ans in Model.Module.Answers)
+        @foreach (Answer ans in ViewBag.ModuleAnsList)
         {
             <tr>
                 <td>

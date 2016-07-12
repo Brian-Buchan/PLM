@@ -44,11 +44,19 @@ namespace PLM.Controllers
         [AuthorizeOrRedirectAttribute(Roles = "Instructor")]
         public ActionResult Create(int ID)
         {
-            var module = db.Modules.Find(ID);
-            Answer ansToPass = new Answer();
-            ansToPass.Module = module;
+            ViewBag.ModuleID = ID;
 
-            return View(ansToPass);
+            var modules = db.Modules.ToList();
+
+            ViewBag.ModuleName = modules.Find(x => x.ModuleID == ID).Name;
+
+            var answers = db.Answers.ToList();
+
+            ViewBag.ModuleAnsList = (from a in answers
+                                     where a.ModuleID == ID
+                                     select a).ToList();
+
+            return View();
         }
 
         // POST: /Answers/Create
@@ -57,7 +65,7 @@ namespace PLM.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [AuthorizeOrRedirectAttribute(Roles = "Instructor")]
-        public ActionResult Create([Bind(Include = "AnswerID,AnswerString,ModuleID")] Answer answer)
+        public ActionResult Create([Bind(Include = "AnswerID,AnswerString,ModuleID,PictureCount")] Answer answer)
         {
             if (ModelState.IsValid)
             {
@@ -66,8 +74,8 @@ namespace PLM.Controllers
                 return RedirectToAction("Create", new {id = answer.ModuleID });
             }
 
-            answer.Module = db.Modules.Find(3);
-            return View(answer.Module);
+            //answer.Module = db.Modules.Find(answer.ModuleID);
+            return RedirectToAction("Create", new { id = answer.ModuleID });
         }
 
         // GET: /Answers/Edit/5

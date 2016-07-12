@@ -36,6 +36,7 @@ namespace PLM.Controllers
         {
             Score newScore = new Score();
             newScore = SaveScore(score);
+            ViewBag.ModuleID = ((UserGameSession)Session["userGameSession"]).currentModule.ModuleID;
             return View(newScore);
         }
 
@@ -98,17 +99,25 @@ namespace PLM.Controllers
         }
 
         [HttpGet]
-        public ActionResult Setup(int? PLMid)
+        public ActionResult Setup(int PLMid)
         {
             int IDtoPASS = 1;
             if (PLMid != null)
             {
                 // Attempts to set nullable value, If null sets to itself (DEFAULT IS 0 - AMERICAN GEO PLM)
-                IDtoPASS = PLMid ?? 1;
+                IDtoPASS = PLMid;
             }
 
             if (PLMgenerated == false)
                 GenerateModule(IDtoPASS);
+            //if (changeSettings == true)
+            //{
+            //    return View(((UserGameSession)Session["userGameSession"]).currentModule);
+            //}
+            //else
+            //{
+            //    return RedirectToAction("Play");
+            //}
             return View(((UserGameSession)Session["userGameSession"]).currentModule);
         }
 
@@ -225,6 +234,15 @@ namespace PLM.Controllers
             }
             // Shuffle the list of pictures so Users itterate through them randomly
             currentGameSession.PictureIndices.Shuffle();
+
+            ////stuff that would be normally defined during setup
+            //int timeHours = (currentGameSession.currentModule.DefaultTime / 60);
+            //int timeMinutes = (currentGameSession.currentModule.DefaultTime % 60);
+            //currentGameSession.numAnswers = currentGameSession.currentModule.DefaultNumAnswers;
+            //currentGameSession.numQuestions = currentGameSession.currentModule.DefaultNumQuestions;
+            //currentGameSession.time = currentGameSession.currentModule.DefaultTime;
+            //currentGameSession.timeLeft = new TimeSpan(timeHours, timeMinutes, 0);
+
             Session["userGameSession"] = currentGameSession;
         }
 
