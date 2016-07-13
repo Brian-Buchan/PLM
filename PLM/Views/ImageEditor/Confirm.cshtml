@@ -42,6 +42,13 @@
 @using (Html.BeginForm("Discard", "ImageEditor", FormMethod.Post))
 {
     <input type="text" name="tempUrl" value="@Model.tempUrl" hidden="hidden" />
+    @*<input type="text" name="noRedirect" value="false" />*@
     <input type="submit" value="Discard" />
 }
+
+@*@using (Html.BeginForm("Discard", "ImageEditor", FormMethod.Post, new {id = "LeavePage"}))
+{
+    <input type="text" name="tempUrl" value="@Model.tempUrl" hidden="hidden" />
+    <input type="text" name="noRedirect" value="true" />
+}*@
 

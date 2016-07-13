@@ -99,7 +99,7 @@ namespace PLM.Controllers
         }
 
         [HttpGet]
-        public ActionResult Setup(int PLMid)
+        public ActionResult Setup(int PLMid, int changeSettings)
         {
             int IDtoPASS = 1;
             if (PLMid != null)
@@ -108,17 +108,21 @@ namespace PLM.Controllers
                 IDtoPASS = PLMid;
             }
 
-            if (PLMgenerated == false)
+            if (PLMgenerated == false) 
+            { 
                 GenerateModule(IDtoPASS);
-            //if (changeSettings == true)
-            //{
-            //    return View(((UserGameSession)Session["userGameSession"]).currentModule);
-            //}
-            //else
-            //{
-            //    return RedirectToAction("Play");
-            //}
-            return View(((UserGameSession)Session["userGameSession"]).currentModule);
+            }
+
+            //If the user wants to change the settings of the game session
+            if (changeSettings == 1)
+            {
+                return View(((UserGameSession)Session["userGameSession"]).currentModule);
+            }
+            else
+            {
+                return RedirectToAction("Play");
+            }
+            //return View(((UserGameSession)Session["userGameSession"]).currentModule);
         }
 
         [HttpPost]
@@ -235,13 +239,13 @@ namespace PLM.Controllers
             // Shuffle the list of pictures so Users itterate through them randomly
             currentGameSession.PictureIndices.Shuffle();
 
-            ////stuff that would be normally defined during setup
-            //int timeHours = (currentGameSession.currentModule.DefaultTime / 60);
-            //int timeMinutes = (currentGameSession.currentModule.DefaultTime % 60);
-            //currentGameSession.numAnswers = currentGameSession.currentModule.DefaultNumAnswers;
-            //currentGameSession.numQuestions = currentGameSession.currentModule.DefaultNumQuestions;
-            //currentGameSession.time = currentGameSession.currentModule.DefaultTime;
-            //currentGameSession.timeLeft = new TimeSpan(timeHours, timeMinutes, 0);
+            //stuff that would be normally defined during setup. Will be overwritten in the setup POST action if it is accessed
+            int timeHours = (currentGameSession.currentModule.DefaultTime / 60);
+            int timeMinutes = (currentGameSession.currentModule.DefaultTime % 60);
+            currentGameSession.numAnswers = currentGameSession.currentModule.DefaultNumAnswers;
+            currentGameSession.numQuestions = currentGameSession.currentModule.DefaultNumQuestions;
+            currentGameSession.time = currentGameSession.currentModule.DefaultTime;
+            currentGameSession.timeLeft = new TimeSpan(timeHours, timeMinutes, 0);
 
             Session["userGameSession"] = currentGameSession;
         }

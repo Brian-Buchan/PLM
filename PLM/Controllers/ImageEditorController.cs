@@ -14,7 +14,23 @@ namespace PLM.Controllers
 {
     public class ImageEditorController : Controller
     {
-        // GET: ImageEditor
+        //Image Editor flow:
+        //
+        //User goes to the Image Editor (ImgEd) page
+        //
+        //AJAX call from ImgEd page saves image data
+        //
+        //User hits "Save" button, which is in fact a form submit button that POSTs data 
+        //to the ConfirmPOST() action.
+        //
+        //This action redirects the user to the Confirm GET action after processing the nessecary data
+        //
+        //The user selects either "Save" or "Discard" on the Confirm page, 
+        //which POSTs to either the Save() or Discard() actions, respectively
+        //
+        //Users are then returned to the Index page of the Home controller.
+
+
         [HttpGet]
         public ActionResult ImageEditor()
         {
@@ -53,9 +69,14 @@ namespace PLM.Controllers
         }
 
         [HttpGet]
+        
         public ActionResult Confirm()
         {
             ConfirmViewModel model = (ConfirmViewModel)TempData["model"];
+            Response.Cache.SetCacheability(HttpCacheability.NoCache);  // HTTP 1.1.
+            Response.Cache.AppendCacheExtension("no-store, must-revalidate");
+            Response.AppendHeader("Pragma", "no-cache"); // HTTP 1.0.
+            Response.AppendHeader("Expires", "0"); // Proxies.
             return View(model);
         }
 
@@ -91,9 +112,15 @@ namespace PLM.Controllers
         public ActionResult Discard()
         {
             string tempUrl = Request.Form.Get("tempUrl");
+            //string noRedirect = Request.Form.Get("noRedirect");
             string temporaryFileName = Path.GetFileName(tempUrl);
 
             DiscardChanges(temporaryFileName);
+
+            //if (noRedirect == Boolean.TrueString)
+            //{
+            //    return new HttpStatusCodeResult(HttpStatusCode.OK);
+            //}
 
             return RedirectToAction("Index", "Home");
         }
