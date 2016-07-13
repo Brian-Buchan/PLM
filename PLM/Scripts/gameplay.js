@@ -98,20 +98,20 @@ function ToggleMute(img) {
     if (getCookie("muteSound") === "true") {
         //set the cookie to false and display the speaker symbol
         setCookie("muteSound", "false", 365);
-        img.src = '/Content/Images/speaker.png';
+        img.src = '/PerceptualLearning/Content/Images/speaker.png';
     }
     else {
         //otherwise, set muteSound to true and display the mute symbol
         setCookie("muteSound", "true", 365);
-        img.src = '/Content/Images/mute.png';
+        img.src = '/PerceptualLearning/Content/Images/mute.png';
     }
 }
 
 function CheckMute() {
     if (getCookie("muteSound") === "true") {
-        document.getElementById('soundToggle').setAttribute('src', '/Content/Images/mute.png');
+        document.getElementById('soundToggle').setAttribute('src', '/PerceptualLearning/Content/Images/mute.png');
     } else {
-        document.getElementById('soundToggle').setAttribute('src', '/Content/Images/speaker.png');
+        document.getElementById('soundToggle').setAttribute('src', '/PerceptualLearning/Content/Images/speaker.png');
     }
 }
 

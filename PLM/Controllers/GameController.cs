@@ -264,8 +264,6 @@ namespace PLM.Controllers
             return false;
         }
 
-
-
         public ActionResult Complete(int score)
         {
             Score newScore = new Score();
@@ -274,6 +272,7 @@ namespace PLM.Controllers
             return View(newScore);
         }
 
+        [NonAction]
         private Score SaveScore(int score)
         {
             Score newScore = new Score();
@@ -303,6 +302,7 @@ namespace PLM.Controllers
         /// Check to make sure that there are enough answers to generate the required amount.
         /// If not, set the default number of answers to something that will not break the program.
         /// </summary>
+        [NonAction]
         private void CheckMaxAnswers()
         {
             if (currentModule.Answers.Count <= ((UserGameSession)Session["userGameSession"]).numAnswers)
@@ -314,6 +314,7 @@ namespace PLM.Controllers
         /// <summary>
         /// Reshuffle the picture indices list, and set the counter variable to -1
         /// </summary>
+        [NonAction]
         private void Reshuffle()
         {
             //shuffle the picture indices
@@ -323,6 +324,7 @@ namespace PLM.Controllers
         }
 
         #region Legacy Method GetAnswerID
+
         //private int GetAnswerID()
         //{
         //    foreach (Answer answer in currentModule.Answers)
@@ -343,6 +345,7 @@ namespace PLM.Controllers
         // Generates guess, only loops through each answer once, so only
         // one picture will be chosen per answer
         #region Legacy Method - GenerateGuessOnePerAnswer
+        [NonAction]
         private void GenerateGuessONEperANS()
         {
             ((UserGameSession)Session["userGameSession"]).currentQuestion++;

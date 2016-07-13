@@ -1288,6 +1288,8 @@
     <Content Include="Views\Profile\StatusRequest.cshtml" />
     <Content Include="Views\Account\RoleRequest.cshtml" />
     <Content Include="Views\Pictures\InvalidImage.cshtml" />
+    <Content Include="Views\Answers\ImageEditor.cshtml" />
+    <Content Include="Views\Answers\Confirm.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
