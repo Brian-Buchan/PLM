@@ -14,7 +14,7 @@
 </head>
 <body>
 
-    <br/><br/>
+    <br /><br />
     <section id="page-breadcrumb">
         <div class="vertical-center sun">
             <div class="container">
@@ -73,6 +73,8 @@
                     <div class="row">
                         @foreach (Module module in Model)
                         {
+                            if(module.Answers.Count>=5)
+                            {
                             try { 
                             Answer answer = module.Answers.ElementAt(0);
                             Picture picture = answer.Pictures.ElementAt(0);
@@ -100,6 +102,7 @@
                             catch(ArgumentOutOfRangeException){
                                 
                             }
+                        }                  
                         }                  
                     </div>
 

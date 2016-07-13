@@ -40,9 +40,9 @@
         <br />
 
         <div id="container">
-            <div class="helper">
-                <img onerror="this.src='/Content/Images/Error.bmp';" @*id="picture"*@ src="@Model.ImageURL" onload="fixAspect(this)" title="Image Courtesy of @Model.Attribution" />
-            </div>
+            @*<div class="helper">*@
+                <img onerror="this.src='/Content/Images/Error.bmp';" @*id="picture"*@ style="max-height:480px;max-width:640px;" src="@Model.ImageURL" @*onload="fixAspect(this)"*@ title="Image Courtesy of @Model.Attribution" />
+            @*</div>*@
         </div>
         <p id="StoredAnswer" hidden="hidden">@Model.Answer</p>
         <div>
