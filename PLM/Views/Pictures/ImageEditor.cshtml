@@ -8,7 +8,7 @@
 
 <img onerror="this.src='/PerceprtualLearning/Content/images/Error.bmp';" data-orig-source="@Model.Location" id="@Model.PictureID" src="@Model.Location" title="@Model.AnswerID" alt="Photo To Edit" />
 
-<script data-preload="true" data-path="@Url.Content("~/pixie-image-editor/pixie")" 
+<script data-preload="true" data-path="@Url.Content("~/pixie-image-editor/pixie")"
         src="@Url.Content("~/pixie-image-editor/pixie/pixie-integrate.js")"></script>
 
 @using (Html.BeginForm("Confirm", "Pictures", FormMethod.Post))
@@ -20,8 +20,8 @@
     <input type="text" name="imgData" id="imgData" hidden="hidden" required="required" value="" />
     <input type="text" name="origUrl" id="origUrl" hidden="hidden" required="required" value="" />
     <input type="text" name="tempUrl" id="tempUrl" hidden="hidden" required="required" value="" />
-    <input type="submit" value="Save"/>
-    
+    <input type="submit" value="Save" />
+
 }
 
 <script>
@@ -59,13 +59,14 @@
         }
     });
 
-    $('#3').on('click', function (e) {
+    $('#@Model.PictureID').on('click', function (e) {
         if (e.target.src !== "/PerceprtualLearning/Content/images/Error.bmp") {
             myPixie.open({
                 url: e.target.src,
                 image: e.target
             });
-        } else {
+        }
+        else {
             alert("We can't seem to find your image. Try deleting this one, then reupload the image.");
         }
     });

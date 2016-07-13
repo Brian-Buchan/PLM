@@ -7,13 +7,13 @@ namespace PLM.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class DualAnswer : IMigrationMetadata
+    public sealed partial class dualAnswer : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(DualAnswer));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(dualAnswer));
         
         string IMigrationMetadata.Id
         {
-            get { return "201607131937012_DualAnswer"; }
+            get { return "201607131944284_dualAnswer"; }
         }
         
         string IMigrationMetadata.Source
