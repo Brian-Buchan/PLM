@@ -274,7 +274,7 @@ namespace PLM.Controllers
         }
 
         [NonAction]
-        private Score SaveScore(int score)
+        private void SaveScore(int score)
         {
             newScore.CorrectAnswers = (score / 100);
             newScore.Module = ((UserGameSession)Session["userGameSession"]).currentModule;
