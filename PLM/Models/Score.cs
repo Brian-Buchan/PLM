@@ -14,8 +14,11 @@ namespace PLM
     {
         public int ID { get; set; }
 
-        public virtual Module Module { get; set; }
-        public virtual ApplicationUser User { get; set; }
+        [Display(Name = "ModuleID")]
+        public int ModuleID { get; set; }
+
+        [Display(Name = "UserID")]
+        public string UserID { get; set; }
 
         [Display(Name = "Correct Answers")]
         public int CorrectAnswers { get; set; }
@@ -29,7 +32,6 @@ namespace PLM
         public Score()
         {
             TimeStamp = DateTime.Now;
-            User = new ApplicationUser();
         }
     }
 }

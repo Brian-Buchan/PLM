@@ -274,14 +274,14 @@ namespace PLM.Controllers
         }
 
         [NonAction]
-        private Score SaveScore(int score)
+        private void SaveScore(int score)
         {
             newScore.CorrectAnswers = (score / 100);
-            newScore.Module = ((UserGameSession)Session["userGameSession"]).currentModule;
-            newScore.User = db.Users.Find(User.Identity.GetUserId());
+            newScore.ModuleID = ((UserGameSession)Session["userGameSession"]).currentModule.ModuleID;
+            newScore.UserID = User.Identity.GetUserId();
             newScore.TotalAnswers = ((UserGameSession)Session["userGameSession"]).numQuestions;
 
-            db.Entry(newScore).State = EntityState.Modified;
+            db.Entry(newScore).State = EntityState.Added;
             db.SaveChanges();
         }
 

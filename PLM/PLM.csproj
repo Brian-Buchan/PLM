@@ -262,6 +262,14 @@
     <Compile Include="Migrations\201607121527318_ModuleNameLength.Designer.cs">
       <DependentUpon>201607121527318_ModuleNameLength.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201607131843576_scoreupdate.cs" />
+    <Compile Include="Migrations\201607131843576_scoreupdate.Designer.cs">
+      <DependentUpon>201607131843576_scoreupdate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201607131857400_scoreupdate2.cs" />
+    <Compile Include="Migrations\201607131857400_scoreupdate2.Designer.cs">
+      <DependentUpon>201607131857400_scoreupdate2.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AdminViewModel.cs" />
     <Compile Include="Models\ConfirmViewModel.cs" />
@@ -1342,6 +1350,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201607121527318_ModuleNameLength.resx">
       <DependentUpon>201607121527318_ModuleNameLength.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201607131843576_scoreupdate.resx">
+      <DependentUpon>201607131843576_scoreupdate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201607131857400_scoreupdate2.resx">
+      <DependentUpon>201607131857400_scoreupdate2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

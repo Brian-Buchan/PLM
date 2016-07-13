@@ -86,6 +86,7 @@
                             <div class="portfolio-info ">
                                 <div class="halfPanel">
                                     @*TODO - link to image editor page here (Ben will take care of this)*@
+                                    @Html.ActionLink("Edit Image", "ImageEditor", new { controller = "Pictures", id = pic.PictureID }, new { type = "button-square" })
                                 </div>
                                 <div class="halfPanel">
                                     @Html.ActionLink("Attribution", "Edit", new { controller = "Pictures", id = pic.PictureID }, new { type = "button-square" })
