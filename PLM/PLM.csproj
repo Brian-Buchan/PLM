@@ -274,9 +274,9 @@
     <Compile Include="Migrations\201607131917595_databaseFix.Designer.cs">
       <DependentUpon>201607131917595_databaseFix.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201607131937012_DualAnswer.cs" />
-    <Compile Include="Migrations\201607131937012_DualAnswer.Designer.cs">
-      <DependentUpon>201607131937012_DualAnswer.cs</DependentUpon>
+    <Compile Include="Migrations\201607131944284_dualAnswer.cs" />
+    <Compile Include="Migrations\201607131944284_dualAnswer.Designer.cs">
+      <DependentUpon>201607131944284_dualAnswer.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AdminViewModel.cs" />
@@ -1368,8 +1368,8 @@
     <EmbeddedResource Include="Migrations\201607131917595_databaseFix.resx">
       <DependentUpon>201607131917595_databaseFix.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201607131937012_DualAnswer.resx">
-      <DependentUpon>201607131937012_DualAnswer.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201607131944284_dualAnswer.resx">
+      <DependentUpon>201607131944284_dualAnswer.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

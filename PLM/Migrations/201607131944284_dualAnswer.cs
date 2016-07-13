@@ -3,12 +3,12 @@ namespace PLM.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class DualAnswer : DbMigration
+    public partial class dualAnswer : DbMigration
     {
         public override void Up()
         {
             DropIndex("dbo.Answers", new[] { "ModuleID" });
-            CreateIndex("dbo.Answers", new[] { "ModuleID", "AnswerID" }, unique: true, name: "IX_AnswerStringModuleId");
+            CreateIndex("dbo.Answers", new[] { "ModuleID", "AnswerString" }, unique: true, name: "IX_AnswerStringModuleId");
         }
         
         public override void Down()
