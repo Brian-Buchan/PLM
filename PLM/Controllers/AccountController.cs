@@ -81,22 +81,21 @@ namespace PLM.Controllers
             var users = from u in db.Users
                         where u.Status == ApplicationUser.AccountStatus.PendingInstrustorRole
                         select u;
-            
+
             return View(users);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         //[AuthorizeOrRedirectAttribute(Roles = "Admin")]
-        public ActionResult RoleRequest(ApplicationUser model)
+        public ActionResult RoleRequest(string userID)
         {
-            if (ModelState.IsValid)
-            {
-                model.Status = ApplicationUser.AccountStatus.Active;
-                UserManager.AddToRole(model.Id, "Instructor");
-                db.Entry(model).State = EntityState.Modified;
-                db.SaveChanges();
-            }           
+            ApplicationUser user = db.Users.First(x => x.Id == userID);
+            user.Status = ApplicationUser.AccountStatus.Active;
+            UserManager.AddToRole(user.Id, "Instructor");
+            db.Entry(user).State = EntityState.Modified;
+            db.SaveChanges();
+
             return RedirectToAction("RoleRequest", "Account");
         }
 
@@ -114,8 +113,16 @@ namespace PLM.Controllers
             if (ModelState.IsValid)
             {
                 //Sets user Account Type to Free and Account Status to Active
-                var user = new ApplicationUser() { UserName = model.Email, Email = model.Email, FirstName = model.FirstName, LastName = model.LastName, Institution = model.Institution, 
-                    Type = ApplicationUser.AccountType.Free, Status = ApplicationUser.AccountStatus.Active };
+                var user = new ApplicationUser()
+                {
+                    UserName = model.Email,
+                    Email = model.Email,
+                    FirstName = model.FirstName,
+                    LastName = model.LastName,
+                    Institution = model.Institution,
+                    Type = ApplicationUser.AccountType.Free,
+                    Status = ApplicationUser.AccountStatus.Active
+                };
 
                 IdentityResult result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
@@ -165,7 +172,7 @@ namespace PLM.Controllers
 
                 //PasswordHasher ph = new PasswordHasher();
                 //user.PasswordHash = ph.HashPassword(userModel.Password);
-                
+
                 db.Entry(user).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -362,7 +369,8 @@ namespace PLM.Controllers
             UserManager = userManager;
         }
 
-        public ApplicationUserManager UserManager {
+        public ApplicationUserManager UserManager
+        {
             get
             {
                 return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
@@ -382,8 +390,8 @@ namespace PLM.Controllers
             return View();
         }
 
-        
-         //POST: /Account/Login
+
+        //POST: /Account/Login
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
@@ -400,11 +408,11 @@ namespace PLM.Controllers
                 {
                     //if (!await UserManager.IsEmailConfirmedAsync(user.Id))
                     //{
-                        //string callbackUrl = await SendEmailConfirmationTokenAsync(user.Id, "Confirm your account-Resend");
-                        ViewBag.errorMessage = "You must have a confirmed email to log on.";
-                        //return View("Error");
-                        await SignInAsync(user, model.RememberMe);
-                        return RedirectToLocal(returnUrl);
+                    //string callbackUrl = await SendEmailConfirmationTokenAsync(user.Id, "Confirm your account-Resend");
+                    ViewBag.errorMessage = "You must have a confirmed email to log on.";
+                    //return View("Error");
+                    await SignInAsync(user, model.RememberMe);
+                    return RedirectToLocal(returnUrl);
                     //}
                 }
                 else
@@ -483,8 +491,16 @@ namespace PLM.Controllers
             if (ModelState.IsValid)
             {
                 //Sets account to Free Accont Type and Active Account Status
-                var user = new ApplicationUser() { UserName = model.Email, Email = model.Email, FirstName = model.FirstName, LastName = model.LastName, Institution = model.Institution, 
-                    Type = ApplicationUser.AccountType.Free, Status = ApplicationUser.AccountStatus.Active};
+                var user = new ApplicationUser()
+                {
+                    UserName = model.Email,
+                    Email = model.Email,
+                    FirstName = model.FirstName,
+                    LastName = model.LastName,
+                    Institution = model.Institution,
+                    Type = ApplicationUser.AccountType.Free,
+                    Status = ApplicationUser.AccountStatus.Active
+                };
                 IdentityResult result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
@@ -523,7 +539,7 @@ namespace PLM.Controllers
         [AllowAnonymous]
         public async Task<ActionResult> ConfirmEmail(string userId, string code)
         {
-            if (userId == null || code == null) 
+            if (userId == null || code == null)
             {
                 return View("Error");
             }
@@ -583,13 +599,13 @@ namespace PLM.Controllers
         {
             return View();
         }
-	
+
         //
         // GET: /Account/ResetPassword
         [AllowAnonymous]
         public ActionResult ResetPassword(string code)
         {
-            if (code == null) 
+            if (code == null)
             {
                 return View("Error");
             }
@@ -817,13 +833,13 @@ namespace PLM.Controllers
                     if (result.Succeeded)
                     {
                         await SignInAsync(user, isPersistent: false);
-                        
+
                         // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
                         // Send an email with this link
                         // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
                         // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                         // SendEmail(user.Email, callbackUrl, "Confirm your account", "Please confirm your account by clicking this link");
-                        
+
                         return RedirectToLocal(returnUrl);
                     }
                 }
