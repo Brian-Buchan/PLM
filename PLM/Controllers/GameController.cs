@@ -21,6 +21,7 @@ namespace PLM.Controllers
         private List<int> GeneratedGuessIDs = new List<int>();
         private PlayViewModel currentGuess = new PlayViewModel();
         private int currentGuessNum;
+        private Score newScore;
 
         private bool PLMgenerated = false;
         private bool WrongAnswersGenerationNOTcompleted = true;
@@ -264,28 +265,23 @@ namespace PLM.Controllers
             return false;
         }
 
-
-
         public ActionResult Complete(int score)
         {
-            Score newScore = new Score();
-            newScore = SaveScore(score);
+            newScore = new Score();
+            SaveScore(score);
             ViewBag.ModuleID = ((UserGameSession)Session["userGameSession"]).currentModule.ModuleID;
             return View(newScore);
         }
 
-        private Score SaveScore(int score)
+        private void SaveScore(int score)
         {
-            Score newScore = new Score();
             newScore.CorrectAnswers = (score / 100);
             newScore.Module = ((UserGameSession)Session["userGameSession"]).currentModule;
             newScore.User.Id = User.Identity.GetUserId();
             newScore.TotalAnswers = ((UserGameSession)Session["userGameSession"]).numQuestions;
 
             db.Entry(newScore).State = EntityState.Modified;
-            //db.SaveChanges();
-
-            return newScore;
+            db.SaveChanges();
         }
 
         public ActionResult Error()
@@ -365,7 +361,5 @@ namespace PLM.Controllers
             currentGuess.possibleAnswers.Shuffle();
         }
         #endregion
-
-
     }
 }
