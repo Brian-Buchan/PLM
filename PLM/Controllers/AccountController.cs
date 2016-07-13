@@ -441,7 +441,7 @@ namespace PLM.Controllers
 
             var db = new ApplicationDbContext();
             var user = db.Users.First(u => u.UserName == userName);
-            var model = new EditUserViewModel(user);
+            var model = new DisableUserViewModel(user);
 
             if (user == null)
             {
