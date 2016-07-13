@@ -10,11 +10,12 @@ namespace PLM
 {
     public class Answer
     {
-        [Index("IX_AnswerStringModuleId", 2, IsUnique = true)]
+        
         public int AnswerID { get; set; }
         [Display(Name="Answer Text")]
         [MaxLength(25)]
         [Required]
+        [Index("IX_AnswerStringModuleId", 2, IsUnique = true)]
         public string AnswerString { get; set; }
         [Display(Name="Module")]
         [Index("IX_AnswerStringModuleId", 1, IsUnique = true)]
