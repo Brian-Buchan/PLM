@@ -44,18 +44,25 @@ namespace PLM.Controllers
         [AuthorizeOrRedirectAttribute(Roles = "Instructor")]
         public ActionResult Create(int ID)
         {
-            ViewBag.ModuleID = ID;
+            try
+            {
+                ViewBag.ModuleID = ID;
 
-            var modules = db.Modules.ToList();
+                var modules = db.Modules.ToList();
 
-            ViewBag.ModuleName = modules.Find(x => x.ModuleID == ID).Name;
+                ViewBag.ModuleName = modules.Find(x => x.ModuleID == ID).Name;
 
-            var answers = db.Answers.ToList();
+                var answers = db.Answers.ToList();
 
-            ViewBag.ModuleAnsList = (from a in answers
-                                     where a.ModuleID == ID
-                                     select a).ToList();
+                ViewBag.ModuleAnsList = (from a in answers
+                                         where a.ModuleID == ID
+                                         select a).ToList();
 
+            }
+            catch(Exception)
+            {
+                ViewBag.Error = "You cannot add duplicate answers";
+            }
             return View();
         }
 
@@ -67,6 +74,7 @@ namespace PLM.Controllers
         [AuthorizeOrRedirectAttribute(Roles = "Instructor")]
         public ActionResult Create([Bind(Include = "AnswerID,AnswerString,ModuleID,PictureCount")] Answer answer)
         {
+
             if (ModelState.IsValid)
             {
                 db.Answers.Add(answer);
