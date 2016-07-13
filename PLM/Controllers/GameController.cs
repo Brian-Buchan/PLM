@@ -29,20 +29,32 @@ namespace PLM.Controllers
         private int pictureID;
 
         [HttpGet]
-        public ActionResult Setup(int PLMid)
+        public ActionResult Setup(int PLMid, int changeSettings)
         {
             int IDtoPASS = PLMid;
 
-            if (PLMgenerated == false)
+            if (PLMgenerated == false) 
+            { 
                 GenerateModule(IDtoPASS);
+            }
 
-            return View(((UserGameSession)Session["userGameSession"]).currentModule);
+            //If the user wants to change the settings of the game session
+            if (changeSettings == 1)
+            {
+                return View(((UserGameSession)Session["userGameSession"]).currentModule);
+            }
+            else
+            {
+                return RedirectToAction("Play");
+            }
+            //return View(((UserGameSession)Session["userGameSession"]).currentModule);
         }
 
         /// <summary>
         /// Generate a module and create a UserGameSession session variable with that module.
         /// </summary>
         /// <param name="PLMid">The ID of the PLM to use</param>
+        [NonAction]
         private void GenerateModule(int PLMid)
         {
             currentGameSession = new UserGameSession();
@@ -68,6 +80,14 @@ namespace PLM.Controllers
             // Shuffle the list of pictures so Users itterate through them randomly
             currentGameSession.PictureIndices.Shuffle();
 
+            //stuff that would be normally defined during setup. Will be overwritten in the setup POST action if it is accessed
+            int timeHours = (currentGameSession.currentModule.DefaultTime / 60);
+            int timeMinutes = (currentGameSession.currentModule.DefaultTime % 60);
+            currentGameSession.numAnswers = currentGameSession.currentModule.DefaultNumAnswers;
+            currentGameSession.numQuestions = currentGameSession.currentModule.DefaultNumQuestions;
+            currentGameSession.time = currentGameSession.currentModule.DefaultTime;
+            currentGameSession.timeLeft = new TimeSpan(timeHours, timeMinutes, 0);
+
             Session["userGameSession"] = currentGameSession;
         }
 
@@ -90,6 +110,7 @@ namespace PLM.Controllers
             return RedirectToAction("Play");
         }
 
+        [HttpGet]
         public ActionResult Play()
         {
             GenerateQuestionONEperPIC();
@@ -104,6 +125,7 @@ namespace PLM.Controllers
         /// Generate a question, loops through each picture in each answer
         /// The same answer will be chosen multiple times with different pictures
         /// </summary>
+        [NonAction]
         private void GenerateQuestionONEperPIC()
         {
             //increment guess counters
@@ -137,6 +159,7 @@ namespace PLM.Controllers
             currentGuess.possibleAnswers.Shuffle();
         }
 
+        [NonAction]
         private int[] GetPictureID(int currentGuessNum)
         {
             AnsPicIndex IndexItem = ((UserGameSession)Session["userGameSession"]).PictureIndices.ElementAt(currentGuessNum);
@@ -146,6 +169,7 @@ namespace PLM.Controllers
         /// <summary>
         /// Generate the wrong answers to be displayed during each question
         /// </summary>
+        [NonAction]
         private void GenerateWrongAnswers()
         {
             int wrongAnswerID;
@@ -213,6 +237,7 @@ namespace PLM.Controllers
         /// and there are no more questions, reshuffle the PictureIndices and continue 
         /// </summary>
         /// <returns>Bool</returns>
+        [NonAction]
         private bool IsGameDone()
         {
             currentModule = ((UserGameSession)Session["userGameSession"]).currentModule;
@@ -238,6 +263,8 @@ namespace PLM.Controllers
             }
             return false;
         }
+
+
 
         public ActionResult Complete(int score)
         {
