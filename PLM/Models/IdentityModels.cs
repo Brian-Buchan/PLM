@@ -68,6 +68,7 @@ namespace PLM
 
         public enum Reason
         {
+            None,
             AccountNotPaid, 
             AgainstTermsOfUser,
             Other
