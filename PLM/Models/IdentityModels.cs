@@ -32,11 +32,11 @@ namespace PLM
         [Display(Name = "Modules List")]
         public List <Module> ModuleList { get; set; }
 
-        [Display(Name = "Enrolled Courses")]
-        public List<Course> EnrolledCourses { get; set; }
+        //[Display(Name = "Enrolled Courses")]
+        //public List<Course> EnrolledCourses { get; set; }
 
-        [Display(Name = "Instructed Courses")]
-        public List<Course> InstructedCourses { get; set; }
+        //[Display(Name = "Instructed Courses")]
+        //public List<Course> InstructedCourses { get; set; }
 
         public int OverrideNumberOfAnswers { get; set; }
 
