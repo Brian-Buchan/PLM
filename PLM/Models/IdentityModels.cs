@@ -32,9 +32,6 @@ namespace PLM
         [Display(Name = "Modules List")]
         public List <Module> ModuleList { get; set; }
 
-        [Display(Name = "Score List")]
-        public List<Score> ScoreList { get; set; }
-
         [Display(Name = "Enrolled Courses")]
         public List<Course> EnrolledCourses { get; set; }
 
@@ -112,9 +109,7 @@ namespace PLM
         public DbSet<PLM.Models.Report> Reports { get; set; }
 
         public System.Data.Entity.DbSet<PLM.DisableModuleViewModel> DisableModuleViewModels { get; set; }
-
-        public System.Data.Entity.DbSet<PLM.ApplicationUser> ApplicationUsers { get; set; }
-
+        
         //public System.Data.Entity.DbSet<PLM.ApplicationUser> ApplicationUsers { get; set; }
     }
 }
