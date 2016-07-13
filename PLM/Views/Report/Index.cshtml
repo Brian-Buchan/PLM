@@ -63,7 +63,12 @@
                     @Html.DisplayFor(modelItem => item.description)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.userID)
+                    @*@Html.DisplayFor(modelItem => item.userID)
+                    @{
+                    string Username = db.Users.Where(x => x.Id == item.userID);
+                    @ViewBag.username = Username;
+                    }*@
+                    <p>@ViewBag.username</p>
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.category)

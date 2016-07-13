@@ -36,6 +36,7 @@ namespace PLM.Controllers
         {
             var Reports = from u in db.Reports
                           select u;
+            //ViewBag.NameUserName = (ApplicationUser)db.Users.Where(x => x.Id == id);
             //if (userID !=null)
             //{
             //    Reports = Reports.Where(m => m.moduleID.Equals(userID));
@@ -76,6 +77,8 @@ namespace PLM.Controllers
             {
                 return HttpNotFound();
             }
+            ApplicationUser Reporter = (ApplicationUser)db.Users.Single(x => x.Id == report.userID);
+            ViewBag.ReporterUserName = Reporter.UserName;
             return View(report);
         }
 
@@ -87,6 +90,7 @@ namespace PLM.Controllers
                 Report placeholder = new Report();
                 ViewBag.UserID = User.Identity.Name;
                 var name = User.Identity.GetUserName();
+                
                 ApplicationUser currentUser = (ApplicationUser)db.Users.Single(x => x.UserName == name);
                 placeholder.userID = currentUser.Id;
                 placeholder.moduleID = (int)id;
