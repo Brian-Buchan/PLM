@@ -277,7 +277,7 @@ namespace PLM.Controllers
         {
             newScore.CorrectAnswers = (score / 100);
             newScore.Module = ((UserGameSession)Session["userGameSession"]).currentModule;
-            newScore.User.Id = User.Identity.GetUserId();
+            newScore.User = db.Users.Find(User.Identity.GetUserId());
             newScore.TotalAnswers = ((UserGameSession)Session["userGameSession"]).numQuestions;
 
             db.Entry(newScore).State = EntityState.Modified;
