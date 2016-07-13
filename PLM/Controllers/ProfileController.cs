@@ -23,15 +23,15 @@ namespace PLM.Controllers
                 return View(db.Modules.ToList());
             }
             else
-            { 
-               
+            {
+
                 ViewBag.UserID = User.Identity.Name;
                 var name = User.Identity.GetUserName();
                 ApplicationUser currentUser = (ApplicationUser)db.Users.Single(x => x.UserName == name);
                 var modules = db.Modules.ToList();
                 modules = (from m in modules
-                               where m.User == currentUser
-                               select m).ToList();
+                           where m.User == currentUser
+                           select m).ToList();
                 ViewBag.location = currentUser.ProfilePicture;
                 return View(modules);
             }
@@ -39,22 +39,19 @@ namespace PLM.Controllers
 
         public ActionResult StatusRequest()
         {
-            ViewBag.User = User.Identity.GetUserId();
+            ViewBag.UserID = User.Identity.GetUserId();
             return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult StatusRequest(ApplicationUser userModel)
+        public ActionResult StatusRequest(string userID)
         {
-            if (ModelState.IsValid)
-            {
-                var user = db.Users.First(u => u.UserName == userModel.UserName);
-                user.Status = ApplicationUser.AccountStatus.PendingInstrustorRole;
+            ApplicationUser user = db.Users.First(u => u.Id == userID);
+            user.Status = ApplicationUser.AccountStatus.PendingInstrustorRole;
 
-                db.Entry(user).State = EntityState.Modified;
-                db.SaveChanges();
-            }  
+            db.Entry(user).State = EntityState.Modified;
+            db.SaveChanges();
             return RedirectToAction("Index");
         }
 
@@ -74,10 +71,10 @@ namespace PLM.Controllers
                 }
                 else
                 {
-                  currentUser.ProfilePicture = location;
+                    currentUser.ProfilePicture = location;
                 }
 
-                db.SaveChanges(); 
+                db.SaveChanges();
             }
 
             return RedirectToAction("Index");
@@ -106,7 +103,7 @@ namespace PLM.Controllers
                         path = imageDirectory + fName;
                         file.SaveAs(path);
                         string filetype = Path.GetExtension(path);
-                        
+
                         relpath = (imageDirectory + "profilePicture" + filetype);
                         System.IO.File.Copy(path, relpath, true);
                         System.IO.File.Delete(path);
