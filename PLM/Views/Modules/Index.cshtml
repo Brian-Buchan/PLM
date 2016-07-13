@@ -73,31 +73,34 @@
                     <div class="row">
                         @foreach (Module module in Model)
                         {
-                            try { 
-                            Answer answer = module.Answers.ElementAt(0);
-                            Picture picture = answer.Pictures.ElementAt(0);
-                            <div class="col-xs-6 col-sm-6 col-md-4 portfolio-item branded logos">
-                                <div class="portfolio-wrapper">
-                                    <div class="portfolio-single">
-                                        <div class="portfolio-thumb">
-                                            <img onerror="this.src='Content/images/Error.bmp';" src="@picture.Location"  class="img-responsive moduleImage" alt="PLM Logo">
+                            if(module.Answers.Count>=5)
+                            {
+                                try { 
+                                Answer answer = module.Answers.ElementAt(0);
+                                Picture picture = answer.Pictures.ElementAt(0);
+                                <div class="col-xs-6 col-sm-6 col-md-4 portfolio-item branded logos">
+                                    <div class="portfolio-wrapper">
+                                        <div class="portfolio-single">
+                                            <div class="portfolio-thumb">
+                                                <img onerror="this.src='Content/images/Error.bmp';" src="@picture.Location"  class="img-responsive moduleImage" alt="PLM Logo">
+                                            </div>
+                                            <div class="portfolio-view">
+                                                <ul class="nav nav-pills">
+                                                    <li>
+                                                        <a href="@Url.Action("Setup", "Game", new { PLMid = module.ModuleID }, null)" class="elements"><img onerror="this.src='Content/images/Error.bmp';" height="33" width="33" src="~/Content/Images/home/PlayIcon.png" /></a>
+                                                    </li>
+                                                </ul>
+                                            </div>
                                         </div>
-                                        <div class="portfolio-view">
-                                            <ul class="nav nav-pills">
-                                                <li>
-                                                    <a href="@Url.Action("Setup", "Game", new { PLMid = module.ModuleID }, null)" class="elements"><img onerror="this.src='Content/images/Error.bmp';" height="33" width="33" src="~/Content/Images/home/PlayIcon.png" /></a>
-                                                </li>
-                                            </ul>
+                                        <div class="portfolio-info ">
+                                            <h2>@module.Name</h2>
                                         </div>
-                                    </div>
-                                    <div class="portfolio-info ">
-                                        <h2>@module.Name</h2>
                                     </div>
                                 </div>
-                            </div>
-                            }
-                            catch(ArgumentOutOfRangeException){
+                                }
+                                catch(ArgumentOutOfRangeException){
                                 
+                                 }
                             }
                         }                  
                     </div>

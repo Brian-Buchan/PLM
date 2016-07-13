@@ -36,7 +36,8 @@ namespace PLM
         public virtual List<Answer> Answers { get; set; }
 
         public virtual ApplicationUser User { get; set; }
-         [Display(Name = "Private")]
+
+        [Display(Name = "Private")]
         public bool isPrivate { get; set; }
 
         [Display(Name = "Response for correct answer")]
