@@ -69,14 +69,18 @@ namespace PLM.Controllers
         }
 
         [HttpGet]
-        
+        [RequireHttps] //Ensures http-headers work
         public ActionResult Confirm()
         {
             ConfirmViewModel model = (ConfirmViewModel)TempData["model"];
+            
+            //Disallows using back button to return to page after saving or discarding. Does not permit caching.
+            //Taken from Kornel at http://stackoverflow.com/questions/49547/making-sure-a-web-page-is-not-cached-across-all-browsers
             Response.Cache.SetCacheability(HttpCacheability.NoCache);  // HTTP 1.1.
             Response.Cache.AppendCacheExtension("no-store, must-revalidate");
             Response.AppendHeader("Pragma", "no-cache"); // HTTP 1.0.
             Response.AppendHeader("Expires", "0"); // Proxies.
+
             return View(model);
         }
 

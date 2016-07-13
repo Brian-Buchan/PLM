@@ -13,6 +13,7 @@ namespace PLM
     public class Score
     {
         public int ID { get; set; }
+
         public virtual Module Module { get; set; }
         public virtual ApplicationUser User { get; set; }
 
