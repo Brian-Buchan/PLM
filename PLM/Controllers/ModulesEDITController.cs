@@ -178,7 +178,7 @@ namespace PLM.Controllers
 
                 db.Entry(module).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index", new { controller = "Profile" });
+                return RedirectToAction("Index", new { controller = "ModulesEdit" });
             }
             return View(userModule);
         }
