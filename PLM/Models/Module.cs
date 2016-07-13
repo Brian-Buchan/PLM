@@ -14,8 +14,8 @@ namespace PLM
     {
         public int ModuleID { get; set; }
         [Required]
-         [Display(Name = "Module name")]
-         [MaxLength(25)]
+        [Display(Name = "Module name")]
+        [MaxLength(25)]
         public string Name { get; set; }
 
         [MaxLength(200)]
@@ -24,7 +24,7 @@ namespace PLM
         [Display(Name = "Category")]
         public virtual int CategoryId { get; set; }
 
-        [Display(Name="Default Number of Answers")]
+        [Display(Name = "Default Number of Answers")]
         public int DefaultNumAnswers { get; set; }
 
         [Display(Name = "Default Time in minutes")]
@@ -71,6 +71,4 @@ namespace PLM
         public DisableModuleReason DisableReason { get; set; }
 
     }
-
-    
 }
