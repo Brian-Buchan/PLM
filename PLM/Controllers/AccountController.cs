@@ -75,6 +75,53 @@ namespace PLM.Controllers
             return View(model);
         }
 
+        ////[AuthorizeOrRedirectAttribute(Roles = "Admin")]
+        public ActionResult DisabledUsersList(string sortOrder, string searchString)
+        {
+            ViewBag.UsernameSortParam = String.IsNullOrEmpty(sortOrder) ? "username_asc" : "";
+            ViewBag.NameSortParam = sortOrder == "first_asc" ? "first_desc" : "first_asc";
+            ViewBag.LastSortParam = sortOrder == "last_asc" ? "last_desc" : "last_asc";
+
+            var db = new ApplicationDbContext();
+            var users = from u in db.Users
+                        where u.Status == ApplicationUser.AccountStatus.Disabled
+                        select u;
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                users = users.Where(u => u.LastName.Contains(searchString)
+                                       || u.FirstName.Contains(searchString)
+                                       && u.Status == ApplicationUser.AccountStatus.Disabled);
+            }
+            switch (sortOrder)
+            {
+                case "username_asc":
+                    users = users.OrderBy(u => u.UserName);
+                    break;
+                case "first_desc":
+                    users = users.OrderByDescending(u => u.FirstName);
+                    break;
+                case "last_desc":
+                    users = users.OrderByDescending(u => u.LastName);
+                    break;
+                case "first_asc":
+                    users = users.OrderBy(u => u.FirstName);
+                    break;
+                case "last_asc":
+                    users = users.OrderBy(u => u.LastName);
+                    break;
+            }
+
+            var model = new System.Collections.Generic.List<EditUserViewModel>();
+
+            foreach (var user in users)
+            {
+                var u = new EditUserViewModel(user);
+                model.Add(u);
+            }
+            return View(model);
+        }
+
         public ActionResult RoleRequest()
         {
             var db = new ApplicationDbContext();
