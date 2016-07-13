@@ -169,13 +169,14 @@ namespace PLM.Controllers
         {
             if (ModelState.IsValid)
             {
-                var module = db.Modules.First(m => m.Name == userModule.Name);
+                var db = new ApplicationDbContext();
+                Module module = db.Modules.First(m => m.Name == userModule.Name);
 
                 module.isDisabled = userModule.isDisabled;
                 module.DisableModuleNote = userModule.DisableModuleNote;
                 module.DisableReason = userModule.DisableReason;
 
-                db.Entry(userModule).State = EntityState.Modified;
+                db.Entry(module).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index", new { controller = "Profile" });
             }
