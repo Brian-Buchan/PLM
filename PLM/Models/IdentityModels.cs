@@ -113,6 +113,8 @@ namespace PLM
 
         public System.Data.Entity.DbSet<PLM.DisableModuleViewModel> DisableModuleViewModels { get; set; }
 
+        public System.Data.Entity.DbSet<PLM.ApplicationUser> ApplicationUsers { get; set; }
+
         //public System.Data.Entity.DbSet<PLM.ApplicationUser> ApplicationUsers { get; set; }
     }
 }

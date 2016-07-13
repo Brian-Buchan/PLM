@@ -1290,6 +1290,8 @@
     <Content Include="Views\Pictures\InvalidImage.cshtml" />
     <Content Include="Views\Answers\ImageEditor.cshtml" />
     <Content Include="Views\Answers\Confirm.cshtml" />
+    <Content Include="Views\ModulesEDIT\DisabledModulesList.cshtml" />
+    <Content Include="Views\Account\DisabledUsersList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
