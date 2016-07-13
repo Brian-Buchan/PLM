@@ -101,7 +101,7 @@ namespace PLM.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [AuthorizeOrRedirectAttribute(Roles = "Instructor")]
-        public ActionResult Edit([Bind(Include = "AnswerID,AnswerString,ModuleID")] Answer answer, int? ModuleID)
+        public ActionResult Edit([Bind(Include = "AnswerID,AnswerString,ModuleID,PictureCount")] Answer answer, int? ModuleID)
         {
             if (ModelState.IsValid)
             {
