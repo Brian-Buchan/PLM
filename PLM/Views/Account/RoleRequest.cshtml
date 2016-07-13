@@ -71,7 +71,7 @@
             @Html.DisplayFor(modelItem => item.UserName)
         </td>
         <td>
-            <form action="~/Account/RoleRequest?id=@item.Id" method="post">
+            <form action="~/Account/RoleRequest?userID=@item.Id" method="post">
                 @Html.AntiForgeryToken()
                 <button name="subject" type="submit" value="fav_CSS">Approve</button>
             </form>
