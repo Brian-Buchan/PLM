@@ -19,7 +19,7 @@ namespace PLM.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: /ModulesEDIT/
-       [AuthorizeOrRedirectAttribute(Roles = "Admin")]
+        [AuthorizeOrRedirectAttribute(Roles = "Admin")]
         public ActionResult Index(string sortOrder, string searchString, string userSearchString)
         {
             ViewBag.NameSortParam = String.IsNullOrEmpty(sortOrder) ? "name_asc" : "";
@@ -47,6 +47,38 @@ namespace PLM.Controllers
 
             return View(modules);
         }
+
+        // GET: /ModulesEDIT/
+        [AuthorizeOrRedirectAttribute(Roles = "Admin")]
+        public ActionResult DisabledModulesList(string sortOrder, string searchString, string userSearchString)
+        {
+            ViewBag.NameSortParam = String.IsNullOrEmpty(sortOrder) ? "name_asc" : "";
+
+            var db = new ApplicationDbContext();
+            var modules = from u in db.Modules
+                          where u.isDisabled == true
+                          select u;
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                modules = modules.Where(m => m.Name.Contains(searchString) && m.isDisabled == true);
+            }
+
+            if (!String.IsNullOrEmpty(userSearchString))
+            {
+                modules = modules.Where(m => m.User.UserName.Contains(searchString) && m.isDisabled == true);
+            }
+
+            switch (sortOrder)
+            {
+                case "name_asc":
+                    modules = modules.OrderBy(m => m.Name);
+                    break;
+            }
+
+            return View(modules);
+        }
+
 
         public ActionResult ProfanityCheck()
         {
