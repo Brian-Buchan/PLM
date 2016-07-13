@@ -109,6 +109,8 @@
                     <td>
                         @Html.DisplayFor(modelItem => item.isPrivate)
                     </td>
+                @if (User.IsInRole("Instructor"))
+                {
                     <td>
                         @Html.ActionLink("Add Answer", "Create", new { controller = "Answers", id = item.ModuleID })
                     </td>
@@ -117,6 +119,7 @@
                         @Html.ActionLink("Delete", "Delete", new { controller = "ModulesEDIT", id = item.ModuleID }) |
                         @Html.ActionLink("Play Game","Setup", "Game", new { PLMid = item.ModuleID }, null)
                     </td>
+                }
                 </tr>
             }
 
@@ -126,9 +129,12 @@
 
     <br />
     <br />
+@if (User.IsInRole("Instructor"))
+{
     <div class="clearLeft floatRight">
         @Html.ActionLink("Create New Module", "Create", new { controller = "ModulesEdit" }, new { type = "button" })
     </div>
+}
 
     <br />
     <br />

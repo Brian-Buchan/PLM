@@ -105,7 +105,7 @@ using (Html.BeginForm())
         <div class="form-group" title="Check this if you don't want the module to be open to the public">
             @Html.LabelFor(model => model.isPrivate, new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.isPrivate)
+                @Html.EditorFor(model => model.isPrivate, new { htmlAttributes = new { @value = "True", @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.isPrivate)
             </div>
         </div>
