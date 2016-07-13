@@ -68,7 +68,43 @@
                     @Html.DisplayFor(modelItem => item.Name)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.CategoryId)
+                    @switch (item.CategoryId)
+                    {
+                        case 1 :
+                        <p>Aviation</p>
+                            break;
+                        case 2:
+                        <p>Business</p>
+                            break;
+                        case 3:
+                        <p>Communications</p>
+                            break;
+                        case 4:
+                        <p>Humanities</p>
+                            break;
+                        case 5:
+                        <p>Maritime</p>
+                            break;
+                        case 6:
+                        <p>Math</p>
+                            break;
+                        case 7:
+                        <p>Medical</p>
+                            break;
+                        case 8:
+                        <p>Science</p>
+                            break;
+                        case 9:
+                        <p>Social Science</p>
+                            break;
+                        case 10:
+                        <p>Technical</p>
+                            break;
+                        case 11:
+                        <p>Other</p>
+                            break;
+                            
+                    }
                 </td>
                 <td>
                     @Html.ActionLink("Edit", "Edit", new { id = item.ModuleID }) |

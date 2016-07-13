@@ -7,8 +7,6 @@
     <meta name="author" content="">
     <title>Disable Module</title>
 </head>
-
-<br /><br />
 <section id="page-breadcrumb">
     <div class="vertical-center sun">
         <div class="container">
@@ -28,7 +26,6 @@
         @Html.AntiForgeryToken()
 
         <div class="form-horizontal">
-            <h4>DisableModuleViewModel</h4>
             <hr />
             @Html.ValidationSummary(true)
             @Html.HiddenFor(model => model.Name)
@@ -53,7 +50,7 @@
                 @Html.LabelFor(model => model.DisableReason, new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
                     @*@Html.DropDownList(model => model.DisableReason, new { htmlAttributes = new { @class = "form-control" } })*@
-                    @Html.DropDownList("DisableReason", EnumHelper.GetSelectList(typeof(ApplicationUser.Reason)), "Select My Type", new { @class = "form-control" })
+                    @Html.DropDownList("DisableReason", EnumHelper.GetSelectList(typeof(Module.DisableModuleReason)), "Select My Type", new { @class = "form-control" })
                     @Html.ValidationMessageFor(model => model.DisableReason)
                 </div>
             </div>

@@ -151,11 +151,12 @@ namespace PLM.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Module module = db.Modules.Find(id);
+            var model = new DisableModuleViewModel(module);
             if (module == null)
             {
                 return HttpNotFound();
             }
-            return View(module);
+            return View(model);
         }
 
         // POST: /ModulesEDIT/ModuleDisable/5
@@ -168,14 +169,16 @@ namespace PLM.Controllers
         {
             if (ModelState.IsValid)
             {
-                var module = db.Modules.First(m => m.Name == userModule.Name);
+                var db = new ApplicationDbContext();
+                Module module = db.Modules.First(m => m.Name == userModule.Name);
+
                 module.isDisabled = userModule.isDisabled;
                 module.DisableModuleNote = userModule.DisableModuleNote;
                 module.DisableReason = userModule.DisableReason;
 
-                db.Entry(userModule).State = EntityState.Modified;
+                db.Entry(module).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index", new { controller = "Profile" });
+                return RedirectToAction("Index", new { controller = "ModulesEdit" });
             }
             return View(userModule);
         }

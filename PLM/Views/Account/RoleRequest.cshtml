@@ -24,9 +24,12 @@
         </div>
     </div>
 </section>
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
+
+<form action="~/Account/ApproveAllRequests" method="post">
+    @Html.AntiForgeryToken()
+    <button name="subject" type="submit" value="fav_CSS">Approve All</button>
+</form>
+
 <table class="table">
     <tr>
         <th>
@@ -47,6 +50,7 @@
         <th>
             @Html.DisplayNameFor(model => model.UserName)
         </th>
+        <th></th>
         <th></th>
     </tr>
 
@@ -74,6 +78,12 @@
             <form action="~/Account/RoleRequest?userID=@item.Id" method="post">
                 @Html.AntiForgeryToken()
                 <button name="subject" type="submit" value="fav_CSS">Approve</button>
+            </form>
+        </td>
+        <td>
+            <form action="~/Account/DenyRequest?userID=@item.Id" method="post">
+                @Html.AntiForgeryToken()
+                <button name="subject" type="submit" value="fav_CSS">Deny</button>
             </form>
         </td>
     </tr>

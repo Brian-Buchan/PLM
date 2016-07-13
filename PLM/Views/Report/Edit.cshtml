@@ -22,12 +22,12 @@
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
-        <h4>Report</h4>
+
         <hr />
         @Html.ValidationSummary(true)
         @Html.HiddenFor(model => model.ID)
 
-        <div class="form-group" style="visibility:hidden">
+        <div class="form-group" style="display:none">
             @Html.LabelFor(model => model.moduleID, new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.moduleID)
@@ -42,7 +42,7 @@
                 @Html.ValidationMessageFor(model => model.description, "", new { @class = "text-danger" })
             </div>
         </div>
-        <div class="form-group" style="visibility:hidden">
+        <div class="form-group" style="display:none">
             @Html.LabelFor(model => model.userID, new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.userID)
