@@ -159,8 +159,6 @@ input[type='range']::-webkit-slider-thumb {
 }
 
 #container img {
-   width: 100%;
-   height: 480px;
    vertical-align: middle;
 }
 .helper{
