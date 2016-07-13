@@ -44,7 +44,7 @@
             <div class="form-group">
                 @Html.LabelFor(model => model.DisableAccountReason, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
-                    @Html.DropDownList(model => model.DisableAccountReason, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.DropDownList("DisableAccountReason", EnumHelper.GetSelectList(typeof(ApplicationUser.Reason)), "Select My Type", new { @class = "form-control" })
                     @Html.ValidationMessageFor(model => model.DisableAccountReason, "", new { @class = "text-danger" })
                 </div>
             </div>
@@ -60,7 +60,7 @@
             <div class="form-group">
                 @Html.LabelFor(model => model.Status, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
-                    @Html.DropDownList(model => model.Status, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.DropDownList("Status", EnumHelper.GetSelectList(typeof(ApplicationUser.AccountStatus)), "Select My Type", new { @class = "form-control" })
                     @Html.ValidationMessageFor(model => model.Status, "", new { @class = "text-danger" })
                 </div>
             </div>

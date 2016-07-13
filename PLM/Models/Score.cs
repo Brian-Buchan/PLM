@@ -30,6 +30,7 @@ namespace PLM
         public Score()
         {
             TimeStamp = DateTime.Now;
+            User = new ApplicationUser();
         }
     }
 }
