@@ -270,6 +270,10 @@
     <Compile Include="Migrations\201607131857400_scoreupdate2.Designer.cs">
       <DependentUpon>201607131857400_scoreupdate2.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201607131917595_databaseFix.cs" />
+    <Compile Include="Migrations\201607131917595_databaseFix.Designer.cs">
+      <DependentUpon>201607131917595_databaseFix.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AdminViewModel.cs" />
     <Compile Include="Models\ConfirmViewModel.cs" />
@@ -1296,8 +1300,8 @@
     <Content Include="Views\Profile\StatusRequest.cshtml" />
     <Content Include="Views\Account\RoleRequest.cshtml" />
     <Content Include="Views\Pictures\InvalidImage.cshtml" />
-    <Content Include="Views\Answers\ImageEditor.cshtml" />
-    <Content Include="Views\Answers\Confirm.cshtml" />
+    <Content Include="Views\Pictures\ImageEditor.cshtml" />
+    <Content Include="Views\Pictures\Confirm.cshtml" />
     <Content Include="Views\ModulesEDIT\DisabledModulesList.cshtml" />
     <Content Include="Views\Account\DisabledUsersList.cshtml" />
   </ItemGroup>
@@ -1356,6 +1360,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201607131857400_scoreupdate2.resx">
       <DependentUpon>201607131857400_scoreupdate2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201607131917595_databaseFix.resx">
+      <DependentUpon>201607131917595_databaseFix.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

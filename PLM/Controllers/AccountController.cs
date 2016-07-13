@@ -112,13 +112,8 @@ namespace PLM.Controllers
                     break;
             }
 
-            var model = new System.Collections.Generic.List<EditUserViewModel>();
+            var model = new System.Collections.Generic.List<ApplicationUser>();
 
-            foreach (var user in users)
-            {
-                var u = new EditUserViewModel(user);
-                model.Add(u);
-            }
             return View(model);
         }
 
