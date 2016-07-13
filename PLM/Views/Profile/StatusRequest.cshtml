@@ -7,6 +7,7 @@
 </head>
 @{
     ViewBag.Title = "Request Status Change";
+    string userID = ViewBag.UserID;
 }
 <section id="page-breadcrumb">
     <div class="vertical-center sun">
@@ -30,7 +31,7 @@
 
 <div class="clearLeft floatRight">
 
-    <form action="~/Profile/StatusRequest?id=@ViewBag.User" method="post">
+    <form action="~/Profile/StatusRequest?userID=@ViewBag.UserID" method="post">
         @Html.AntiForgeryToken()
         <button name="subject" type="submit" value="fav_CSS">Make Request</button>
     </form>
