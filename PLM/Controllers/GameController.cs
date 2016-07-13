@@ -270,6 +270,7 @@ namespace PLM.Controllers
             newScore = new Score();
             SaveScore(score);
             ViewBag.ModuleID = ((UserGameSession)Session["userGameSession"]).currentModule.ModuleID;
+            ViewBag.Top10Scores = TopTenScore.GetTopTenScores(((UserGameSession)Session["userGameSession"]).currentModule.ModuleID);
             return View(newScore);
         }
 
