@@ -1296,8 +1296,8 @@
     <Content Include="Views\Profile\StatusRequest.cshtml" />
     <Content Include="Views\Account\RoleRequest.cshtml" />
     <Content Include="Views\Pictures\InvalidImage.cshtml" />
-    <Content Include="Views\Answers\ImageEditor.cshtml" />
-    <Content Include="Views\Answers\Confirm.cshtml" />
+    <Content Include="Views\Pictures\ImageEditor.cshtml" />
+    <Content Include="Views\Pictures\Confirm.cshtml" />
     <Content Include="Views\ModulesEDIT\DisabledModulesList.cshtml" />
     <Content Include="Views\Account\DisabledUsersList.cshtml" />
   </ItemGroup>
