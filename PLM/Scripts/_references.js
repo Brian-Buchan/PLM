@@ -98,3 +98,4 @@
 /// <reference path="../pixie-image-editor/pixie/assets/js/vendor/spectrum.js" />
 /// <reference path="../pixie-image-editor/pixie/gulpfile.js" />
 /// <reference path="../pixie-image-editor/pixie/pixie-integrate.js" />
+/// <reference path="image-editor-confirm.js" />
