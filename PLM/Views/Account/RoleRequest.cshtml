@@ -24,11 +24,13 @@
         </div>
     </div>
 </section>
-
-<form action="~/Account/ApproveAllRequests" method="post">
-    @Html.AntiForgeryToken()
-    <button name="subject" type="submit" value="fav_CSS">Approve All</button>
-</form>
+@using (Html.BeginForm())
+{
+    <form action="~/Account/ApproveAllRequests" method="post">
+        @Html.AntiForgeryToken()
+        <button name="subject" type="submit" value="fav_CSS">Approve All</button>
+    </form>
+}
 
 <table class="table">
     <tr>

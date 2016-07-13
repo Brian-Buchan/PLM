@@ -271,9 +271,9 @@ namespace PLM.Controllers
             string origUrl = Request.Form.Get("origUrl");
             string tempUrl = Request.Form.Get("tempUrl");
             string temporaryFileName = Path.GetFileName(tempUrl);
-            string newFileName = Path.GetFileNameWithoutExtension(origUrl);
+            //string newFileName = Path.GetFileNameWithoutExtension(origUrl);
 
-            PermaSave(temporaryFileName, newFileName);
+            PermaSave(temporaryFileName, origUrl);
 
             return RedirectToAction("Index", "Home");
         }
@@ -385,24 +385,30 @@ namespace PLM.Controllers
 
         /// <summary>
         /// Permanently save the file with the given name in the tempUpload folder
-        /// to the permUploads folder, with a new name.
+        /// to a different folder, with a new name. Overwrites files with the same name that are already there.
         /// If there are multiple files found with the same name for whatever reason,
         /// takes the last one found.
         /// Returns "SAVED" if successful, 
-        /// "NO FILES" if there were no files found, 
-        /// or "FAILED" otherwise.
+        /// "BAD LOCATION" if the file could not be found within the temp folder 
+        /// (possibly indicating that the temp folder is missing),
+        /// "NO FILES FOUND" if GetFiles failed to match,
+        /// "BAD MOVE ON RENAME" if TryRenameFile fails,
+        /// "BAD MOVE DURING TRANSFER" if the filesMove array is nulled,
+        /// or "FAILED ON FILE MOVE" otherwise.
         /// </summary>
-        /// <param name="filename">The file to permanently save. Expects only 
+        /// <param name="filename">The file to permanently save from the tempUpload folder. Expects only 
         /// the filename and its extension, not a path</param>
-        /// <param name="newFileName">The new name for the saved file. 
-        /// Expects only the name, not the path or extension</param>
+        /// <param name="toNewFilePath">The new name for the saved file, with the new path. 
+        /// Expects the full path</param>
         /// <returns>string</returns>
         [NonAction]
-        private string PermaSave(string filename, string newFileName)
+        private string PermaSave(string filename, string toNewFilePath)
         {
             List<string> filesToMove = new List<string>();
             string dirPath = (Path.Combine(Server.MapPath("~/Content/Images/tempUploads/")));
-            string newDirPath = (Path.Combine(Server.MapPath("~/Content/Images/permUploads/")));
+            string newDirPath = Path.GetDirectoryName(toNewFilePath);
+            //string newDirPath = (Path.Combine(Server.MapPath("~/Content/Images/permUploads/")));
+            string newFileName = Path.GetFileNameWithoutExtension(toNewFilePath);
 
             //if the selected file doesn't exist in the temp folder
             if (!(System.IO.File.Exists(dirPath + filename)))
