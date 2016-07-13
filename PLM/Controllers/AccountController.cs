@@ -99,6 +99,39 @@ namespace PLM.Controllers
             return RedirectToAction("RoleRequest", "Account");
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        //[AuthorizeOrRedirectAttribute(Roles = "Admin")]
+        public ActionResult DenyRequest(string userID)
+        {
+            ApplicationUser user = db.Users.First(x => x.Id == userID);
+            user.Status = ApplicationUser.AccountStatus.Active;
+            db.Entry(user).State = EntityState.Modified;
+            db.SaveChanges();
+
+            return RedirectToAction("RoleRequest", "Account");
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        //[AuthorizeOrRedirectAttribute(Roles = "Admin")]
+        public ActionResult ApproveAll()
+        {
+            var users = from u in db.Users
+                        where u.Status == ApplicationUser.AccountStatus.PendingInstrustorRole
+                        select u;
+
+            foreach (ApplicationUser user in users)
+            {
+                user.Status = ApplicationUser.AccountStatus.Active;
+                UserManager.AddToRole(user.Id, "Instructor");
+                db.Entry(user).State = EntityState.Modified;
+                db.SaveChanges();
+            }
+
+            return RedirectToAction("RoleRequest", "Account");
+        }
+
         //[AuthorizeOrRedirectAttribute(Roles = "Admin")]
         public ActionResult Create()
         {
