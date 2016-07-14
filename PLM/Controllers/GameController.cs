@@ -225,7 +225,7 @@ namespace PLM.Controllers
                 return RedirectToAction("Complete", new { Score = Score });
             }
             GenerateQuestionONEperPIC();
-            currentGuess.CurrentQuestion = ((UserGameSession)Session["userGameSession"]).currentQuestion;
+            currentGuess.CurrentQuestion = ((UserGameSession)Session["userGameSession"]).currentQuestion + 1;
             currentGuess.TotalQuestions = ((UserGameSession)Session["userGameSession"]).numQuestions;
             currentGuess.NumCorrect = ((UserGameSession)Session["userGameSession"]).numCorrect;
             currentGuess.Score = Score;

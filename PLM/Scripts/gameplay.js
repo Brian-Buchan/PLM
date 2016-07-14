@@ -1,6 +1,6 @@
 //Sounds from http://www.freesfx.co.uk/
 var pictureAnswer = "default";
-var count = Number(document.getElementById("displayScore").innerText);
+var count = Number($('#displayScore').text());
 var revealed = false;
 var intervalID;
 
@@ -86,8 +86,10 @@ function Correct() {
     count = (parseInt(count) + 100);
     //check the unchecked radio button (set "Correct" to true)
     $('input[type="radio"]').not(':checked').prop("checked", true);
-    document.getElementById("Score").value = count;
-    document.getElementById("displayScore").innerText = count;
+    $('#Score').val(count);
+    $('#displayScore').text(count);
+    //document.getElementById("Score").value = count;
+    //document.getElementById("displayScore").innerText = count;
 }
 
 //This image only implementation of a mute button is from Tarun at 

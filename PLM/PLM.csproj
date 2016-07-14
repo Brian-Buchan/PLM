@@ -405,6 +405,7 @@
     <Content Include="Content\Images\home\learn.png" />
     <Content Include="Content\Images\home\profile1.png" />
     <Content Include="Content\Images\home\profile2.png" />
+    <Content Include="Content\Images\home\settings.png" />
     <Content Include="Content\Images\home\slider-bg.png" />
     <Content Include="Content\Images\home\slider\birds1.png" />
     <Content Include="Content\Images\home\slider\birds2.png" />
