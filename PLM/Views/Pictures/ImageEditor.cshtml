@@ -6,7 +6,7 @@
 
 <h2>Image Editor</h2>
 
-<img onerror="this.src='/PerceprtualLearning/Content/images/Error.bmp';" data-orig-source="@Model.Location" id="@Model.PictureID" src="@Model.Location" title="@Model.AnswerID" alt="Photo To Edit" />
+<img onerror="this.src='/PerceptualLearning/Content/Images/Error.bmp';" data-orig-source="@Model.Location" id="@Model.PictureID" src="@Model.Location" title="@Model.AnswerID" alt="Photo To Edit" />
 
 <script data-preload="true" data-path="@Url.Content("~/pixie-image-editor/pixie")"
         src="@Url.Content("~/pixie-image-editor/pixie/pixie-integrate.js")"></script>
@@ -25,7 +25,7 @@
 }
 
 <script>
-    var imgEdit = document.getElementById("3");
+    var imgEdit = document.getElementById("@Model.PictureID");
     var imgIdInput = document.getElementById("imgId");
     var answerIdInput = document.getElementById("answerId");
     var imgDataInput = document.getElementById("imgData");
