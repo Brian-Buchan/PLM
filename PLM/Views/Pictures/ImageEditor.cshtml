@@ -5,8 +5,7 @@
 }
 
 <h2>Image Editor</h2>
-@*/PerceptualLearning*@
-<img onerror="this.src='/Content/Images/Error.bmp';" data-orig-source="@Model.Location" id="@Model.PictureID" src="@Model.Location" title="@Model.AnswerID" alt="Photo To Edit" />
+<img onerror="this.src = '/PerceptualLearning/Content/Images/Error.bmp';" data-orig-source="@Model.Location" id="@Model.PictureID" src="@Model.Location" title="@Model.AnswerID" alt="Photo To Edit" />
 
 <script data-path="@Url.Content("~/pixie-image-editor/pixie")"
         src="@Url.Content("~/pixie-image-editor/pixie/pixie-integrate.js")"></script>
@@ -21,7 +20,6 @@
     <input type="text" name="origUrl" id="origUrl" hidden="hidden" required="required" value="" />
     <input type="text" name="tempUrl" id="tempUrl" hidden="hidden" required="required" value="" />
     <input type="submit" value="Save" />
-
 }
 
 <script id="jslink" src="@Url.Content("~/Scripts/ImageEditorProd.js")" data-image-id="@Model.PictureID"></script>
