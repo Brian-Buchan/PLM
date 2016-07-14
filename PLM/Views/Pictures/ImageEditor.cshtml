@@ -5,10 +5,10 @@
 }
 
 <h2>Image Editor</h2>
+@*/PerceptualLearning*@
+<img onerror="this.src='/Content/Images/Error.bmp';" data-orig-source="@Model.Location" id="@Model.PictureID" src="@Model.Location" title="@Model.AnswerID" alt="Photo To Edit" />
 
-<img onerror="this.src='/PerceptualLearning/Content/Images/Error.bmp';" data-orig-source="@Model.Location" id="@Model.PictureID" src="@Model.Location" title="@Model.AnswerID" alt="Photo To Edit" />
-
-<script data-preload="true" data-path="@Url.Content("~/pixie-image-editor/pixie")"
+<script data-path="@Url.Content("~/pixie-image-editor/pixie")"
         src="@Url.Content("~/pixie-image-editor/pixie/pixie-integrate.js")"></script>
 
 @using (Html.BeginForm("Confirm", "Pictures", FormMethod.Post))
@@ -24,50 +24,4 @@
 
 }
 
-<script>
-    var imgEdit = document.getElementById("@Model.PictureID");
-    var imgIdInput = document.getElementById("imgId");
-    var answerIdInput = document.getElementById("answerId");
-    var imgDataInput = document.getElementById("imgData");
-    var origUrlInput = document.getElementById("origUrl");
-    var tempUrlInput = document.getElementById("tempUrl");
-
-    var myPixie = Pixie.setOptions({
-        replaceOriginal: true,
-        appendTo: 'body',
-        onSave: function (data, img) {
-            $.ajax({
-                type: 'POST',
-                url: '/Pictures/ImageEditor',
-                data: { imgData: data, imgId: img.id, answerId: img.title, origUrl: img.dataset.origSource },
-                success: function (xhr, status, text) {
-                    imgIdInput.value = imgEdit.id;
-                    answerIdInput.value = imgEdit.title;
-                    imgDataInput.value = imgEdit.src;
-                    origUrlInput.value = imgEdit.dataset.origSource;
-                    tempUrlInput.value = text.statusText;
-
-                    alert('Image changes have been saved successfully. \nRemember to ' +
-                    'click the save button to finalize your changes.');
-                    myPixie.close();
-                },
-                error: function (xhr, status, text) {
-                    alert(text);
-                    myPixie.close();
-                }
-            });
-        }
-    });
-
-    $('#@Model.PictureID').on('click', function (e) {
-        if (e.target.src !== "/PerceprtualLearning/Content/images/Error.bmp") {
-            myPixie.open({
-                url: e.target.src,
-                image: e.target
-            });
-        }
-        else {
-            alert("We can't seem to find your image. Try deleting this one, then reupload the image.");
-        }
-    });
-</script>
+<script id="jslink" src="@Url.Content("~/Scripts/ImageEditorProd.js")" data-image-id="@Model.PictureID"></script>

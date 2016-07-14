@@ -232,7 +232,7 @@ namespace PLM.Controllers
         }
 
         [HttpGet]
-        [RequireHttps] //Ensures http-headers work
+        //[RequireHttps] //Ensures http-headers work
         [AuthorizeOrRedirectAttribute(Roles = "Instructor")]
         public ActionResult Confirm()
         {
