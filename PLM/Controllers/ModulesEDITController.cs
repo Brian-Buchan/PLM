@@ -249,6 +249,32 @@ namespace PLM.Controllers
             return RedirectToAction("Index", new { controller = "Profile" });
         }
 
+        [AuthorizeOrRedirectAttribute(Roles = "Admin")]
+        public ActionResult AdminDelete(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Module module = db.Modules.Find(id);
+            if (module == null)
+            {
+                return HttpNotFound();
+            }
+            return View(module);
+        }
+
+        // POST: /ModulesEDIT/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        [AuthorizeOrRedirectAttribute(Roles = "Admin")]
+        public ActionResult AdminDeleteConfirmed(int id)
+        {
+            CascadeDeleter.DeleteModule(id);
+
+            return RedirectToAction("Index", new { controller = "Profile" });
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)
