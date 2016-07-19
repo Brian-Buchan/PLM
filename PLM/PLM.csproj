@@ -1311,6 +1311,7 @@
     <Content Include="Views\Pictures\Confirm.cshtml" />
     <Content Include="Views\ModulesEDIT\DisabledModulesList.cshtml" />
     <Content Include="Views\Account\DisabledUsersList.cshtml" />
+    <Content Include="Views\Account\AccessDenied.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

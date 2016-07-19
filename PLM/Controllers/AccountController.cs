@@ -609,6 +609,11 @@ namespace PLM.Controllers
             return View(model);
         }
 
+        public ActionResult AccessDenied()
+        {
+            return View();
+        }
+
         //
         // GET: /Account/ConfirmEmail
         [AllowAnonymous]
