@@ -56,13 +56,12 @@
             <h3>Top Scores</h3>
             <div class="Top10ScoreBoard">
                 @{
-                    foreach (Score score in ViewBag.Scores)
+                    foreach (String[] score in ViewBag.Top10Scores)
                     {
-                        user = db.Users.Find(score.UserID);
                         <div class="Top10ScoreItem">
-                            <p class="Top10Player">@(user.FirstName + " " + user.LastName[0])</p>
-                            <p class="Top10Score">@(score.CorrectAnswers + " out of " + score.TotalAnswers)</p>
-                            <p class="Top10Time">@score.TimeStamp</p>
+                            <p class="Top10Player">@score[0]</p>
+                            <p class="Top10Score">@score[1]</p>
+                            <p class="Top10Time">@score[2]</p>
                         </div>
                     }
                 }
