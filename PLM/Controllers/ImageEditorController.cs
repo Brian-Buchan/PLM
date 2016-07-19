@@ -69,7 +69,7 @@ namespace PLM.Controllers
         }
 
         [HttpGet]
-        [RequireHttps] //Ensures http-headers work
+        //[RequireHttps] //Ensures http-headers work
         public ActionResult Confirm()
         {
             ConfirmViewModel model = (ConfirmViewModel)TempData["model"];

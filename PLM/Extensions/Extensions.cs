@@ -36,6 +36,8 @@ namespace PLM
             ApplicationDbContext db = new ApplicationDbContext();
             List<Score> scores = db.Scores.Where(x => x.ModuleID == moduleID).ToList();
             scores.OrderBy(x => (x.CorrectAnswers / x.TotalAnswers));
+            //InvalidCast error
+            //Unable to cast object of type '<TakeIterator>d__3a`1[PLM.Score]' to type 'System.Collections.Generic.List`1[PLM.Score]'.
             return((List<Score>)scores.Take(10));
         }
     }
@@ -174,13 +176,45 @@ namespace PLM
                     {
                         File.Delete(filePath);
                     }
+                    else return false;
                 }
             }
             catch (Exception)
             {
-                return false;
+                throw;
             }
             return true;
+        }
+
+        /// <summary>
+        /// Remove files (and only files) from the specified directory that are 
+        /// older than the specified timespan. 
+        /// Does not search subdirectories
+        /// </summary>
+        /// <param name="dirPath">The path of the directory to clean. Only takes directory paths</param>
+        /// <param name="olderThan">A timespan designating how old files 
+        /// have to be in order to be deleted</param>
+        public static void RemoveOldFiles(string dirPath, TimeSpan olderThan)
+        {
+            var files = new DirectoryInfo(dirPath).GetFiles();
+            
+            foreach (var file in files)
+            {
+                try
+                {
+                    if (File.Exists(file.FullName))
+                    {
+                        if (DateTime.UtcNow - file.CreationTimeUtc > olderThan)
+                        {
+                            File.Delete(file.FullName);
+                        }
+                    }
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+            }
         }
     }
 
@@ -189,6 +223,8 @@ namespace PLM
         //This function originated from user "artfulhacker"
         //at http://stackoverflow.com/questions/378415/how-do-i-extract-text-that-lies-between-parentheses-round-brackets,
         //and was originally called "GetSubstringByString"
+        //It can be used to extract the image id and the answer id from filenames 
+        //in the temp folder, for example.
         
         /// <summary>
         /// Gets the substring from between the first two instances of the specified marker strings.
