@@ -6,7 +6,7 @@
 
 <img onerror="this.src='Content/images/Error.bmp';" data-orig-source="~/Content/Images/logo.png" id="3" src="~/Content/Images/logo.png" title="1" alt="Photo To Edit" />
 
-<script data-preload="true" data-path="@Url.Content("~\\pixie-image-editor\\pixie")" 
+<script @*data-preload="true"*@ data-path="@Url.Content("~\\pixie-image-editor\\pixie")" 
         src="@Url.Content("~/pixie-image-editor/pixie/pixie-integrate.js")"></script>
 
 @*<button id="save" name="save" onclick="saveAll()">Save Changes</button>*@
@@ -24,7 +24,7 @@
     
 }
 
-<script>
+@*<script>
     var imgEdit = document.getElementById("3");
     var imgIdInput = document.getElementById("imgId");
     var answerIdInput = document.getElementById("answerId");
@@ -65,4 +65,5 @@
             image: e.target
         });
     });
-</script>
+</script>*@
+<script type="text/javascript" src="@Url.Content("~/Scripts/ImageEditor.js")"></script>

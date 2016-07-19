@@ -99,3 +99,5 @@
 /// <reference path="../pixie-image-editor/pixie/gulpfile.js" />
 /// <reference path="../pixie-image-editor/pixie/pixie-integrate.js" />
 /// <reference path="image-editor-confirm.js" />
+/// <reference path="imageeditortestbed.js" />
+/// <reference path="imageeditorprod.js" />

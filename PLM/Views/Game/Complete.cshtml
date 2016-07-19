@@ -1,6 +1,8 @@
 ﻿@model PLM.Score
 @{
     ViewBag.Title = "Results";
+    ApplicationDbContext db = new ApplicationDbContext();
+    ApplicationUser user = new ApplicationUser();
 }
 <head>
     <meta charset="utf-8">
@@ -52,25 +54,19 @@
     </div>
         <div class="about-us" style="width:50%; float:left">
             <h3>Top Scores</h3>
-            <ol>
-                <li>1</li>
-                <li>2</li>
-                <li>3</li>
-                <li>4</li>
-                <li>5</li>
-                <li>6</li>
-                <li>7</li>
-                <li>8</li>
-                <li>9</li>
-                <li>10</li>
-            </ol>
-            @*@{
-                foreach (var score in TopTenScore.GetTopTenScores(ViewBag.ModuleID, ViewBag.UserId))
-                {
-                    // TODO - Update username and scores
-                    <p>@score.User.FirstName</p>
-                    <p>@score.CorrectAnswers</p>
+            <div class="Top10ScoreBoard">
+                @{
+                    foreach (Score score in ViewBag.Scores)
+                    {
+                        user = db.Users.Find(score.UserID);
+                        <div class="Top10ScoreItem">
+                            <p class="Top10Player">@(user.FirstName + " " + user.LastName[0])</p>
+                            <p class="Top10Score">@(score.CorrectAnswers + " out of " + score.TotalAnswers)</p>
+                            <p class="Top10Time">@score.TimeStamp</p>
+                        </div>
+                    }
                 }
-            }*@
+
+            </div>
         </div>
     </div>

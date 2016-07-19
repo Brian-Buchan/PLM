@@ -1,31 +1,9 @@
-﻿@model PLM.Picture
+﻿$(function ($) {
+    //get model data from view, which was designated in the script tag with data-* attributes. 
+    //Taken from arserbin3 at http://stackoverflow.com/questions/7626662/access-a-model-property-in-a-javascript-file
+    var $vars = $('#jslink').data();
 
-@{
-    ViewBag.Title = "Image Editor";
-}
-
-<h2>Image Editor</h2>
-
-<img onerror="this.src='/PerceprtualLearning/Content/images/Error.bmp';" data-orig-source="@Model.Location" id="@Model.PictureID" src="@Model.Location" title="@Model.AnswerID" alt="Photo To Edit" />
-
-<script data-preload="true" data-path="@Url.Content("~\\pixie-image-editor\\pixie")" 
-        src="@Url.Content("~/pixie-image-editor/pixie/pixie-integrate.js")"></script>
-
-@using (Html.BeginForm("Confirm", "Pictures", FormMethod.Post))
-{
-    @Html.AntiForgeryToken()
-
-    <input type="text" name="imgId" id="imgId" hidden="hidden" required="required" value="" />
-    <input type="text" name="answerId" id="answerId" hidden="hidden" required="required" value="" />
-    <input type="text" name="imgData" id="imgData" hidden="hidden" required="required" value="" />
-    <input type="text" name="origUrl" id="origUrl" hidden="hidden" required="required" value="" />
-    <input type="text" name="tempUrl" id="tempUrl" hidden="hidden" required="required" value="" />
-    <input type="submit" value="Save"/>
-    
-}
-
-<script>
-    var imgEdit = document.getElementById("3");
+    var imgEdit = document.getElementById($vars.imageId);
     var imgIdInput = document.getElementById("imgId");
     var answerIdInput = document.getElementById("answerId");
     var imgDataInput = document.getElementById("imgData");
@@ -59,14 +37,15 @@
         }
     });
 
-    $('#3').on('click', function (e) {
-        if (e.target.src !== "/PerceprtualLearning/Content/images/Error.bmp") {
+    $('#' + $vars.imageId).on('click', function (e) {
+        if (e.target.src !== "/PerceprtualLearning/Content/Images/Error.bmp") {
             myPixie.open({
                 url: e.target.src,
                 image: e.target
             });
-        } else {
+        }
+        else {
             alert("We can't seem to find your image. Try deleting this one, then reupload the image.");
         }
     });
-</script>
+});
