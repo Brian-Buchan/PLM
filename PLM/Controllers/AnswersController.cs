@@ -74,16 +74,22 @@ namespace PLM.Controllers
         [AuthorizeOrRedirectAttribute(Roles = "Instructor")]
         public ActionResult Create([Bind(Include = "AnswerID,AnswerString,ModuleID,PictureCount")] Answer answer)
         {
-
+            try
+            {
             if (ModelState.IsValid)
             {
                 db.Answers.Add(answer);
                 db.SaveChanges();
                 return RedirectToAction("Create", new {id = answer.ModuleID });
             }
-
+            }
+            catch(Exception)
+            {
+                
+            }
             //answer.Module = db.Modules.Find(answer.ModuleID);
-            return RedirectToAction("Create", new { id = answer.ModuleID });
+            ViewBag.Error = "You cannot add duplicate answers";
+            return RedirectToAction("Create");
         }
 
         // GET: /Answers/Edit/5
