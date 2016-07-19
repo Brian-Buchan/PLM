@@ -16,7 +16,7 @@ namespace PLM.CutomAttributes
 
             if (filterContext.RequestContext.HttpContext.User.Identity.IsAuthenticated)
             {
-                filterContext.Result = new RedirectResult("~/Error/AccessDenied");
+                filterContext.Result = new RedirectResult("~/Account/AccessDenied");
             }
         }
 
