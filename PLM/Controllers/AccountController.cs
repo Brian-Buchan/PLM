@@ -234,7 +234,7 @@ namespace PLM.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         //[AuthorizeOrRedirectAttribute(Roles = "Admin")]
-        public ActionResult Edit([Bind(Include = "UserName, LastName, FirstName, Email , PasswordHash")] EditUserViewModel userModel)
+        public ActionResult Edit([Bind(Include = "UserName, LastName, FirstName, Email , PasswordHash, Institution")] EditUserViewModel userModel)
         {
             if (ModelState.IsValid)
             {
@@ -244,6 +244,9 @@ namespace PLM.Controllers
                 user.FirstName = userModel.FirstName;
                 user.LastName = userModel.LastName;
                 user.Email = userModel.Email;
+                user.Institution = userModel.Institution;
+                user.UserName = userModel.UserName;
+                
 
                 PasswordHasher ph = new PasswordHasher();
                 user.PasswordHash = ph.HashPassword(userModel.Password);
