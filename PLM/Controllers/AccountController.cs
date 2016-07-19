@@ -157,7 +157,7 @@ namespace PLM.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         //[AuthorizeOrRedirectAttribute(Roles = "Admin")]
-        public ActionResult ApproveAll()
+        public ActionResult ApproveAllRequests()
         {
             var users = from u in db.Users
                         where u.Status == ApplicationUser.AccountStatus.PendingInstrustorRole

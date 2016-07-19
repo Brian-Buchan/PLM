@@ -534,15 +534,18 @@ namespace PLM.Controllers
                             // Saves the file through the HttpPostedFileBase class
                             file.SaveAs(path);
                             string filetype = Path.GetExtension(path);
+                            if ((filetype == ".bmp") || (filetype == ".jpg") || (filetype == ".jpeg") || (filetype == ".png"))
+                            {
+                                // Then renames that image to the correct name based off the answer
+                                // And number of picturs per answer, then deletes the old picture
+                                string newfName = (picture.Answer.AnswerString + "-" + picture.Answer.PictureCount.ToString() + filetype);
+                                relpath = (moduleDirectory + newfName);
+                                System.IO.File.Copy(path, relpath);
+                                System.IO.File.Delete(path);
 
-                            // Then renames that image to the correct name based off the answer
-                            // And number of picturs per answer, then deletes the old picture
-                            string newfName = (picture.Answer.AnswerString + "-" + picture.Answer.PictureCount.ToString() + filetype);
-                            relpath = (moduleDirectory + newfName);
-                            System.IO.File.Copy(path, relpath);
-                            System.IO.File.Delete(path);
-
-                            db.SaveChanges();
+                                db.SaveChanges();
+                            }
+                            else RedirectToAction("InvalidImage", "Pictures");
                         }
                     }
                 }
@@ -562,7 +565,10 @@ namespace PLM.Controllers
                 return "FAILED";
             }
         }
-
+        public ActionResult InvalidImage()
+        {
+            return View();
+        }
         public ActionResult DropzoneTest()
         {
             return View();
