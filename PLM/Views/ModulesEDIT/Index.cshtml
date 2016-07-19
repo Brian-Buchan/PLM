@@ -68,7 +68,9 @@
 
         @foreach (var item in Model)
         {
-            <tr>
+            var style = (item.isDisabled == true) ? "background-color: red" : "";
+            
+            <tr style="@style">
                 <td>
                     @Html.DisplayFor(modelItem => item.Name)
                 </td>
