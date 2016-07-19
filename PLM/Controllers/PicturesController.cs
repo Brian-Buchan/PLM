@@ -406,7 +406,7 @@ namespace PLM.Controllers
         {
             List<string> filesToMove = new List<string>();
             string dirPath = (Path.Combine(Server.MapPath("~/Content/Images/tempUploads/")));
-            string newDirPath = Path.GetDirectoryName(toNewFilePath);
+            string newDirPath = Path.GetDirectoryName(Server.MapPath(toNewFilePath));
             //string newDirPath = (Path.Combine(Server.MapPath("~/Content/Images/permUploads/")));
             string newFileName = Path.GetFileNameWithoutExtension(toNewFilePath);
 
