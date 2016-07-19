@@ -72,6 +72,7 @@ namespace PLM
                 if (File.Exists(filePath))
                 {
                     File.Copy(filePath, possibleFilePath, overWrite);
+                    File.SetAttributes(possibleFilePath, FileAttributes.Normal);
                 }   
             }
             //catch (IOException)
