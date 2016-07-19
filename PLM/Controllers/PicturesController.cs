@@ -565,7 +565,10 @@ namespace PLM.Controllers
                 return "FAILED";
             }
         }
-
+        public ActionResult InvalidImage()
+        {
+            return View();
+        }
         public ActionResult DropzoneTest()
         {
             return View();
