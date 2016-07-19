@@ -60,7 +60,8 @@ namespace PLM
         {
             string dirPath = new FileInfo(filePath).Directory.FullName;
             string fileExt = new FileInfo(filePath).Extension;
-            string possibleFilePath = Path.Combine(dirPath, newFileName + fileExt);
+            //dirPath, 
+            string possibleFilePath = Path.Combine(newFileName + fileExt);
             newfilepath = "";
             if (!Directory.Exists(dirPath))
             {
@@ -86,7 +87,7 @@ namespace PLM
                 //return false;
             }
 
-            //Then try deleting the old file. If this fails, rollback changes and return false.
+            //Then try deleting the old file. If this errors out, rollback changes and return false.
             try
             {
                 if (File.Exists(filePath))
