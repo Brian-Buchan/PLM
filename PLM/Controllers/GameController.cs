@@ -270,7 +270,18 @@ namespace PLM.Controllers
             newScore = new Score();
             SaveScore(score);
             ViewBag.ModuleID = ((UserGameSession)Session["userGameSession"]).currentModule.ModuleID;
-            ViewBag.Top10Scores = TopTenScore.GetTopTenScores(((UserGameSession)Session["userGameSession"]).currentModule.ModuleID);
+            List<Score> scores = TopTenScore.GetTopTenScores(((UserGameSession)Session["userGameSession"]).currentModule.ModuleID);
+            List<string[]> scoresToSend = new List<string[]>();
+            foreach (Score top10score in scores)
+            {
+                string[] stringToSend = new string[3];
+                ApplicationUser player = db.Users.Find(top10score.UserID);
+                stringToSend[0] = (player.FirstName + ", " + player.LastName[0]);
+                stringToSend[1] = (top10score.CorrectAnswers + " out of " + top10score.TotalAnswers);
+                stringToSend[2] = top10score.TimeStamp.ToString();
+                scoresToSend.Add(stringToSend);
+            }
+            ViewBag.Top10Scores = scoresToSend;
             return View(newScore);
         }
 
