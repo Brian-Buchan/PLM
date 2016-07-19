@@ -12,9 +12,6 @@
     <title>Add Answer</title>
     <link rel="shortcut icon" href="~/Content/images/ico/favicon.ico">
 </head>
-
-<br />
-
 <section id="page-breadcrumb">
     <div class="vertical-center sun">
         <div class="container">
@@ -66,7 +63,7 @@
                 }
             }*@
          }
-        @ViewBag.Error
+        <p class="text-danger">@ViewBag.Error</p>
         <div class="form-group hidden">
             @Html.LabelFor(model => model.ModuleID, "ModuleID", new { @class = "control-label col-md-2" })
             <div class="col-md-10">
