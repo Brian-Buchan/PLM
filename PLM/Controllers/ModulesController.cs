@@ -56,47 +56,47 @@ namespace PLM.Controllers
             //foreach(var x in ModuleModel.Cats)
             ViewBag.Cat1Count = 
                 (from p in db.Modules
-             where p.CategoryId == 1
+             where p.CategoryId == 1 && p.isDisabled == false
              select p).Count();
             ViewBag.Cat2Count =
                 (from p in db.Modules
-                 where p.CategoryId == 2
+                 where p.CategoryId == 2 && p.isDisabled == false
                  select p).Count();
             ViewBag.Cat3Count =
                 (from p in db.Modules
-                 where p.CategoryId == 3
+                 where p.CategoryId == 3 && p.isDisabled == false
                  select p).Count();
             ViewBag.Cat4Count =
                 (from p in db.Modules
-                 where p.CategoryId == 4
+                 where p.CategoryId == 4 && p.isDisabled == false
                  select p).Count();
             ViewBag.Cat5Count =
                 (from p in db.Modules
-                 where p.CategoryId == 5
+                 where p.CategoryId == 5 && p.isDisabled == false
                  select p).Count();
             ViewBag.Cat6Count =
                 (from p in db.Modules
-                 where p.CategoryId == 6
+                 where p.CategoryId == 6 && p.isDisabled == false
                  select p).Count();
             ViewBag.Cat7Count =
                 (from p in db.Modules
-                 where p.CategoryId == 7
+                 where p.CategoryId == 7 && p.isDisabled == false
                  select p).Count();
             ViewBag.Cat8Count =
                 (from p in db.Modules
-                 where p.CategoryId == 8
+                 where p.CategoryId == 8 && p.isDisabled == false
                  select p).Count();
            ViewBag.Cat9Count = 
                 (from p in db.Modules
-             where p.CategoryId == 9
+                 where p.CategoryId == 9 && p.isDisabled == false
              select p).Count();
             ViewBag.Cat10Count = 
                 (from p in db.Modules
-             where p.CategoryId == 10
+                 where p.CategoryId == 10 && p.isDisabled == false
              select p).Count();
             ViewBag.Cat11Count =
                 (from p in db.Modules
-                 where p.CategoryId == 11
+                 where p.CategoryId == 11 && p.isDisabled == false
                  select p).Count();
 
 

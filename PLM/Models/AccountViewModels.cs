@@ -143,6 +143,9 @@ namespace PLM.Models
         [Required]
         public string Institution { get; set; }
 
+        [Display(Name = "Account Status")]
+        public ApplicationUser.AccountStatus Status { get; set; }
+
         [Required]
         [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
         [DataType(DataType.Password)]

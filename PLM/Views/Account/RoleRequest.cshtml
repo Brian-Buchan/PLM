@@ -24,13 +24,13 @@
         </div>
     </div>
 </section>
-@using (Html.BeginForm())
-{
+@*@using (Html.BeginForm())
+{*@
     <form action="~/Account/ApproveAllRequests" method="post">
         @Html.AntiForgeryToken()
         <button name="subject" type="submit">Approve All</button>
     </form>
-}
+@* } *@
 
 <table class="table">
     <tr>
