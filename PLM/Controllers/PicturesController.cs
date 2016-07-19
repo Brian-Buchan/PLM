@@ -515,7 +515,7 @@ namespace PLM.Controllers
                     HttpPostedFileBase file = Request.Files[fileName];
                     fName = file.FileName;
                     picture.Answer.PictureCount++;
-                    if (file.ContentLength >= 5971520)
+                    if (file.ContentLength >= 10971520)
                     {
                         RedirectToAction("InvalidImage","Pictures");
                     }else if(!((file.ContentType=="image/jpeg")||(file.ContentType=="image/bmp")||(file.ContentType=="image/png"))){
