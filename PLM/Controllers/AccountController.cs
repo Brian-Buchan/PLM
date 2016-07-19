@@ -234,7 +234,7 @@ namespace PLM.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         //[AuthorizeOrRedirectAttribute(Roles = "Admin")]
-        public ActionResult Edit([Bind(Include = "UserName, LastName, FirstName, Institution, Email")] EditUserViewModel userModel)
+        public ActionResult Edit([Bind(Include = "UserName, LastName, FirstName, Institution, Email, Status")] EditUserViewModel userModel)
         {
             if (ModelState.IsValid)
             {

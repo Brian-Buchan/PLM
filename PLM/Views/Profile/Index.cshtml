@@ -96,7 +96,8 @@
 
         @foreach (var item in Model)
         {
-            <tr>
+            var style = (item.isDisabled == true) ? "background-color: #ff8080" : "";
+            <tr style="@style">
                 <td>
                     @Html.DisplayFor(modelItem => item.Name)
                 </td>
@@ -109,17 +110,17 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.isPrivate)
                 </td>
-            @if (User.IsInRole("Instructor"))
-            {
-                <td>
-                    @Html.ActionLink("Add Answer", "Create", new { controller = "Answers", id = item.ModuleID })
-                </td>
-                <td>
-                    @Html.ActionLink("Edit", "Edit", new { controller = "ModulesEDIT", id = item.ModuleID }) |
-                    @Html.ActionLink("Delete", "Delete", new { controller = "ModulesEDIT", id = item.ModuleID }) |
-                    @Html.ActionLink("Play Game","Setup", "Game", new { PLMid = item.ModuleID }, null)
-                </td>
-            }
+                @if (User.IsInRole("Instructor"))
+                {
+                    <td>
+                        @Html.ActionLink("Add Answer", "Create", new { controller = "Answers", id = item.ModuleID })
+                    </td>
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", new { controller = "ModulesEDIT", id = item.ModuleID }) |
+                        @Html.ActionLink("Delete", "Delete", new { controller = "ModulesEDIT", id = item.ModuleID }) |
+                        @Html.ActionLink("Play Game", "Setup", "Game", new { PLMid = item.ModuleID }, null)
+                    </td>
+                }
             </tr>
         }
 

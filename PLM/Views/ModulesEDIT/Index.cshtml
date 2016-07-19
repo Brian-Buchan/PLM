@@ -68,7 +68,8 @@
 
         @foreach (var item in Model)
         {
-            var style = (item.isDisabled == true) ? "background-color: red" : "";
+            //Styles the background color red if the module is disabled
+            var style = (item.isDisabled == true) ? "background-color: #ff8080" : "";
             
             <tr style="@style">
                 <td>

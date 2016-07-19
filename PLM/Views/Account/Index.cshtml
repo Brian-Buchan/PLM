@@ -64,7 +64,8 @@
 
         @foreach (var item in Model)
         {
-            <tr>
+            var style = (item.Status == PLM.ApplicationUser.AccountStatus.Disabled) ? "background-color: #ff8080" : "";
+            <tr style="@style">
                 <td>
                     @Html.DisplayFor(modelItem => item.Email)
                 </td>
