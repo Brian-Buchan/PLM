@@ -275,9 +275,9 @@ namespace PLM.Controllers
             string temporaryFileName = Path.GetFileName(tempUrl);
             //string newFileName = Path.GetFileNameWithoutExtension(origUrl);
 
-            PermaSave(temporaryFileName, origUrl);
+            string result = PermaSave(temporaryFileName, origUrl);
 
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "Home", new {actResult = result });
         }
 
         [HttpPost]
@@ -408,11 +408,12 @@ namespace PLM.Controllers
         private string PermaSave(string filename, string toNewFilePath)
         {
             List<string> filesToMove = new List<string>();
-            //string dirPath = (Path.Combine(Server.MapPath("~/Content/Images/tempUploads/")));
-            string dirPath = DevPro.baseFileDirectory + "/tempUploads";
+            string dirPath = (Path.Combine(Server.MapPath("~/Content/Images/tempUploads/")));
+            //string dirPath = DevPro.baseFileDirectory + "tempUploads";
             string newDirPath = Path.GetDirectoryName(Server.MapPath(toNewFilePath));
             //string newDirPath = (Path.Combine(Server.MapPath("~/Content/Images/permUploads/")));
             string newFileName = Path.GetFileNameWithoutExtension(toNewFilePath);
+            string result;
 
             //if the selected file doesn't exist in the temp folder
             if (!(System.IO.File.Exists(dirPath + filename)))
@@ -422,7 +423,8 @@ namespace PLM.Controllers
                 //The passed in filename may have also contained illegal characters, 
                 //referenced a location on a failing/missing disk, 
                 //or the program might not have read permissions for that specific file.
-                return "BAD LOCATION";
+                result = "BAD LOCATION:" + dirPath + filename;
+                return result;
             }
 
             string[] filesToSave = Directory.GetFiles(dirPath, filename);

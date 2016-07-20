@@ -160,7 +160,7 @@ namespace PLM.Controllers
                         where u.Status == ApplicationUser.AccountStatus.PendingInstrustorRole
                         select u).ToList();
 
-            for (int i = 0; i < users.Count + 1; i++)
+            for (int i = 0; i < users.Count; i++)
             {
                 users[i].Status = ApplicationUser.AccountStatus.Active;
                 UserManager.AddToRole(users[i].Id, "Instructor");
@@ -184,6 +184,7 @@ namespace PLM.Controllers
         {
             if (ModelState.IsValid)
             {
+                
                 //Sets user Account Type to Free and Account Status to Active
                 var user = new ApplicationUser()
                 {
