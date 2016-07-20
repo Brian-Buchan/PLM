@@ -45,7 +45,7 @@
             <div>
                 <ul>
                     <li>@Html.ActionLink("Report this module", "Create", "Report", new { id = ViewBag.ModuleID },null)</li>
-                    <li>@Html.ActionLink("Play this module again", "Setup", "Game", new { PLMid = ViewBag.ModuleID }, null)</li>
+                    <li>@Html.ActionLink("Play this module again", "Setup", "Game", new { PLMid = ViewBag.ModuleID, changeSettings = 0 }, null)</li>
                     <li>@Html.ActionLink("Return to module select", "Index", "Modules")</li>
                 </ul>
             </div>

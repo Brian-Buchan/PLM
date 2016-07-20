@@ -7,6 +7,9 @@
         var str = document.getElementById("text-danger").innerHTML;
         var res = str.replace("Email Field", "Email");
         document.getElementById("demo").innerHTML = res;
+        var str2 = document.getElementById("top").innerHTML;
+        var txt = str2.replace(/Name \b[A-Z0-9._%+-]+\W[A-Z0-9.-]+\.[A-Z]{2,}\b is already taken./i, "");
+        document.getElementById("top").innerHTML = txt;
     }
   </script>
 <script>
@@ -41,12 +44,13 @@
     @Html.AntiForgeryToken()
     <h4>Create a new account.</h4>
     <hr />
-    @*@Html.ValidationSummary("", new { @class = "text-danger" })*@
+    <span id="top" onload="myFunction()">
+        @Html.ValidationSummary("", new { @class = "text-danger" })
+    </span>
     <div class="form-group"  onload="myFunction()">
             @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
             <div class="col-md-10">
                 @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
-                @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
             </div>
         </div>
     <div class="form-group">
