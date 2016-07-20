@@ -408,8 +408,8 @@ namespace PLM.Controllers
         private string PermaSave(string filename, string toNewFilePath)
         {
             List<string> filesToMove = new List<string>();
-            //string dirPath = (Path.Combine(Server.MapPath("~/Content/Images/tempUploads/")));
-            string dirPath = DevPro.baseFileDirectory + "tempUploads";
+            string dirPath = (Path.Combine(Server.MapPath("~/Content/Images/tempUploads/")));
+            //string dirPath = DevPro.baseFileDirectory + "tempUploads";
             string newDirPath = Path.GetDirectoryName(Server.MapPath(toNewFilePath));
             //string newDirPath = (Path.Combine(Server.MapPath("~/Content/Images/permUploads/")));
             string newFileName = Path.GetFileNameWithoutExtension(toNewFilePath);
