@@ -127,6 +127,7 @@ namespace PLM
         /// <returns>bool</returns>
         public static bool MoveSpecificFiles(string[] filePaths, string saveDirectory, bool overWrite = false)
         {
+            //REPLACE %20 with SPACE in FILENAME BEFORE SAVING
             //If the directory doesn't exist, error out.
             if (!Directory.Exists(saveDirectory))
             {
