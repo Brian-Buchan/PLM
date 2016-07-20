@@ -64,7 +64,7 @@
 
         @foreach (var item in Model)
         {
-            var style = (item.Status == ApplicationUser.AccountStatus.Disabled) ? "background-color: #ff8080" : "";
+            var style = (item.Status == ApplicationUser.AccountStatus.Active) ? "background-color: #ff8080" : "";
             <tr style="@style">
                 <td>
                     @Html.DisplayFor(modelItem => item.Email)
