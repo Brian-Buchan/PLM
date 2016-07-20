@@ -56,15 +56,6 @@
             <th>
                 @Html.DisplayNameFor(model => model.DisableAccountReason)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Email)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.PhoneNumber)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.UserName)
-            </th>
             <th></th>
         </tr>
 
@@ -91,15 +82,6 @@
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.DisableAccountReason)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Email)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.PhoneNumber)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.UserName)
                 </td>
                 <th>
                     @Html.ActionLink("Change Status", "AccountDisable", new { userName = item.UserName }, new { type = "button-enter" })
