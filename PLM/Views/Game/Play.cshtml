@@ -61,6 +61,7 @@
         <br />
         @using (Html.BeginForm("Play", "Game", FormMethod.Post, new { id = "GameForm", onsubmit = "return CheckIn();" }))
         {
+            @Html.AntiForgeryToken()
             <input id="Score" name="Score" hidden="hidden" type="number" value="@Model.Score" />
             <input id="Time" name="Time" hidden="hidden" type="text" value="@Model.Time.ToString()" />
             <input type="radio" name="isCorrect" value="True" hidden="hidden" />

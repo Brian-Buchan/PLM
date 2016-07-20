@@ -36,9 +36,10 @@ namespace PLM
             ApplicationDbContext db = new ApplicationDbContext();
             List<Score> scores = db.Scores.Where(x => x.ModuleID == moduleID).ToList();
             scores.OrderBy(x => (x.CorrectAnswers / x.TotalAnswers));
+            scores = scores.Take(10).ToList();
             //InvalidCast error
             //Unable to cast object of type '<TakeIterator>d__3a`1[PLM.Score]' to type 'System.Collections.Generic.List`1[PLM.Score]'.
-            return((List<Score>)scores.Take(10));
+            return(scores);
         }
     }
 
@@ -216,6 +217,14 @@ namespace PLM
                 {
                     throw;
                 }
+            }
+        }
+
+        public static void CreateFileDirectory(string directoryName)
+        {
+            if (!Directory.Exists(DevPro.baseFileDirectory))
+            {
+
             }
         }
     }
