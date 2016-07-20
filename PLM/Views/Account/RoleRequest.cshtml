@@ -26,13 +26,14 @@
 </section>
 @using (Html.BeginForm())
 {
-    <form action="~/Account/ApproveAllRequests" method="post">
+    <form action="~/Account/ApproveAllRequests">
         @Html.AntiForgeryToken()
         <button name="ApproveAll" value="ApproveAll" type="submit">Approve All</button>
     </form>
 }
 
 <table class="table">
+
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.FirstName)
