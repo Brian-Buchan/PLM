@@ -53,5 +53,10 @@ namespace PLM.Controllers
 
             return View();
         }
+
+        public ActionResult TemplateStyles()
+        {
+            return View();
+        }
     }
 }
