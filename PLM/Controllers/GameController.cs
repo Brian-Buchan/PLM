@@ -200,6 +200,7 @@ namespace PLM.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Play(int Score, string Time, string isCorrect)
         {
             bool BoolIsCorrect;
@@ -278,7 +279,7 @@ namespace PLM.Controllers
                 ApplicationUser player = db.Users.Find(top10score.UserID);
                 stringToSend[0] = (player.FirstName + ", " + player.LastName[0]);
                 stringToSend[1] = (top10score.CorrectAnswers + " out of " + top10score.TotalAnswers);
-                stringToSend[2] = top10score.TimeStamp.ToString();
+                stringToSend[2] = top10score.TimeStamp.ToLongDateString();
                 scoresToSend.Add(stringToSend);
             }
             ViewBag.Top10Scores = scoresToSend;

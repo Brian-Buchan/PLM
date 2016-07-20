@@ -181,3 +181,18 @@ hr {
 .disabled{
     background-color: red;
 }
+
+.Top10ScoreBoard{
+    background-color: lightgray;
+    border: 2px solid black;
+}
+
+.Top10ScoreItem{
+    overflow: hidden;
+    margin: 5px;
+}
+
+.Top10Score{
+    float: left;
+    width: 33%;
+}
