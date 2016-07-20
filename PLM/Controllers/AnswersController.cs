@@ -42,7 +42,7 @@ namespace PLM.Controllers
 
         // GET: /Answers/Create
         [AuthorizeOrRedirectAttribute(Roles = "Instructor")]
-        public ActionResult Create(int ID)
+        public ActionResult Create(int ID, string error)
         {
             try
             {
@@ -63,6 +63,7 @@ namespace PLM.Controllers
             {
                 ViewBag.Error = "You cannot add duplicate answers";
             }
+            ViewBag.Error = error;
             return View();
         }
 
@@ -88,8 +89,7 @@ namespace PLM.Controllers
                 
             }
             //answer.Module = db.Modules.Find(answer.ModuleID);
-            ViewBag.Error = "You cannot add duplicate answers";
-            return RedirectToAction("Create");
+            return RedirectToAction("Create", new { error= "You cannot add duplicate answers" });
         }
 
         // GET: /Answers/Edit/5
