@@ -187,6 +187,7 @@ namespace PLM.Controllers
         {
             if (ModelState.IsValid)
             {
+                
                 //Sets user Account Type to Free and Account Status to Active
                 var user = new ApplicationUser()
                 {
