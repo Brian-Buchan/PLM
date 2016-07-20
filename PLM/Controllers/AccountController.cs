@@ -154,24 +154,23 @@ namespace PLM.Controllers
             return RedirectToAction("RoleRequest", "Account");
         }
 
-        [HttpPost, ActionName("ApproveAll")]
+       [HttpPost]
         [ValidateAntiForgeryToken]
         //[AuthorizeOrRedirectAttribute(Roles = "Admin")]
-        public ActionResult ApproveAllRequests()
+        public ActionResult ApproveALLRequests()
         {
-            var db = new ApplicationDbContext();
-            var users = from u in db.Users
+            var users = (from u in db.Users
                         where u.Status == ApplicationUser.AccountStatus.PendingInstrustorRole
-                        select u;
+                        select u).ToList();
 
-            foreach (ApplicationUser user in users)
+            for (int i = 0; i < users.Count + 1; i++)
             {
-                user.Status = ApplicationUser.AccountStatus.Active;
-                UserManager.AddToRole(user.Id, "Instructor");
-                db.Entry(user).State = EntityState.Modified;
+                users[i].Status = ApplicationUser.AccountStatus.Active;
+                UserManager.AddToRole(users[i].Id, "Instructor");
+                db.Entry(users[i]).State = EntityState.Modified;
                 db.SaveChanges();
-            }
-
+            }    
+            
             return RedirectToAction("RoleRequest", "Account");
         }
 

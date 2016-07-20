@@ -269,7 +269,9 @@ namespace PLM.Controllers
         public ActionResult Save()
         {
             string origUrl = Request.Form.Get("origUrl");
+            origUrl = HttpUtility.HtmlDecode(origUrl);
             string tempUrl = Request.Form.Get("tempUrl");
+            tempUrl = HttpUtility.HtmlDecode(tempUrl);
             string temporaryFileName = Path.GetFileName(tempUrl);
             //string newFileName = Path.GetFileNameWithoutExtension(origUrl);
 
@@ -283,6 +285,7 @@ namespace PLM.Controllers
         public ActionResult Discard()
         {
             string tempUrl = Request.Form.Get("tempUrl");
+            tempUrl = HttpUtility.HtmlDecode(tempUrl);
             //string noRedirect = Request.Form.Get("noRedirect");
             string temporaryFileName = Path.GetFileName(tempUrl);
 
