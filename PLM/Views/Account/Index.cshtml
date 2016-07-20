@@ -84,7 +84,11 @@
                     @Html.ActionLink("Delete", "Delete", new { userName = item.UserName })
                 </td>
                 <th>
-                    @Html.ActionLink("Disable Account", "AccountDisable", new { userName = item.UserName })
+                    <form action="~/Account/AccountDisable?userName=@item.UserName" method="post">
+                        @Html.AntiForgeryToken()
+                        <button name="subject" type="submit" value="fav_CSS">Change Status</button>
+                    </form>
+                    @*@Html.ActionLink("Change Status", "AccountDisable", new { userName = item.UserName })*@
                 </th>
             </tr>
         }

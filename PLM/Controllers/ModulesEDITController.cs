@@ -265,7 +265,7 @@ namespace PLM.Controllers
         }
 
         // POST: /ModulesEDIT/Delete/5
-        [HttpPost, ActionName("Delete")]
+        [HttpPost, ActionName("AdminDelete")]
         [ValidateAntiForgeryToken]
         [AuthorizeOrRedirectAttribute(Roles = "Admin")]
         public ActionResult AdminDeleteConfirmed(int id)
