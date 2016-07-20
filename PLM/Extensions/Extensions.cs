@@ -62,7 +62,7 @@ namespace PLM
             string dirPath = new FileInfo(filePath).Directory.FullName;
             string fileExt = new FileInfo(filePath).Extension;
             //dirPath, 
-            string possibleFilePath = Path.Combine(newFileName + fileExt);
+            string possibleFilePath = Path.Combine(dirPath, newFileName + fileExt);
             newfilepath = "";
             if (!Directory.Exists(dirPath))
             {
@@ -73,8 +73,8 @@ namespace PLM
             {
                 if (File.Exists(filePath))
                 {
-                    throw new ArgumentException(possibleFilePath);
-                    //File.Copy(filePath, possibleFilePath, overWrite);
+                    //throw new ArgumentException(possibleFilePath);
+                    File.Copy(filePath, possibleFilePath, overWrite);
                     //File.SetAttributes(possibleFilePath, FileAttributes.Normal);
                 }   
             }
