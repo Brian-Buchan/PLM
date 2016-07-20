@@ -159,7 +159,6 @@ namespace PLM.Controllers
         //[AuthorizeOrRedirectAttribute(Roles = "Admin")]
         public ActionResult ApproveALLRequests()
         {
-            var db = new ApplicationDbContext();
             var users = from u in db.Users
                         where u.Status == ApplicationUser.AccountStatus.PendingInstrustorRole
                         select u;
