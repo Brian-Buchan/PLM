@@ -125,9 +125,8 @@ namespace PLM
         /// to overwrite any existing files with the same name in the new directory. 
         /// If false, skips files that already exist in destination.</param>
         /// <returns>bool</returns>
-        public static bool MoveSpecificFiles(string[] filePaths, string saveDirectory, out string check, bool overWrite = false)
+        public static bool MoveSpecificFiles(string[] filePaths, string saveDirectory, bool overWrite = false)
         {
-            check = "";
             //If the directory doesn't exist, error out.
             if (!Directory.Exists(saveDirectory))
             {
@@ -156,12 +155,12 @@ namespace PLM
                             File.Move(filePath, saveDirectory + fileName);
                         }
                     }
-                    throw new ArgumentException();
+                    //throw new ArgumentException();
                 }
             }
             catch (Exception)
             {
-                check = saveDirectory + " " + Path.GetFileName(filePaths[0]);
+                //check = saveDirectory + " " + Path.GetFileName(filePaths[0]);
                 return false;
             }
             return true;

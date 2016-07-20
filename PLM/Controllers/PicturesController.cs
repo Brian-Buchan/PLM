@@ -475,11 +475,11 @@ namespace PLM.Controllers
                 return "BAD MOVE DURING TRANSFER";
             }
 
-            if (FileManipExtensions.MoveSpecificFiles(filesMove, newDirPath, out result, true))
+            if (FileManipExtensions.MoveSpecificFiles(filesMove, newDirPath, true))
             {
                 return "SAVED";
             }
-            else return "FAILED ON FILE MOVE" + result;
+            else return "FAILED ON FILE MOVE";
         }
 
         /// <summary>
