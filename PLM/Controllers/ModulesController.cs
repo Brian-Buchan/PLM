@@ -60,7 +60,7 @@ namespace PLM.Controllers
              select p).Count();
             ViewBag.Cat2Count =
                 (from p in db.Modules
-                 where p.CategoryId == 2 && p.isDisabled == false
+                 where p.CategoryId == 2 && p.isDisabled == false 
                  select p).Count();
             ViewBag.Cat3Count =
                 (from p in db.Modules
@@ -68,7 +68,7 @@ namespace PLM.Controllers
                  select p).Count();
             ViewBag.Cat4Count =
                 (from p in db.Modules
-                 where p.CategoryId == 4 && p.isDisabled == false
+                 where p.CategoryId == 4 && p.isDisabled == false// && p.Answers.ElementAt(0).Pictures.ElementAt(0).PictureID != null
                  select p).Count();
             ViewBag.Cat5Count =
                 (from p in db.Modules

@@ -14,7 +14,7 @@ namespace PLM
         public int AnswerID { get; set; }
         [MaxLength(40)]
         public string Attribution { get; set; }
-
+        [MaxLength(300)]
         public virtual Answer Answer { get; set; }
     }
 }
