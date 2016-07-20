@@ -416,70 +416,70 @@ namespace PLM.Controllers
             List<string> filesToMove = new List<string>();
             string dirPath = (Path.Combine(Server.MapPath("~/Content/Images/tempUploads/")));
             //string dirPath = DevPro.baseFileDirectory + "tempUploads";
-            string newDirPath = Path.GetDirectoryName(Server.MapPath(toNewFilePath));
+            string newDirPath = Path.GetDirectoryName(Server.MapPath(toNewFilePath)) + @"\";
             //string newDirPath = (Path.Combine(Server.MapPath("~/Content/Images/permUploads/")));
             string newFileName = Path.GetFileNameWithoutExtension(toNewFilePath);
-            string result = "";
+            string result;
 
-            throw new ArgumentException(toNewFilePath + " " + newDirPath);
+            //For checking passed in file path + created file path
+            //throw new ArgumentException(toNewFilePath + " " + newDirPath);
+            //return result;
 
-            return result;
+            //if the selected file doesn't exist in the temp folder
+            if (!(System.IO.File.Exists(dirPath + filename)))
+            {
+                //If this code is reached, the passed in filename could not be accessed. 
+                //It may have been moved, deleted, or did not exist in the first place.
+                //The passed in filename may have also contained illegal characters, 
+                //referenced a location on a failing/missing disk, 
+                //or the program might not have read permissions for that specific file.
+                result = "BAD LOCATION:" + dirPath + filename;
+                return result;
+            }
 
-            ////if the selected file doesn't exist in the temp folder
-            //if (!(System.IO.File.Exists(dirPath + filename)))
-            //{
-            //    //If this code is reached, the passed in filename could not be accessed. 
-            //    //It may have been moved, deleted, or did not exist in the first place.
-            //    //The passed in filename may have also contained illegal characters, 
-            //    //referenced a location on a failing/missing disk, 
-            //    //or the program might not have read permissions for that specific file.
-            //    result = "BAD LOCATION:" + dirPath + filename;
-            //    return result;
-            //}
+            string[] filesToSave = Directory.GetFiles(dirPath, filename);
 
-            //string[] filesToSave = Directory.GetFiles(dirPath, filename);
+            if (filesToSave.Length == 0)
+            {
+                //If this code is reached, GetFiles didn't find any matching files.
+                return "NO FILES FOUND";
+            }
 
-            //if (filesToSave.Length == 0)
-            //{
-            //    //If this code is reached, GetFiles didn't find any matching files.
-            //    return "NO FILES FOUND";
-            //}
+            //for each file to be saved, 
+            foreach (string filePath in filesToSave)
+            {
+                string newFilePath;
+                if (FileManipExtensions.TryRenameFile(filePath, newFileName, out newFilePath, true))
+                {
+                    filesToMove.Add(newFilePath);
+                }
+            }
 
-            ////for each file to be saved, 
-            //foreach (string filePath in filesToSave)
-            //{
-            //    string newFilePath;
-            //    if (FileManipExtensions.TryRenameFile(filePath, newFileName, out newFilePath, true))
-            //    {
-            //        filesToMove.Add(newFilePath);
-            //    }
-            //}
+            //Make sure that filepaths were actually moved to the filesToMove list.
+            if (filesToMove.Count == 0)
+            {
+                //If this code is reached, there is a problem within the TryRenameFile method.
+                //Another process may have been accessing the file at the time of the renaming.
+                return "BAD MOVE ON RENAME";
+            }
 
-            ////Make sure that filepaths were actually moved to the filesToMove list.
-            //if (filesToMove.Count == 0)
-            //{
-            //    //If this code is reached, there is a problem within the TryRenameFile method.
-            //    //Another process may have been accessing the file at the time of the renaming.
-            //    return "BAD MOVE ON RENAME";
-            //}
+            string[] filesMove = filesToMove.ToArray();
 
-            //string[] filesMove = filesToMove.ToArray();
+            //Verify that all the filepaths were moved to the array intact
 
-            ////Verify that all the filepaths were moved to the array intact
+            //if filesMove.Length is either zero or unequal to filesToMove.Count
+            if (filesMove.Length == 0 || filesMove.Length != filesToMove.Count)
+            {
+                //If this code is reached, something happened that nulled 
+                //or removed some or all elements from the filesMove array
+                return "BAD MOVE DURING TRANSFER";
+            }
 
-            ////if filesMove.Length is either zero or unequal to filesToMove.Count
-            //if (filesMove.Length == 0 || filesMove.Length != filesToMove.Count)
-            //{
-            //    //If this code is reached, something happened that nulled 
-            //    //or removed some or all elements from the filesMove array
-            //    return "BAD MOVE DURING TRANSFER";
-            //}
-
-            //if (FileManipExtensions.MoveSpecificFiles(filesMove, newDirPath, true))
-            //{
-            //    return "SAVED";
-            //}
-            //else return "FAILED ON FILE MOVE";
+            if (FileManipExtensions.MoveSpecificFiles(filesMove, newDirPath, true))
+            {
+                return "SAVED";
+            }
+            else return "FAILED ON FILE MOVE";
         }
 
         /// <summary>
