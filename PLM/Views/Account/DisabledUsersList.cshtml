@@ -28,6 +28,11 @@
         </div>
     </section>
     <!--/#page-breadcrumb-->
+
+    <p>
+        @Html.ActionLink("View Active Accounts", "Index", new { @class = "floatRight", type = "button" })
+    </p>
+
     <table class="table">
         <tr>
             <th>
@@ -96,17 +101,9 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.UserName)
                 </td>
-                <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-                    @Html.ActionLink("Details", "Details", new { id = item.Id }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = item.Id })
-                </td>
-                <td>
-                    <form action="~/Account/RoleRequest?userID=@item.Id" method="post">
-                        @Html.AntiForgeryToken()
-                        <button name="subject" type="submit" value="fav_CSS">Reapprove</button>
-                    </form>
-                </td>
+                <th>
+                    @Html.ActionLink("Change Status", "AccountDisable", new { userName = item.UserName }, new { type = "button" })
+                </th>
             </tr>
         }
 

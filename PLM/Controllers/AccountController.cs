@@ -39,12 +39,14 @@ namespace PLM.Controllers
 
             var db = new ApplicationDbContext();
             var users = from u in db.Users
+                        where u.Status != ApplicationUser.AccountStatus.Disabled
                         select u;
 
             if (!String.IsNullOrEmpty(searchString))
             {
                 users = users.Where(u => u.LastName.Contains(searchString)
-                                       || u.FirstName.Contains(searchString));
+                                       || u.FirstName.Contains(searchString)
+                                       && u.Status != ApplicationUser.AccountStatus.Disabled);
             }
             switch (sortOrder)
             {
