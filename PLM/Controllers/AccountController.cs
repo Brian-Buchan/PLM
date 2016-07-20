@@ -153,11 +153,11 @@ namespace PLM.Controllers
 
             return RedirectToAction("RoleRequest", "Account");
         }
-        
-        [HttpPost]
+
+        [HttpPost, ActionName("ApproveAll")]
         [ValidateAntiForgeryToken]
         //[AuthorizeOrRedirectAttribute(Roles = "Admin")]
-        public void ApproveAllRequests()
+        public ActionResult ApproveAllRequests()
         {
             var db = new ApplicationDbContext();
             var users = from u in db.Users
@@ -172,7 +172,7 @@ namespace PLM.Controllers
                 db.SaveChanges();
             }
 
-            RedirectToAction("RoleRequest", "Account");
+            return RedirectToAction("RoleRequest", "Account");
         }
 
         //[AuthorizeOrRedirectAttribute(Roles = "Admin")]
