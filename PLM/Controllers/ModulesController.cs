@@ -58,6 +58,7 @@ namespace PLM.Controllers
                 (from p in db.Modules
              where p.CategoryId == 1 && p.isDisabled == false
              select p).Count();
+            
             ViewBag.Cat2Count =
                 (from p in db.Modules
                  where p.CategoryId == 2 && p.isDisabled == false 
@@ -70,6 +71,21 @@ namespace PLM.Controllers
                 (from p in db.Modules
                  where p.CategoryId == 4 && p.isDisabled == false// && p.Answers.ElementAt(0).Pictures.ElementAt(0).PictureID != null
                  select p).Count();
+            //foreach (Module module in db.Modules)
+            //{
+            //    if (module.Answers.Count() >= 5)
+            //    {
+            //        try
+            //        {
+            //            Answer answer = module.Answers.ElementAt(0);
+            //            Picture picture = answer.Pictures.ElementAt(0);
+            //        }
+            //        catch
+            //        {
+            //            ViewBag.Cat4Count -= 1;
+            //        }
+            //    }
+            //}
             ViewBag.Cat5Count =
                 (from p in db.Modules
                  where p.CategoryId == 5 && p.isDisabled == false
