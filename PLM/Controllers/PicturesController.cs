@@ -275,9 +275,9 @@ namespace PLM.Controllers
             string temporaryFileName = Path.GetFileName(tempUrl);
             //string newFileName = Path.GetFileNameWithoutExtension(origUrl);
 
-            PermaSave(temporaryFileName, origUrl);
+            string result = PermaSave(temporaryFileName, origUrl);
 
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "Home", new {actResult = result });
         }
 
         [HttpPost]
