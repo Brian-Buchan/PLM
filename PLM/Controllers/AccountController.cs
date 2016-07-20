@@ -111,10 +111,7 @@ namespace PLM.Controllers
                     users = users.OrderBy(u => u.LastName);
                     break;
             }
-
-            var model = new System.Collections.Generic.List<ApplicationUser>();
-
-            return View(model);
+            return View(users);
         }
 
         public ActionResult RoleRequest()
