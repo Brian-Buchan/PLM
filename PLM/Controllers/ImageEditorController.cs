@@ -285,8 +285,9 @@ namespace PLM.Controllers
                 //or removed some or all elements from the filesMove array
                 return "BAD MOVE DURING TRANSFER";
             }
+            string res = "";
 
-            if (FileManipExtensions.MoveSpecificFiles(filesMove, newDirPath, true))
+            if (FileManipExtensions.MoveSpecificFiles(filesMove, newDirPath, out res, true))
             {
                 return "SAVED";
             }
