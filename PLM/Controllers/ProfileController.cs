@@ -80,6 +80,16 @@ namespace PLM.Controllers
             return RedirectToAction("Index");
         }
 
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult SaveProfilePicture(string id)
+        {
+            ApplicationUser user = db.Users.Find(id);
+
+            return RedirectToAction("Index");
+        }
+
         public string SaveUploadedFileProfile(string UserId)
         {
             Session["upload"] = UserId;

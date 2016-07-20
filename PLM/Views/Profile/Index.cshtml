@@ -6,7 +6,7 @@
     var instution = User.Identity.GetInstution();
     var email = User.Identity.GetUserName();
     var location = ViewBag.location;
-
+    var id = User.Identity.GetUserId();
 }
 
 <head>
@@ -45,7 +45,7 @@
                 <div class="panel-body">
                     <div st class="jumbotron" id="uploadPicture" style="padding-bottom:15px; padding-top:15px">
                         <h2 class="header" style="margin-top:10px">Upload a profile picture</h2>
-                        <form action="~/Profile/CreateProfile" method="post" enctype="multipart/form-data" class="dropzone" id="dropzoneForm" style="width: 50px; background: none; border: none;">
+                        <form action="~/Profile/SaveProfilePicture?id" method="post" enctype="multipart/form-data" class="dropzone" id="dropzoneForm" style="width: 50px; background: none; border: none;">
                             @Html.AntiForgeryToken()
                             <div class="fallback">
                                 <input name="file" type="file" multiple />
