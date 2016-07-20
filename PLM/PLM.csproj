@@ -217,7 +217,7 @@
     <Compile Include="Controllers\ModulesEDITController.cs" />
     <Compile Include="Controllers\ReportController.cs" />
     <Compile Include="DevPro Resources\DevPro.cs" />
-    <Compile Include="Extensions\CascadeDeleter.cs" />
+    <Compile Include="Extensions\DirectoryHandler.cs" />
     <Compile Include="Migrations\201606141648191_InitialCreate.cs" />
     <Compile Include="Migrations\201606141648191_InitialCreate.Designer.cs">
       <DependentUpon>201606141648191_InitialCreate.cs</DependentUpon>

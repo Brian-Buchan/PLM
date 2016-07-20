@@ -10,9 +10,6 @@
     <title>Add Picture</title>
     <link rel="shortcut icon" href="~/Content/images/ico/favicon.ico">
 </head>
-
-<br />
-
 <section id="page-breadcrumb">
     <div class="vertical-center sun">
         <div class="container">
@@ -35,14 +32,14 @@
 
         
 
-        <div class="fallback" style="width:500px;">
+        <div class="fallback">
             <input name="file" type="file" multiple /> 
             <br />
             @Html.ActionLink("Sources for free use images", "FreeUseImages", "Home")
             <div class="form-group" title="Attribution is needed to give credit to the original creator of the image">
                 @Html.LabelFor(model => model.Attribution, "Attribution", new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
-                    @Html.TextAreaFor(model => model.Attribution, new { rows = "5", cols = "250" })
+                    @Html.TextAreaFor(model => model.Attribution, new { rows = "20", cols = "500" })
                     @Html.ValidationMessageFor(model => model.Attribution, "", new { @class = "text-danger" })
                 </div>
             </div>

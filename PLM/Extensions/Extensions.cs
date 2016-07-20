@@ -219,14 +219,6 @@ namespace PLM
                 }
             }
         }
-
-        public static void CreateFileDirectory(string directoryName)
-        {
-            if (!Directory.Exists(DevPro.baseFileDirectory))
-            {
-
-            }
-        }
     }
 
     public static class StringExtensions

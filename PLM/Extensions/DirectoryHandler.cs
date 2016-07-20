@@ -6,7 +6,7 @@ using System.IO;
 
 namespace PLM
 {
-    public class CascadeDeleter
+    public class DirectoryHandler
     {
         private static ApplicationDbContext db = new ApplicationDbContext();
 
@@ -42,7 +42,14 @@ namespace PLM
 
             db.Answers.Remove(answer);
             db.SaveChanges();
+        }
 
+        public static void CreateDirectory(string moduleName)
+        {
+            if (!Directory.Exists(DevPro.baseFileDirectory + "PLM/" + moduleName))
+            {
+                Directory.CreateDirectory(DevPro.baseFileDirectory + "PLM/" + moduleName);
+            }
         }
     }
 }
