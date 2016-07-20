@@ -80,13 +80,13 @@
         <td>
             <form action="~/Account/RoleRequest?userID=@item.Id" method="post">
                 @Html.AntiForgeryToken()
-                <button name="subject" type="submit" value="fav_CSS">Approve</button>
+                <button name="subject" type="submit" class="btn-success" value="fav_CSS">Approve</button>
             </form>
         </td>
         <td>
             <form action="~/Account/DenyRequest?userID=@item.Id" method="post">
                 @Html.AntiForgeryToken()
-                <button name="subject" type="submit" value="fav_CSS">Deny</button>
+                <button name="subject" type="submit" class="btn-error" value="fav_CSS">Deny</button>
             </form>
         </td>
     </tr>
