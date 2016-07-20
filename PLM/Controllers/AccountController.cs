@@ -159,17 +159,18 @@ namespace PLM.Controllers
         //[AuthorizeOrRedirectAttribute(Roles = "Admin")]
         public ActionResult ApproveALLRequests()
         {
-            var users = from u in db.Users
+            var users = (from u in db.Users
                         where u.Status == ApplicationUser.AccountStatus.PendingInstrustorRole
-                        select u;
+                        select u).ToList();
 
-            foreach (ApplicationUser user in users)
+            for (int i = 0; i < users.Count + 1; i++)
             {
-                user.Status = ApplicationUser.AccountStatus.Active;
-                UserManager.AddToRole(user.Id, "Instructor");
-                db.Entry(user).State = EntityState.Modified;
+                users[i].Status = ApplicationUser.AccountStatus.Active;
+                UserManager.AddToRole(users[i].Id, "Instructor");
+                db.Entry(users[i]).State = EntityState.Modified;
                 db.SaveChanges();
-            }
+            }    
+            
             return RedirectToAction("RoleRequest", "Account");
         }
 
@@ -186,6 +187,7 @@ namespace PLM.Controllers
         {
             if (ModelState.IsValid)
             {
+                
                 //Sets user Account Type to Free and Account Status to Active
                 var user = new ApplicationUser()
                 {
