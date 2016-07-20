@@ -320,6 +320,11 @@ namespace PLM.Controllers
             {
                 string dirPath = (Path.Combine(Server.MapPath("~/Content/Images/tempUploads/")));
 
+                if (!(Directory.Exists(dirPath)))
+                {
+                    Directory.CreateDirectory(dirPath);
+                }
+
                 //gets the post data
                 string imageBase64 = fromPost;
 
@@ -407,6 +412,7 @@ namespace PLM.Controllers
         [NonAction]
         private string PermaSave(string filename, string toNewFilePath)
         {
+
             List<string> filesToMove = new List<string>();
             string dirPath = (Path.Combine(Server.MapPath("~/Content/Images/tempUploads/")));
             //string dirPath = DevPro.baseFileDirectory + "tempUploads";
