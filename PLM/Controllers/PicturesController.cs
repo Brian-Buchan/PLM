@@ -416,10 +416,14 @@ namespace PLM.Controllers
             List<string> filesToMove = new List<string>();
             string dirPath = (Path.Combine(Server.MapPath("~/Content/Images/tempUploads/")));
             //string dirPath = DevPro.baseFileDirectory + "tempUploads";
-            string newDirPath = Path.GetDirectoryName(Server.MapPath(toNewFilePath));
+            string newDirPath = Path.GetDirectoryName(Server.MapPath(toNewFilePath)) + @"\";
             //string newDirPath = (Path.Combine(Server.MapPath("~/Content/Images/permUploads/")));
             string newFileName = Path.GetFileNameWithoutExtension(toNewFilePath);
             string result;
+
+            //For checking passed in file path + created file path
+            //throw new ArgumentException(toNewFilePath + " " + newDirPath);
+            //return result;
 
             //if the selected file doesn't exist in the temp folder
             if (!(System.IO.File.Exists(dirPath + filename)))
