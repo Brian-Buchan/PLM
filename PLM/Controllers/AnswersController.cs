@@ -158,7 +158,7 @@ namespace PLM.Controllers
         {
             Answer answer = db.Answers.Find(id);
 
-            CascadeDeleter.DeleteAnswer(id);
+            DirectoryHandler.DeleteAnswer(id);
             return RedirectToAction("edit", new { controller = "ModulesEdit", id = answer.ModuleID});
         }
 

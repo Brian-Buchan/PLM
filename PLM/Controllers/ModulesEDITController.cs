@@ -133,9 +133,9 @@ namespace PLM.Controllers
                 db.Modules.Add(module);
                 db.SaveChanges();
                 PopulateCategoryDropDownList(module.CategoryId);
+                DirectoryHandler.CreateDirectory(module.Name);
                 if (module.CategoryId != null) { return RedirectToAction("Create", "Answers", new { id = module.ModuleID }); }
                 else{return RedirectToAction("Create", "ModulesEDIT");}
-
             }
             return View(module);
         }
@@ -244,7 +244,7 @@ namespace PLM.Controllers
         [AuthorizeOrRedirectAttribute(Roles = "Instructor")]
         public ActionResult DeleteConfirmed(int id)
         {
-            CascadeDeleter.DeleteModule(id);
+            DirectoryHandler.DeleteModule(id);
 
             return RedirectToAction("Index", new { controller = "Profile" });
         }
@@ -265,12 +265,12 @@ namespace PLM.Controllers
         }
 
         // POST: /ModulesEDIT/Delete/5
-        [HttpPost, ActionName("Delete")]
+        [HttpPost, ActionName("AdminDelete")]
         [ValidateAntiForgeryToken]
         [AuthorizeOrRedirectAttribute(Roles = "Admin")]
         public ActionResult AdminDeleteConfirmed(int id)
         {
-            CascadeDeleter.DeleteModule(id);
+            DirectoryHandler.DeleteModule(id);
 
             return RedirectToAction("Index", new { controller = "Profile" });
         }
