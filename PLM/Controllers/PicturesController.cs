@@ -421,7 +421,7 @@ namespace PLM.Controllers
             string newFileName = Path.GetFileNameWithoutExtension(toNewFilePath);
             string result = "";
 
-            throw new ArgumentException(toNewFilePath + " " + dirPath);
+            throw new ArgumentException(toNewFilePath + " " + newDirPath);
 
             return result;
 
