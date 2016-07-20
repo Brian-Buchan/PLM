@@ -84,7 +84,7 @@
                     @Html.ActionLink("Delete", "Delete", new { userName = item.UserName })
                 </td>
                 <th>
-                    @Html.ActionLink("Disable Account", "AccountDisable", new { userName = item.UserName })
+                    @Html.ActionLink("Change Status", "AccountDisable", new { userName = item.UserName }, new { type = "button" })
                 </th>
             </tr>
         }

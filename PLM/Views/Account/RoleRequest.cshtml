@@ -9,7 +9,7 @@
     <link rel="shortcut icon" href="~/Content/images/ico/favicon.ico">
 </head>
 @ViewBag.Title="List of requests for instructor status";
-<br />
+
 
 <section id="page-breadcrumb">
     <div class="vertical-center sun">
@@ -24,14 +24,13 @@
         </div>
     </div>
 </section>
-@*@using (Html.BeginForm())
-{*@
-    <form action="~/Account/ApproveAllRequests" method="post">
+@using (Html.BeginForm("ApproveAllRequests", "Account", FormMethod.Post))
+{
+    @*<form action="~/Account/ApproveAllRequests" method="post">*@
         @Html.AntiForgeryToken()
-        <button name="subject" type="submit">Approve All</button>
-    </form>
-@* } *@
-
+    <button name="ApproveAllRequests" value="ApproveAllRequests" type="submit">Approve All</button>
+    @*</form>*@
+}
 <table class="table">
     <tr>
         <th>
@@ -56,8 +55,10 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
+@foreach (var item in Model)
+{
+    var style = (item.Status == ApplicationUser.AccountStatus.Disabled) ? "background-color: #ff8080" : "";
+    <tr style="@style">
         <td>
             @Html.DisplayFor(modelItem => item.FirstName)
         </td>

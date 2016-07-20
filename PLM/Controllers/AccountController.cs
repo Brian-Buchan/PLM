@@ -153,13 +153,12 @@ namespace PLM.Controllers
 
             return RedirectToAction("RoleRequest", "Account");
         }
-        
-        [HttpPost]
+
+       [HttpPost]
         [ValidateAntiForgeryToken]
         //[AuthorizeOrRedirectAttribute(Roles = "Admin")]
-        public ActionResult ApproveAllRequests()
+        public ActionResult ApproveALLRequests()
         {
-            var db = new ApplicationDbContext();
             var users = from u in db.Users
                         where u.Status == ApplicationUser.AccountStatus.PendingInstrustorRole
                         select u;
@@ -171,7 +170,6 @@ namespace PLM.Controllers
                 db.Entry(user).State = EntityState.Modified;
                 db.SaveChanges();
             }
-
             return RedirectToAction("RoleRequest", "Account");
         }
 
