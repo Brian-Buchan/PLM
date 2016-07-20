@@ -56,12 +56,17 @@
             <h3>Top Scores</h3>
             <div class="Top10ScoreBoard">
                 @{
+                    <div class="Top10ScoreItem ScoreHeader">
+                        <p class="Top10Score">Name</p>
+                        <p class="Top10Score">Score</p>
+                        <p class="Top10Score">Date</p>
+                    </div>
                     foreach (String[] score in ViewBag.Top10Scores)
                     {
                         <div class="Top10ScoreItem">
-                            <p class="Top10Player">@score[0]</p>
+                            <p class="Top10Score">@score[0]</p>
                             <p class="Top10Score">@score[1]</p>
-                            <p class="Top10Time">@score[2]</p>
+                            <p class="Top10Score">@score[2]</p>
                         </div>
                     }
                 }
