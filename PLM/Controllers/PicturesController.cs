@@ -83,13 +83,9 @@ namespace PLM.Controllers
 
                 if (location == "FAILED")
                 {
-                    if (imageSizeTooLarge)
+                    if (imageSizeTooLarge || incorrectImageType)
                     {
-
-                    }
-                    else if (incorrectImageType)
-                    {
-
+                        RedirectToAction("InvalidImage", new { controller = "Answers", id = picture.AnswerID });
                     }
                     RedirectToAction("UploadError", new { controller = "Answers", id = picture.AnswerID });
                 }
@@ -528,8 +524,10 @@ namespace PLM.Controllers
         [NonAction]
         public string SaveUploadedFile(Picture picture)
         {
-            Session["upload"] = picture.Answer.Module.Name;
+            imageSizeTooLarge = false;
+            incorrectImageType = false;
             bool isSavedSuccessfully = false;
+            Session["upload"] = picture.Answer.Module.Name;
             string fName = "";
             string path = "";
             string relpath = "";
