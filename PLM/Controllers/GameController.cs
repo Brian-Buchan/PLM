@@ -269,7 +269,10 @@ namespace PLM.Controllers
         public ActionResult Complete(int score)
         {
             newScore = new Score();
-            if (Request.IsAuthenticated)
+            if (Request.IsAuthenticated 
+                && ((UserGameSession)Session["userGameSession"]).currentModule.DefaultNumAnswers == ((UserGameSession)Session["userGameSession"]).numAnswers
+                && ((UserGameSession)Session["userGameSession"]).currentModule.DefaultNumQuestions == ((UserGameSession)Session["userGameSession"]).numQuestions
+                && ((UserGameSession)Session["userGameSession"]).currentModule.DefaultTime == ((UserGameSession)Session["userGameSession"]).time)
             {
             SaveScore(score);
             }
