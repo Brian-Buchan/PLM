@@ -85,9 +85,9 @@ namespace PLM.Controllers
                 {
                     if (imageSizeTooLarge || incorrectImageType)
                     {
-                        RedirectToAction("InvalidImage", new { controller = "Answers", id = picture.AnswerID });
+                        return RedirectToAction("InvalidImage", new { controller = "Answers", id = picture.AnswerID });
                     }
-                    RedirectToAction("UploadError", new { controller = "Answers", id = picture.AnswerID });
+                    return RedirectToAction("UploadError", new { controller = "Answers", id = picture.AnswerID });
                 }
                 else
                 {
