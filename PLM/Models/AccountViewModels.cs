@@ -120,7 +120,7 @@ namespace PLM.Models
             this.LastName = user.LastName;
             this.Email = user.Email;
             this.Institution = user.Institution;
-            this.Password = user.PasswordHash;
+            //this.Password = user.PasswordHash;
             //this.ProfilePicture = user.ProfilePicture;
         }
 
