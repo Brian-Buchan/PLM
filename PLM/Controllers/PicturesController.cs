@@ -100,9 +100,17 @@ namespace PLM.Controllers
 
             ViewBag.AnswerID = new SelectList(db.Answers, "AnswerID", "AnswerString", picture.AnswerID);
             return View(picture);
-
         }
 
+        public ActionResult InvalidImage(int? id)
+        {
+            return View();
+        }
+
+        public ActionResult UploadError(int? id)
+        {
+            return View();
+        }
         // GET: /Pictures/Edit/5
         [AuthorizeOrRedirectAttribute(Roles = "Instructor")]
         public ActionResult Edit(int? id)
@@ -578,8 +586,6 @@ namespace PLM.Controllers
                                 Directory.CreateDirectory(moduleDirectory);
                             }
                             path = moduleDirectory + fName;
-                            // Saves the file through the HttpPostedFileBase class
-                            file.SaveAs(path);
                             string filetype = Path.GetExtension(path);
                             if (filetype == "jpeg")
                             {
@@ -587,6 +593,8 @@ namespace PLM.Controllers
                                 // this will convert jpeg files to jpg files when they get uploaded
                                 filetype = "jpg";
                             }
+                            // Saves the file through the HttpPostedFileBase class
+                            file.SaveAs(path);
                             string newfName = (picture.Answer.AnswerString + "-" + picture.Answer.PictureCount.ToString() + filetype);
                             relpath = (moduleDirectory + newfName);
                             System.IO.File.Copy(path, relpath);
