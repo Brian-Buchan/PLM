@@ -35,8 +35,8 @@ namespace PLM
         {
             ApplicationDbContext db = new ApplicationDbContext();
             List<Score> scores = db.Scores.Where(x => x.ModuleID == moduleID).ToList();
-            scores.OrderBy(x => (x.CorrectAnswers / x.TotalAnswers));
-            scores = scores.Take(10).ToList();
+            scores = scores.OrderBy(x => (x.CorrectAnswers / x.TotalAnswers)).Take(10).ToList();
+            //scores = scores.Take(10).ToList();
             //InvalidCast error
             //Unable to cast object of type '<TakeIterator>d__3a`1[PLM.Score]' to type 'System.Collections.Generic.List`1[PLM.Score]'.
             return(scores);
@@ -143,17 +143,18 @@ namespace PLM
                     if (File.Exists(filePath))
                     {
                         fileName = Path.GetFileName(filePath);
-
+                        var fullPath = Path.Combine(saveDirectory, fileName);
                         //if the overwrite flag is set to true and the file exists in the new directory, delete it.
-                        if (overWrite && File.Exists(saveDirectory + fileName))
+                        //saveDirectory + fileName
+                        if (overWrite && File.Exists(fullPath))
                         {
-                            File.Delete(saveDirectory + fileName);
+                            File.Delete(fullPath);
                         }
                         //If the file to be moved does not exist in the new location, move it there.
                         //This means that duplicate files will not be moved.
-                        if (!File.Exists(saveDirectory + fileName))
+                        if (!File.Exists(fullPath))
                         {
-                            File.Move(filePath, saveDirectory + fileName);
+                            File.Move(filePath, fullPath);
                         }
                     }
                     //throw new ArgumentException();
