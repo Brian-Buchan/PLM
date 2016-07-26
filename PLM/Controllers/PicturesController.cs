@@ -212,8 +212,18 @@ namespace PLM.Controllers
 
             string imgId = Request.Form.Get("imgId");
             string answerId = Request.Form.Get("answerId");
+            string origUrl = Request.Form.Get("origUrl");
+            string imgData = Request.Form.Get("imgData");
+            string imageFormat = "." + imgData.Substring(imgData.IndexOf('/') + 1, imgData.IndexOf(';'));
 
-            string result = SaveImage(Request.Form.Get("imgData"), imgId, answerId);
+            if (imageFormat != Path.GetExtension(origUrl))
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.InternalServerError,
+                    "The selected image format is not the same as the original image format." +
+                    "\nPlease select the other image format.");
+            }
+
+            string result = SaveImage(imgData, imgId, answerId);
             
             if (result == "FAILED")
             {
@@ -222,7 +232,7 @@ namespace PLM.Controllers
             }
             else if (result=="TOO LARGE")
             {
-                return new HttpStatusCodeResult(HttpStatusCode.RequestEntityTooLarge, 
+                return new HttpStatusCodeResult(HttpStatusCode.InternalServerError, 
                 "Image file size larger than 200 KB. \nTry lowering the quality when you save," + 
                 " \nor resize the image to a smaller size.");
             }
@@ -274,6 +284,8 @@ namespace PLM.Controllers
             tempUrl = HttpUtility.HtmlDecode(tempUrl);
             string temporaryFileName = Path.GetFileName(tempUrl);
             //string newFileName = Path.GetFileNameWithoutExtension(origUrl);
+
+
 
             string result = PermaSave(temporaryFileName, origUrl);
 

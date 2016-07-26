@@ -143,17 +143,18 @@ namespace PLM
                     if (File.Exists(filePath))
                     {
                         fileName = Path.GetFileName(filePath);
-
+                        var fullPath = Path.Combine(saveDirectory, fileName);
                         //if the overwrite flag is set to true and the file exists in the new directory, delete it.
-                        if (overWrite && File.Exists(saveDirectory + fileName))
+                        //saveDirectory + fileName
+                        if (overWrite && File.Exists(fullPath))
                         {
-                            File.Delete(saveDirectory + fileName);
+                            File.Delete(fullPath);
                         }
                         //If the file to be moved does not exist in the new location, move it there.
                         //This means that duplicate files will not be moved.
-                        if (!File.Exists(saveDirectory + fileName))
+                        if (!File.Exists(fullPath))
                         {
-                            File.Move(filePath, saveDirectory + fileName);
+                            File.Move(filePath, fullPath);
                         }
                     }
                     //throw new ArgumentException();
