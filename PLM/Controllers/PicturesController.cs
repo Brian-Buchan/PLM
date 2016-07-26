@@ -474,7 +474,7 @@ namespace PLM.Controllers
                 //or removed some or all elements from the filesMove array
                 return "BAD MOVE DURING TRANSFER";
             }
-
+            //REPLACE %20 with SPACE in FILENAME BEFORE SAVING
             if (FileManipExtensions.MoveSpecificFiles(filesMove, newDirPath, true))
             {
                 return "SAVED";

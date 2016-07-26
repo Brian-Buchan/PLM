@@ -74,7 +74,7 @@ namespace PLM
                 if (File.Exists(filePath))
                 {
                     //throw new ArgumentException(possibleFilePath);
-                    //File.Copy(filePath, possibleFilePath, overWrite);
+                    File.Copy(filePath, possibleFilePath, overWrite);
                     //File.SetAttributes(possibleFilePath, FileAttributes.Normal);
                 }   
             }
@@ -127,6 +127,7 @@ namespace PLM
         /// <returns>bool</returns>
         public static bool MoveSpecificFiles(string[] filePaths, string saveDirectory, bool overWrite = false)
         {
+            //REPLACE %20 with SPACE in FILENAME BEFORE SAVING
             //If the directory doesn't exist, error out.
             if (!Directory.Exists(saveDirectory))
             {
@@ -155,10 +156,12 @@ namespace PLM
                             File.Move(filePath, saveDirectory + fileName);
                         }
                     }
+                    //throw new ArgumentException();
                 }
             }
             catch (Exception)
             {
+                //check = saveDirectory + " " + Path.GetFileName(filePaths[0]);
                 return false;
             }
             return true;

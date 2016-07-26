@@ -82,10 +82,10 @@ namespace PLM.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult SaveProfilePicture(string id)
+        public ActionResult SaveProfilePicture(string userID)
         {
-            ApplicationUser user = db.Users.Find(id);
-            user.ProfilePicture = SaveUploadedFileProfile(id);
+            ApplicationUser user = db.Users.Find(userID);
+            user.ProfilePicture = SaveUploadedFileProfile(userID);
             db.SaveChanges();
             return RedirectToAction("Index");
         }
