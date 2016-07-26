@@ -43,6 +43,8 @@ namespace PLM.Controllers
             {
                 modules = modules.Where(m => m.CategoryId == filterParam).ToList();
             }
+
+            ViewBag.filterParam = filterParam;
             //var query = (db.Modules
             //            .GroupBy(p => new
             //            {
