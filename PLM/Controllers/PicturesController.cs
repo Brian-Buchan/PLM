@@ -19,6 +19,8 @@ namespace PLM.Controllers
     public class PicturesController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
+        private bool incorrectImageType = false;
+        private bool imageSizeTooLarge = false;
 
         // GET: /Pictures/
         public ActionResult Index()
@@ -71,7 +73,6 @@ namespace PLM.Controllers
                 picture.Answer = db.Answers
                     .Where(a => a.AnswerID == id)
                     .ToList().First();
-                //picture.Attribution = attribution;
 
                 picture.AnswerID = (int)id;
 
@@ -80,16 +81,20 @@ namespace PLM.Controllers
 
                 var location = SaveUploadedFile(picture);
          
-                if (location == "")
+                if (location == "FAILED")
                 {
-                    //error
+                    if (imageSizeTooLarge || incorrectImageType)
+                    {
+                        RedirectToAction("InvalidImage", new { controller = "Answers", id = picture.AnswerID });
+                }
+                    RedirectToAction("UploadError", new { controller = "Answers", id = picture.AnswerID });
                 }
                 else
                 {
                     picture.Location = location;
+                    db.SaveChanges();
                 }
 
-                db.SaveChanges();
                 return RedirectToAction("edit", new { controller = "Answers", id = picture.AnswerID });
             }
 
@@ -121,7 +126,7 @@ namespace PLM.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [AuthorizeOrRedirectAttribute(Roles = "Instructor")]
-        public ActionResult Edit([Bind(Include = "PictureID,Location,AnswerID")] Picture picture)
+        public ActionResult Edit([Bind(Include = "PictureID,Location,AnswerID,Attribution")] Picture picture)
         {
             if (ModelState.IsValid)
             {
@@ -161,7 +166,7 @@ namespace PLM.Controllers
             db.Pictures.Remove(picture);
             db.SaveChanges();
             System.IO.File.Delete(picture.Location);
-            return RedirectToAction("edit", new { controller = "Answers", id = picture.AnswerID});
+            return RedirectToAction("edit", new { controller = "Answers", id = picture.AnswerID });
         }
 
         #region From Image Editor
@@ -230,7 +235,7 @@ namespace PLM.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.InternalServerError,
                         "Something went wrong with your request. \nContact an administrator.");
             }
-            else if (result=="TOO LARGE")
+            else if (result == "TOO LARGE")
             {
                 return new HttpStatusCodeResult(HttpStatusCode.InternalServerError, 
                 "Image file size larger than 200 KB. \nTry lowering the quality when you save," + 
@@ -289,7 +294,7 @@ namespace PLM.Controllers
 
             string result = PermaSave(temporaryFileName, origUrl);
 
-            return RedirectToAction("Index", "Home", new {actResult = result });
+            return RedirectToAction("Index", "Home", new { actResult = result });
         }
 
         [HttpPost]
@@ -531,8 +536,10 @@ namespace PLM.Controllers
         [NonAction]
         public string SaveUploadedFile(Picture picture)
         {
+            imageSizeTooLarge = false;
+            incorrectImageType = false;
+            bool isSavedSuccessfully = false;
             Session["upload"] = picture.Answer.Module.Name;
-            bool isSavedSuccessfully = true;
             string fName = "";
             string path = "";
             string relpath = "";
@@ -545,9 +552,15 @@ namespace PLM.Controllers
                     picture.Answer.PictureCount++;
                     if (file.ContentLength >= 10971520)
                     {
-                        RedirectToAction("InvalidImage","Pictures");
-                    }else if(!((file.ContentType=="image/jpeg")||(file.ContentType=="image/bmp")||(file.ContentType=="image/png"))){
-                        RedirectToAction("InvalidImage","Pictures");
+                        //File To Big
+                        imageSizeTooLarge = true;
+                        isSavedSuccessfully = false;
+                    }
+                    else if (!((file.ContentType == "image/jpeg") || (file.ContentType == "image/jpg") || (file.ContentType == "image/png")))
+                    {
+                        //File Incorrect Type
+                        incorrectImageType = true;
+                        isSavedSuccessfully = false;
                     }
                     else
                     {
@@ -562,18 +575,13 @@ namespace PLM.Controllers
                             // Saves the file through the HttpPostedFileBase class
                             file.SaveAs(path);
                             string filetype = Path.GetExtension(path);
-                            if ((filetype == ".bmp") || (filetype == ".jpg") || (filetype == ".jpeg") || (filetype == ".png"))
-                            {
-                                // Then renames that image to the correct name based off the answer
-                                // And number of picturs per answer, then deletes the old picture
                                 string newfName = (picture.Answer.AnswerString + "-" + picture.Answer.PictureCount.ToString() + filetype);
                                 relpath = (moduleDirectory + newfName);
                                 System.IO.File.Copy(path, relpath);
                                 System.IO.File.Delete(path);
 
                                 db.SaveChanges();
-                            }
-                            else RedirectToAction("InvalidImage", "Pictures");
+                            isSavedSuccessfully = true;
                         }
                     }
                 }
@@ -581,7 +589,6 @@ namespace PLM.Controllers
             catch (Exception ex)
             {
                 isSavedSuccessfully = false;
-                
             }
 
             if (isSavedSuccessfully)

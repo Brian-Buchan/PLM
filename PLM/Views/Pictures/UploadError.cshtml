@@ -1,6 +1,6 @@
 ﻿@model PLM.Picture
 @{
-    ViewBag.Title = "Invalid Image";
+    ViewBag.Title = "Upload Error";
 }
 
 <section id="page-breadcrumb">
@@ -16,7 +16,7 @@
         </div>
     </div>
 </section>
-The Image may be too big, or of an invalid format(.jpg .jpeg .png are allowed types)
+There was an error uploading the image to the database. If this error continues, please contact the administrator.
 
 @using (Html.BeginForm())
 {
