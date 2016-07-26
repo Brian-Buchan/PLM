@@ -277,9 +277,34 @@ namespace PLM.Controllers
             {
                 string[] stringToSend = new string[3];
                 ApplicationUser player = db.Users.Find(top10score.UserID);
+                try
+                {
+
                 stringToSend[0] = (player.FirstName + ", " + player.LastName[0]);
+                }
+                catch
+                {
+                    stringToSend[0] = "Error";
+                }
+                try
+                {
+
                 stringToSend[1] = (top10score.CorrectAnswers + " out of " + top10score.TotalAnswers);
+                }
+                catch
+                {
+                    stringToSend[1] = "Error";
+                }
+                try
+                {
+
                 stringToSend[2] = top10score.TimeStamp.ToLongDateString();
+                 }
+                catch
+                {
+                    stringToSend[2] = "Error";
+                }
+
                 scoresToSend.Add(stringToSend);
             }
             ViewBag.Top10Scores = scoresToSend;
