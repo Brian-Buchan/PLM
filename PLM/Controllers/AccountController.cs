@@ -248,8 +248,8 @@ namespace PLM.Controllers
                 user.UserName = userModel.UserName;
                 
 
-                PasswordHasher ph = new PasswordHasher();
-                user.PasswordHash = ph.HashPassword(userModel.Password);
+                //PasswordHasher ph = new PasswordHasher();
+                //user.PasswordHash = ph.HashPassword(userModel.Password);
 
                 db.Entry(user).State = EntityState.Modified;
                 db.SaveChanges();

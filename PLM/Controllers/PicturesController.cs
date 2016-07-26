@@ -63,7 +63,7 @@ namespace PLM.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [AuthorizeOrRedirectAttribute(Roles = "Instructor")]
-        public ActionResult Create([Bind(Include = "Attribution,PictureID")] Picture picture, int? id)
+        public ActionResult Create([Bind(Include = "Attribution,PictureID")] Picture picture, int? id) 
         {
             ViewBag.AnswerID = id;
             if (ModelState.IsValid)
@@ -80,14 +80,14 @@ namespace PLM.Controllers
                 db.Pictures.Add(picture);
 
                 var location = SaveUploadedFile(picture);
-
+         
                 if (location == "FAILED")
                 {
                     if (imageSizeTooLarge || incorrectImageType)
                     {
-                        RedirectToAction("InvalidImage", new { controller = "Answers", id = picture.AnswerID });
+                        return RedirectToAction("InvalidImage", new { controller = "Answers", id = picture.AnswerID });
                     }
-                    RedirectToAction("UploadError", new { controller = "Answers", id = picture.AnswerID });
+                    return RedirectToAction("UploadError", new { controller = "Answers", id = picture.AnswerID });
                 }
                 else
                 {
@@ -203,7 +203,7 @@ namespace PLM.Controllers
             }
             return View(picture);
         }
-
+        
         [HttpPost]
         [ActionName("ImageEditor")]
         [AuthorizeOrRedirectAttribute(Roles = "Instructor")]
@@ -217,9 +217,19 @@ namespace PLM.Controllers
 
             string imgId = Request.Form.Get("imgId");
             string answerId = Request.Form.Get("answerId");
+            //string origUrl = Request.Form.Get("origUrl");
+            string imgData = Request.Form.Get("imgData");
+            //string imageFormat = "." + imgData.Substring(imgData.IndexOf('/') + 1, imgData.IndexOf(';'));
 
-            string result = SaveImage(Request.Form.Get("imgData"), imgId, answerId);
+            //if (imageFormat != Path.GetExtension(origUrl))
+            //{
+            //    return new HttpStatusCodeResult(HttpStatusCode.InternalServerError,
+            //        "The selected image format is not the same as the original image format." +
+            //        "\nPlease select the other image format.");
+            //}
 
+            string result = SaveImage(imgData, imgId, answerId);
+            
             if (result == "FAILED")
             {
                 return new HttpStatusCodeResult(HttpStatusCode.InternalServerError,
@@ -227,8 +237,8 @@ namespace PLM.Controllers
             }
             else if (result == "TOO LARGE")
             {
-                return new HttpStatusCodeResult(HttpStatusCode.RequestEntityTooLarge,
-                "Image file size larger than 200 KB. \nTry lowering the quality when you save," +
+                return new HttpStatusCodeResult(HttpStatusCode.InternalServerError, 
+                "Image file size larger than 200 KB. \nTry lowering the quality when you save," + 
                 " \nor resize the image to a smaller size.");
             }
 
@@ -242,7 +252,7 @@ namespace PLM.Controllers
         public ActionResult Confirm()
         {
             ConfirmViewModel model = (ConfirmViewModel)TempData["model"];
-
+            
             //Disallows using back button to return to page after saving or discarding. Does not permit caching.
             //Taken from Kornel at http://stackoverflow.com/questions/49547/making-sure-a-web-page-is-not-cached-across-all-browsers
             Response.Cache.SetCacheability(HttpCacheability.NoCache);  // HTTP 1.1.
@@ -563,12 +573,12 @@ namespace PLM.Controllers
                             // Saves the file through the HttpPostedFileBase class
                             file.SaveAs(path);
                             string filetype = Path.GetExtension(path);
-                            string newfName = (picture.Answer.AnswerString + "-" + picture.Answer.PictureCount.ToString() + filetype);
-                            relpath = (moduleDirectory + newfName);
-                            System.IO.File.Copy(path, relpath);
-                            System.IO.File.Delete(path);
+                                string newfName = (picture.Answer.AnswerString + "-" + picture.Answer.PictureCount.ToString() + filetype);
+                                relpath = (moduleDirectory + newfName);
+                                System.IO.File.Copy(path, relpath);
+                                System.IO.File.Delete(path);
 
-                            db.SaveChanges();
+                                db.SaveChanges();
                             isSavedSuccessfully = true;
                         }
                     }
