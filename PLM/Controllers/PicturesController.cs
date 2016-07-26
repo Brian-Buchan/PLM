@@ -345,6 +345,12 @@ namespace PLM.Controllers
 
                 //gets the image format from the post
                 string imageFormat = imageBase64.Substring(imageBase64.IndexOf('/') + 1, imageBase64.IndexOf(';') - 11);
+                
+                //If the image format is jpeg (which will break the system), 
+                if (imageFormat == "jpeg")
+                {
+                    imageFormat = "jpg";
+                }
 
                 //gets the file data as a Base64 string
                 imageBase64 = imageBase64.Substring(imageBase64.LastIndexOf(',') + 1);
