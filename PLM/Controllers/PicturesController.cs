@@ -225,7 +225,7 @@ namespace PLM.Controllers
             //{
             //    return new HttpStatusCodeResult(HttpStatusCode.InternalServerError,
             //        "The selected image format is not the same as the original image format." +
-            //        "\nPlease select the other image format.");
+            //        " \nPlease select the other image format.");
             //}
 
             string result = SaveImage(imgData, imgId, answerId);
@@ -389,7 +389,7 @@ namespace PLM.Controllers
                     Image image;
                     image = Image.FromStream(ms, true);
 
-                    if (imageFormat == "jpeg")
+                    if (imageFormat == "jpg")
                     {
                         image.Save(dirPath + TempFileName, ImageFormat.Jpeg);
                         image.Dispose();
