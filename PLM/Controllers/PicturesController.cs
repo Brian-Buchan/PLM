@@ -288,11 +288,12 @@ namespace PLM.Controllers
             string tempUrl = Request.Form.Get("tempUrl");
             tempUrl = HttpUtility.HtmlDecode(tempUrl);
             string temporaryFileName = Path.GetFileName(tempUrl);
+            string ansId = Request.Form.Get("answerID");
             //string newFileName = Path.GetFileNameWithoutExtension(origUrl);
 
             string result = PermaSave(temporaryFileName, origUrl);
 
-            return RedirectToAction("Index", "Home", new { actResult = result });
+            return RedirectToAction("Edit", "Answers", new { id = ansId });
         }
 
         [HttpPost]
@@ -310,8 +311,9 @@ namespace PLM.Controllers
             //{
             //    return new HttpStatusCodeResult(HttpStatusCode.OK);
             //}
+            string ansId = Request.Form.Get("answerID");
 
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Edit", "Answers", new { id = ansId });
         }
 
         /// <summary>
