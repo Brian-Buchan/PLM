@@ -271,7 +271,20 @@ namespace PLM.Controllers
             newScore = new Score();
             if (Request.IsAuthenticated)
             {
-            SaveScore(score);
+                if (((UserGameSession)Session["userGameSession"]).currentModule.DefaultNumAnswers == ((UserGameSession)Session["userGameSession"]).numAnswers
+                    && ((UserGameSession)Session["userGameSession"]).currentModule.DefaultNumQuestions == ((UserGameSession)Session["userGameSession"]).numQuestions
+                    && ((UserGameSession)Session["userGameSession"]).currentModule.DefaultTime == ((UserGameSession)Session["userGameSession"]).time)
+                    {
+                        SaveScore(score);
+                    }
+                else
+                {
+                    ViewBag.ErrorMessage = "You must use default settings for your score to save";
+                }
+            
+            }else
+            {
+                ViewBag.ErrorMessage = "You must be logged in for your score to save";
             }
             ViewBag.ModuleID = ((UserGameSession)Session["userGameSession"]).currentModule.ModuleID;
             List<Score> scores = TopTenScore.GetTopTenScores(((UserGameSession)Session["userGameSession"]).currentModule.ModuleID);
