@@ -1314,6 +1314,7 @@
     <Content Include="Views\Account\AccessDenied.cshtml" />
     <Content Include="Views\ModulesEDIT\AdminDelete.cshtml" />
     <Content Include="Views\Home\TemplateStyles.cshtml" />
+    <Content Include="Views\Pictures\UploadError.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

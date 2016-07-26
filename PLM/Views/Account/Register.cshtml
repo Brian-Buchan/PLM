@@ -7,9 +7,13 @@
         //var str = document.getElementById("text-danger").innerHTML;
         //var res = str.replace("Email Field", "Email");
         //document.getElementById("demo").innerHTML = res;
-        var str2 = document.getElementById("top").innerHTML;
-        var txt = str2.replace(/Name \b[A-Z0-9._%+-]+\W[A-Z0-9.-]+\.[A-Z]{2,}\b is already taken./ig, " ");
-        document.getElementById("top").innerHTML = txt;
+        //var divs = document.getElementsByClassName('text-danger');
+        //var uls = divs[0].getElementsByTagName('ul');
+        //var lis = uls[0].getElementsByTagName('li');
+        //var li = lis[0];
+        var li = document.getElementById("top").firstChild.firstChild.innerHTML;
+        var txt = li.replace(/Name \b[A-Z0-9._%+-]+\W[A-Z0-9.-]+\.[A-Z]{2,}\b is already taken./ig, " ");
+        document.getElementById("top").firstChild.firstChild.innerHTML = txt;
     }
     $(document).ready(function () {
         $('#check').click(function () {
@@ -42,9 +46,9 @@
     @Html.AntiForgeryToken()
     <h4>Create a new account.</h4>
     <hr />
-    <span >
-        @Html.ValidationSummary("", new { @class = "text-danger", @onload = "myFunction()", @id = "top"} )
-    </span>
+    <div class="JavascriptTarget">
+        @Html.ValidationSummary("", new { @class = "text-danger", @id = "top"} )
+    </div>
     <div class="form-group"  onload="myFunction()">
             @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
             <div class="col-md-10">
@@ -84,12 +88,12 @@
         <div class="form-group">
             <input type="checkbox" class="checkbox" name="TermsOfUse" value="Accepted" id="check">I accept the <a target="_blank" href="@Url.Action("TOU", "Home")"> Terms Of Use</a>
         </div>
-    <div class="form-group">
+    <div class="form-group" onload="myFunction()">
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" class="btn btn-default" id="btncheck" value="Register" disabled="disabled" />
             </div>
         </div>
-
+        
 }
 
     @section Scripts {
