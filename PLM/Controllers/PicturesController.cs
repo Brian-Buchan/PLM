@@ -83,11 +83,15 @@ namespace PLM.Controllers
 
                 if (location == "FAILED")
                 {
-                    if (imageSizeTooLarge || incorrectImageType)
+                    if (incorrectImageType)
                     {
-                        return RedirectToAction("InvalidImage", new { controller = "Answers", id = picture.AnswerID });
+                        return RedirectToAction("InvalidImage", new { controller = "Pictures", id = picture.AnswerID });
                     }
-                    return RedirectToAction("UploadError", new { controller = "Answers", id = picture.AnswerID });
+                    else if (imageSizeTooLarge)
+                    {
+                        return RedirectToAction("FileToLarge", new { controller = "Pictures", id = picture.AnswerID });
+                    }
+                    return RedirectToAction("UploadError", new { controller = "Pictures", id = picture.AnswerID });
                 }
                 else
                 {
@@ -102,15 +106,24 @@ namespace PLM.Controllers
             return View(picture);
         }
 
-        public ActionResult InvalidImage(int? id)
+        public ActionResult InvalidImage(int id)
         {
+            ViewBag.AnswerID = id;
             return View();
         }
 
-        public ActionResult UploadError(int? id)
+        public ActionResult FileToLarge(int id)
         {
+            ViewBag.AnswerID = id;
             return View();
         }
+
+        public ActionResult UploadError(int id)
+        {
+            ViewBag.AnswerID = id;
+            return View();
+        }
+
         // GET: /Pictures/Edit/5
         [AuthorizeOrRedirectAttribute(Roles = "Instructor")]
         public ActionResult Edit(int? id)
@@ -572,7 +585,7 @@ namespace PLM.Controllers
                     HttpPostedFileBase file = Request.Files[fileName];
                     fName = file.FileName;
                     picture.Answer.PictureCount++;
-                    if (file.ContentLength >= 10971520)
+                    if (file.ContentLength >= 200000)
                     {
                         //File To Big
                         imageSizeTooLarge = true;
@@ -627,14 +640,6 @@ namespace PLM.Controllers
             {
                 return "FAILED";
             }
-        }
-        public ActionResult InvalidImage()
-        {
-            return View();
-        }
-        public ActionResult DropzoneTest()
-        {
-            return View();
         }
     }
 }
