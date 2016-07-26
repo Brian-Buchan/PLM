@@ -100,9 +100,17 @@ namespace PLM.Controllers
 
             ViewBag.AnswerID = new SelectList(db.Answers, "AnswerID", "AnswerString", picture.AnswerID);
             return View(picture);
-
         }
 
+        public ActionResult InvalidImage(int? id)
+        {
+            return View();
+        }
+
+        public ActionResult UploadError(int? id)
+        {
+            return View();
+        }
         // GET: /Pictures/Edit/5
         [AuthorizeOrRedirectAttribute(Roles = "Instructor")]
         public ActionResult Edit(int? id)
@@ -225,7 +233,7 @@ namespace PLM.Controllers
             //{
             //    return new HttpStatusCodeResult(HttpStatusCode.InternalServerError,
             //        "The selected image format is not the same as the original image format." +
-            //        "\nPlease select the other image format.");
+            //        " \nPlease select the other image format.");
             //}
 
             string result = SaveImage(imgData, imgId, answerId);
@@ -288,11 +296,12 @@ namespace PLM.Controllers
             string tempUrl = Request.Form.Get("tempUrl");
             tempUrl = HttpUtility.HtmlDecode(tempUrl);
             string temporaryFileName = Path.GetFileName(tempUrl);
+            string ansId = Request.Form.Get("answerID");
             //string newFileName = Path.GetFileNameWithoutExtension(origUrl);
 
             string result = PermaSave(temporaryFileName, origUrl);
 
-            return RedirectToAction("Index", "Home", new { actResult = result });
+            return RedirectToAction("Edit", "Answers", new { id = ansId });
         }
 
         [HttpPost]
@@ -310,8 +319,9 @@ namespace PLM.Controllers
             //{
             //    return new HttpStatusCodeResult(HttpStatusCode.OK);
             //}
+            string ansId = Request.Form.Get("answerID");
 
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Edit", "Answers", new { id = ansId });
         }
 
         /// <summary>
@@ -389,7 +399,7 @@ namespace PLM.Controllers
                     Image image;
                     image = Image.FromStream(ms, true);
 
-                    if (imageFormat == "jpeg")
+                    if (imageFormat == "jpg")
                     {
                         image.Save(dirPath + TempFileName, ImageFormat.Jpeg);
                         image.Dispose();
@@ -576,8 +586,6 @@ namespace PLM.Controllers
                                 Directory.CreateDirectory(moduleDirectory);
                             }
                             path = moduleDirectory + fName;
-                            // Saves the file through the HttpPostedFileBase class
-                            file.SaveAs(path);
                             string filetype = Path.GetExtension(path);
                             if (filetype == "jpeg")
                             {
@@ -585,6 +593,8 @@ namespace PLM.Controllers
                                 // this will convert jpeg files to jpg files when they get uploaded
                                 filetype = "jpg";
                             }
+                            // Saves the file through the HttpPostedFileBase class
+                            file.SaveAs(path);
                             string newfName = (picture.Answer.AnswerString + "-" + picture.Answer.PictureCount.ToString() + filetype);
                             relpath = (moduleDirectory + newfName);
                             System.IO.File.Copy(path, relpath);
