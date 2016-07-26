@@ -85,9 +85,9 @@ namespace PLM.Controllers
                 {
                     if (imageSizeTooLarge || incorrectImageType)
                     {
-                        RedirectToAction("InvalidImage", new { controller = "Answers", id = picture.AnswerID });
-                }
-                    RedirectToAction("UploadError", new { controller = "Answers", id = picture.AnswerID });
+                        return RedirectToAction("InvalidImage", new { controller = "Answers", id = picture.AnswerID });
+                    }
+                    return RedirectToAction("UploadError", new { controller = "Answers", id = picture.AnswerID });
                 }
                 else
                 {
@@ -152,7 +152,7 @@ namespace PLM.Controllers
                 return HttpNotFound();
             }
 
-            
+
             return View(picture);
         }
 
@@ -289,8 +289,6 @@ namespace PLM.Controllers
             tempUrl = HttpUtility.HtmlDecode(tempUrl);
             string temporaryFileName = Path.GetFileName(tempUrl);
             //string newFileName = Path.GetFileNameWithoutExtension(origUrl);
-
-
 
             string result = PermaSave(temporaryFileName, origUrl);
 
