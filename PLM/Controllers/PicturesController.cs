@@ -63,7 +63,7 @@ namespace PLM.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [AuthorizeOrRedirectAttribute(Roles = "Instructor")]
-        public ActionResult Create([Bind(Include = "Attribution,PictureID")] Picture picture, int? id) 
+        public ActionResult Create([Bind(Include = "Attribution,PictureID")] Picture picture, int? id)
         {
             ViewBag.AnswerID = id;
             if (ModelState.IsValid)
@@ -80,7 +80,7 @@ namespace PLM.Controllers
                 db.Pictures.Add(picture);
 
                 var location = SaveUploadedFile(picture);
-         
+
                 if (location == "FAILED")
                 {
                     if (imageSizeTooLarge || incorrectImageType)
@@ -203,7 +203,7 @@ namespace PLM.Controllers
             }
             return View(picture);
         }
-        
+
         [HttpPost]
         [ActionName("ImageEditor")]
         [AuthorizeOrRedirectAttribute(Roles = "Instructor")]
@@ -229,7 +229,7 @@ namespace PLM.Controllers
             //}
 
             string result = SaveImage(imgData, imgId, answerId);
-            
+
             if (result == "FAILED")
             {
                 return new HttpStatusCodeResult(HttpStatusCode.InternalServerError,
@@ -237,8 +237,8 @@ namespace PLM.Controllers
             }
             else if (result == "TOO LARGE")
             {
-                return new HttpStatusCodeResult(HttpStatusCode.InternalServerError, 
-                "Image file size larger than 200 KB. \nTry lowering the quality when you save," + 
+                return new HttpStatusCodeResult(HttpStatusCode.InternalServerError,
+                "Image file size larger than 200 KB. \nTry lowering the quality when you save," +
                 " \nor resize the image to a smaller size.");
             }
 
@@ -252,7 +252,7 @@ namespace PLM.Controllers
         public ActionResult Confirm()
         {
             ConfirmViewModel model = (ConfirmViewModel)TempData["model"];
-            
+
             //Disallows using back button to return to page after saving or discarding. Does not permit caching.
             //Taken from Kornel at http://stackoverflow.com/questions/49547/making-sure-a-web-page-is-not-cached-across-all-browsers
             Response.Cache.SetCacheability(HttpCacheability.NoCache);  // HTTP 1.1.
@@ -579,12 +579,18 @@ namespace PLM.Controllers
                             // Saves the file through the HttpPostedFileBase class
                             file.SaveAs(path);
                             string filetype = Path.GetExtension(path);
-                                string newfName = (picture.Answer.AnswerString + "-" + picture.Answer.PictureCount.ToString() + filetype);
-                                relpath = (moduleDirectory + newfName);
-                                System.IO.File.Copy(path, relpath);
-                                System.IO.File.Delete(path);
+                            if (filetype == "jpeg")
+                            {
+                                // Had issues with the image editor not accepting jpeg filetypes
+                                // this will convert jpeg files to jpg files when they get uploaded
+                                filetype = "jpg";
+                            }
+                            string newfName = (picture.Answer.AnswerString + "-" + picture.Answer.PictureCount.ToString() + filetype);
+                            relpath = (moduleDirectory + newfName);
+                            System.IO.File.Copy(path, relpath);
+                            System.IO.File.Delete(path);
 
-                                db.SaveChanges();
+                            db.SaveChanges();
                             isSavedSuccessfully = true;
                         }
                     }

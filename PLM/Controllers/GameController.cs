@@ -269,7 +269,10 @@ namespace PLM.Controllers
         public ActionResult Complete(int score)
         {
             newScore = new Score();
+            if (Request.IsAuthenticated)
+            {
             SaveScore(score);
+            }
             ViewBag.ModuleID = ((UserGameSession)Session["userGameSession"]).currentModule.ModuleID;
             List<Score> scores = TopTenScore.GetTopTenScores(((UserGameSession)Session["userGameSession"]).currentModule.ModuleID);
             List<string[]> scoresToSend = new List<string[]>();
