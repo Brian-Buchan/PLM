@@ -67,7 +67,7 @@ namespace PLM.Controllers
         public ActionResult Create([Bind(Include = "Attribution,PictureID")] Picture picture, int? id)
         {
             pictureToSave = new Picture();
-            pictureToSave = picture;
+            pictureToSave.Attribution = picture.Attribution;
             ViewBag.AnswerID = id;
             if (ModelState.IsValid)
             {
@@ -97,6 +97,7 @@ namespace PLM.Controllers
                 else
                 {
                     pictureToSave.Location = location;
+                    pictureToSave.Answer = answer;
                     db.Pictures.Add(pictureToSave);
                     //db.Entry(pictureToSave).State = EntityState.Modified;
                     db.SaveChanges();
@@ -152,14 +153,16 @@ namespace PLM.Controllers
                         //{
                         //    Directory.CreateDirectory(moduleDirectory);
                         //}
-                        path = moduleDirectory + fName;
                         string filetype = Path.GetExtension(path);
-                        if (filetype == "jpeg")
+                        if (filetype == ".jpeg")
                         {
                             // Had issues with the image editor not accepting jpeg filetypes
                             // this will convert jpeg files to jpg files when they get uploaded
-                            filetype = "jpg";
+                            filetype = ".jpg";
                         }
+                        string basefname = Path.GetFileNameWithoutExtension(fName);
+                        fName = basefname + filetype;
+                        path = moduleDirectory + fName;
                         // Saves the file through the HttpPostedFileBase class
                         file.SaveAs(path);
                         string newfName = (answer.AnswerString + "-" + answer.PictureCount.ToString() + filetype);
