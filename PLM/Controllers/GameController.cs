@@ -314,7 +314,7 @@ namespace PLM.Controllers
                 try
                 {
 
-                stringToSend[2] = top10score.TimeStamp.ToLongDateString();
+                stringToSend[2] = top10score.TimeStamp.ToShortDateString();
                  }
                 catch
                 {

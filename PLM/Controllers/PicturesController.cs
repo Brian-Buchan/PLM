@@ -22,6 +22,7 @@ namespace PLM.Controllers
         private bool incorrectImageType = false;
         private bool imageSizeTooLarge = false;
         private Picture pictureToSave;
+        //private Answer currentAnswer;
 
         // GET: /Pictures/
         public ActionResult Index()
@@ -67,11 +68,7 @@ namespace PLM.Controllers
         public ActionResult Create([Bind(Include = "Attribution,PictureID")] Picture picture, int? id)
         {
             pictureToSave = new Picture();
-            Answer answer = db.Answers
-                .Where(a => a.AnswerID == id)
-                .ToList().First();
             pictureToSave.AnswerID = (int)id;
-            pictureToSave.Answer = answer;
             if (picture.Attribution == null)
                 pictureToSave.Attribution = "";
             else
@@ -83,7 +80,7 @@ namespace PLM.Controllers
 
             if (ModelState.IsValid)
             {
-                var location = SaveUploadedFile(pictureToSave, answer);
+                var location = SaveUploadedFile(pictureToSave, (int)id);
 
                 if (location == "FAILED")
                 {
@@ -117,12 +114,21 @@ namespace PLM.Controllers
         /// <param name="picture">The picture object to be saved</param>
         /// <returns>string</returns>
         [NonAction]
-        public string SaveUploadedFile(Picture picture, Answer answer)
+        public string SaveUploadedFile(Picture picture, int id)
         {
             imageSizeTooLarge = false;
             incorrectImageType = false;
             bool isSavedSuccessfully = false;
-            Session["upload"] = answer.Module.GetModuleDirectory();
+            int picCount;
+            string answerString;
+            using (ApplicationDbContext db2 = new ApplicationDbContext())
+            {
+                Session["upload"] = db2.Answers.Find(id).Module.GetModuleDirectory();
+                answerString = db2.Answers.Find(id).AnswerString;
+                picCount = db2.Answers.Find(id).PictureCount;
+                picCount++;
+                db2.SaveChanges();
+            }
             string fName = "";
             string path = "";
             string relpath = "";
@@ -132,7 +138,6 @@ namespace PLM.Controllers
             {
                 HttpPostedFileBase file = Request.Files[fileName];
                 fName = file.FileName;
-                //picture.Answer.PictureCount++;
                 if (file.ContentLength >= 200000)
                 {
                     //File To Big
@@ -166,7 +171,7 @@ namespace PLM.Controllers
                         path = moduleDirectory + fName;
                         // Saves the file through the HttpPostedFileBase class
                         file.SaveAs(path);
-                        string newfName = (answer.AnswerString + "-" + answer.PictureCount.ToString() + filetype);
+                        string newfName = (answerString + "-" + picCount.ToString() + filetype);
                         relpath = (moduleDirectory + newfName);
                         System.IO.File.Copy(path, relpath);
                         System.IO.File.Delete(path);

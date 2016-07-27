@@ -48,7 +48,7 @@
         <div id="container">
             @*<div class="helper">*@
                 <img onerror="this.src='/Content/Images/Error.bmp';" @*id="picture"*@ 
-                     style="max-height:480px;max-width:640px;" src="@Model.ImageURL" 
+                     style="max-height:480px;max-width:640px;background-size:contain" src="@Model.ImageURL"  
                     @*onload="fixAspect(this)"*@ title="Image Courtesy of @Model.Attribution" />
             @*</div>*@
 
