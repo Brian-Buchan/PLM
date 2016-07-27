@@ -67,19 +67,22 @@ namespace PLM.Controllers
         public ActionResult Create([Bind(Include = "Attribution,PictureID")] Picture picture, int? id)
         {
             pictureToSave = new Picture();
-            pictureToSave.Attribution = picture.Attribution;
+            Answer answer = db.Answers
+                .Where(a => a.AnswerID == id)
+                .ToList().First();
+            pictureToSave.AnswerID = (int)id;
+            pictureToSave.Answer = answer;
+            if (picture.Attribution == null)
+                pictureToSave.Attribution = "";
+            else
+                pictureToSave.Attribution = picture.Attribution;
+            db.Pictures.Add(pictureToSave);
+            db.SaveChanges();
+
             ViewBag.AnswerID = id;
+
             if (ModelState.IsValid)
             {
-                //pictureToSave.Answer= db.Answers
-                //    .Where(a => a.AnswerID == id)
-                //    .ToList().First();
-
-                Answer answer = db.Answers
-                    .Where(a => a.AnswerID == id)
-                    .ToList().First();
-
-                pictureToSave.AnswerID = (int)id;
                 var location = SaveUploadedFile(pictureToSave, answer);
 
                 if (location == "FAILED")
@@ -97,9 +100,7 @@ namespace PLM.Controllers
                 else
                 {
                     pictureToSave.Location = location;
-                    pictureToSave.Answer = answer;
-                    db.Pictures.Add(pictureToSave);
-                    //db.Entry(pictureToSave).State = EntityState.Modified;
+                    db.Entry(pictureToSave).State = EntityState.Modified;
                     db.SaveChanges();
                 }
 
@@ -153,7 +154,7 @@ namespace PLM.Controllers
                         //{
                         //    Directory.CreateDirectory(moduleDirectory);
                         //}
-                        string filetype = Path.GetExtension(path);
+                        string filetype = Path.GetExtension(fName);
                         if (filetype == ".jpeg")
                         {
                             // Had issues with the image editor not accepting jpeg filetypes
