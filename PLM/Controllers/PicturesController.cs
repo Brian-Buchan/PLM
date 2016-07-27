@@ -68,8 +68,8 @@ namespace PLM.Controllers
             ViewBag.AnswerID = id;
             if (ModelState.IsValid)
             {
-                //db.Entry(picture).State = EntityState.Modified;
-                picture = new Picture();
+                db.Entry(picture).State = EntityState.Modified;
+                //picture = new Picture();
                 picture.Answer = db.Answers
                     .Where(a => a.AnswerID == id)
                     .ToList().First();
@@ -238,21 +238,29 @@ namespace PLM.Controllers
 
             string imgId = Request.Form.Get("imgId");
             string answerId = Request.Form.Get("answerId");
-            //string origUrl = Request.Form.Get("origUrl");
+            string origUrl = Request.Form.Get("origUrl");
             string imgData = Request.Form.Get("imgData");
-            //string imageFormat = "." + imgData.Substring(imgData.IndexOf('/') + 1, imgData.IndexOf(';'));
+            string imageFormat = "." + imgData.Substring(imgData.IndexOf('/') + 1, imgData.IndexOf(';'));
 
-            //if (imageFormat == ".jpeg")
-            //{
-            //    imageFormat = ".jpg";
-            //}
+            if (imageFormat == ".jpeg")
+            {
+                imageFormat = ".jpg";
+            }
 
-            //if (imageFormat != Path.GetExtension(origUrl))
-            //{
-            //    return new HttpStatusCodeResult(HttpStatusCode.InternalServerError,
-            //        "The selected image format is not the same as the original image format." +
-            //        " \nPlease select the other image format.");
-            //}
+            try
+            {
+                if (imageFormat != Path.GetExtension(origUrl))
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.InternalServerError,
+                        "The selected image format is not the same as the original image format." +
+                        " \nPlease select the other image format.");
+                }
+            }
+            catch (ArgumentException e)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.InternalServerError, e.Message);
+            }
+            
 
             string result = SaveImage(imgData, imgId, answerId);
 
@@ -575,13 +583,13 @@ namespace PLM.Controllers
             string fName = "";
             string path = "";
             string relpath = "";
-            try
-            {
+            //try
+            //{
                 foreach (string fileName in Request.Files)
                 {
                     HttpPostedFileBase file = Request.Files[fileName];
                     fName = file.FileName;
-                    picture.Answer.PictureCount++;
+                    //picture.Answer.PictureCount++;
                     if (file.ContentLength >= 200000)
                     {
                         //File To Big
@@ -623,11 +631,11 @@ namespace PLM.Controllers
                         }
                     }
                 }
-            }
-            catch (Exception ex)
-            {
-                isSavedSuccessfully = false;
-            }
+            //}
+            //catch (Exception ex)
+            //{
+            //    isSavedSuccessfully = false;
+            //}
 
             if (isSavedSuccessfully)
             {
