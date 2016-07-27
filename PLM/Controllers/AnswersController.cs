@@ -59,7 +59,7 @@ namespace PLM.Controllers
                                          select a).ToList();
 
             }
-            catch(Exception)
+            catch (Exception)
             {
                 ViewBag.Error = "You cannot add duplicate answers";
             }
@@ -77,19 +77,19 @@ namespace PLM.Controllers
         {
             try
             {
-            if (ModelState.IsValid)
-            {
-                db.Answers.Add(answer);
-                db.SaveChanges();
-                return RedirectToAction("Create", new {id = answer.ModuleID });
+                if (ModelState.IsValid)
+                {
+                    db.Answers.Add(answer);
+                    db.SaveChanges();
+                    return RedirectToAction("Create", new { id = answer.ModuleID });
+                }
             }
-            }
-            catch(Exception)
+            catch (Exception)
             {
-                
+
             }
             //answer.Module = db.Modules.Find(answer.ModuleID);
-            return RedirectToAction("Create", new { error= "You cannot add duplicate answers" });
+            return RedirectToAction("Create", new { error = "You cannot add duplicate answers" });
         }
 
         // GET: /Answers/Edit/5
@@ -135,8 +135,8 @@ namespace PLM.Controllers
             return View(answer);
         }
 
-        
-        
+
+
         // GET: /Answers/Delete/5
         [AuthorizeOrRedirectAttribute(Roles = "Instructor")]
         public ActionResult Delete(int? id)
@@ -162,7 +162,7 @@ namespace PLM.Controllers
             Answer answer = db.Answers.Find(id);
 
             DirectoryHandler.DeleteAnswer(id);
-            return RedirectToAction("edit", new { controller = "ModulesEdit", id = answer.ModuleID});
+            return RedirectToAction("edit", new { controller = "ModulesEdit", id = answer.ModuleID });
         }
 
         protected override void Dispose(bool disposing)
@@ -172,6 +172,6 @@ namespace PLM.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
-        }       
+        }
     }
 }

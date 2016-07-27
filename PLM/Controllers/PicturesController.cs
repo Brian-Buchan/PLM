@@ -67,16 +67,20 @@ namespace PLM.Controllers
         public ActionResult Create([Bind(Include = "Attribution,PictureID")] Picture picture, int? id)
         {
             pictureToSave = new Picture();
-            pictureToSave = picture;
+            pictureToSave.Attribution = picture.Attribution;
             ViewBag.AnswerID = id;
             if (ModelState.IsValid)
             {
-                pictureToSave.Answer= db.Answers
+                //pictureToSave.Answer= db.Answers
+                //    .Where(a => a.AnswerID == id)
+                //    .ToList().First();
+
+                Answer answer = db.Answers
                     .Where(a => a.AnswerID == id)
                     .ToList().First();
 
                 pictureToSave.AnswerID = (int)id;
-                var location = SaveUploadedFile(pictureToSave);
+                var location = SaveUploadedFile(pictureToSave, answer);
 
                 if (location == "FAILED")
                 {
@@ -93,6 +97,7 @@ namespace PLM.Controllers
                 else
                 {
                     pictureToSave.Location = location;
+                    pictureToSave.Answer = answer;
                     db.Pictures.Add(pictureToSave);
                     //db.Entry(pictureToSave).State = EntityState.Modified;
                     db.SaveChanges();
@@ -103,6 +108,87 @@ namespace PLM.Controllers
 
             ViewBag.AnswerID = new SelectList(db.Answers, "AnswerID", "AnswerString", pictureToSave.AnswerID);
             return View(pictureToSave);
+        }
+
+        /// <summary>
+        /// Save a picture to the server. Returns the relative path if successful, otherwise returns "FAILED"
+        /// </summary>
+        /// <param name="picture">The picture object to be saved</param>
+        /// <returns>string</returns>
+        [NonAction]
+        public string SaveUploadedFile(Picture picture, Answer answer)
+        {
+            imageSizeTooLarge = false;
+            incorrectImageType = false;
+            bool isSavedSuccessfully = false;
+            Session["upload"] = answer.Module.GetModuleDirectory();
+            string fName = "";
+            string path = "";
+            string relpath = "";
+            //try
+            //{
+            foreach (string fileName in Request.Files)
+            {
+                HttpPostedFileBase file = Request.Files[fileName];
+                fName = file.FileName;
+                //picture.Answer.PictureCount++;
+                if (file.ContentLength >= 200000)
+                {
+                    //File To Big
+                    imageSizeTooLarge = true;
+                    isSavedSuccessfully = false;
+                }
+                else if (!((file.ContentType == "image/jpeg") || (file.ContentType == "image/jpg") || (file.ContentType == "image/png")))
+                {
+                    //File Incorrect Type
+                    incorrectImageType = true;
+                    isSavedSuccessfully = false;
+                }
+                else
+                {
+                    if (file != null && file.ContentLength > 0)
+                    {
+                        string moduleDirectory = (DevPro.baseFileDirectory + "PLM/" + Session["upload"].ToString() + "/");
+                        //if (!Directory.Exists(moduleDirectory))
+                        //{
+                        //    Directory.CreateDirectory(moduleDirectory);
+                        //}
+                        string filetype = Path.GetExtension(path);
+                        if (filetype == ".jpeg")
+                        {
+                            // Had issues with the image editor not accepting jpeg filetypes
+                            // this will convert jpeg files to jpg files when they get uploaded
+                            filetype = ".jpg";
+                        }
+                        string basefname = Path.GetFileNameWithoutExtension(fName);
+                        fName = basefname + filetype;
+                        path = moduleDirectory + fName;
+                        // Saves the file through the HttpPostedFileBase class
+                        file.SaveAs(path);
+                        string newfName = (answer.AnswerString + "-" + answer.PictureCount.ToString() + filetype);
+                        relpath = (moduleDirectory + newfName);
+                        System.IO.File.Copy(path, relpath);
+                        System.IO.File.Delete(path);
+
+                        //db.SaveChanges();
+                        isSavedSuccessfully = true;
+                    }
+                }
+            }
+            //}
+            //catch (Exception ex)
+            //{
+            //    isSavedSuccessfully = false;
+            //}
+
+            if (isSavedSuccessfully)
+            {
+                return relpath;
+            }
+            else
+            {
+                return "FAILED";
+            }
         }
 
         public ActionResult InvalidImage(int id)
@@ -237,31 +323,31 @@ namespace PLM.Controllers
 
             string imgId = Request.Form.Get("imgId");
             string answerId = Request.Form.Get("answerId");
-            string origUrl = Request.Form.Get("origUrl");
+            //string origUrl = Request.Form.Get("origUrl");
             string imgData = Request.Form.Get("imgData");
-            string imageFormat = "." + imgData.Substring(imgData.IndexOf('/') + 1, imgData.IndexOf(';'));
+            //string imageFormat = "." + imgData.Substring(imgData.IndexOf('/') + 1, imgData.IndexOf(';'));
 
-            if (imageFormat == ".jpeg")
-            {
-                imageFormat = ".jpg";
-            }
+            //if (imageFormat == ".jpeg")
+            //{
+            //    imageFormat = ".jpg";
+            //}
 
-            origUrl = origUrl.Substring(origUrl.Length - 5);
+            ////origUrl = ;
 
-            try
-            {
-                if (imageFormat != Path.GetExtension(origUrl))
-                {
-                    return new HttpStatusCodeResult(HttpStatusCode.InternalServerError,
-                        "The selected image format is not the same as the original image format." +
-                        " \nPlease select the other image format.");
-                }
-            }
-            catch (ArgumentException e)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.InternalServerError, e.Message);
-            }
-            
+            //try
+            //{
+            //    if (imageFormat != Path.GetExtension(origUrl))
+            //    {
+            //        return new HttpStatusCodeResult(HttpStatusCode.InternalServerError,
+            //            "The selected image format is not the same as the original image format." +
+            //            " \nPlease select the other image format.");
+            //    }
+            //}
+            //catch (ArgumentException e)
+            //{
+            //    return new HttpStatusCodeResult(HttpStatusCode.InternalServerError, e.Message);
+            //}
+
 
             string result = SaveImage(imgData, imgId, answerId);
 
@@ -382,7 +468,7 @@ namespace PLM.Controllers
 
                 //gets the image format from the post
                 string imageFormat = imageBase64.Substring(imageBase64.IndexOf('/') + 1, imageBase64.IndexOf(';') - 11);
-                
+
                 //If the image format is jpeg (which will break the system), 
                 if (imageFormat == "jpeg")
                 {
@@ -567,85 +653,6 @@ namespace PLM.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
-        }
-
-        /// <summary>
-        /// Save a picture to the server. Returns the relative path if successful, otherwise returns "FAILED"
-        /// </summary>
-        /// <param name="picture">The picture object to be saved</param>
-        /// <returns>string</returns>
-        [NonAction]
-        public string SaveUploadedFile(Picture picture)
-        {
-            imageSizeTooLarge = false;
-            incorrectImageType = false;
-            bool isSavedSuccessfully = false;
-            Session["upload"] = picture.Answer.AnswerString;
-            string fName = "";
-            string path = "";
-            string relpath = "";
-            //try
-            //{
-                foreach (string fileName in Request.Files)
-                {
-                    HttpPostedFileBase file = Request.Files[fileName];
-                    fName = file.FileName;
-                    //picture.Answer.PictureCount++;
-                    if (file.ContentLength >= 200000)
-                    {
-                        //File To Big
-                        imageSizeTooLarge = true;
-                        isSavedSuccessfully = false;
-                    }
-                    else if (!((file.ContentType == "image/jpeg") || (file.ContentType == "image/jpg") || (file.ContentType == "image/png")))
-                    {
-                        //File Incorrect Type
-                        incorrectImageType = true;
-                        isSavedSuccessfully = false;
-                    }
-                    else
-                    {
-                        if (file != null && file.ContentLength > 0)
-                        {
-                            string moduleDirectory = (DevPro.baseFileDirectory + "PLM/" + Session["upload"].ToString() + "/");
-                            if (!Directory.Exists(moduleDirectory))
-                            {
-                                Directory.CreateDirectory(moduleDirectory);
-                            }
-                            path = moduleDirectory + fName;
-                            string filetype = Path.GetExtension(path);
-                            if (filetype == "jpeg")
-                            {
-                                // Had issues with the image editor not accepting jpeg filetypes
-                                // this will convert jpeg files to jpg files when they get uploaded
-                                filetype = "jpg";
-                            }
-                            // Saves the file through the HttpPostedFileBase class
-                            file.SaveAs(path);
-                            string newfName = (picture.Answer.AnswerString + "-" + picture.Answer.PictureCount.ToString() + filetype);
-                            relpath = (moduleDirectory + newfName);
-                            System.IO.File.Copy(path, relpath);
-                            System.IO.File.Delete(path);
-
-                            //db.SaveChanges();
-                            isSavedSuccessfully = true;
-                        }
-                    }
-                }
-            //}
-            //catch (Exception ex)
-            //{
-            //    isSavedSuccessfully = false;
-            //}
-
-            if (isSavedSuccessfully)
-            {
-                return relpath;
-            }
-            else
-            {
-                return "FAILED";
-            }
         }
     }
 }

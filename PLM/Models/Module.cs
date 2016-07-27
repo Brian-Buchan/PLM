@@ -18,6 +18,11 @@ namespace PLM
         [MaxLength(25)]
         public string Name { get; set; }
 
+        public string GetModuleDirectory()
+        {
+            return (Name + ModuleID).ToString();
+        }
+
         [MaxLength(200)]
         public string Description { get; set; }
         [Required]
