@@ -98,7 +98,7 @@ namespace PLM.Controllers
         {
             Response.Cache.SetCacheability(HttpCacheability.NoCache);
             Response.AppendHeader("Pragma", "no-cache"); // HTTP 1.0.
-            Response.AppendHeader("Expires", "0"); // Proxies.
+            Response.AppendHeader("Expires", "-1"); // Proxies.
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
