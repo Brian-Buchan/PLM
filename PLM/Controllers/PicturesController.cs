@@ -21,6 +21,7 @@ namespace PLM.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
         private bool incorrectImageType = false;
         private bool imageSizeTooLarge = false;
+        private Picture pictureToSave;
 
         // GET: /Pictures/
         public ActionResult Index()
@@ -65,59 +66,67 @@ namespace PLM.Controllers
         [AuthorizeOrRedirectAttribute(Roles = "Instructor")]
         public ActionResult Create([Bind(Include = "Attribution,PictureID")] Picture picture, int? id)
         {
+            pictureToSave = new Picture();
+            pictureToSave = picture;
             ViewBag.AnswerID = id;
             if (ModelState.IsValid)
             {
-                //db.Entry(picture).State = EntityState.Modified;
-                picture = new Picture();
-                picture.Answer = db.Answers
+                pictureToSave.Answer= db.Answers
                     .Where(a => a.AnswerID == id)
                     .ToList().First();
 
-                picture.AnswerID = (int)id;
-
-                picture.Location = "";
-                db.Pictures.Add(picture);
-
-                var location = SaveUploadedFile(picture);
+                pictureToSave.AnswerID = (int)id;
+                var location = SaveUploadedFile(pictureToSave);
 
                 if (location == "FAILED")
                 {
-                    if (imageSizeTooLarge || incorrectImageType)
+                    if (incorrectImageType)
                     {
-                        return RedirectToAction("InvalidImage", new { controller = "Answers", id = picture.AnswerID });
+                        return RedirectToAction("InvalidImage", new { controller = "Pictures", id = pictureToSave.AnswerID });
                     }
-                    return RedirectToAction("UploadError", new { controller = "Answers", id = picture.AnswerID });
+                    else if (imageSizeTooLarge)
+                    {
+                        return RedirectToAction("FileToLarge", new { controller = "Pictures", id = pictureToSave.AnswerID });
+                    }
+                    return RedirectToAction("UploadError", new { controller = "Pictures", id = pictureToSave.AnswerID });
                 }
                 else
                 {
-                    picture.Location = location;
+                    pictureToSave.Location = location;
+                    db.Pictures.Add(pictureToSave);
+                    //db.Entry(pictureToSave).State = EntityState.Modified;
                     db.SaveChanges();
                 }
 
-                return RedirectToAction("edit", new { controller = "Answers", id = picture.AnswerID });
+                return RedirectToAction("edit", new { controller = "Answers", id = pictureToSave.AnswerID });
             }
 
-            ViewBag.AnswerID = new SelectList(db.Answers, "AnswerID", "AnswerString", picture.AnswerID);
-            return View(picture);
+            ViewBag.AnswerID = new SelectList(db.Answers, "AnswerID", "AnswerString", pictureToSave.AnswerID);
+            return View(pictureToSave);
         }
 
-        public ActionResult InvalidImage(int? id)
+        public ActionResult InvalidImage(int id)
         {
+            ViewBag.AnswerID = id;
             return View();
         }
 
-        public ActionResult UploadError(int? id)
+        public ActionResult FileToLarge(int id)
         {
+            ViewBag.AnswerID = id;
             return View();
         }
+
+        public ActionResult UploadError(int id)
+        {
+            ViewBag.AnswerID = id;
+            return View();
+        }
+
         // GET: /Pictures/Edit/5
         [AuthorizeOrRedirectAttribute(Roles = "Instructor")]
         public ActionResult Edit(int? id)
         {
-            Response.Cache.SetCacheability(HttpCacheability.NoCache);
-            Response.AppendHeader("Pragma", "no-cache"); // HTTP 1.0.
-            Response.AppendHeader("Expires", "0"); // Proxies.
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -237,12 +246,22 @@ namespace PLM.Controllers
                 imageFormat = ".jpg";
             }
 
-            if (imageFormat != Path.GetExtension(origUrl))
+            origUrl = origUrl.Substring(origUrl.Length - 5);
+
+            try
             {
-                return new HttpStatusCodeResult(HttpStatusCode.InternalServerError,
-                    "The selected image format is not the same as the original image format." +
-                    " \nPlease select the other image format.");
+                if (imageFormat != Path.GetExtension(origUrl))
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.InternalServerError,
+                        "The selected image format is not the same as the original image format." +
+                        " \nPlease select the other image format.");
+                }
             }
+            catch (ArgumentException e)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.InternalServerError, e.Message);
+            }
+            
 
             string result = SaveImage(imgData, imgId, answerId);
 
@@ -561,18 +580,18 @@ namespace PLM.Controllers
             imageSizeTooLarge = false;
             incorrectImageType = false;
             bool isSavedSuccessfully = false;
-            Session["upload"] = picture.Answer.Module.Name;
+            Session["upload"] = picture.Answer.AnswerString;
             string fName = "";
             string path = "";
             string relpath = "";
-            try
-            {
+            //try
+            //{
                 foreach (string fileName in Request.Files)
                 {
                     HttpPostedFileBase file = Request.Files[fileName];
                     fName = file.FileName;
-                    picture.Answer.PictureCount++;
-                    if (file.ContentLength >= 10971520)
+                    //picture.Answer.PictureCount++;
+                    if (file.ContentLength >= 200000)
                     {
                         //File To Big
                         imageSizeTooLarge = true;
@@ -608,16 +627,16 @@ namespace PLM.Controllers
                             System.IO.File.Copy(path, relpath);
                             System.IO.File.Delete(path);
 
-                            db.SaveChanges();
+                            //db.SaveChanges();
                             isSavedSuccessfully = true;
                         }
                     }
                 }
-            }
-            catch (Exception ex)
-            {
-                isSavedSuccessfully = false;
-            }
+            //}
+            //catch (Exception ex)
+            //{
+            //    isSavedSuccessfully = false;
+            //}
 
             if (isSavedSuccessfully)
             {
@@ -627,14 +646,6 @@ namespace PLM.Controllers
             {
                 return "FAILED";
             }
-        }
-        public ActionResult InvalidImage()
-        {
-            return View();
-        }
-        public ActionResult DropzoneTest()
-        {
-            return View();
         }
     }
 }

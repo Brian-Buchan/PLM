@@ -23,7 +23,6 @@ There was an error uploading the image to the database. If this error continues,
     @Html.AntiForgeryToken()
 
     <div class="form-actions no-color">
-        <input type="submit" value="Delete" class="btn btn-default" /> |
-        @Html.ActionLink("Back to List", "edit", new { controller = "Answers", id = Model.AnswerID });
+        @Html.ActionLink("Back to List", "edit", new { controller = "Answers", id = ViewBag.AnswerID });
     </div>
 }

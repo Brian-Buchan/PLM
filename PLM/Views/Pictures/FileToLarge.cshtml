@@ -1,6 +1,6 @@
 ﻿@model PLM.Picture
 @{
-    ViewBag.Title = "Invalid Image";
+    ViewBag.Title = "File Too Large";
 }
 
 <section id="page-breadcrumb">
@@ -16,7 +16,7 @@
         </div>
     </div>
 </section>
-The image is of an invalid format(.jpg .jpeg .png are allowed types)
+The size limit on uploading an image is 200 kb.
 
 @using (Html.BeginForm())
 {
