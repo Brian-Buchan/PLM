@@ -13,6 +13,28 @@ namespace PLM.Controllers
         private ModuleViewModel ModuleModel = new ModuleViewModel();
         
          //GET: Profile
+        public int categoryCount(int cat)
+        {
+            int count = (from p in db.Modules
+                         where p.CategoryId == cat && p.isDisabled == false
+                         select p).Count();
+            foreach (Module module in db.Modules)
+            {
+                if (module.Answers.Count() <= 5 && module.CategoryId == cat)
+                {
+                    try
+                    {
+                        Answer answer = module.Answers.ElementAt(0);
+                        Picture picture = answer.Pictures.ElementAt(0);
+                    }
+                    catch
+                    {
+                        count -= 1;
+                    }
+                }
+            }
+            return (count);
+        }
         public ActionResult Index(string sortOrder, string searchString, string currentFilter, int? filterParam, int? page)
         {
             ViewBag.CurrentSort = sortOrder;
@@ -45,228 +67,17 @@ namespace PLM.Controllers
             }
 
             ViewBag.filterParam = filterParam;
-            //var query = (db.Modules
-            //            .GroupBy(p => new
-            //            {
-            //                p.CategoryId
-            //            })
-            //            .Select(g => new
-            //            {
-            //                g.Key.CategoryId,
-            //                Available = g.Count()
-            //            }));
-            //foreach(var x in ModuleModel.Cats)
-            ViewBag.Cat1Count = 
-                (from p in db.Modules
-             where p.CategoryId == 1 && p.isDisabled == false
-             select p).Count();
-            foreach (Module module in db.Modules)
-            {
-                if (module.Answers.Count() <= 5 && module.CategoryId == 1)
-                {
-                    try
-                    {
-                        Answer answer = module.Answers.ElementAt(0);
-                        Picture picture = answer.Pictures.ElementAt(0);
-                    }
-                    catch
-                    {
-                        ViewBag.Cat1Count -= 1;
-                    }
-                }
-            }
-            
-            ViewBag.Cat2Count =
-                (from p in db.Modules
-                 where p.CategoryId == 2 && p.isDisabled == false 
-                 select p).Count();
-            foreach (Module module in db.Modules)
-            {
-                if (module.Answers.Count() <= 5 && module.CategoryId == 2)
-                {
-                    try
-                    {
-                        Answer answer = module.Answers.ElementAt(0);
-                        Picture picture = answer.Pictures.ElementAt(0);
-                    }
-                    catch
-                    {
-                        ViewBag.Cat2Count -= 1;
-                    }
-                }
-            }
-            ViewBag.Cat3Count =
-                (from p in db.Modules
-                 where p.CategoryId == 3 && p.isDisabled == false
-                 select p).Count();
-            foreach (Module module in db.Modules)
-            {
-                if (module.Answers.Count() <= 5 && module.CategoryId == 3)
-                {
-                    try
-                    {
-                        Answer answer = module.Answers.ElementAt(0);
-                        Picture picture = answer.Pictures.ElementAt(0);
-                    }
-                    catch
-                    {
-                        ViewBag.Cat3Count -= 1;
-                    }
-                }
-            }
-            ViewBag.Cat4Count =
-                (from p in db.Modules
-                 where p.CategoryId == 4 && p.isDisabled == false// && p.Answers.ElementAt(0).Pictures.ElementAt(0).PictureID != null
-                 select p).Count();
-            foreach (Module module in db.Modules)
-            {
-                if (module.Answers.Count() <= 5 && module.CategoryId == 4)
-                {
-                    try
-                    {
-                        Answer answer = module.Answers.ElementAt(0);
-                        Picture picture = answer.Pictures.ElementAt(0);
-                    }
-                    catch
-                    {
-                        ViewBag.Cat4Count -= 1;
-                    }
-                }
-            }
-            ViewBag.Cat5Count =
-                (from p in db.Modules
-                 where p.CategoryId == 5 && p.isDisabled == false
-                 select p).Count();
-            foreach (Module module in db.Modules)
-            {
-                if (module.Answers.Count() <= 5 && module.CategoryId == 5)
-                {
-                    try
-                    {
-                        Answer answer = module.Answers.ElementAt(0);
-                        Picture picture = answer.Pictures.ElementAt(0);
-                    }
-                    catch
-                    {
-                        ViewBag.Cat5Count -= 1;
-                    }
-                }
-            }
-            ViewBag.Cat6Count =
-                (from p in db.Modules
-                 where p.CategoryId == 6 && p.isDisabled == false
-                 select p).Count();
-            foreach (Module module in db.Modules)
-            {
-                if (module.Answers.Count() <= 5 && module.CategoryId == 6)
-                {
-                    try
-                    {
-                        Answer answer = module.Answers.ElementAt(0);
-                        Picture picture = answer.Pictures.ElementAt(0);
-                    }
-                    catch
-                    {
-                        ViewBag.Cat6Count -= 1;
-                    }
-                }
-            }
-            ViewBag.Cat7Count =
-                (from p in db.Modules
-                 where p.CategoryId == 7 && p.isDisabled == false
-                 select p).Count();
-            foreach (Module module in db.Modules)
-            {
-                if (module.Answers.Count() <= 5 && module.CategoryId == 7)
-                {
-                    try
-                    {
-                        Answer answer = module.Answers.ElementAt(0);
-                        Picture picture = answer.Pictures.ElementAt(0);
-                    }
-                    catch
-                    {
-                        ViewBag.Cat7Count -= 1;
-                    }
-                }
-            }
-            ViewBag.Cat8Count =
-                (from p in db.Modules
-                 where p.CategoryId == 8 && p.isDisabled == false
-                 select p).Count();
-            foreach (Module module in db.Modules)
-            {
-                if (module.Answers.Count() <= 5 && module.CategoryId == 8)
-                {
-                    try
-                    {
-                        Answer answer = module.Answers.ElementAt(0);
-                        Picture picture = answer.Pictures.ElementAt(0);
-                    }
-                    catch
-                    {
-                        ViewBag.Cat8Count -= 1;
-                    }
-                }
-            }
-           ViewBag.Cat9Count = 
-                (from p in db.Modules
-                 where p.CategoryId == 9 && p.isDisabled == false
-             select p).Count();
-           foreach (Module module in db.Modules)
-           {
-               if (module.Answers.Count() <= 5 && module.CategoryId == 9)
-               {
-                   try
-                   {
-                       Answer answer = module.Answers.ElementAt(0);
-                       Picture picture = answer.Pictures.ElementAt(0);
-                   }
-                   catch
-                   {
-                       ViewBag.Cat9Count -= 1;
-                   }
-               }
-           }
-            ViewBag.Cat10Count = 
-                (from p in db.Modules
-                 where p.CategoryId == 10 && p.isDisabled == false
-             select p).Count();
-            foreach (Module module in db.Modules)
-            {
-                if (module.Answers.Count() <= 5 && module.CategoryId == 10)
-                {
-                    try
-                    {
-                        Answer answer = module.Answers.ElementAt(0);
-                        Picture picture = answer.Pictures.ElementAt(0);
-                    }
-                    catch
-                    {
-                        ViewBag.Cat10Count -= 1;
-                    }
-                }
-            }
-            ViewBag.Cat11Count =
-                (from p in db.Modules
-                 where p.CategoryId == 11 && p.isDisabled == false
-                 select p).Count();
-            foreach (Module module in db.Modules)
-            {
-                if (module.Answers.Count() <= 5 && module.CategoryId == 11)
-                {
-                    try
-                    {
-                        Answer answer = module.Answers.ElementAt(0);
-                        Picture picture = answer.Pictures.ElementAt(0);
-                    }
-                    catch
-                    {
-                        ViewBag.Cat11Count -= 1;
-                    }
-                }
-            }
-
+            ViewBag.Cat1Count = categoryCount(1);
+            ViewBag.Cat2Count = categoryCount(2);
+            ViewBag.Cat3Count = categoryCount(3);
+            ViewBag.Cat4Count = categoryCount(4);
+            ViewBag.Cat5Count = categoryCount(5);
+            ViewBag.Cat6Count = categoryCount(6);
+            ViewBag.Cat7Count = categoryCount(7);
+            ViewBag.Cat8Count = categoryCount(8);
+            ViewBag.Cat9Count = categoryCount(9);
+            ViewBag.Cat10Count = categoryCount(10);
+            ViewBag.Cat11Count = categoryCount(11);
             int pageSize = 3;
             int pageNumber = (page ?? 1);
 
