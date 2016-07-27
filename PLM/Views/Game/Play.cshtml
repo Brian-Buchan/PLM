@@ -25,12 +25,24 @@
     </audio>
 
     <div id="gameBoard">
-        <div id="ScoreBoard">
-            <p>Score:</p>
-            <p id="displayScore">@Model.Score</p>
-            <br />
-            <p>Time Left:</p>
-            <p><div id="clockdiv">@Model.Time.ToString()</div></p>
+        <div style="float:right">
+            <div id="ScoreBoard">
+                <p>Score:</p>
+                <p id="displayScore">@Model.Score</p>
+                <br />
+                <p>Time Left:</p>
+                <p><div id="clockdiv">@Model.Time.ToString()</div></p>
+            </div>
+            <div id="statsOptions">
+                <p>Question @Model.CurrentQuestion out of @Model.TotalQuestions</p>
+                <br />
+                <p>@Model.NumCorrect correct out of @Model.TotalQuestions</p>
+                <br />
+                <!--This image only implementation of a mute button is from Tarun at
+                http://stackoverflow.com/questions/22918220/how-to-create-a-only-mute-unmute-button-like-youtube-in-html
+                -->
+                <img src="@Url.Content("~/Content/Images/speaker.png")" alt="speaker" id="soundToggle" onclick="ToggleMute(this)" />
+            </div>
         </div>
 
         <div id="container">
@@ -40,16 +52,7 @@
                     @*onload="fixAspect(this)"*@ title="Image Courtesy of @Model.Attribution" />
             @*</div>*@
 
-            <div id="statsOptions" style="float:right">
-                <p>Question @Model.CurrentQuestion out of @Model.TotalQuestions</p>
-                <br />
-                <p>@Model.NumCorrect correct out of @Model.TotalQuestions</p>
-                <br />
-                <!--This image only implementation of a mute button is from Tarun at 
-                http://stackoverflow.com/questions/22918220/how-to-create-a-only-mute-unmute-button-like-youtube-in-html 
-                 -->
-                <img src="@Url.Content("~/Content/Images/speaker.png")" alt="speaker" id="soundToggle" onclick="ToggleMute(this)" />
-            </div>
+            
 
         </div>
         <p id="StoredAnswer" hidden="hidden">@Model.Answer</p>
