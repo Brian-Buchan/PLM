@@ -71,8 +71,7 @@ namespace PLM.Controllers
             ViewBag.AnswerID = id;
             if (ModelState.IsValid)
             {
-                db.Pictures.Add(pictureToSave);
-                pictureToSave.Answer = db.Answers
+                pictureToSave.Answer= db.Answers
                     .Where(a => a.AnswerID == id)
                     .ToList().First();
 
@@ -94,7 +93,8 @@ namespace PLM.Controllers
                 else
                 {
                     pictureToSave.Location = location;
-                    db.Entry(pictureToSave).State = EntityState.Modified;
+                    db.Pictures.Add(pictureToSave);
+                    //db.Entry(pictureToSave).State = EntityState.Modified;
                     db.SaveChanges();
                 }
 
@@ -580,7 +580,7 @@ namespace PLM.Controllers
             imageSizeTooLarge = false;
             incorrectImageType = false;
             bool isSavedSuccessfully = false;
-            Session["upload"] = picture.Answer.Module.Name;
+            Session["upload"] = picture.Answer.AnswerString;
             string fName = "";
             string path = "";
             string relpath = "";
