@@ -35,8 +35,9 @@
     @Html.AntiForgeryToken()
 
 
-    <div class="floatRight">
-        @Html.ActionLink("Add Picture", "Create", new { Controller = "Pictures", id = Model.AnswerID, ModuleID = Model.ModuleID }, new { type = "button" })
+    @*<div class="floatRight">*@
+    <div>
+        @Html.ActionLink("Add Picture", "Create", new { Controller = "Pictures", id = Model.AnswerID, ModuleID = Model.ModuleID }, new { type = "button-enter" })
     </div>
 
     <div class="form-horizontal floatLeft" style="width:100%;">
@@ -84,15 +85,15 @@
                                 </div>
                             </div>
                             <div class="portfolio-info ">
-                                <div class="halfPanel">
-                                    @Html.ActionLink("Edit Image", "ImageEditor", new { controller = "Pictures", id = pic.PictureID }, new { type = "button-square" })
-                                </div>
-                                <div class="halfPanel">
-                                    @Html.ActionLink("Attribution", "Edit", new { controller = "Pictures", id = pic.PictureID }, new { type = "button-square" })
-                                </div>
-                                <div class="halfPanel">
-                                    @Html.ActionLink("Delete", "Delete", new { controller = "Pictures", id = pic.PictureID }, new { type = "button-square" })
-                                </div>
+                                @*<div class="halfPanel">*@
+                                    @Html.ActionLink("Edit Image", "ImageEditor", new { controller = "Pictures", id = pic.PictureID }) |
+                                @*</div>
+                                <div class="halfPanel">*@
+                                    @Html.ActionLink("Attribution", "Edit", new { controller = "Pictures", id = pic.PictureID }) |
+                                @*</div>
+                                <div class="halfPanel">*@
+                                    @Html.ActionLink("Delete", "Delete", new { controller = "Pictures", id = pic.PictureID })
+                                @*</div>*@
                                 @*<h2><a href="@Url.Action("Edit", "Pictures",new { Controller = "Pictures", id = pic.PictureID})">Attribution</a></h2>
                                     <a href="@Url.Action("Delete", "Pictures",new { Controller = "Pictures", id = pic.PictureID})"></a>*@
                             </div>
@@ -107,8 +108,8 @@
 
         <br />
         <div class="form-group">
-            <div class="clearLeft floatRight">
-                <input type="submit" value="Save and Return" class="btn btn-submit" />
+            <div class="clearLeft floatRight col-lg-2">
+                <input type="submit" value="Save" class="btn btn-submit" />
             </div>
         </div>
     </div>
