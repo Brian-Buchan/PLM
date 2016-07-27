@@ -28,7 +28,11 @@
     <form action="~/Pictures/Create?id=@ViewBag.AnswerID" method="post" enctype="multipart/form-data" class="dropzone" id="dropzoneForm" style="background: none; border: none;" >
         @Html.AntiForgeryToken()
         @*<input type="text" name="attribution"/>*@
-            <input name="file" type="file" multiple /> 
+
+        
+
+        <div class="fallback">
+            <input name="file" type="file"/> 
             <br />
             @Html.ActionLink("Sources for free use images", "FreeUseImages", "Home")
             <div class="form-group" title="Attribution is needed to give credit to the original creator of the image">
