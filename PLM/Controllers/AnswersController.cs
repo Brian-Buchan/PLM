@@ -96,6 +96,9 @@ namespace PLM.Controllers
         [AuthorizeOrRedirectAttribute(Roles = "Instructor")]
         public ActionResult Edit(int? id)
         {
+            Response.Cache.SetCacheability(HttpCacheability.NoCache);
+            Response.AppendHeader("Pragma", "no-cache"); // HTTP 1.0.
+            Response.AppendHeader("Expires", "0"); // Proxies.
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);

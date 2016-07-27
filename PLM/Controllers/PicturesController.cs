@@ -128,9 +128,6 @@ namespace PLM.Controllers
         [AuthorizeOrRedirectAttribute(Roles = "Instructor")]
         public ActionResult Edit(int? id)
         {
-            Response.Cache.SetCacheability(HttpCacheability.NoCache);
-            Response.AppendHeader("Pragma", "no-cache"); // HTTP 1.0.
-            Response.AppendHeader("Expires", "0"); // Proxies.
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -241,21 +238,29 @@ namespace PLM.Controllers
 
             string imgId = Request.Form.Get("imgId");
             string answerId = Request.Form.Get("answerId");
-            //string origUrl = Request.Form.Get("origUrl");
+            string origUrl = Request.Form.Get("origUrl");
             string imgData = Request.Form.Get("imgData");
-            //string imageFormat = "." + imgData.Substring(imgData.IndexOf('/') + 1, imgData.IndexOf(';'));
+            string imageFormat = "." + imgData.Substring(imgData.IndexOf('/') + 1, imgData.IndexOf(';'));
 
-            //if (imageFormat == ".jpeg")
-            //{
-            //    imageFormat = ".jpg";
-            //}
+            if (imageFormat == ".jpeg")
+            {
+                imageFormat = ".jpg";
+            }
 
-            //if (imageFormat != Path.GetExtension(origUrl))
-            //{
-            //    return new HttpStatusCodeResult(HttpStatusCode.InternalServerError,
-            //        "The selected image format is not the same as the original image format." +
-            //        " \nPlease select the other image format.");
-            //}
+            try
+            {
+                if (imageFormat != Path.GetExtension(origUrl))
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.InternalServerError,
+                        "The selected image format is not the same as the original image format." +
+                        " \nPlease select the other image format.");
+                }
+            }
+            catch (ArgumentException e)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.InternalServerError, e.Message);
+            }
+            
 
             string result = SaveImage(imgData, imgId, answerId);
 
