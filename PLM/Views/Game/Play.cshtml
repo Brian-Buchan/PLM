@@ -25,23 +25,35 @@
     </audio>
 
     <div id="gameBoard">
-        <div id="ScoreBoard">
-            <p>Score:</p>
-            <p id="displayScore">@Model.Score</p>
-            <br />
-            <p>Time Left:</p>
-            <p><div id="clockdiv">@Model.Time.ToString()</div></p>
+        <div style="float:right">
+            <div id="ScoreBoard">
+                <p>Score:</p>
+                <p id="displayScore">@Model.Score</p>
+                <br />
+                <p>Time Left:</p>
+                <p><div id="clockdiv">@Model.Time.ToString()</div></p>
+            </div>
+            <div id="statsOptions">
+                <p>Question @Model.CurrentQuestion out of @Model.TotalQuestions</p>
+                <br />
+                <p>@Model.NumCorrect correct out of @Model.TotalQuestions</p>
+                <br />
+                <!--This image only implementation of a mute button is from Tarun at
+                http://stackoverflow.com/questions/22918220/how-to-create-a-only-mute-unmute-button-like-youtube-in-html
+                -->
+                <img src="@Url.Content("~/Content/Images/speaker.png")" alt="speaker" id="soundToggle" onclick="ToggleMute(this)" />
+            </div>
         </div>
-
-        <p>Question @Model.CurrentQuestion out of @Model.TotalQuestions</p>
-        <br />
-        <p>@Model.NumCorrect correct out of @Model.TotalQuestions</p>
-        <br />
 
         <div id="container">
             @*<div class="helper">*@
-                <img onerror="this.src='/Content/Images/Error.bmp';" @*id="picture"*@ style="max-height:480px;max-width:640px;" src="@Model.ImageURL" @*onload="fixAspect(this)"*@ title="Image Courtesy of @Model.Attribution" />
+                <img onerror="this.src='/Content/Images/Error.bmp';" @*id="picture"*@ 
+                     style="max-height:480px;max-width:640px;" src="@Model.ImageURL" 
+                    @*onload="fixAspect(this)"*@ title="Image Courtesy of @Model.Attribution" />
             @*</div>*@
+
+            
+
         </div>
         <p id="StoredAnswer" hidden="hidden">@Model.Answer</p>
         <div>
@@ -71,11 +83,6 @@
                 <h1 id="resultText">Correct</h1>
             </div>
         }
-        <br />
-        @*<button onclick="ToggleMute()">Mute/Unmute</button>*@
-        <!--This image only implementation of a mute button is from Tarun at http://stackoverflow.com/questions/22918220/how-to-create-a-only-mute-unmute-button-like-youtube-in-html -->
-        <img src="@Url.Content("~/Content/Images/speaker.png")" alt="speaker" id="soundToggle" onclick="ToggleMute(this)" />
-        <br />
         @Html.ActionLink("Quit Game", "Quit", "Game", null, new {type = "button-warning", onclick = "return confirm('Are you sure? Your progress will not be saved.');" })
         <script type="text/javascript" src="~/Scripts/gameplay.js"></script>
     </div>
