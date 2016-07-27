@@ -71,12 +71,16 @@ namespace PLM.Controllers
             ViewBag.AnswerID = id;
             if (ModelState.IsValid)
             {
-                pictureToSave.Answer= db.Answers
+                //pictureToSave.Answer= db.Answers
+                //    .Where(a => a.AnswerID == id)
+                //    .ToList().First();
+
+                Answer answer = db.Answers
                     .Where(a => a.AnswerID == id)
                     .ToList().First();
 
                 pictureToSave.AnswerID = (int)id;
-                var location = SaveUploadedFile(pictureToSave);
+                var location = SaveUploadedFile(pictureToSave, answer);
 
                 if (location == "FAILED")
                 {
@@ -575,12 +579,13 @@ namespace PLM.Controllers
         /// <param name="picture">The picture object to be saved</param>
         /// <returns>string</returns>
         [NonAction]
-        public string SaveUploadedFile(Picture picture)
+        public string SaveUploadedFile(Picture picture, Answer answer)
         {
             imageSizeTooLarge = false;
             incorrectImageType = false;
             bool isSavedSuccessfully = false;
-            Session["upload"] = picture.Answer.AnswerString;
+            //Session["upload"] = picture.Answer.AnswerString;
+            Session["upload"] = answer.Module.GetModuleDirectory();
             string fName = "";
             string path = "";
             string relpath = "";
@@ -608,10 +613,10 @@ namespace PLM.Controllers
                         if (file != null && file.ContentLength > 0)
                         {
                             string moduleDirectory = (DevPro.baseFileDirectory + "PLM/" + Session["upload"].ToString() + "/");
-                            if (!Directory.Exists(moduleDirectory))
-                            {
-                                Directory.CreateDirectory(moduleDirectory);
-                            }
+                            //if (!Directory.Exists(moduleDirectory))
+                            //{
+                            //    Directory.CreateDirectory(moduleDirectory);
+                            //}
                             path = moduleDirectory + fName;
                             string filetype = Path.GetExtension(path);
                             if (filetype == "jpeg")
@@ -622,7 +627,7 @@ namespace PLM.Controllers
                             }
                             // Saves the file through the HttpPostedFileBase class
                             file.SaveAs(path);
-                            string newfName = (picture.Answer.AnswerString + "-" + picture.Answer.PictureCount.ToString() + filetype);
+                            string newfName = (answer.AnswerString + "-" + answer.PictureCount.ToString() + filetype);
                             relpath = (moduleDirectory + newfName);
                             System.IO.File.Copy(path, relpath);
                             System.IO.File.Delete(path);

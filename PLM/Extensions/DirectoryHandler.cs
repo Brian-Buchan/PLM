@@ -44,11 +44,11 @@ namespace PLM
             db.SaveChanges();
         }
 
-        public static void CreateDirectory(string moduleName)
+        public static void CreateDirectory(Module module)
         {
-            if (!Directory.Exists(DevPro.baseFileDirectory + "PLM/" + moduleName))
+            if (!Directory.Exists(DevPro.baseFileDirectory + "PLM/" + module.GetModuleDirectory()))
             {
-                Directory.CreateDirectory(DevPro.baseFileDirectory + "PLM/" + moduleName);
+                Directory.CreateDirectory(DevPro.baseFileDirectory + "PLM/" + module.GetModuleDirectory());
             }
         }
     }
