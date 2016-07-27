@@ -4,12 +4,12 @@
     ViewBag.Title = "Image Editor";
 }
 
-<h2>Image Editor</h2>
+<h2>Image Editor - Click the picture to start editing</h2>
 <img onerror="this.src = '/PerceptualLearning/Content/Images/Error.bmp';" data-orig-source="@Model.Location" id="@Model.PictureID" src="@Model.Location" title="@Model.AnswerID" alt="Photo To Edit" />
 
 <script data-path="@Url.Content("~/pixie-image-editor/pixie")"
         src="@Url.Content("~/pixie-image-editor/pixie/pixie-integrate.js")"></script>
-
+<br />
 @using (Html.BeginForm("Confirm", "Pictures", FormMethod.Post))
 {
     @Html.AntiForgeryToken()
@@ -19,7 +19,7 @@
     <input type="text" name="imgData" id="imgData" hidden="hidden" required="required" value="" />
     <input type="text" name="origUrl" id="origUrl" hidden="hidden" required="required" value="" />
     <input type="text" name="tempUrl" id="tempUrl" hidden="hidden" required="required" value="" />
-    <input type="submit" value="Save" />
+    <input class="btn btn-primary" type="submit" style="background-color:green" value="Save" />
 }
 
 <script id="jslink" src="@Url.Content("~/Scripts/ImageEditorProd.js")" data-image-id="@Model.PictureID"></script>
