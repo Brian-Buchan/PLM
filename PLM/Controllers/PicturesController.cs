@@ -241,30 +241,30 @@ namespace PLM.Controllers
 
             string imgId = Request.Form.Get("imgId");
             string answerId = Request.Form.Get("answerId");
-            string origUrl = Request.Form.Get("origUrl");
+            //string origUrl = Request.Form.Get("origUrl");
             string imgData = Request.Form.Get("imgData");
-            string imageFormat = "." + imgData.Substring(imgData.IndexOf('/') + 1, imgData.IndexOf(';'));
+            //string imageFormat = "." + imgData.Substring(imgData.IndexOf('/') + 1, imgData.IndexOf(';'));
 
-            if (imageFormat == ".jpeg")
-            {
-                imageFormat = ".jpg";
-            }
+            //if (imageFormat == ".jpeg")
+            //{
+            //    imageFormat = ".jpg";
+            //}
 
-            origUrl = origUrl.Substring(origUrl.Length - 5);
+            ////origUrl = ;
 
-            try
-            {
-                if (imageFormat != Path.GetExtension(origUrl))
-                {
-                    return new HttpStatusCodeResult(HttpStatusCode.InternalServerError,
-                        "The selected image format is not the same as the original image format." +
-                        " \nPlease select the other image format.");
-                }
-            }
-            catch (ArgumentException e)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.InternalServerError, e.Message);
-            }
+            //try
+            //{
+            //    if (imageFormat != Path.GetExtension(origUrl))
+            //    {
+            //        return new HttpStatusCodeResult(HttpStatusCode.InternalServerError,
+            //            "The selected image format is not the same as the original image format." +
+            //            " \nPlease select the other image format.");
+            //    }
+            //}
+            //catch (ArgumentException e)
+            //{
+            //    return new HttpStatusCodeResult(HttpStatusCode.InternalServerError, e.Message);
+            //}
             
 
             string result = SaveImage(imgData, imgId, answerId);
