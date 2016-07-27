@@ -29,7 +29,7 @@
 {
     <form action="~/Account/ApproveAllRequests" method="post">
         @Html.AntiForgeryToken()
-        <button name="ApproveAllRequests" value="ApproveAllRequests" type="submit">Approve All</button>
+        <button name="ApproveAllRequests" value="ApproveAllRequests" type="submit" class="btn-success">Approve All</button>
     </form>
 }
 <table class="table">
@@ -87,7 +87,7 @@
         <td>
             <form action="~/Account/DenyRequest?userID=@item.Id" method="post">
                 @Html.AntiForgeryToken()
-                <button name="subject" type="submit" class="btn-error" value="fav_CSS">Deny</button>
+                <button name="subject" type="submit" class="btn-warning" >Deny</button>
             </form>
         </td>
     </tr>

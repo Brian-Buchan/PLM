@@ -28,15 +28,15 @@
     </section>
     <!--/#page-breadcrumb-->
 
-    <p>
-        @Html.ActionLink("Create New", "Create")
+    <p class="floatRight">
+        @Html.ActionLink("Create New", "Create", new { type = "button-enter" })
     </p>
 
     @using (Html.BeginForm())
     {
         <p>
             Find by name: @Html.TextBox("SearchString")
-            <input type="submit" value="Search" />
+            <input type="submit" value="Search" class="btn-submit" />
         </p>
     }
 
