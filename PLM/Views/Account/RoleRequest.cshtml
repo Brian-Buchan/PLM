@@ -8,9 +8,6 @@
     <title>Instructor Role Requests</title>
     <link rel="shortcut icon" href="~/Content/images/ico/favicon.ico">
 </head>
-@{
-    ViewBag.Title = "List of requests for instructor status";
-}
 
 <section id="page-breadcrumb">
     <div class="vertical-center sun">
@@ -87,10 +84,10 @@
         <td>
             <form action="~/Account/DenyRequest?userID=@item.Id" method="post">
                 @Html.AntiForgeryToken()
-                <button name="subject" type="submit" class="btn-warning" >Deny</button>
+                <button name="subject" type="submit" class="btn-danger" >Deny</button>
             </form>
         </td>
     </tr>
 }
-
+    @Html.ActionLink("Back to Administration Page", "Admin", "Home")
 </table>
