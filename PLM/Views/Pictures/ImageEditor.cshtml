@@ -5,7 +5,7 @@
 }
 
 <h2>Image Editor - Click the picture to start editing</h2>
-<h3>Save this picture as a @Model.Location.Substring(Model.Location.Length - 4)!</h3>
+<h3>Save this picture as a @Model.Location.Substring(Model.Location.Length - 4)! (".jpg" means JPEG)</h3>
 <img onerror="this.src = '/PerceptualLearning/Content/Images/Error.bmp';" data-orig-source="@Model.Location" id="@Model.PictureID" src="@Model.Location" title="@Model.AnswerID" alt="Photo To Edit" />
 
 <script data-path="@Url.Content("~/pixie-image-editor/pixie")"
