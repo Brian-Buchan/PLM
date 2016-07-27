@@ -17,9 +17,63 @@ using SendGrid;
 using System.Configuration;
 using System.Diagnostics;
 using PLM.CutomAttributes;
-
+using System.Text.RegularExpressions;
+using System.Globalization;
 namespace PLM.Controllers
 {
+    public class RegexUtilities
+    {
+        bool invalid;
+        public bool IsValidEmail(string strIn)
+        {
+            invalid = false;
+            if (String.IsNullOrEmpty(strIn))
+                return false;
+
+            // Use IdnMapping class to convert Unicode domain names.
+            try
+            {
+                strIn = Regex.Replace(strIn, @"(@)(.+)$", this.DomainMapper,
+                                      RegexOptions.None, TimeSpan.FromMilliseconds(200));
+            }
+            catch (RegexMatchTimeoutException)
+            {
+                return false;
+            }
+
+            if (invalid) return false;
+
+            // Return true if strIn is in valid e-mail format.
+            try
+            {
+                return Regex.IsMatch(strIn,
+                      @"^(?("")("".+?(?<!\\)""@)|(([0-9a-z]((\.(?!\.))|[-!#\$%&'\*\+/=\?\^`\{\}\|~\w])*)(?<=[0-9a-z])@))" +
+                      @"(?(\[)(\[(\d{1,3}\.){3}\d{1,3}\])|(([0-9a-z][-\w]*[0-9a-z]*\.)+[a-z0-9][\-a-z0-9]{0,22}[a-z0-9]))$",
+                      RegexOptions.IgnoreCase, TimeSpan.FromMilliseconds(250));
+            }
+            catch (RegexMatchTimeoutException)
+            {
+                return (false);
+            }
+        }
+        private string DomainMapper(Match match)
+        {
+            // IdnMapping class with default property values.
+            IdnMapping idn = new IdnMapping();
+
+            string domainName = match.Groups[2].Value;
+            try
+            {
+                domainName = idn.GetAscii(domainName);
+            }
+            catch (ArgumentException)
+            {
+                invalid = true;
+            }
+            return match.Groups[1].Value + domainName;
+        }
+    }
+    
     [Authorize]
     public class AccountController : Controller
     {
@@ -568,17 +622,46 @@ namespace PLM.Controllers
         {
             if (ModelState.IsValid)
             {
-                //Sets account to Free Accont Type and Active Account Status
-                var user = new ApplicationUser()
+                RegexUtilities emailcheck = new RegexUtilities();
+                string email = model.Email;
+                var user = new ApplicationUser();
+                if (emailcheck.IsValidEmail(email))
                 {
-                    UserName = model.Email,
-                    Email = model.Email,
-                    FirstName = model.FirstName,
-                    LastName = model.LastName,
-                    Institution = model.Institution,
-                    Type = ApplicationUser.AccountType.Free,
-                    Status = ApplicationUser.AccountStatus.Active
-                };
+                    user = new ApplicationUser()
+                    {
+                        UserName = model.Email,
+                        Email = model.Email,
+                        FirstName = model.FirstName,
+                        LastName = model.LastName,
+                        Institution = model.Institution,
+                        Type = ApplicationUser.AccountType.Free,
+                        Status = ApplicationUser.AccountStatus.Active
+                    };
+                }
+                else
+                {
+                    user = new ApplicationUser()
+                    {
+                        UserName = "Validemail@nmc.edu",
+                        Email = model.Email,
+                        FirstName = model.FirstName,
+                        LastName = model.LastName,
+                        Institution = model.Institution,
+                        Type = ApplicationUser.AccountType.Free,
+                        Status = ApplicationUser.AccountStatus.Active
+                    };
+                }
+                //Sets account to Free Accont Type and Active Account Status
+                //var user = new ApplicationUser()
+                //{
+                //    UserName = model.Email,
+                //    Email = model.Email,
+                //    FirstName = model.FirstName,
+                //    LastName = model.LastName,
+                //    Institution = model.Institution,
+                //    Type = ApplicationUser.AccountType.Free,
+                //    Status = ApplicationUser.AccountStatus.Active
+                //};
                 IdentityResult result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
@@ -603,6 +686,7 @@ namespace PLM.Controllers
                 }
                 else
                 {
+                    
                     AddErrors(result);
                     RedirectToAction("Index", "Profile");
                 }
@@ -990,8 +1074,14 @@ namespace PLM.Controllers
         private void AddErrors(IdentityResult result)
         {
             foreach (var error in result.Errors)
-            {
+            { 
+                //Regex rgx = new Regex("Name \b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}\b is already taken.");
+                //if (!rgx.IsMatch(error))
+                //{
+                if(!(error.Contains("Name")&& error.Contains("is already taken.")))
+                {
                 ModelState.AddModelError("", error);
+                }
             }
         }
 
