@@ -257,10 +257,10 @@ namespace PLM.Controllers
             //            " \nPlease select the other image format.");
             //    }
             //}
-            catch (ArgumentException e)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.InternalServerError, e.Message);
-            }
+            //catch (ArgumentException e)
+            //{
+            //    return new HttpStatusCodeResult(HttpStatusCode.InternalServerError, e.Message);
+            //}
             
 
             string result = SaveImage(imgData, imgId, answerId);
