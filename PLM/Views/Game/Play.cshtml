@@ -67,7 +67,7 @@
             <input type="radio" name="isCorrect" value="False" hidden="hidden" checked="checked" />
 
             <div id="nextButton" style="display:none;">
-                <button id="next" type="submit" value="">Next</button>
+                <button id="next" type="submit" value="" class="btn-success">Next</button>
                 <h1 id="resultText">Correct</h1>
             </div>
         }
@@ -76,7 +76,7 @@
         <!--This image only implementation of a mute button is from Tarun at http://stackoverflow.com/questions/22918220/how-to-create-a-only-mute-unmute-button-like-youtube-in-html -->
         <img src="@Url.Content("~/Content/Images/speaker.png")" alt="speaker" id="soundToggle" onclick="ToggleMute(this)" />
         <br />
-        @Html.ActionLink("Quit Game", "Quit", "Game", null, new { onclick = "return confirm('Are you sure? Your progress will not be saved.');" })
+        @Html.ActionLink("Quit Game", "Quit", "Game", null, new {type = "button-warning", onclick = "return confirm('Are you sure? Your progress will not be saved.');" })
         <script type="text/javascript" src="~/Scripts/gameplay.js"></script>
     </div>
 </body>

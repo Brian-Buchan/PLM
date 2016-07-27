@@ -45,9 +45,15 @@
         <hr />
         <div>
             <div>
-                <ul>
-                    <li>@Html.ActionLink("Report this module", "Create", "Report", new { id = ViewBag.ModuleID },null)</li>
-                    <li>@Html.ActionLink("Play this module again", "Setup", "Game", new { PLMid = ViewBag.ModuleID, changeSettings = 0 }, null)</li>
+                @Html.ActionLink("Play Again", "Setup", "Game", new { PLMid = ViewBag.ModuleID, changeSettings = 0, type = "button-enter" }, null)
+                <br/>
+
+                <ul> 
+                    @if (User.IsInRole("Learner"))
+                    {
+                        <li>@Html.ActionLink("Report this module", "Create", "Report", new { id = ViewBag.ModuleID },null)</li>
+                    }
+                    
                     <li>@Html.ActionLink("Return to module select", "Index", "Modules")</li>
                 </ul>
             </div>
