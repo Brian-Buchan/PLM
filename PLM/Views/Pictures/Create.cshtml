@@ -25,9 +25,8 @@
 </section>
 <br />
 <div class="jumbotron">
-    <form action="~/Pictures/Create?id=@ViewBag.AnswerID" method="post" enctype="multipart/form-data" class="dropzone" id="dropzoneForm" style="width: 50px; background: none; border: none;" >
+    <form action="~/Pictures/Create?id=@ViewBag.AnswerID" method="post" enctype="multipart/form-data" class="dropzone" id="dropzoneForm" style="background: none; border: none;" >
         @Html.AntiForgeryToken()
-
         @*<input type="text" name="attribution"/>*@
 
         
@@ -42,7 +41,7 @@
                     @Html.TextAreaFor(model => model.Attribution, new { rows = "20", cols = "500" })
                     @Html.ValidationMessageFor(model => model.Attribution, "", new { @class = "text-danger" })
                 </div>
-            </div>
+
 
             <br />
             <br />
