@@ -14,7 +14,6 @@
     <title>Create Module</title>
     <link rel="shortcut icon" href="~/Content/images/ico/favicon.ico">
 </head>
-
 <section id="page-breadcrumb">
     <div class="vertical-center sun">
         <div class="container">
@@ -28,7 +27,6 @@
         </div>
     </div>
 </section>
-
 @if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated) {
 using (Html.BeginForm()) 
 {
@@ -113,10 +111,7 @@ using (Html.BeginForm())
                 @Html.ValidationMessageFor(model => model.isPrivate)
             </div>
         </div>
-
-
         <br />
-
         <br />
         <br />
         <div class="form-group">

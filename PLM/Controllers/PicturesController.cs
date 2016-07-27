@@ -21,6 +21,7 @@ namespace PLM.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
         private bool incorrectImageType = false;
         private bool imageSizeTooLarge = false;
+        private Picture pictureToSave;
 
         // GET: /Pictures/
         public ActionResult Index()
@@ -65,45 +66,43 @@ namespace PLM.Controllers
         [AuthorizeOrRedirectAttribute(Roles = "Instructor")]
         public ActionResult Create([Bind(Include = "Attribution,PictureID")] Picture picture, int? id)
         {
+            pictureToSave = new Picture();
+            pictureToSave = picture;
             ViewBag.AnswerID = id;
             if (ModelState.IsValid)
             {
-                //db.Entry(picture).State = EntityState.Modified;
-                picture = new Picture();
-                picture.Answer = db.Answers
+                db.Pictures.Add(pictureToSave);
+                pictureToSave.Answer = db.Answers
                     .Where(a => a.AnswerID == id)
                     .ToList().First();
 
-                picture.AnswerID = (int)id;
-
-                picture.Location = "";
-                db.Pictures.Add(picture);
-
-                var location = SaveUploadedFile(picture);
+                pictureToSave.AnswerID = (int)id;
+                var location = SaveUploadedFile(pictureToSave);
 
                 if (location == "FAILED")
                 {
                     if (incorrectImageType)
                     {
-                        return RedirectToAction("InvalidImage", new { controller = "Pictures", id = picture.AnswerID });
+                        return RedirectToAction("InvalidImage", new { controller = "Pictures", id = pictureToSave.AnswerID });
                     }
                     else if (imageSizeTooLarge)
                     {
-                        return RedirectToAction("FileToLarge", new { controller = "Pictures", id = picture.AnswerID });
+                        return RedirectToAction("FileToLarge", new { controller = "Pictures", id = pictureToSave.AnswerID });
                     }
-                    return RedirectToAction("UploadError", new { controller = "Pictures", id = picture.AnswerID });
+                    return RedirectToAction("UploadError", new { controller = "Pictures", id = pictureToSave.AnswerID });
                 }
                 else
                 {
-                    picture.Location = location;
+                    pictureToSave.Location = location;
+                    db.Entry(pictureToSave).State = EntityState.Modified;
                     db.SaveChanges();
                 }
 
-                return RedirectToAction("edit", new { controller = "Answers", id = picture.AnswerID });
+                return RedirectToAction("edit", new { controller = "Answers", id = pictureToSave.AnswerID });
             }
 
-            ViewBag.AnswerID = new SelectList(db.Answers, "AnswerID", "AnswerString", picture.AnswerID);
-            return View(picture);
+            ViewBag.AnswerID = new SelectList(db.Answers, "AnswerID", "AnswerString", pictureToSave.AnswerID);
+            return View(pictureToSave);
         }
 
         public ActionResult InvalidImage(int id)
@@ -585,13 +584,13 @@ namespace PLM.Controllers
             string fName = "";
             string path = "";
             string relpath = "";
-            try
-            {
+            //try
+            //{
                 foreach (string fileName in Request.Files)
                 {
                     HttpPostedFileBase file = Request.Files[fileName];
                     fName = file.FileName;
-                    picture.Answer.PictureCount++;
+                    //picture.Answer.PictureCount++;
                     if (file.ContentLength >= 200000)
                     {
                         //File To Big
@@ -628,16 +627,16 @@ namespace PLM.Controllers
                             System.IO.File.Copy(path, relpath);
                             System.IO.File.Delete(path);
 
-                            db.SaveChanges();
+                            //db.SaveChanges();
                             isSavedSuccessfully = true;
                         }
                     }
                 }
-            }
-            catch (Exception ex)
-            {
-                isSavedSuccessfully = false;
-            }
+            //}
+            //catch (Exception ex)
+            //{
+            //    isSavedSuccessfully = false;
+            //}
 
             if (isSavedSuccessfully)
             {
