@@ -68,8 +68,8 @@ namespace PLM.Controllers
             ViewBag.AnswerID = id;
             if (ModelState.IsValid)
             {
-                //db.Entry(picture).State = EntityState.Modified;
-                picture = new Picture();
+                db.Entry(picture).State = EntityState.Modified;
+                //picture = new Picture();
                 picture.Answer = db.Answers
                     .Where(a => a.AnswerID == id)
                     .ToList().First();
@@ -578,13 +578,13 @@ namespace PLM.Controllers
             string fName = "";
             string path = "";
             string relpath = "";
-            try
-            {
+            //try
+            //{
                 foreach (string fileName in Request.Files)
                 {
                     HttpPostedFileBase file = Request.Files[fileName];
                     fName = file.FileName;
-                    picture.Answer.PictureCount++;
+                    //picture.Answer.PictureCount++;
                     if (file.ContentLength >= 200000)
                     {
                         //File To Big
@@ -626,11 +626,11 @@ namespace PLM.Controllers
                         }
                     }
                 }
-            }
-            catch (Exception ex)
-            {
-                isSavedSuccessfully = false;
-            }
+            //}
+            //catch (Exception ex)
+            //{
+            //    isSavedSuccessfully = false;
+            //}
 
             if (isSavedSuccessfully)
             {
