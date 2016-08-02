@@ -81,7 +81,7 @@
                 <td>
                     @Html.ActionLink("Edit", "Edit", new { userName = item.UserName }) |
                     @Html.ActionLink("Roles", "ViewUserRoles", new { userName = item.UserName }) |
-                    @Html.ActionLink("Delete", "Delete", new { userName = item.UserName })
+                    @*@Html.ActionLink("Delete", "Delete", new { userName = item.UserName })*@
                 </td>
                 <th>
                     @Html.ActionLink("Change Status", "AccountDisable", new { userName = item.UserName }, new { type = "button-enter" })

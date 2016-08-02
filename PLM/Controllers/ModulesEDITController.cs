@@ -79,15 +79,6 @@ namespace PLM.Controllers
             return View(modules);
         }
 
-
-        public ActionResult ProfanityCheck()
-        {
-            var modules = from m in db.Modules
-                          select m;
-
-            return View(modules);
-        }
-
         // GET: /ModulesEDIT/Details/5
         public ActionResult Details(int? id)
         {
