@@ -8,7 +8,6 @@
     <title>Instructor Role Requests</title>
     <link rel="shortcut icon" href="~/Content/images/ico/favicon.ico">
 </head>
-@ViewBag.Title = "Role Requests"
 <section id="page-breadcrumb">
     <div class="vertical-center sun">
         <div class="container">
@@ -26,7 +25,7 @@
 {
     <form action="~/Account/ApproveAllRequests" method="post">
         @Html.AntiForgeryToken()
-        <button name="ApproveAllRequests" value="ApproveAllRequests" type="submit" class="button-enter">Approve All</button>
+        <button name="ApproveAllRequests" value="ApproveAllRequests" type="submit" class="col-sm-2 button-enter">Approve All</button>
     </form>
 }
 <table class="table">

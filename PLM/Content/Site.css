@@ -95,6 +95,7 @@ article{
 
 a[type="button"] {
   width: 100%;
+  font-family:Arial;
   background-color: #4fcccd;
   color: #fff;
   font-size: 14px;
@@ -118,6 +119,7 @@ a[type="button"] :focus{
 
 a[type="button-enter"] {
   width: 100%;
+  font-family:Arial;
   background-color: #5cb85c;
   color: #fff;
   font-size: 0.8em;
@@ -139,6 +141,7 @@ a[type="button-enter"] :focus{
 
 a[type="button-submit-sm"] {
   width: 100%;
+  font-family:Arial;
   background-color: #4fcccd;
   color: #fff;
   font-size: 0.8em;
@@ -160,6 +163,7 @@ a[type="button-submit-sm"] :focus{
 
 .button-submit-sm {
   width: 100%;
+  font-family:Arial;
   background-color: #4fcccd;
   color: #fff;
   font-size: 0.8em;
@@ -181,6 +185,7 @@ a[type="button-submit-sm"] :focus{
 
 .button-enter {
   width: 100%;
+  font-family:Arial;
   background-color: #5cb85c;
   color: #fff;
   font-size: 0.8em;
@@ -202,6 +207,7 @@ a[type="button-submit-sm"] :focus{
 
 a[type="button-warning"] {
   width: 100%;
+  font-family:Arial;
   background-color: red;
   color: #fff;
   font-size: 0.8em;

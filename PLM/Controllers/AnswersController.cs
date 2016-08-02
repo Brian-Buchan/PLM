@@ -162,7 +162,7 @@ namespace PLM.Controllers
             Answer answer = db.Answers.Find(id);
 
             DirectoryHandler.DeleteAnswer(id);
-            return RedirectToAction("edit", new { controller = "ModulesEdit", id = answer.ModuleID });
+            return RedirectToAction("Create", new { id = answer.ModuleID });
         }
 
         protected override void Dispose(bool disposing)
