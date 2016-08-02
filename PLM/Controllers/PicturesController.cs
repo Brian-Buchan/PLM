@@ -362,12 +362,13 @@ namespace PLM.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.InternalServerError,
                         "Something went wrong with your request. \nContact an administrator.");
             }
-            else if (result == "TOO LARGE")
-            {
-                return new HttpStatusCodeResult(400,
-                "Image file size larger than 200 KB. \nTry lowering the quality when you save," +
-                " \nor resize the image to a smaller size.");
-            }
+            //REMOVED: Relates to error when image size is too large.
+            //else if (result == "TOO LARGE")
+            //{
+            //    return new HttpStatusCodeResult(HttpStatusCode.InternalServerError,
+            //    "Image file size larger than 200 KB. \nTry lowering the quality when you save," +
+            //    " \nor resize the image to a smaller size.");
+            //}
 
             //return View();
             return new HttpStatusCodeResult(HttpStatusCode.OK, result);
@@ -487,11 +488,12 @@ namespace PLM.Controllers
                 //converts the file data to a byte array
                 byte[] img = Convert.FromBase64String(imageBase64);
 
+                //Commented out causing breakage
                 //if the image is greater than 200KB, reject it and return a response.
-                if (img.Length > 200000)
-                {
-                    return "TOO LARGE";
-                }
+                //if (img.Length > 200000)
+                //{
+                //    return "TOO LARGE";
+                //}
 
                 //sets up the filename, guid part taken from Mark Synowiec at http://stackoverflow.com/questions/730268/unique-random-string-generation
                 Guid g = Guid.NewGuid();
@@ -537,7 +539,7 @@ namespace PLM.Controllers
             }
             catch (Exception ex)
             {
-                return ex.Message;
+                return "FAILED";
             }
         }
 
