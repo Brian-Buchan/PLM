@@ -12,9 +12,9 @@ namespace PLM
         public int PictureID { get; set; }
         public string Location { get; set; }
         public int AnswerID { get; set; }
-        [MaxLength(40)]
-        public string Attribution { get; set; }
         [MaxLength(300)]
+        public string Attribution { get; set; }
+        [MaxLength(40)]
         public virtual Answer Answer { get; set; }
     }
 }
