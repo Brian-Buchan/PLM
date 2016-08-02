@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<PLM.Module>
 
 @{
-    ViewBag.Title = "Disabled Modules";
+    ViewBag.Title = "Disabled Modules List";
 }
 <head>
     <meta charset="utf-8">
@@ -13,7 +13,7 @@
 </head>
 
 <body>
-   
+    
     <section id="page-breadcrumb">
         <div class="vertical-center sun">
             <div class="container">
@@ -41,27 +41,6 @@
                 @Html.DisplayNameFor(model => model.Description)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.DefaultNumAnswers)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DefaultTime)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DefaultNumQuestions)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.isPrivate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.rightAnswerString)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.wrongAnswerString)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.isDisabled)
-            </th>
-            <th>
                 @Html.DisplayNameFor(model => model.DisableModuleNote)
             </th>
             <th>
@@ -83,27 +62,6 @@
                     @Html.DisplayFor(modelItem => item.Description)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.DefaultNumAnswers)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.DefaultTime)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.DefaultNumQuestions)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.isPrivate)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.rightAnswerString)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.wrongAnswerString)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.isDisabled)
-                </td>
-                <td>
                     @Html.DisplayFor(modelItem => item.DisableModuleNote)
                 </td>
                 <td>
@@ -117,4 +75,8 @@
         }
 
     </table>
+
+    <div>
+        @Html.ActionLink("Back to List", "Index")
+    </div>
 </body>
