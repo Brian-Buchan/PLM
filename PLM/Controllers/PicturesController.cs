@@ -74,7 +74,6 @@ namespace PLM.Controllers
             else
                 pictureToSave.Attribution = picture.Attribution;
             db.Pictures.Add(pictureToSave);
-            db.SaveChanges();
 
             ViewBag.AnswerID = id;
 
@@ -82,7 +81,7 @@ namespace PLM.Controllers
             {
                 var location = SaveUploadedFile(pictureToSave, (int)id);
 
-                if (location == "FAILED")
+                if (location == "FAILED" || location == null)
                 {
                     if (incorrectImageType)
                     {
@@ -132,7 +131,7 @@ namespace PLM.Controllers
 
             string fName = "";
             string path = "";
-            string relpath = "";
+            string relpath = "NO FILE UPLOADED";
 
             foreach (string fileName in Request.Files)
             {
