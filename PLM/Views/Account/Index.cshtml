@@ -29,14 +29,14 @@
     <!--/#page-breadcrumb-->
 
     <p class="floatRight">
-        @Html.ActionLink("Create New Account", "Create", new { type = "button-enter" })
+        @Html.ActionLink("Create New Account", "Create", new { type = "btn button-enter" })
     </p>
 
     @using (Html.BeginForm())
     {
         <p>
             Find by name: @Html.TextBox("SearchString")
-            <input type="submit" value="Search" class="button-submit-sm" />
+            <input type="submit" value="Search" class="button-submit-sm col-sm-1" />
         </p>
     }
 
@@ -80,7 +80,7 @@
                 </td>
                 <td>
                     @Html.ActionLink("Edit", "Edit", new { userName = item.UserName }) |
-                    @Html.ActionLink("Roles", "ViewUserRoles", new { userName = item.UserName }) |
+                    @Html.ActionLink("Roles", "ViewUserRoles", new { userName = item.UserName })
                     @*@Html.ActionLink("Delete", "Delete", new { userName = item.UserName })*@
                 </td>
                 <th>
