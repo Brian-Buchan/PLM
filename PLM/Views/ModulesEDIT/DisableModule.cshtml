@@ -37,7 +37,7 @@ Viewbag.Title= "Disable Module"
                 @Html.LabelFor(model => model.isDisabled, new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
                     @Html.EditorFor(model => model.isDisabled)
-                    @Html.ValidationMessageFor(model => model.isDisabled)
+                    @Html.ValidationMessageFor(model => model.isDisabled, "", new { @class = "text-danger" })
                 </div>
             </div>
 
@@ -45,7 +45,7 @@ Viewbag.Title= "Disable Module"
                 @Html.LabelFor(model => model.DisableModuleNote, new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
                     @Html.EditorFor(model => model.DisableModuleNote)
-                    @Html.ValidationMessageFor(model => model.DisableModuleNote)
+                    @Html.ValidationMessageFor(model => model.DisableModuleNote, "", new { @class = "text-danger" })
                 </div>
             </div>
 
@@ -54,7 +54,7 @@ Viewbag.Title= "Disable Module"
                 <div class="col-md-10">
                     @*@Html.DropDownList(model => model.DisableReason, new { htmlAttributes = new { @class = "form-control" } })*@
                     @Html.DropDownList("DisableReason", EnumHelper.GetSelectList(typeof(Module.DisableModuleReason)), "Select My Type", new { @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.DisableReason)
+                    @Html.ValidationMessageFor(model => model.DisableReason, "", new { @class = "text-danger" })
                 </div>
             </div>
 
