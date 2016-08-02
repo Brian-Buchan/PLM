@@ -108,7 +108,7 @@ using (Html.BeginForm())
             @Html.LabelFor(model => model.isPrivate, new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => defaultPrivateSetting, new { htmlAttributes = new {@class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.isPrivate)
+                @Html.ValidationMessageFor(model => model.isPrivate, "", new { @class = "text-danger" })
             </div>
         </div>
         <br />

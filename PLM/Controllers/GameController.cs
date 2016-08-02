@@ -357,10 +357,15 @@ namespace PLM.Controllers
         [NonAction]
         private void CheckMaxAnswers()
         {
-            if (currentModule.Answers.Count <= ((UserGameSession)Session["userGameSession"]).numAnswers)
+            // IsDivisible(x, 3) 3 is hard coded as we want the game to display multiple answers in groups of 3
+            while (currentModule.Answers.Count < ((UserGameSession)Session["userGameSession"]).numAnswers || !MathExtensions.IsDivisible(((UserGameSession)Session["userGameSession"]).numAnswers, 3))
             {
-                ((UserGameSession)Session["userGameSession"]).numAnswers = currentModule.Answers.Count - 2;
+                ((UserGameSession)Session["userGameSession"]).numAnswers--;
             }
+            //if (currentModule.Answers.Count <= ((UserGameSession)Session["userGameSession"]).numAnswers)
+            //{
+            //    ((UserGameSession)Session["userGameSession"]).numAnswers = currentModule.Answers.Count - 2;
+            //}
         }
 
         /// <summary>

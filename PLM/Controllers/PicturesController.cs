@@ -364,7 +364,7 @@ namespace PLM.Controllers
             }
             else if (result == "TOO LARGE")
             {
-                return new HttpStatusCodeResult(HttpStatusCode.InternalServerError,
+                return new HttpStatusCodeResult(400,
                 "Image file size larger than 200 KB. \nTry lowering the quality when you save," +
                 " \nor resize the image to a smaller size.");
             }
@@ -537,7 +537,7 @@ namespace PLM.Controllers
             }
             catch (Exception ex)
             {
-                return "FAILED";
+                return ex.Message;
             }
         }
 
