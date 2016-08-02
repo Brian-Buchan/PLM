@@ -279,6 +279,10 @@
     <Compile Include="Migrations\201607131944284_dualAnswer.Designer.cs">
       <DependentUpon>201607131944284_dualAnswer.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201608021803154_attributionlength.cs" />
+    <Compile Include="Migrations\201608021803154_attributionlength.Designer.cs">
+      <DependentUpon>201608021803154_attributionlength.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AdminViewModel.cs" />
     <Compile Include="Models\ConfirmViewModel.cs" />
@@ -1378,6 +1382,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201607131944284_dualAnswer.resx">
       <DependentUpon>201607131944284_dualAnswer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201608021803154_attributionlength.resx">
+      <DependentUpon>201608021803154_attributionlength.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
