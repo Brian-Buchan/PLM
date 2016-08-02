@@ -329,16 +329,16 @@ namespace PLM.Controllers
 
             string imgId = Request.Form.Get("imgId");
             string answerId = Request.Form.Get("answerId");
-            //string origUrl = Request.Form.Get("origUrl");
             string imgData = Request.Form.Get("imgData");
+            
+            //This section of code was to check that the extension was the same for both files.
+            //string origUrl = Request.Form.Get("origUrl");
             //string imageFormat = "." + imgData.Substring(imgData.IndexOf('/') + 1, imgData.IndexOf(';'));
 
             //if (imageFormat == ".jpeg")
             //{
             //    imageFormat = ".jpg";
             //}
-
-            ////origUrl = ;
 
             //try
             //{
