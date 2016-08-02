@@ -184,7 +184,7 @@ a[type="button-submit-sm"] :focus{
 }
 
 .button-enter {
-  width: 100%;
+  width: 15%;
   font-family:Arial;
   background-color: #5cb85c;
   color: #fff;
@@ -255,6 +255,11 @@ input[type='range']::-webkit-slider-thumb {
     vertical-align: middle;
     width:100%;
 }
+
+.offset{
+    margin-left:30%;
+}
+
 .descriptionBox{
     width:400px; 
     height:100px; 
