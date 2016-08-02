@@ -1,38 +1,124 @@
 ﻿@model IEnumerable<PLM.Module>
 @{
-    ViewBag.Title = "Modules Index";
+    ViewBag.Title = "All modules";
 }
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Modules</title>
+    <link rel="shortcut icon" href="~/Content/images/ico/favicon.ico">
+</head>
 
-<h2>Index</h2>
+<body>
+    <br />
+    <section id="page-breadcrumb">
+        <div class="vertical-center sun">
+            <div class="container">
+                <div class="row">
+                    <div class="action">
+                        <div class="col-sm-12">
+                            <h1 class="title">Modules Administration</h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--/#page-breadcrumb-->
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Name)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.CategoryId)
-        </th>
-        <th></th>
-    </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CategoryId)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ModuleID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ModuleID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ModuleID })
-        </td>
-    </tr>
-}
+    @using (Html.BeginForm())
+    {
+        <p>
+            Find by Module Name: @Html.TextBox("SearchString")
+            <input type="submit" value="Search" />
+        </p>
+    }
 
-</table>
+    <p>
+        @Html.ActionLink("View Disabled Modules", "DisabledModulesList", new { @class = "floatRight", type = "button" })
+    </p>
+
+    @*@using (Html.BeginForm())
+    {
+        <p>
+            Find by Username: @Html.TextBox("UserSearchString")
+            <input type="submit" value="Search" />
+        </p>
+    }*@
+
+    <table class="table">
+        <tr>
+            <th>
+                @Html.ActionLink("Name", "Index", new { sortOrder = ViewBag.NameSortParam })
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CategoryId)
+            </th>
+            <th></th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            //Styles the background color red if the module is disabled
+            var style = (item.isDisabled == true) ? "background-color: #ff8080" : "";
+            
+            <tr style="@style">
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @switch (item.CategoryId)
+                    {
+                        case 1 :
+                        <p>Aviation</p>
+                            break;
+                        case 2:
+                        <p>Business</p>
+                            break;
+                        case 3:
+                        <p>Communications</p>
+                            break;
+                        case 4:
+                        <p>Humanities</p>
+                            break;
+                        case 5:
+                        <p>Maritime</p>
+                            break;
+                        case 6:
+                        <p>Math</p>
+                            break;
+                        case 7:
+                        <p>Medical</p>
+                            break;
+                        case 8:
+                        <p>Science</p>
+                            break;
+                        case 9:
+                        <p>Social Science</p>
+                            break;
+                        case 10:
+                        <p>Technical</p>
+                            break;
+                        case 11:
+                        <p>Other</p>
+                            break;
+                            
+                    }
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.ModuleID }) |
+                    @Html.ActionLink("Delete", "AdminDelete", new { id = item.ModuleID })
+                </td>
+                <td>
+                    @Html.ActionLink("Disable", "DisableModule", new { id = item.ModuleID, type="button-warning"})
+                </td>
+            </tr>
+        }
+
+    </table>
+    @Html.ActionLink("Back to Administration Page", "Admin", "Home")
+</body>

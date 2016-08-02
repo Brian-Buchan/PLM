@@ -1,6 +1,6 @@
 ﻿@model PLM.Module
 @{
-    ViewBag.Title = " Modeules Edit";
+    ViewBag.Title = "Edit Module ";
 }
 <head>
     <meta charset="utf-8">
@@ -8,16 +8,8 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <title>Edit Module</title>
-    <link href="~/Content/bootstrap.min.css" rel="stylesheet">
-    <link href="~/Content/font-awesome.min.css" rel="stylesheet">
-    <link href="~/Content/animate.min.css" rel="stylesheet">
-    <link href="~/Conetnt/lightbox.css" rel="stylesheet">
-    <link href="~/Content/main.css" rel="stylesheet">
-    <link href="~/Content/responsive.css" rel="stylesheet">
-
     <link rel="shortcut icon" href="~/Content/images/ico/favicon.ico">
 </head>
-
 <section id="page-breadcrumb">
     <div class="vertical-center sun">
         <div class="container">
@@ -31,12 +23,6 @@
         </div>
     </div>
 </section>
-
-<br />
-<br />
-<br />
-
-
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
@@ -54,9 +40,9 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.CategoryId, new { @class = "control-label col-md-2" })
+            <label class="control-label col-md-2" for="CategoryID">Category</label>
             <div class="col-md-10">
-                @Html.EditorFor(model => model.CategoryId)
+                @Html.DropDownList("CategoryId")
                 @Html.ValidationMessageFor(model => model.CategoryId)
             </div>
         </div>
@@ -64,32 +50,52 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Description, new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Description)
+                @*@Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "LargeTextBox" } })*@
+                @Html.TextAreaFor(model => model.Description, new { rows="5", cols="25"})
                 @Html.ValidationMessageFor(model => model.Description)
             </div>
         </div>
-
+        @*<div class="form-group" title="String displayed when a the answer is correct">
+            @Html.LabelFor(model => model.rightAnswerString, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.rightAnswerString, new { @class = "control-label col-md-2" })
+                @Html.ValidationMessageFor(model => model.rightAnswerString)
+            </div>
+        </div>
+        <div class="form-group" title="String displayed when a the answer is incorrect">
+            @Html.LabelFor(model => model.wrongAnswerString, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.wrongAnswerString, new { @class = "control-label col-md-2" })
+                @Html.ValidationMessageFor(model => model.wrongAnswerString)
+            </div>
+        </div>*@
         <div class="form-group">
             @Html.LabelFor(model => model.DefaultNumAnswers, new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.DefaultNumAnswers)
-                @Html.ValidationMessageFor(model => model.DefaultNumAnswers)
+                <input type="range" id="numAnswers" name="DefaultNumAnswers" step="3" min="3" max="15" value="@Model.DefaultNumAnswers" oninput="outputUpdate(value, '#numAnswersOutput')" />
+                <output for="numAnswers" id="numAnswersOutput">@Model.DefaultNumAnswers</output>
+                @*@Html.EditorFor(model => model.DefaultNumAnswers)
+                @Html.ValidationMessageFor(model => model.DefaultNumAnswers)*@
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.DefaultNumPictures, new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.DefaultNumQuestions, new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.DefaultNumPictures)
-                @Html.ValidationMessageFor(model => model.DefaultNumPictures)
+                <input type="range" id="numQuestions" name="DefaultNumQuestions" step="5" min="5" max="260" value="@Model.DefaultNumQuestions" oninput="outputUpdate(value, '#numQuestionsOutput')" />
+                <output for="numQuestions" id="numQuestionsOutput">@Model.DefaultNumQuestions</output>
+                @*@Html.EditorFor(model => model.DefaultNumPictures)
+                @Html.ValidationMessageFor(model => model.DefaultNumPictures)*@
             </div>
         </div>
 
         <div class="form-group">
             @Html.LabelFor(model => model.DefaultTime, new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.DefaultTime)
-                @Html.ValidationMessageFor(model => model.DefaultTime)
+                <input type="range" id="time" name="DefaultTime" value="@Model.DefaultTime" min="2" max="32" step="2" oninput="outputUpdate(value, '#timeOutput')" />
+                <output for="time" id="timeOutput">@Model.DefaultTime</output>
+                @*@Html.EditorFor(model => model.DefaultTime)
+                @Html.ValidationMessageFor(model => model.DefaultTime)*@
             </div>
         </div>
 
@@ -104,10 +110,22 @@
         <br />
 
         <p>
-            @Html.ActionLink("Add New Answer", "Create", new { controller = "Answers"})
+            @Html.ActionLink("Add New Answer", "Create", new { controller = "Answers", ID = Model.ModuleID})
         </p>
-
-        <div class="form-group col-md-10">
+        @{
+            if (Model.Answers.Count <= 3)
+            {
+                <p class="text-danger">You need More answers for this to be a valid PLM</p>
+            }
+            foreach (Answer ans in Model.Answers)
+            {
+                if (ans.Pictures.Count == 0)
+                {
+                    <p class="text-danger">@ans.AnswerString needs pictures added to be a valid answer.</p>
+                }
+            }
+}
+        <div class="form-group">
             <table class="table ">
                 <tr>
                     <th>
@@ -116,6 +134,7 @@
                     <th>
                         Picture Count
                     </th>
+                    <th></th>
                     <th></th>
                 </tr>
 
@@ -130,7 +149,7 @@
                             @ans.Pictures.Count()
                         </td>
                         <td>
-                            @*@Html.ActionLink("Add Image", "Create", new { controller = "Pictures", id = ans.AnswerID })*@
+                            @Html.ActionLink("Add Picture", "Create", new { controller = "Pictures", id = ans.AnswerID })
                         </td>
                         <td>
                             @Html.ActionLink("Edit", "Edit", new { controller = "Answers", id = ans.AnswerID }) |
@@ -141,30 +160,20 @@
                 }
 
             </table>
-
-            @*Displays each picture in module*@
-            @*<div class="form-group, scroll-box, col-md-10">
-                @foreach (Answer ans in Model.Answers)
-                {
-                    foreach (Picture pic in ans.Pictures)
-                    {
-                        <img src="@pic.Location" alt="Answer Image" class="img-thumbnail" width="225"/>
-                    }
-                }
-            </div>*@
         </div>
         <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
+            <div class="floatRight clearLeft">
                 <input type="submit" value="Save" class="btn btn-submit" />
             </div>
         </div>
     </div>
 }
 
-<div>
-    @Html.ActionLink("Back to List", "Index", new { controller = "Profile" });
+<div class="floatLeft clearRight">
+    @Html.ActionLink("Back to List", "Index", new { controller = "Profile", @class="btn" })
 </div>
 
 @section Scripts {
+    <script src="~/Scripts/Setup.js"></script>
     @Scripts.Render("~/bundles/jqueryval")
 }

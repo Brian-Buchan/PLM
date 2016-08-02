@@ -1,0 +1,64 @@
+﻿@{
+    ViewBag.Title = "Roles by User";
+    string userName = ViewBag.UserName;
+}
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>View Roles</title>
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet">
+    <link href="~/Content/font-awesome.min.css" rel="stylesheet">
+    <link href="~/Conent/animate.min.css" rel="stylesheet">
+    <link href="~/Conetnt/lightbox.css" rel="stylesheet">
+    <link href="~/Content/main.css" rel="stylesheet">
+    <link href="~/Content/responsive.css" rel="stylesheet">
+</head>
+
+<body>
+
+    <section id="page-breadcrumb">
+        <div class="vertical-center sun">
+            <div class="container">
+                <div class="row">
+                    <div class="action">
+                        <div class="col-sm-12">
+                            <h1 class="title">View Role</h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <h3>User: @ViewBag.UserName</h3>
+
+    <p>
+        @Html.ActionLink("Add a Role", "AddRoleToUser", new { userName = userName })
+    </p>
+    <table class="table">
+        <tr>
+            <th>
+                User Role
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var role in ViewBag.RolesForUser)
+        {
+            <tr>
+                <td>
+                    @role
+                </td>
+                <td>
+                    @Html.ActionLink("Remove", "DeleteRoleForUser", new { userName = userName, roleName = role })
+                </td>
+            </tr>
+        }
+
+    </table>
+
+    <a href="~/Account/Index">Click here to return to the list of users.</a>
+</body>

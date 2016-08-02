@@ -1,0 +1,64 @@
+﻿@model PLM.Models.Report
+
+@{
+    ViewBag.Title = "Report Details";
+}
+<section id="page-breadcrumb">
+    <div class="vertical-center sun">
+        <div class="container">
+            <div class="row">
+                <div class="action">
+                    <div class="col-sm-12">
+                        <h1 class="title">@ViewBag.Title</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div>
+	<hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.moduleID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.moduleID)
+        </dd>
+        <dt>
+            User who reported it
+        </dt>
+
+        <dd>
+            @ViewBag.ReporterUserName ----
+            @Html.DisplayFor(model => model.userID)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.category)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.category)
+        </dd>
+        
+    </dl>
+    <hr />
+    <h1>@Html.DisplayNameFor(model => model.description)</h1>
+    <div class="descriptionBox">
+        @Html.DisplayFor(model => model.description)
+    </div>
+</div>
+<p>
+    @{
+        if (User.IsInRole("Admin"))
+        {
+            @Html.ActionLink("Back to List", "Index")
+        }
+        else
+        {
+            @Html.ActionLink("Back to List", "YourReports")
+        }
+    }
+</p>

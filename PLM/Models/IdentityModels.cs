@@ -13,14 +13,17 @@ namespace PLM
     {
         [Required]
         [Display(Name = "First Name")]
+        [MaxLength(25)]
         public string FirstName { get; set; }
 
         [Required]
         [Display(Name = "Last Name")]
+        [MaxLength(25)]
         public string LastName { get; set; }
 
         [Required]
         [Display(Name = "Institution")]
+        [MaxLength(40)]
         public string Institution { get; set; }
 
         [Display(Name = "Avatar Url")]
@@ -29,17 +32,47 @@ namespace PLM
         [Display(Name = "Modules List")]
         public List <Module> ModuleList { get; set; }
 
-        [Display(Name = "Score List")]
-        public List<Score> ScoreList { get; set; }
+        //[Display(Name = "Enrolled Courses")]
+        //public List<Course> EnrolledCourses { get; set; }
 
-        [Display(Name = "Enrolled Courses")]
-        public List<Course> EnrolledCourses { get; set; }
-
-        [Display(Name = "Instructed Courses")]
-        public List<Course> InstructedCourses { get; set; }
+        //[Display(Name = "Instructed Courses")]
+        //public List<Course> InstructedCourses { get; set; }
 
         public int OverrideNumberOfAnswers { get; set; }
 
+        public enum AccountType
+        {
+            Free,
+            Premium            
+        }
+
+        public enum AccountStatus
+        {
+            Pending,
+            PendingInstrustorRole,
+            Active,
+            Disabled
+        }
+
+        [Display(Name = "Account Type")]
+        public AccountType Type { get; set; }
+
+        [Display(Name = "Account Status")]
+        public AccountStatus Status { get; set; }
+
+        [Display(Name = "Note")]
+        public string DisableAccountNote { get; set; }
+
+        public enum Reason
+        {
+            None,
+            AccountNotPaid, 
+            AgainstTermsOfUser,
+            Other
+        }
+
+        [Display(Name = "Reason")]
+        public Reason DisableAccountReason { get; set; }
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {
@@ -48,6 +81,7 @@ namespace PLM
             userIdentity.AddClaim(new Claim("FirstName", this.FirstName));
             userIdentity.AddClaim(new Claim("LastName", this.LastName));
             userIdentity.AddClaim(new Claim("Instution", this.Institution));
+            //userIdentity.AddClaim(new Claim("ProfilePicture", this.ProfilePicture));
             return userIdentity;
         }
     }
@@ -55,7 +89,7 @@ namespace PLM
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public ApplicationDbContext()
-            : base("DefaultConnection", throwIfV1Schema: false)
+            : base(DevPro.connectionStringName, throwIfV1Schema: false)
         {
         }
 
@@ -68,9 +102,14 @@ namespace PLM
         public DbSet<Answer> Answers { get; set; }
         public DbSet<Picture> Pictures { get; set; }
         public DbSet<Category> Categories { get; set; }
-        public DbSet<Course> Courses { get; set; }
-        public DbSet<CourseWork> CourseWork { get; set; }
-        public DbSet<Assignment> Assignments { get; set; }
+        //public DbSet<Course> Courses { get; set; }
+        //public DbSet<CourseWork> CourseWork { get; set; }
+        //public DbSet<Assignment> Assignments { get; set; }
         public DbSet<Score> Scores { get; set; }
+        public DbSet<PLM.Models.Report> Reports { get; set; }
+
+        public System.Data.Entity.DbSet<PLM.DisableModuleViewModel> DisableModuleViewModels { get; set; }
+        
+        //public System.Data.Entity.DbSet<PLM.ApplicationUser> ApplicationUsers { get; set; }
     }
 }

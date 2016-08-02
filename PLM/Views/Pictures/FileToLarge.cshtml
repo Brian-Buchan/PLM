@@ -1,0 +1,28 @@
+﻿@model PLM.Picture
+@{
+    ViewBag.Title = "File Too Large";
+}
+
+<section id="page-breadcrumb">
+    <div class="vertical-center sun">
+        <div class="container">
+            <div class="row">
+                <div class="action">
+                    <div class="col-sm-12">
+                        <h1 class="title">@ViewBag.Title</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+The size limit on uploading an image is 200 kb.
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-actions no-color">
+        @Html.ActionLink("Back to List", "edit", new { controller = "Answers", id = ViewBag.AnswerID });
+    </div>
+}

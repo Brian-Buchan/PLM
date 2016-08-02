@@ -1,19 +1,82 @@
-﻿@{
-    ViewBag.Title = "Complete";
+﻿@model PLM.Score
+@{
+    ViewBag.Title = "Results";
+    ApplicationDbContext db = new ApplicationDbContext();
+    ApplicationUser user = new ApplicationUser();
 }
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Results</title>
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet">
+    <link href="~/Content/font-awesome.min.css" rel="stylesheet">
+    <link href="~/Content/animate.min.css" rel="stylesheet">
+    <link href="~/Conetnt/lightbox.css" rel="stylesheet">
+    <link href="~/Content/main.css" rel="stylesheet">
+    <link href="~/Content/responsive.css" rel="stylesheet">
 
-<h2>Complete</h2>
-<div>
-    @{
-        foreach (var score in TopTenScore.GetTopTenScores(ViewBag.ModuleID, ViewBag.UserId))
-        {
-            // TODO - Update username and scores
-            <p>@score.User.FirstName</p>
-            <p>@score.CorrectAnswers</p>
-        }
-    }
-    <p>YOUR SCORE:</p>
-    <p>@Model</p>
+    <link rel="shortcut icon" href="~/Content/images/ico/favicon.ico">
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="~/Content/images/ico/apple-touch-icon-144-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="~/Content/images/ico/apple-touch-icon-114-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="~/Content/images/ico/apple-touch-icon-72-precomposed.png">
+</head>
+    <section id="page-breadcrumb">
+        <div class="vertical-center sun">
+            <div class="container">
+                <div class="row">
+                    <div class="action">
+                        <div class="col-sm-12">
+                            <h1 class="title">Your Results</h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr class="line-through"/>
+    </section>
+    <div style="width:100%">
+    <div class="about-us" style="width:50%; float:left">
+        
+        <h1>Your Score: @{ string userScore = (Model.CorrectAnswers * 100).ToString(); }@userScore</h1>
+        <h2> @Model.CorrectAnswers out of @Model.TotalAnswers Correct </h2>
+        <h2>@ViewBag.ErrorMessage</h2>
+        <hr />
+        <div>
+            <div>
+                @Html.ActionLink("Play Again", "Setup", "Game", new { PLMid = ViewBag.ModuleID, changeSettings = 0}, new { Type = "button-submit-sm" })
+                <br/>
+                <br/>
+                    @if (User.IsInRole("Learner"))
+                    {
+                        @Html.ActionLink("Report this module", "Create", "Report", new { id = ViewBag.ModuleID },null)
+                        <br />
+                    }
+                    @Html.ActionLink("Return to module select", "Index", "Modules")
+            </div>
 
-</div>
+        </div>
+    </div>
+        <div class="about-us" style="width:50%; float:left">
+            <h3>Top Scores</h3>
+            <div class="Top10ScoreBoard">
+                @{
+                    <div class="Top10ScoreItem ScoreHeader">
+                        <p class="Top10Score">Name</p>
+                        <p class="Top10Score">Score</p>
+                        <p class="Top10Score">Date</p>
+                    </div>
+                    foreach (String[] score in ViewBag.Top10Scores)
+                    {
+                        <div class="Top10ScoreItem">
+                            <p class="Top10Score">@score[0]</p>
+                            <p class="Top10Score">@score[1]</p>
+                            <p class="Top10Score">@score[2]</p>
+                        </div>
+                    }
+                }
 
+            </div>
+        </div>
+    </div>

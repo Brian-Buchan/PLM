@@ -1,4 +1,5 @@
-﻿@{
+﻿@model PLM.Module
+@{
     ViewBag.Title = "Setup";
 }
 
@@ -15,7 +16,7 @@
     <link href="~/Content/main.css" rel="stylesheet">
     <link href="~/Content/responsive.css" rel="stylesheet">
     <link href="~/Content/Site.css" rel="stylesheet" />
-</head><!--/head-->
+</head>
 
 <section id="page-breadcrumb">
     <div class="vertical-center sun">
@@ -31,22 +32,27 @@
     </div>
 </section>
 
-@using (Html.BeginForm()) { 
+@* If you want a confirmation popup, uncomment the 'onsubmit = "return validate();"' part *@
+
+@using (Html.BeginForm("Setup", "Game", FormMethod.Post@*, new { onsubmit = "return validate();" }*@))
+{ 
     @Html.AntiForgeryToken()
     <div class="form-horizontal col-lg-offset-1">
-        <label>Number of Answers per Question</label>
-        <input type="range" id="numAnswers" name="numAnswers" step="3" min="3" max="15" value="12" oninput="outputUpdate(value, '#numAnswersOutput')" />
-        <output for="numAnswers" id="numAnswersOutput">12</output>
+        <label>Number of Answers to Choose From per Question</label>
+        <input type="range" id="numAnswers" name="numAnswers" step="3" min="3" max="15" value="@Model.DefaultNumAnswers" oninput="outputUpdate(value, '#numAnswersOutput')" />
+        <output for="numAnswers" id="numAnswersOutput">@Model.DefaultNumAnswers</output>
 
-        <label>Number of Questions</label>
-        <input type="range" id="numQuestions" name="numQuestions" step="5" min="5" max="260" value="50" oninput="outputUpdate(value, '#numQuestionsOutput')" />
-        <output for="numQuestions" id="numQuestionsOutput">50</output>
+        <label>Number of Questions to Ask</label>
+        <input type="range" id="numQuestions" name="numQuestions" step="5" min="5" max="260" value="@Model.DefaultNumQuestions" oninput="outputUpdate(value, '#numQuestionsOutput')" />
+        <output for="numQuestions" id="numQuestionsOutput">@Model.DefaultNumQuestions</output>
 
         <label>Time Limit</label>
-        <input type="range" id="time" name="time" value="5" min="3" max="120" step="1" oninput="outputUpdate(value, '#timeOutput')" />
-        <output for="time" id="timeOutput">5</output>
+        <input type="range" id="time" name="time" value="@Model.DefaultTime" min="2" max="32" step="2" oninput="outputUpdate(value, '#timeOutput')" />
+        <output for="time" id="timeOutput">@Model.DefaultTime</output>
         <br />
-        <input type="submit" name="btnPlay" value="Play" class="btn btn-success" />
+        <input type="submit" name="btnPlay" value="Play" class="button-enter"/>
     </div>
 }
+
+@Html.ActionLink("Back to Modules List", "Index", "Modules")
 <script src="~/Scripts/Setup.js"></script>

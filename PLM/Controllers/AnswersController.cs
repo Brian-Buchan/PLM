@@ -7,6 +7,10 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using PLM;
+using System.IO;
+using System.Drawing;
+using System.Drawing.Imaging;
+using PLM.CutomAttributes;
 
 namespace PLM.Controllers
 {
@@ -37,9 +41,29 @@ namespace PLM.Controllers
         }
 
         // GET: /Answers/Create
-        public ActionResult Create()
+        [AuthorizeOrRedirectAttribute(Roles = "Instructor")]
+        public ActionResult Create(int ID, string error)
         {
-            ViewBag.ModuleID = new SelectList(db.Modules, "ModuleID", "Name");
+            try
+            {
+                ViewBag.ModuleID = ID;
+
+                var modules = db.Modules.ToList();
+
+                ViewBag.ModuleName = modules.Find(x => x.ModuleID == ID).Name;
+
+                var answers = db.Answers.ToList();
+
+                ViewBag.ModuleAnsList = (from a in answers
+                                         where a.ModuleID == ID
+                                         select a).ToList();
+
+            }
+            catch (Exception)
+            {
+                ViewBag.Error = "You cannot add duplicate answers";
+            }
+            ViewBag.Error = error;
             return View();
         }
 
@@ -48,22 +72,33 @@ namespace PLM.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "AnswerID,AnswerString,ModuleID")] Answer answer)
+        [AuthorizeOrRedirectAttribute(Roles = "Instructor")]
+        public ActionResult Create([Bind(Include = "AnswerID,AnswerString,ModuleID,PictureCount")] Answer answer)
         {
-            if (ModelState.IsValid)
+            try
             {
-                db.Answers.Add(answer);
-                db.SaveChanges();
-                return RedirectToAction("edit", new { controller = "ModulesEdit", id = answer.ModuleID });
+                if (ModelState.IsValid)
+                {
+                    db.Answers.Add(answer);
+                    db.SaveChanges();
+                    return RedirectToAction("Create", new { id = answer.ModuleID });
+                }
             }
+            catch (Exception)
+            {
 
-            ViewBag.ModuleID = new SelectList(db.Modules, "ModuleID", "Name");
-            return View(answer);
+            }
+            //answer.Module = db.Modules.Find(answer.ModuleID);
+            return RedirectToAction("Create", new { error = "You cannot add duplicate answers" });
         }
 
         // GET: /Answers/Edit/5
+        [AuthorizeOrRedirectAttribute(Roles = "Instructor")]
         public ActionResult Edit(int? id)
         {
+            Response.Cache.SetCacheability(HttpCacheability.NoCache);
+            Response.AppendHeader("Pragma", "no-cache"); // HTTP 1.0.
+            Response.AppendHeader("Expires", "-1"); // Proxies.
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -82,19 +117,28 @@ namespace PLM.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "AnswerID,AnswerString,ModuleID")] Answer answer)
+        [AuthorizeOrRedirectAttribute(Roles = "Instructor")]
+        public ActionResult Edit([Bind(Include = "AnswerID,AnswerString,ModuleID,PictureCount")] Answer answer, int? ModuleID)
         {
             if (ModelState.IsValid)
             {
+
                 db.Entry(answer).State = EntityState.Modified;
+                if (ModuleID != null)
+                {
+                    answer.ModuleID = (int)ModuleID;
+                }
                 db.SaveChanges();
-                return RedirectToAction("edit", new { controller = "ModulesEdit", id = answer.ModuleID });
+                return RedirectToAction("Create", new { controller = "Answers", id = answer.ModuleID });
             }
             ViewBag.ModuleID = new SelectList(db.Modules, "ModuleID", "Name");
             return View(answer);
         }
 
+
+
         // GET: /Answers/Delete/5
+        [AuthorizeOrRedirectAttribute(Roles = "Instructor")]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -112,12 +156,13 @@ namespace PLM.Controllers
         // POST: /Answers/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [AuthorizeOrRedirectAttribute(Roles = "Instructor")]
         public ActionResult DeleteConfirmed(int id)
         {
             Answer answer = db.Answers.Find(id);
-            db.Answers.Remove(answer);
-            db.SaveChanges();
-            return RedirectToAction("edit", new { controller = "ModulesEdit", id = answer.ModuleID});
+
+            DirectoryHandler.DeleteAnswer(id);
+            return RedirectToAction("edit", new { controller = "ModulesEdit", id = answer.ModuleID });
         }
 
         protected override void Dispose(bool disposing)

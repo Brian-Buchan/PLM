@@ -1,0 +1,28 @@
+﻿@model PLM.Picture
+@{
+    ViewBag.Title = "Invalid Image";
+}
+
+<section id="page-breadcrumb">
+    <div class="vertical-center sun">
+        <div class="container">
+            <div class="row">
+                <div class="action">
+                    <div class="col-sm-12">
+                        <h1 class="title">@ViewBag.Title</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+The image is of an invalid format(.jpg .jpeg .png are allowed types)
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-actions no-color">
+        @Html.ActionLink("Back to List", "edit", new { controller = "Answers", id = ViewBag.AnswerID });
+    </div>
+}

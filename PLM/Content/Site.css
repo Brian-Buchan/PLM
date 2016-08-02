@@ -17,16 +17,43 @@ textarea {
 }
 
 .moduleImage {
-    max-height: 200px;
     width: auto;
+    height:200px;
 }
 
 .floatLeft{
     float:left;
+    width:33%;
 }
 
 .floatRight{
     float:right;
+    width:33%;
+}
+.halfPanel{
+    width:50%;
+    float:left
+}
+.clearLeft{
+    clear:left;
+}
+
+.clearRight{
+    clear: right;
+}
+
+.accordianHeading{
+    color: #0099AE;
+}
+
+.defaultHeight{
+    height:250px;
+}
+
+.img-hover:hover{
+    border-style: solid;
+    border-color: black;
+    border-width: 1px;
 }
 
 article{
@@ -36,6 +63,7 @@ article{
 
 .scroll-box{
     overflow: scroll;
+    height:60%;
     scrollbar-face-color:#00aeef;
 }
 
@@ -55,6 +83,7 @@ article{
     visibility:visible;
 }
 
+
 .maxWidth{
     width:100%;
     padding:0px 0px;
@@ -62,6 +91,134 @@ article{
 .span{
     background-image: url("~/Content/images/home/under.png");
     background-size:100%;
+}
+
+a[type="button"] {
+  width: 100%;
+  background-color: #4fcccd;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 300;
+  letter-spacing: 5px;
+  text-transform: uppercase;
+  border-radius: 3px;
+  margin-top: 5px;
+  border-bottom: 3px solid #2f9697;
+  box-shadow: none;
+  padding: 10px;
+}
+
+a[type="button"] :hover, 
+a[type="button"] :focus{
+  color: #fff;
+  outline: none;
+  box-shadow: none;
+  opacity: .8;
+}
+
+a[type="button-enter"] {
+  width: 100%;
+  background-color: #5cb85c;
+  color: #fff;
+  font-size: 0.8em;
+  font-weight: 300;
+  letter-spacing: 5px;
+  border-radius: 3px;
+  margin-top: 5px;
+  box-shadow: none;
+  padding: 10px;
+}
+
+a[type="button-enter"] :hover, 
+a[type="button-enter"] :focus{
+  color: #fff;
+  outline: none;
+  box-shadow: none;
+  opacity: .8;
+}
+
+a[type="button-submit-sm"] {
+  width: 100%;
+  background-color: #4fcccd;
+  color: #fff;
+  font-size: 0.8em;
+  font-weight: 300;
+  letter-spacing: 5px;
+  border-radius: 3px;
+  margin-top: 5px;
+  box-shadow: none;
+  padding: 10px;
+}
+
+a[type="button-submit-sm"] :hover, 
+a[type="button-submit-sm"] :focus{
+  color: #fff;
+  outline: none;
+  box-shadow: none;
+  opacity: .8;
+}
+
+.button-submit-sm {
+  width: 100%;
+  background-color: #4fcccd;
+  color: #fff;
+  font-size: 0.8em;
+  font-weight: 300;
+  letter-spacing: 5px;
+  border-radius: 3px;
+  margin-top: 5px;
+  box-shadow: none;
+  padding: 10px;
+}
+
+.button-submit-sm :hover, 
+.button-submit-sm :focus{
+  color: #fff;
+  outline: none;
+  box-shadow: none;
+  opacity: .8;
+}
+
+.button-enter {
+  width: 100%;
+  background-color: #5cb85c;
+  color: #fff;
+  font-size: 0.8em;
+  font-weight: 300;
+  letter-spacing: 5px;
+  border-radius: 3px;
+  margin-top: 5px;
+  box-shadow: none;
+  padding: 10px;
+}
+
+.button-enter :hover, 
+.button-enter :focus{
+  color: #fff;
+  outline: none;
+  box-shadow: none;
+  opacity: .8;
+}
+
+a[type="button-warning"] {
+  width: 100%;
+  background-color: red;
+  color: #fff;
+  font-size: 0.8em;
+  font-weight: 300;
+  letter-spacing: 5px;
+  border-radius: 3px;
+  margin-top: 5px;
+  box-shadow: none;
+  padding: 10px;
+}
+
+a[type="button-warning"] :hover, 
+a[type="button-enter"] :focus{
+  color: #fff;
+  outline: none;
+  box-shadow: none;
+  opacity: .8;
 }
 
 input[type='range']::-webkit-slider-thumb {
@@ -75,3 +232,94 @@ input[type='range']::-webkit-slider-thumb {
 	 height: 20px;
 	 width: 20px;
 }
+#container {
+   width: 640px;
+   height: 480px;
+    white-space: nowrap;
+    
+    text-align: center; margin: 1em 0;
+}
+
+#container img {
+   vertical-align: middle;
+}
+.helper{
+     display: inline-block;
+    height: 480px;
+    vertical-align: middle;
+    width:100%;
+}
+.descriptionBox{
+    width:400px; 
+    height:100px; 
+    overflow:hidden;
+}
+hr {
+    height: 12px;
+    border: 0;
+    box-shadow: inset 0 12px 12px -12px rgba(0, 0, 0, 0.5);
+}
+
+.disabled{
+    background-color: red;
+}
+
+.Top10ScoreBoard{
+    background-color: #adc9db;
+    border: 2px solid black;
+    min-width: 350px;
+}
+
+.Top10ScoreItem{
+    overflow: hidden;
+    margin: 5px;
+}
+
+.Top10Score{
+    margin: 1.5%;
+    float: left;
+    width: 30%;
+}
+
+  #ScoreBoard {
+      float: right;
+      margin: 10px, 10px, 0px, 10px;
+      background-color: lightgray;
+      border: 2px solid black;
+      width: 300px;
+      height: 100px;
+  }
+
+  #picture {
+      display: block;
+      height: 480px;
+      width: 640px;
+      resize: none;
+      background-color: gray;
+  }
+
+  #gameBoard {
+      width: 1000px;
+      resize: none;
+      margin: 10px;
+  }
+
+  #ScoreBoard p {
+      float: left;
+      font-size: 20pt;
+      margin: 5px;
+  }
+
+  #answerButtons {
+      width: 640px;
+      height: auto;
+      resize: none;
+      background-color: lightgray;
+      border: 3px solid black;
+  }
+
+  #answerButtons Button {      
+    margin: 1.5%;
+    width: 30%;
+    overflow: hidden;
+  }

@@ -13,10 +13,35 @@ namespace PLM.Controllers
         private ModuleViewModel ModuleModel = new ModuleViewModel();
         
          //GET: Profile
+        public int categoryCount(int cat)
+        {
+            int count = (from p in db.Modules
+                         where p.CategoryId == cat && p.isDisabled == false
+                         select p).Count();
+            foreach (Module module in db.Modules)
+            {
+                if (module.Answers.Count() <= 5 && module.CategoryId == cat)
+                {
+                    try
+                    {
+                        Answer answer = module.Answers.ElementAt(0);
+                        Picture picture = answer.Pictures.ElementAt(0);
+                    }
+                    catch
+                    {
+                        count -= 1;
+                    }
+                }
+            }
+            return (count);
+        }
         public ActionResult Index(string sortOrder, string searchString, string currentFilter, int? filterParam, int? page)
         {
             ViewBag.CurrentSort = sortOrder;
             var modules = db.Modules.ToList();
+            modules = (from m in modules
+                            where m.isPrivate == false && m.isDisabled == false 
+                            select m).ToList();
 
             if (searchString != null)
             {
@@ -40,63 +65,19 @@ namespace PLM.Controllers
             {
                 modules = modules.Where(m => m.CategoryId == filterParam).ToList();
             }
-            //var query = (db.Modules
-            //            .GroupBy(p => new
-            //            {
-            //                p.CategoryId
-            //            })
-            //            .Select(g => new
-            //            {
-            //                g.Key.CategoryId,
-            //                Available = g.Count()
-            //            }));
-            //foreach(var x in ModuleModel.Cats)
-            ViewBag.Cat1Count = 
-                (from p in db.Modules
-             where p.CategoryId == 1
-             select p).Count();
-            ViewBag.Cat2Count =
-                (from p in db.Modules
-                 where p.CategoryId == 2
-                 select p).Count();
-            ViewBag.Cat3Count =
-                (from p in db.Modules
-                 where p.CategoryId == 3
-                 select p).Count();
-            ViewBag.Cat4Count =
-                (from p in db.Modules
-                 where p.CategoryId == 4
-                 select p).Count();
-            ViewBag.Cat5Count =
-                (from p in db.Modules
-                 where p.CategoryId == 5
-                 select p).Count();
-            ViewBag.Cat6Count =
-                (from p in db.Modules
-                 where p.CategoryId == 6
-                 select p).Count();
-            ViewBag.Cat7Count =
-                (from p in db.Modules
-                 where p.CategoryId == 7
-                 select p).Count();
-            ViewBag.Cat8Count =
-                (from p in db.Modules
-                 where p.CategoryId == 8
-                 select p).Count();
-           ViewBag.Cat9Count = 
-                (from p in db.Modules
-             where p.CategoryId == 9
-             select p).Count();
-            ViewBag.Cat10Count = 
-                (from p in db.Modules
-             where p.CategoryId == 10
-             select p).Count();
-            ViewBag.Cat11Count =
-                (from p in db.Modules
-                 where p.CategoryId == 11
-                 select p).Count();
 
-
+            ViewBag.filterParam = filterParam;
+            ViewBag.Cat1Count = categoryCount(1);
+            ViewBag.Cat2Count = categoryCount(2);
+            ViewBag.Cat3Count = categoryCount(3);
+            ViewBag.Cat4Count = categoryCount(4);
+            ViewBag.Cat5Count = categoryCount(5);
+            ViewBag.Cat6Count = categoryCount(6);
+            ViewBag.Cat7Count = categoryCount(7);
+            ViewBag.Cat8Count = categoryCount(8);
+            ViewBag.Cat9Count = categoryCount(9);
+            ViewBag.Cat10Count = categoryCount(10);
+            ViewBag.Cat11Count = categoryCount(11);
             int pageSize = 3;
             int pageNumber = (page ?? 1);
 

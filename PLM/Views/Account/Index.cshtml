@@ -1,0 +1,94 @@
+﻿@model IEnumerable<PLM.Models.EditUserViewModel>
+@{
+    ViewBag.Title = "Accounts";
+}
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Accounts</title>
+</head>
+
+<body>
+
+    
+    <section id="page-breadcrumb">
+        <div class="vertical-center sun">
+            <div class="container">
+                <div class="row">
+                    <div class="action">
+                        <div class="col-sm-12">
+                            <h1 class="title">Active Accounts</h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--/#page-breadcrumb-->
+
+    <p class="floatRight">
+        @Html.ActionLink("Create New Account", "Create", new { type = "button-enter" })
+    </p>
+
+    @using (Html.BeginForm())
+    {
+        <p>
+            Find by name: @Html.TextBox("SearchString")
+            <input type="submit" value="Search" class="button-submit-sm" />
+        </p>
+    }
+
+    <p>
+        @Html.ActionLink("View Disabled Accounts", "DisabledUsersList", new { @class = "floatRight", type = "button" })
+    </p>
+
+    <table class="table">
+        <tr>
+            <th>
+                @Html.ActionLink("Username", "Index", new { sortOrder = ViewBag.UsernameSortParam })
+            </th>
+            <th>
+                @Html.ActionLink("First Name", "Index", new { sortOrder = ViewBag.NameSortParam })
+            </th>
+            <th>
+                @Html.ActionLink("Last Name", "Index", new { sortOrder = ViewBag.LastSortParam })
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Institution)
+            </th>
+            <th></th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            var style = (item.Status == ApplicationUser.AccountStatus.Active) ? "background-color: #ff8080" : "";
+            <tr style="@style">
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FirstName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LastName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Institution)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { userName = item.UserName }) |
+                    @Html.ActionLink("Roles", "ViewUserRoles", new { userName = item.UserName }) |
+                    @Html.ActionLink("Delete", "Delete", new { userName = item.UserName })
+                </td>
+                <th>
+                    @Html.ActionLink("Change Status", "AccountDisable", new { userName = item.UserName }, new { type = "button-enter" })
+                </th>
+            </tr>
+        }
+
+    </table>
+    @Html.ActionLink("Back to Administration Page", "Admin", "Home")
+</body>

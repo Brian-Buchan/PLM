@@ -1,18 +1,13 @@
 ﻿@model PLM.Answer
-
+@{
+    ViewBag.Title = "Answer Details";
+}
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="">
     <title>Answer Details</title>
-    <link href="~/Content/bootstrap.min.css" rel="stylesheet">
-    <link href="~/Content/font-awesome.min.css" rel="stylesheet">
-    <link href="~/Content/animate.min.css" rel="stylesheet">
-    <link href="~/Conetnt/lightbox.css" rel="stylesheet">
-    <link href="~/Content/main.css" rel="stylesheet">
-    <link href="~/Content/responsive.css" rel="stylesheet">
-
     <link rel="shortcut icon" href="~/Content/images/ico/favicon.ico">
 </head>
 <section id="page-breadcrumb">
@@ -55,5 +50,5 @@
 </div>
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.AnswerID }) |
-    @Html.ActionLink("Back to List", "edit", new { controller = "ModulesEdit", id = Model.ModuleID });
+    @Html.ActionLink("Back to List", "edit", new { controller = "ModulesEdit", id = Model.ModuleID })
 </p>

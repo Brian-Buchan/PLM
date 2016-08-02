@@ -1,122 +1,187 @@
 ﻿@model PLM.Answer
-
 @{
-    ViewBag.Title = "Edit";
+    ViewBag.Title = "Edit answer";
+    int defaultPictureCount = 0;
 }
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Edit Answer</title>
+    <link rel="shortcut icon" href="~/Content/images/ico/favicon.ico">
+</head>
 
-<h2>Edit</h2>
 
+
+<section id="page-breadcrumb">
+    <div class="vertical-center sun">
+        <div class="container">
+            <div class="row">
+                <div class="action">
+                    <div class="col-sm-12">
+                        <h1 class="title">Edit Answer</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<br />
 
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
 
-    <div class="form-horizontal">
-        <div style="text-align:right; float:right">
+
+    @*<div class="floatRight">*@
+    <div>
+        @Html.ActionLink("Add Picture", "Create", new { Controller = "Pictures", id = Model.AnswerID, ModuleID = Model.ModuleID }, new { type = "button-enter" })
+    </div>
+
+    <div class="form-horizontal floatLeft" style="width:100%;">
+        @*<div style="text-align:right; float:right">
             <a href="http://plmeditor.azurewebsites.net" target="_blank">Edit an image to upload.</a>
-        </div>
-        <h4>Answer</h4>
-        <hr />
+        </div>*@
+
+
         @Html.ValidationSummary(true)
         @Html.HiddenFor(model => model.AnswerID)
         <div class="form-group">
             @Html.LabelFor(model => model.AnswerString, new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.AnswerString)
-                @Html.ValidationMessageFor(model => model.AnswerString)
+                @Html.EditorFor(model => model.AnswerString, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.AnswerString, "", new { @class = "text-danger" })
             </div>
         </div>
 
-        <div class="form-group">
+        <div class="form-group hidden">
             @Html.LabelFor(model => model.ModuleID, "ModuleID", new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownList("ModuleID", String.Empty)
-                @Html.ValidationMessageFor(model => model.ModuleID)
+                @Html.EditorFor(model => model.ModuleID, Model.ModuleID)
+                @Html.ValidationMessageFor(model => model.ModuleID, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group" hidden="hidden">
+            @Html.LabelFor(model => model.PictureCount, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => defaultPictureCount, new { htmlAttributes = new { @class = "form-control" } })
             </div>
         </div>
 
         <div class="form-group">
             @Html.LabelFor(model => model.Pictures, "Pictures", new { @class = "control-label col-md-2" })
-            <p>
-                @*@{
-                        Picture test = new Picture()
-                        {
-                            PictureID = 4,
-                            Location = "http://plmgamesite2.azurewebsites.net/Content/Images/PLM/AmerGeoPhoto/test.png",
-                            AnswerID = 1
-                        };
-                    }*@
-            </p>
+
             <div class="form-group, scroll-box, col-md-10">
                 @foreach (Picture pic in Model.Pictures)
                 {
-                    <img src="@pic.Location" alt="Answer Image" class="img-thumbnail" width="225" />
+                    <div class="col-xs-6 col-sm-6 col-md-4 portfolio-item branded logos">
+                        <div class="portfolio-wrapper defaultHeight">
+                            <div class="portfolio-single">
+                                <div class="portfolio-thumb img-hover">
+                                    <img onerror="this.src = '/PerceptualLearning/Content/images/Error.bmp';" src="@pic.Location" id="@pic.PictureID" title="@pic.AnswerID" class="img-responsive moduleImage" alt="Answer Image">
+                                </div>
+                            </div>
+                            <div class="portfolio-info ">
+                                @*<div class="halfPanel">*@
+                                    @Html.ActionLink("Edit Image", "ImageEditor", new { controller = "Pictures", id = pic.PictureID }) |
+                                @*</div>
+                                <div class="halfPanel">*@
+                                    @Html.ActionLink("Attribution", "Edit", new { controller = "Pictures", id = pic.PictureID }) |
+                                @*</div>
+                                <div class="halfPanel">*@
+                                    @Html.ActionLink("Delete", "Delete", new { controller = "Pictures", id = pic.PictureID })
+                                @*</div>*@
+                                @*<h2><a href="@Url.Action("Edit", "Pictures",new { Controller = "Pictures", id = pic.PictureID})">Attribution</a></h2>
+                                    <a href="@Url.Action("Delete", "Pictures",new { Controller = "Pictures", id = pic.PictureID})"></a>*@
+                            </div>
+                        </div>
+                    </div>
+                    @*<a href="@Url.Action("Delete", "Pictures",new { Controller = "Pictures", id = pic.PictureID})">*@
+                    @*<img onerror="this.src='C:/PerceptualLearning/Content/images/Error.bmp';" src="@pic.Location" alt="Answer Image" class="img-thumbnail" width="225" />*@
                 }
+                                     
             </div>
         </div>
 
         <br />
         <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
+            <div class="clearLeft floatRight col-lg-2">
                 <input type="submit" value="Save" class="btn btn-submit" />
             </div>
         </div>
     </div>
 }
 
-<div>
-    @Html.ActionLink("Add Picture", "Create", new { Controller = "Pictures", id = Model.AnswerID });
-</div>
+<script data-preload="true" data-path="@Url.Content("~/pixie-image-editor/pixie")" src="@Url.Content("~/pixie-image-editor/pixie/pixie-integrate.js")"></script>
 
-@*<!-- HTML heavily inspired by http://blueimp.github.io/jQuery-File-Upload/ -->
-<div class="table table-striped" class="files" id="previews">
+<script>
+    //function saveAll() {
+    //    $.ajax({
+    //        type: "POST",
+    //        url: '/ImageEditor/Save',
+    //        data: { willSave: "True" },
+    //        success: function (response) {
+    //            alert('Images saved successfully!');
+    //        },
+    //        error: function (xhr, status, text) {
+    //            alert(text);
+    //        }
+    //    });
+    //}
 
-    <div id="template" class="file-row">
-        <!-- This is used as the file preview template -->
-        <div>
-            <span class="preview"><img data-dz-thumbnail /></span>
-        </div>
-        <div>
-            <p class="name" data-dz-name></p>
-            <strong class="error text-danger" data-dz-errormessage></strong>
-        </div>
-        <div>
-            <p class="size" data-dz-size></p>
-            <div class="progress progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
-                <div class="progress-bar progress-bar-success" style="width:0%;" data-dz-uploadprogress></div>
-            </div>
-        </div>
-        <div>
-            <button class="btn btn-primary start">
-                <i class="glyphicon glyphicon-upload"></i>
-                <span>Start</span>
-            </button>
-            <button data-dz-remove class="btn btn-warning cancel">
-                <i class="glyphicon glyphicon-ban-circle"></i>
-                <span>Cancel</span>
-            </button>
-            <button data-dz-remove class="btn btn-danger delete">
-                <i class="glyphicon glyphicon-trash"></i>
-                <span>Delete</span>
-            </button>
-        </div>
-    </div>
+    //function discardChanges() {
+    //    $.ajax({
+    //        type: "POST",
+    //        url: '/ImageEditor/Save',
+    //        data: { willSave: "False" },
+    //        success: function (response) {
+    //            alert('Changes Discarded');
+    //        },
+    //        error: function (xhr, status, text) {
+    //            alert(text);
+    //        }
+    //    });
+    //}
 
+    var myPixie = Pixie.setOptions({
+        replaceOriginal: true,
+        appendTo: 'body',
+        onSave: function (data, img) {
+            $.ajax({
+                type: 'POST',
+                url: '/ImageEditor/ImageEditor',
+                data: { imgData: data },
+                success: function (response) {
+                    alert('Image changes have been saved successfully. \nRemember to ' +
+                    'click the save button to finalize your changes.');
+                },
+                error: function (xhr, status, text) {
+                    alert(text);
+                    myPixie.close();
+                }
+            });
+        }
+    });
+
+    $('#imgEdit').on('click', function (e) {
+        myPixie.open({
+            url: e.target.src,
+            image: e.target
+        });
+    });
+</script>
+
+
+@*<div style="text-align:right; float:right">
+    <a href="http://plmeditor.azurewebsites.net" target="_blank">Edit an image to upload.</a>
 </div>*@
-
-
-<div>
-    <div style="text-align:right; float:right">
-        <a href="http://plmeditor.azurewebsites.net" target="_blank">Edit an image to upload.</a>
-    </div>
-    @Html.ActionLink("Back to List", "edit", new { controller = "ModulesEdit", id = Model.ModuleID })
-</div>
+@*<div class="clearLeft floatRight">
+    @Html.ActionLink("Done", "Index", new { controller = "Profile" }, new { type = "button" })
+</div>*@
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }
-
-<script src="~/Content/dropzone.js"></script>
-<script src="~/Content/dropzone-amd-module.js"></script>
-<script src="~/Content/min/dropzone-amd-module.min.js"></script>
-<script src="~/Content/min/dropzone.min.js"></script>

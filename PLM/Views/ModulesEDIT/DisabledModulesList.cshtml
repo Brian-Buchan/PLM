@@ -1,0 +1,120 @@
+﻿@model IEnumerable<PLM.Module>
+
+@{
+    ViewBag.Title = "DisabledModulesList";
+}
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Disabled Modules List</title>
+    <link rel="shortcut icon" href="~/Content/images/ico/favicon.ico">
+</head>
+
+<body>
+    
+    <section id="page-breadcrumb">
+        <div class="vertical-center sun">
+            <div class="container">
+                <div class="row">
+                    <div class="action">
+                        <div class="col-sm-12">
+                            <h1 class="title">Disabled Modules List</h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--/#page-breadcrumb-->
+
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Category.CategoryName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DefaultNumAnswers)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DefaultTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DefaultNumQuestions)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.isPrivate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.rightAnswerString)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.wrongAnswerString)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.isDisabled)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DisableModuleNote)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DisableReason)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Category.CategoryName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DefaultNumAnswers)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DefaultTime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DefaultNumQuestions)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.isPrivate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.rightAnswerString)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.wrongAnswerString)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.isDisabled)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DisableModuleNote)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DisableReason)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.ModuleID }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.ModuleID })
+                </td>
+            </tr>
+        }
+
+    </table>
+</body>

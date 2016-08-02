@@ -7,26 +7,18 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <title>Home </title>
-    <link href="~/Content/bootstrap.min.css" rel="stylesheet">
-    <link href="~/Content/font-awesome.min.css" rel="stylesheet">
-    <link href="~/Conent/animate.min.css" rel="stylesheet">
-    <link href="~/Conetnt/lightbox.css" rel="stylesheet">
-    <link href="~/Content/main.css" rel="stylesheet">
-    <link href="~/Content/responsive.css" rel="stylesheet">
-
-</head><!--/head-->
+</head>
 <body>
-    <br/><br/>
+    
     <section id="home-slider">
         <div class="container">
             <div class="row">
                 <div class="main-slider">
                     <div class="slide-text">
                         <h1>Perceptual Learning Method</h1>
-                        <h2>-create and experience intuitive learning-</h2>
-                        <a href="~/Account/Register" class="btn btn-common">SIGN UP</a>
+                        <h2>-Create and experience intuitive learning-</h2>
                     </div>
-                    <img src="~/Content/images/home/ThinkGraphicColor.jpg" height="500" width="500" class="img-responsive floatRight" alt="slider image">
+                    <img onerror="this.src='Content/images/Error.bmp';" src="~/Content/images/home/ThinkGraphicColor.jpg" height="500" width="500" class="img-responsive floatRight" alt="slider image">
                 </div>
             </div>
         </div>
@@ -40,7 +32,7 @@
                     <a href="@Url.Action("Index", "Modules")">
                         <div class="single-service">
                             <div class="wow scaleIn" data-wow-duration="500ms" data-wow-delay="300ms">
-                                <img src="~/Content/images/home/learn.png" alt="Click here to start playing.">
+                                <img onerror="this.src='Content/images/Error.bmp';" src="~/Content/images/home/learn.png" alt="Click here to start playing.">
                             </div>
                             <h2>Learn</h2>
                             <p>Experience the power of perceptual learning with modules taliored to your category of intrest.</p>
@@ -51,7 +43,7 @@
                     <a href="@Url.Action("Create", "ModulesEdit")">
                         <div class="single-service">
                             <div class="wow scaleIn" data-wow-duration="500ms" data-wow-delay="600ms">
-                                <img src="~/Content/images/home/create.png" alt=" Click here to create a module.">
+                                <img onerror="this.src='Content/images/Error.bmp';" src="~/Content/images/home/create.png" alt=" Click here to create a module.">
                             </div>
                             <h2>Create</h2>
                             <p>As an instructor, gain the productivity and take control of the resource we've created to setup your own modules of category of your choice.</p>
@@ -62,7 +54,7 @@
                     <a href="@Url.Action("Register", "Account")">
                         <div class="single-service">
                             <div class="wow scaleIn" data-wow-duration="500ms" data-wow-delay="900ms">
-                                <img src="~/Content/images/home/join.png" alt="Click here to register.">
+                                <img onerror="this.src='Content/images/Error.bmp';" src="~/Content/images/home/join.png" alt="Click here to register.">
                             </div>
                             <h2>Join</h2>
                             <p>Register for an account in less than a minute and get strated learing without thinking right away!</p>
@@ -72,34 +64,11 @@
             </div>
         </div>
     </section>
-    <!--/#services-->
-    @*<section id="action" class="responsive">
-            <div class="vertical-center">
-                <div class="container">
-                    <div class="row">
-                        <div class="action take-tour">
-                            <div class="col-sm-7 wow fadeInLeft" data-wow-duration="500ms" data-wow-delay="300ms">
-                                <h1 class="title">Triangle Corporate Template</h1>
-                                <p>A responsive, retina-ready &amp; wide multipurpose template.</p>
-                            </div>
-                            <div class="col-sm-5 text-center wow fadeInRight" data-wow-duration="500ms" data-wow-delay="300ms">
-                                <div class="tour-button">
-                                    <a href="#" class="btn btn-common">TAKE THE TOUR</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>*@
-    <!--/#action-->
+
     <section id="features">
         <div class="container">
             <div class="row">
                 <div class="single-features">
-                    @*<div class="col-sm-5 wow fadeInLeft" data-wow-duration="500ms" data-wow-delay="300ms">
-                            <img src="~/Content/images/home/image1.png" class="img-responsive" alt="">
-                        </div>*@
                     <div class="col-sm-12 wow fadeInRight" data-wow-duration="500ms" data-wow-delay="300ms">
                         <h1>Philosophy</h1>
                         <p>Perceptual Learning is  <em>NOT</em>  flashcards.  It is much  <em>BIGGER</em>  than that. If you want to create a learning tool to learn definitions and recall facts, this is <em>NOT</em> it. If you want to create a kill and drill exercise for students to study for a test, this is  <em>NOT</em>  it.</p>
@@ -114,16 +83,14 @@
                         <p>The goal of a PLM is to introduce and reinforce a concept or idea or meaning without detailed explanation -or “any” explanation for that matter.  The goal is to SHOW students a concept, idea or meaning and allow them to  <em>experience</em>  and see what  <em>IT</em>  is.</p>
                         <p>Each item in a PLM is a concept, idea or meaning illustrated by AT LEAST 5 images.  See an example</p>
                     </div>
-                
+                </div>
+            </div>
         </div>
     </section>
     <!--/#features-->
     <footer id="footer" class="span">
         <div>
             <div class="row">
-                @*<div class="col-sm-12 text-center bottom-separator">
-                    <img src="~/Content/images/home/under.png" class="img-responsive inlin" alt="">
-                </div>*@
                 <div class="col-md-offset-4 col-md-3 col-sm-6">
                     <div class="contact-info bottom">
                         <h2>Contacts</h2>

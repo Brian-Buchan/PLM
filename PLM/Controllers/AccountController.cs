@@ -11,16 +11,489 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Owin;
 using PLM.Models;
-
+using System.Net;
+using System.Data.Entity;
+using SendGrid;
+using System.Configuration;
+using System.Diagnostics;
+using PLM.CutomAttributes;
+using System.Text.RegularExpressions;
+using System.Globalization;
 namespace PLM.Controllers
 {
+    public class RegexUtilities
+    {
+        bool invalid;
+        public bool IsValidEmail(string strIn)
+        {
+            invalid = false;
+            if (String.IsNullOrEmpty(strIn))
+                return false;
+
+            // Use IdnMapping class to convert Unicode domain names.
+            try
+            {
+                strIn = Regex.Replace(strIn, @"(@)(.+)$", this.DomainMapper,
+                                      RegexOptions.None, TimeSpan.FromMilliseconds(200));
+            }
+            catch (RegexMatchTimeoutException)
+            {
+                return false;
+            }
+
+            if (invalid) return false;
+
+            // Return true if strIn is in valid e-mail format.
+            try
+            {
+                return Regex.IsMatch(strIn,
+                      @"^(?("")("".+?(?<!\\)""@)|(([0-9a-z]((\.(?!\.))|[-!#\$%&'\*\+/=\?\^`\{\}\|~\w])*)(?<=[0-9a-z])@))" +
+                      @"(?(\[)(\[(\d{1,3}\.){3}\d{1,3}\])|(([0-9a-z][-\w]*[0-9a-z]*\.)+[a-z0-9][\-a-z0-9]{0,22}[a-z0-9]))$",
+                      RegexOptions.IgnoreCase, TimeSpan.FromMilliseconds(250));
+            }
+            catch (RegexMatchTimeoutException)
+            {
+                return (false);
+            }
+        }
+        private string DomainMapper(Match match)
+        {
+            // IdnMapping class with default property values.
+            IdnMapping idn = new IdnMapping();
+
+            string domainName = match.Groups[2].Value;
+            try
+            {
+                domainName = idn.GetAscii(domainName);
+            }
+            catch (ArgumentException)
+            {
+                invalid = true;
+            }
+            return match.Groups[1].Value + domainName;
+        }
+    }
+    
     [Authorize]
     public class AccountController : Controller
     {
         private ApplicationUserManager _userManager;
-
+        private ApplicationDbContext db = new ApplicationDbContext();
         public AccountController()
         {
+        }
+
+
+        ////[AuthorizeOrRedirectAttribute(Roles = "Admin")]
+        public ActionResult Index(string sortOrder, string searchString)
+        {
+            ViewBag.UsernameSortParam = String.IsNullOrEmpty(sortOrder) ? "username_asc" : "";
+            ViewBag.NameSortParam = sortOrder == "first_asc" ? "first_desc" : "first_asc";
+            ViewBag.LastSortParam = sortOrder == "last_asc" ? "last_desc" : "last_asc";
+
+            var db = new ApplicationDbContext();
+            var users = from u in db.Users
+                        where u.Status != ApplicationUser.AccountStatus.Disabled
+                        select u;
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                users = users.Where(u => u.LastName.Contains(searchString)
+                                       || u.FirstName.Contains(searchString)
+                                       && u.Status != ApplicationUser.AccountStatus.Disabled);
+            }
+            switch (sortOrder)
+            {
+                case "username_asc":
+                    users = users.OrderBy(u => u.UserName);
+                    break;
+                case "first_desc":
+                    users = users.OrderByDescending(u => u.FirstName);
+                    break;
+                case "last_desc":
+                    users = users.OrderByDescending(u => u.LastName);
+                    break;
+                case "first_asc":
+                    users = users.OrderBy(u => u.FirstName);
+                    break;
+                case "last_asc":
+                    users = users.OrderBy(u => u.LastName);
+                    break;
+            }
+
+            var model = new System.Collections.Generic.List<EditUserViewModel>();
+
+            foreach (var user in users)
+            {
+                var u = new EditUserViewModel(user);
+                model.Add(u);
+            }
+            return View(model);
+        }
+
+        ////[AuthorizeOrRedirectAttribute(Roles = "Admin")]
+        public ActionResult DisabledUsersList(string sortOrder, string searchString)
+        {
+            ViewBag.UsernameSortParam = String.IsNullOrEmpty(sortOrder) ? "username_asc" : "";
+            ViewBag.NameSortParam = sortOrder == "first_asc" ? "first_desc" : "first_asc";
+            ViewBag.LastSortParam = sortOrder == "last_asc" ? "last_desc" : "last_asc";
+
+            var db = new ApplicationDbContext();
+            var users = from u in db.Users
+                        where u.Status == ApplicationUser.AccountStatus.Disabled
+                        select u;
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                users = users.Where(u => u.LastName.Contains(searchString)
+                                       || u.FirstName.Contains(searchString)
+                                       && u.Status == ApplicationUser.AccountStatus.Disabled);
+            }
+            switch (sortOrder)
+            {
+                case "username_asc":
+                    users = users.OrderBy(u => u.UserName);
+                    break;
+                case "first_desc":
+                    users = users.OrderByDescending(u => u.FirstName);
+                    break;
+                case "last_desc":
+                    users = users.OrderByDescending(u => u.LastName);
+                    break;
+                case "first_asc":
+                    users = users.OrderBy(u => u.FirstName);
+                    break;
+                case "last_asc":
+                    users = users.OrderBy(u => u.LastName);
+                    break;
+            }
+            return View(users);
+        }
+
+        public ActionResult RoleRequest()
+        {
+            var db = new ApplicationDbContext();
+            var users = from u in db.Users
+                        where u.Status == ApplicationUser.AccountStatus.PendingInstrustorRole
+                        select u;
+
+            return View(users);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        //[AuthorizeOrRedirectAttribute(Roles = "Admin")]
+        public ActionResult RoleRequest(string userID)
+        {
+            ApplicationUser user = db.Users.First(x => x.Id == userID);
+            user.Status = ApplicationUser.AccountStatus.Active;
+            UserManager.AddToRole(user.Id, "Instructor");
+            db.Entry(user).State = EntityState.Modified;
+            db.SaveChanges();
+
+            return RedirectToAction("RoleRequest", "Account");
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        //[AuthorizeOrRedirectAttribute(Roles = "Admin")]
+        public ActionResult DenyRequest(string userID)
+        {
+            ApplicationUser user = db.Users.First(x => x.Id == userID);
+            user.Status = ApplicationUser.AccountStatus.Active;
+            db.Entry(user).State = EntityState.Modified;
+            db.SaveChanges();
+
+            return RedirectToAction("RoleRequest", "Account");
+        }
+
+       [HttpPost]
+        [ValidateAntiForgeryToken]
+        //[AuthorizeOrRedirectAttribute(Roles = "Admin")]
+        public ActionResult ApproveALLRequests()
+        {
+            var users = (from u in db.Users
+                        where u.Status == ApplicationUser.AccountStatus.PendingInstrustorRole
+                        select u).ToList();
+
+            for (int i = 0; i < users.Count; i++)
+            {
+                users[i].Status = ApplicationUser.AccountStatus.Active;
+                UserManager.AddToRole(users[i].Id, "Instructor");
+                db.Entry(users[i]).State = EntityState.Modified;
+                db.SaveChanges();
+            }    
+            
+            return RedirectToAction("RoleRequest", "Account");
+        }
+
+        //[AuthorizeOrRedirectAttribute(Roles = "Admin")]
+        public ActionResult Create()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        //[AuthorizeOrRedirectAttribute(Roles = "Admin")]
+        public async Task<ActionResult> Create(CreateUserViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                
+                //Sets user Account Type to Free and Account Status to Active
+                var user = new ApplicationUser()
+                {
+                    UserName = model.Email,
+                    Email = model.Email,
+                    FirstName = model.FirstName,
+                    LastName = model.LastName,
+                    Institution = model.Institution,
+                    Type = ApplicationUser.AccountType.Free,
+                    Status = ApplicationUser.AccountStatus.Active
+                };
+
+                IdentityResult result = await UserManager.CreateAsync(user, model.Password);
+                if (result.Succeeded)
+                {
+                    UserManager.AddToRole(user.Id, "Learner");
+
+                    return RedirectToAction("Index", "Account");
+                }
+                AddErrors(result);
+            }
+            return View(model);
+        }
+
+        //[AuthorizeOrRedirectAttribute(Roles = "Admin")]
+        public ActionResult Edit(string userName = null)
+        {
+            if (userName == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            var db = new ApplicationDbContext();
+            var user = db.Users.First(u => u.UserName == userName);
+            var model = new EditUserViewModel(user);
+
+            if (user == null)
+            {
+                return HttpNotFound();
+            }
+
+            return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        //[AuthorizeOrRedirectAttribute(Roles = "Admin")]
+        public ActionResult Edit([Bind(Include = "UserName, LastName, FirstName, Institution, Email, Status, Password, ConfirmPassword")] EditUserViewModel userModel)
+        {
+            if (ModelState.IsValid)
+            {
+                var db = new ApplicationDbContext();
+                var user = db.Users.First(u => u.UserName == userModel.UserName);
+
+                user.FirstName = userModel.FirstName;
+                user.LastName = userModel.LastName;
+                user.Email = userModel.Email;
+                user.Institution = userModel.Institution;
+                user.UserName = userModel.UserName;
+
+
+                PasswordHasher ph = new PasswordHasher();
+                user.PasswordHash = ph.HashPassword(userModel.Password);
+
+                db.Entry(user).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+
+            return View(userModel);
+        }
+
+        //[AuthorizeOrRedirectAttribute(Roles = "Admin")]
+        public ActionResult Delete(string userName = null)
+        {
+            var db = new ApplicationDbContext();
+            var user = db.Users.First(u => u.UserName == userName);
+            var model = new EditUserViewModel(user);
+
+            if (user == null)
+            {
+                return HttpNotFound();
+            }
+
+            return View(model);
+        }
+
+        [ValidateAntiForgeryToken]
+        [HttpPost, ActionName("Delete")]
+        //[AuthorizeOrRedirectAttribute(Roles = "Admin")]
+        public ActionResult DeleteConfirmed(string userName)
+        {
+            var db = new ApplicationDbContext();
+            var user = db.Users.First(u => u.UserName == userName);
+            db.Users.Remove(user);
+            db.SaveChanges();
+            return RedirectToAction("Index");
+        }
+
+        //[AuthorizeOrRedirectAttribute(Roles = "Admin")]
+        public ActionResult ViewUserRoles(string userName = null)
+        {
+            if (!string.IsNullOrWhiteSpace(userName))
+            {
+                List<string> userRoles;
+
+                using (var context = new ApplicationDbContext())
+                {
+                    var roleStore = new RoleStore<IdentityRole>(context);
+                    var roleManager = new RoleManager<IdentityRole>(roleStore);
+
+                    var userStore = new UserStore<ApplicationUser>(context);
+                    var userManager = new UserManager<ApplicationUser>(userStore);
+
+                    var user = userManager.FindByName(userName);
+                    if (user == null)
+                    {
+                        throw new Exception("User not found!");
+                    }
+
+                    var userRoleIds = (from r in user.Roles select r.RoleId);
+                    userRoles = (from id in userRoleIds
+                                 let r = roleManager.FindById(id)
+                                 select r.Name).ToList();
+                }
+
+                ViewBag.UserName = userName;
+                ViewBag.RolesForUser = userRoles;
+            }
+
+            return View();
+        }
+
+        //[AuthorizeOrRedirectAttribute(Roles = "Admin")]
+        public ActionResult DeleteRoleForUser(string userName = null, string roleName = null)
+        {
+            if ((!string.IsNullOrWhiteSpace(userName)) || (!string.IsNullOrWhiteSpace(roleName)))
+            {
+                List<string> userRoles;
+
+                using (var context = new ApplicationDbContext())
+                {
+                    var roleStore = new RoleStore<IdentityRole>(context);
+                    var roleManager = new RoleManager<IdentityRole>(roleStore);
+
+                    var userStore = new UserStore<ApplicationUser>(context);
+                    var userManager = new UserManager<ApplicationUser>(userStore);
+                    var user = userManager.FindByName(userName);
+
+                    if (user == null)
+                    {
+                        throw new Exception("User not found!");
+                    }
+
+                    if (userManager.IsInRole(user.Id, roleName))
+                    {
+                        userManager.RemoveFromRole(user.Id, roleName);
+                        context.SaveChanges();
+                    }
+
+                    var userRoleIds = (from r in user.Roles select r.RoleId);
+                    userRoles = (from id in userRoleIds
+                                 let r = roleManager.FindById(id)
+                                 select r.Name).ToList();
+                }
+
+                ViewBag.UserName = userName;
+                ViewBag.RolesForUser = userRoles;
+
+                return View("ViewUserRoles");
+            }
+
+            else
+            {
+                return View("Index");
+            }
+        }
+
+        //[AuthorizeOrRedirectAttribute(Roles = "Admin")]
+        public ActionResult AddRoleToUser(string userName = null)
+        {
+            List<string> roles;
+
+            using (var context = new ApplicationDbContext())
+            {
+                var roleStore = new RoleStore<IdentityRole>(context);
+                var roleManager = new RoleManager<IdentityRole>(roleStore);
+
+                roles = (from r in roleManager.Roles select r.Name).ToList();
+            }
+
+            ViewBag.Roles = new SelectList(roles);
+            ViewBag.UserName = userName;
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        //[AuthorizeOrRedirectAttribute(Roles = "Admin")]
+        public ActionResult AddRoleToUser(string roleName, string userName)
+        {
+            List<string> roles;
+
+            using (var context = new ApplicationDbContext())
+            {
+                var roleStore = new RoleStore<IdentityRole>(context);
+                var roleManager = new RoleManager<IdentityRole>(roleStore);
+
+                var userStore = new UserStore<ApplicationUser>(context);
+                var userManager = new UserManager<ApplicationUser>(userStore);
+                var user = userManager.FindByName(userName);
+
+                if (user == null)
+                {
+                    throw new Exception("User not found!");
+                }
+
+                if (roleManager == null)
+                {
+                    throw new Exception("Roles not found!");
+                }
+
+                var role = roleManager.FindByName(roleName);
+                if (userManager.IsInRole(user.Id, role.Name))
+                {
+                    ViewBag.ErrorMessage = "This user already has the role specified!";
+
+                    roles = (from r in roleManager.Roles select r.Name).ToList();
+                    ViewBag.Roles = new SelectList(roles);
+
+                    ViewBag.UserName = userName;
+
+                    return View();
+                }
+                else
+                {
+                    userManager.AddToRole(user.Id, role.Name);
+                    context.SaveChanges();
+
+                    List<string> userRoles;
+                    var userRoleIds = (from r in user.Roles select r.RoleId);
+                    userRoles = (from id in userRoleIds
+                                 let r = roleManager.FindById(id)
+                                 select r.Name).ToList();
+
+                    ViewBag.UserName = userName;
+                    ViewBag.RolesForUser = userRoles;
+
+                    return View("ViewUserRoles");
+                }
+
+            }
+
         }
 
         public AccountController(ApplicationUserManager userManager)
@@ -28,7 +501,8 @@ namespace PLM.Controllers
             UserManager = userManager;
         }
 
-        public ApplicationUserManager UserManager {
+        public ApplicationUserManager UserManager
+        {
             get
             {
                 return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
@@ -48,8 +522,8 @@ namespace PLM.Controllers
             return View();
         }
 
-        //
-        // POST: /Account/Login
+
+        //POST: /Account/Login
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
@@ -58,10 +532,20 @@ namespace PLM.Controllers
             if (ModelState.IsValid)
             {
                 var user = await UserManager.FindAsync(model.Email, model.Password);
+                if (user.Status == ApplicationUser.AccountStatus.Disabled)
+                {
+                    return RedirectToAction("AccountDisabled");
+                }
                 if (user != null)
                 {
+                    //if (!await UserManager.IsEmailConfirmedAsync(user.Id))
+                    //{
+                    //string callbackUrl = await SendEmailConfirmationTokenAsync(user.Id, "Confirm your account-Resend");
+                    ViewBag.errorMessage = "You must have a confirmed email to log on.";
+                    //return View("Error");
                     await SignInAsync(user, model.RememberMe);
                     return RedirectToLocal(returnUrl);
+                    //}
                 }
                 else
                 {
@@ -71,6 +555,54 @@ namespace PLM.Controllers
 
             // If we got this far, something failed, redisplay form
             return View(model);
+        }
+
+        //User View
+        public ActionResult AccountDisabled()
+        {
+            return View();
+        }
+
+        //Admin options page
+        public ActionResult AccountDisable(string userName = null)
+        {
+            if (userName == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            var db = new ApplicationDbContext();
+            var user = db.Users.First(u => u.UserName == userName);
+            var model = new DisableUserViewModel(user);
+
+            if (user == null)
+            {
+                return HttpNotFound();
+            }
+
+            return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        //[AuthorizeOrRedirectAttribute(Roles = "Admin")]
+        public ActionResult AccountDisable([Bind(Include = "UserName, DisableAccountReason, DisableAccountNote, Status")] DisableUserViewModel userModel)
+        {
+            if (ModelState.IsValid)
+            {
+                var db = new ApplicationDbContext();
+                var user = db.Users.First(u => u.UserName == userModel.UserName);
+
+                user.DisableAccountReason = userModel.DisableAccountReason;
+                user.DisableAccountNote = userModel.DisableAccountNote;
+                user.Status = userModel.Status;
+
+                db.Entry(user).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+
+            return View(userModel);
         }
 
         //
@@ -85,27 +617,76 @@ namespace PLM.Controllers
         // POST: /Account/Register
         [HttpPost]
         [AllowAnonymous]
-        [ValidateAntiForgeryToken]
+        //[ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(RegisterViewModel model)
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser() { UserName = model.Email, Email = model.Email, FirstName = model.FirstName, LastName = model.LastName, Institution = model.Institution };
+                RegexUtilities emailcheck = new RegexUtilities();
+                string email = model.Email;
+                var user = new ApplicationUser();
+                if (emailcheck.IsValidEmail(email))
+                {
+                    user = new ApplicationUser()
+                    {
+                        UserName = model.Email,
+                        Email = model.Email,
+                        FirstName = model.FirstName,
+                        LastName = model.LastName,
+                        Institution = model.Institution,
+                        Type = ApplicationUser.AccountType.Free,
+                        Status = ApplicationUser.AccountStatus.Active
+                    };
+                }
+                else
+                {
+                    user = new ApplicationUser()
+                    {
+                        UserName = "Validemail@nmc.edu",
+                        Email = model.Email,
+                        FirstName = model.FirstName,
+                        LastName = model.LastName,
+                        Institution = model.Institution,
+                        Type = ApplicationUser.AccountType.Free,
+                        Status = ApplicationUser.AccountStatus.Active
+                    };
+                }
+                //Sets account to Free Accont Type and Active Account Status
+                //var user = new ApplicationUser()
+                //{
+                //    UserName = model.Email,
+                //    Email = model.Email,
+                //    FirstName = model.FirstName,
+                //    LastName = model.LastName,
+                //    Institution = model.Institution,
+                //    Type = ApplicationUser.AccountType.Free,
+                //    Status = ApplicationUser.AccountStatus.Active
+                //};
                 IdentityResult result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-                    await SignInAsync(user, isPersistent: false);
+                    //await SignInAsync(user, isPersistent: false);
 
-                    // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
-                    // Send an email with this link
-                    // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-                    // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                    // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+                    //string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+                    //var callbackUrl = Url.Action("ConfirmEmail", "Account",
+                    //   new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+                    //await UserManager.SendEmailAsync(user.Id,
+                    //   "Confirm your account", "Please confirm your account by clicking <a href=\""
+                    //   + callbackUrl + "\">here</a>");
 
+                    UserManager.AddToRole(user.Id, "Learner");
+
+                    //string callbackUrl = await SendEmailConfirmationTokenAsync(user.Id, "Confirm your account");
+
+                    ViewBag.Message = "Check your email and confirm your account, you must be confirmed "
+                        + "before you can log in.";
+
+                    //return View("Info");
                     return RedirectToAction("Index", "Home");
                 }
                 else
                 {
+                    
                     AddErrors(result);
                     RedirectToAction("Index", "Profile");
                 }
@@ -115,12 +696,17 @@ namespace PLM.Controllers
             return View(model);
         }
 
+        public ActionResult AccessDenied()
+        {
+            return View();
+        }
+
         //
         // GET: /Account/ConfirmEmail
         [AllowAnonymous]
         public async Task<ActionResult> ConfirmEmail(string userId, string code)
         {
-            if (userId == null || code == null) 
+            if (userId == null || code == null)
             {
                 return View("Error");
             }
@@ -163,10 +749,10 @@ namespace PLM.Controllers
 
                 // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
                 // Send an email with this link
-                // string code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
-                // var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);		
-                // await UserManager.SendEmailAsync(user.Id, "Reset Password", "Please reset your password by clicking <a href=\"" + callbackUrl + "\">here</a>");
-                // return RedirectToAction("ForgotPasswordConfirmation", "Account");
+                string code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
+                var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+                await UserManager.SendEmailAsync(user.Id, "Reset Password", "Please reset your password by clicking <a href=\"" + callbackUrl + "\">here</a>");
+                return RedirectToAction("ForgotPasswordConfirmation", "Account");
             }
 
             // If we got this far, something failed, redisplay form
@@ -180,13 +766,13 @@ namespace PLM.Controllers
         {
             return View();
         }
-	
+
         //
         // GET: /Account/ResetPassword
         [AllowAnonymous]
         public ActionResult ResetPassword(string code)
         {
-            if (code == null) 
+            if (code == null)
             {
                 return View("Error");
             }
@@ -414,13 +1000,13 @@ namespace PLM.Controllers
                     if (result.Succeeded)
                     {
                         await SignInAsync(user, isPersistent: false);
-                        
+
                         // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
                         // Send an email with this link
                         // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
                         // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                         // SendEmail(user.Email, callbackUrl, "Confirm your account", "Please confirm your account by clicking this link");
-                        
+
                         return RedirectToLocal(returnUrl);
                     }
                 }
@@ -488,8 +1074,14 @@ namespace PLM.Controllers
         private void AddErrors(IdentityResult result)
         {
             foreach (var error in result.Errors)
-            {
+            { 
+                //Regex rgx = new Regex("Name \b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}\b is already taken.");
+                //if (!rgx.IsMatch(error))
+                //{
+                if(!(error.Contains("Name")&& error.Contains("is already taken.")))
+                {
                 ModelState.AddModelError("", error);
+                }
             }
         }
 
@@ -555,6 +1147,18 @@ namespace PLM.Controllers
                 context.HttpContext.GetOwinContext().Authentication.Challenge(properties, LoginProvider);
             }
         }
+
+        private async Task<string> SendEmailConfirmationTokenAsync(string userID, string subject)
+        {
+            string code = await UserManager.GenerateEmailConfirmationTokenAsync(userID);
+            var callbackUrl = Url.Action("ConfirmEmail", "Account",
+               new { userId = userID, code = code }, protocol: Request.Url.Scheme);
+            await UserManager.SendEmailAsync(userID, subject,
+               "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+
+            return callbackUrl;
+        }
+
         #endregion
     }
 }

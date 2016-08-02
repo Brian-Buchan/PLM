@@ -5,28 +5,75 @@ using System.Web;
 using System.IO;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel;
+using System.Data.Entity;
 
 namespace PLM
 {
     public class Module
     {
         public int ModuleID { get; set; }
+        [Required]
+        [Display(Name = "Module name")]
+        [MaxLength(25)]
         public string Name { get; set; }
-        public string Description { get; set; }
 
+        public string GetModuleDirectory()
+        {
+            return (Name + ModuleID).ToString();
+        }
+
+        [MaxLength(200)]
+        public string Description { get; set; }
+        [Required]
         [Display(Name = "Category")]
         public virtual int CategoryId { get; set; }
 
-        [Display(Name="Default Number of Answers")]
+        [Display(Name = "Default Number of Answers")]
         public int DefaultNumAnswers { get; set; }
 
-        [Display(Name = "Default Time")]
+        [Display(Name = "Default Time in minutes")]
         public int DefaultTime { get; set; }
 
-        [Display(Name = "Default Number of Pictures")]
-        public int DefaultNumPictures { get; set; }
+        [Display(Name = "Default Number of Questions")]
+        public int DefaultNumQuestions { get; set; }
+
         public virtual List<Answer> Answers { get; set; }
+
         public virtual ApplicationUser User { get; set; }
+
+        [Display(Name = "Private")]
         public bool isPrivate { get; set; }
+
+        [Display(Name = "Response for correct answer")]
+        public string rightAnswerString { get; set; }
+
+        [Display(Name = "Response for incorrect answer")]
+        public string wrongAnswerString { get; set; }
+
+        public virtual Category Category { get; set; }
+
+        [Display(Name = "Is Disabled")]
+        public bool isDisabled { get; set; }
+
+        [Display(Name = "Note")]
+        public string DisableModuleNote { get; set; }
+
+        public enum DisableModuleReason
+        {
+            [Description("Account Not Paid")]
+            AccountNotPaid,
+            [Description("Against Terms of Use")]
+            AgainstTermsOfUse,
+            [Description("Copywrite Infringment")]
+            CopyWriteInfringment,
+            [Description("Inappropiate Content")]
+            InappropriateContent,
+            Other
+        }
+
+        [Display(Name = "Reason")]
+        public DisableModuleReason DisableReason { get; set; }
+
     }
 }

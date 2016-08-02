@@ -1,7 +1,7 @@
 ﻿@model PLM.Module
 
 @{
-    ViewBag.Title = "AddModule";
+    ViewBag.Title = "Create Module";
 }
 
 <head>
@@ -10,18 +10,6 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <title>Add Module</title>
-    <link href="~/Content/bootstrap.min.css" rel="stylesheet">
-    <link href="~/Content/font-awesome.min.css" rel="stylesheet">
-    <link href="~/Content/animate.min.css" rel="stylesheet">
-    <link href="~/Conetnt/lightbox.css" rel="stylesheet">
-    <link href="~/Content/main.css" rel="stylesheet">
-    <link href="~/Content/responsive.css" rel="stylesheet">
-
-    <link rel="shortcut icon" href="~/Content/images/ico/favicon.ico">
-    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="~/Content/images/ico/apple-touch-icon-144-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="~/Content/images/ico/apple-touch-icon-114-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="~/Content/images/ico/apple-touch-icon-72-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" href="~/Content/images/ico/apple-touch-icon-57-precomposed.png">
 </head>
 
 <section id="page-breadcrumb">
@@ -37,11 +25,9 @@
         </div>
     </div>
 </section>
-
-<br/>
-<br/>
-<br/>
-
+<br />
+<br />
+<br />
 <form name="contact-form" method="post" action="/Modules/AddModule">
 
     <label for="ModuleTitle">Title</label>
@@ -49,24 +35,24 @@
         <input type="text" id="ModuleTitle" name="name" class="form-control" required="required" placeholder="Module Name">
     </div>
 
-    <br/><br/>
+    <br /><br />
 
     <label for="ModuleImages">Images</label>
     <div class="form-group, scroll-box">
-        <img src="~/Content/Images/portfolio/11.jpg" alt="Image1" />
-        <img src="~/Content/Images/portfolio/10.jpg" alt="Image2" />
-        <img src="~/Content/Images/portfolio/12.jpg" alt="Image1" />
-        <img src="~/Content/Images/portfolio/13.jpg" alt="Image2" />
-        <img src="~/Content/Images/portfolio/14.jpg" alt="Image1" />
-        <img src="~/Content/Images/portfolio/15.jpg" alt="Image2" />
+        <img onerror="this.src='Content/images/Error.bmp';" src="~/Content/Images/portfolio/11.jpg" alt="Image1" />
+        <img onerror="this.src='Content/images/Error.bmp';" src="~/Content/Images/portfolio/10.jpg" alt="Image2" />
+        <img onerror="this.src='Content/images/Error.bmp';" src="~/Content/Images/portfolio/12.jpg" alt="Image1" />
+        <img onerror="this.src='Content/images/Error.bmp';" src="~/Content/Images/portfolio/13.jpg" alt="Image2" />
+        <img onerror="this.src='Content/images/Error.bmp';" src="~/Content/Images/portfolio/14.jpg" alt="Image1" />
+        <img onerror="this.src='Content/images/Error.bmp';" src="~/Content/Images/portfolio/15.jpg" alt="Image2" />
     </div>
 
-    <br/><br/>
+    <br /><br />
 
     <div class="form-group">
         <input type="submit" name="operation" class="btn btn-success" value="Add" />
         <input type="submit" name="operation" class="btn btn-success" value="Edit" />
-        <br/><br/>
+        <br /><br />
         <input type="submit" name="operation" class="btn btn-success" value="Remove" />
         <input type="submit" name="operation" class="btn btn-success" value="Save" />
         <input type="submit" name="submit" class="btn btn-submit floatRight" value="Submit">

@@ -1,18 +1,13 @@
-// Hello.
-//
-// This is JSHint, a tool that helps to detect errors and potential
-// problems in your JavaScript code.
-//
-// To start, simply enter some JavaScript anywhere on this page. Your
-// report will appear on the right side.
-//
-// Additionally, you can toggle specific options in the Configure
-// menu.
-
 //Sounds from http://www.freesfx.co.uk/
 var pictureAnswer = "default";
-var count = Number(document.getElementById("displayScore").innerText);
+var count = Number($('#displayScore').text());
+var revealed = false;
+var intervalID;
 
+function windowOnload(timeLeft) {
+    CheckMute();
+    startCountdown(timeLeft);
+}
 //These cookie functions are from w3schools
 function setCookie(cname, cvalue, exdays) {
     var d = new Date();
@@ -32,12 +27,15 @@ function getCookie(cname) {
     return "";
 }
 
+//Check if the user's guess is right
+//answer: the correct answer, from #StoredAnswer
+//guess: the user's guess (expects string)
 function isGuessRight(answer, guess) {
     if (answer == guess) {
         if (getCookie("muteSound") !== "true") {
             document.getElementById("audioCorrect").play();
         }
-        $("#resultText").text("Indubitably, the correct answer is in fact " + answer);
+        $("#resultText").text("Yes, the correct answer is " + answer);
         reveal();
         showNext();
         return true;
@@ -46,81 +44,116 @@ function isGuessRight(answer, guess) {
         if (getCookie("muteSound") !== "true") {
             document.getElementById("audioIncorrect").play();
         }
-        $("#resultText").text("Preposterous, the correct answer was actually " + answer);
+        $("#resultText").text("Sorry, the correct answer was actually " + answer);
         reveal();
         showNext();
         return false;
     }
 }
-//Still being worked on
+
 function ButtonClick(guess) {
     pictureAnswer = $("#StoredAnswer").text();
+    if (!revealed) {
+        if (isGuessRight(pictureAnswer, guess)) {
+            Correct();
+        }
+        else {
 
-    if (isGuessRight(pictureAnswer, guess)) {
-        Correct();
-    }
-    else {
-
+        }
     }
 }
-
-//legacy function
-//function ButtonClick(guess) {
-//    pictureAnswer = document.getElementById("StoredAnswer").innerText;
-
-//    if (isGuessRight(pictureAnswer, guess)) {
-//        Correct();
-//    }
-//    else {
-
-//    }
-//}
 
 function showNext() {
     document.getElementById("nextButton").style.display = "inline";
 }
 
-//Currently working on function
 function reveal() {
     pictureAnswer = $("#StoredAnswer").text();
 
     $('.btn').each(function () {
+        $(this).disabled = true;
         if ($(this).text() === pictureAnswer) {
             $(this).css({ "background-color": "green" });
         } else {
             $(this).css({ "background-color": "red" });
         }
+
     });
+    revealed = true;
 }
-
-//Legacy function
-//function reveal() {
-//    pictureAnswer = document.getElementById("StoredAnswer").innerText;
-
-//    $('.btn').each(function () {
-//        if (this.innerText == pictureAnswer) {
-//            this.style.backgroundColor = "green";
-//        } else {
-//            this.style.backgroundColor = "red";
-//        }
-//    });
-//}
 
 function Correct() {
     count = (parseInt(count) + 100);
-    document.getElementById("Score").value = count;
-    document.getElementById("displayScore").innerText = count;
+    //check the unchecked radio button (set "Correct" to true)
+    $('input[type="radio"]').not(':checked').prop("checked", true);
+    $('#Score').val(count);
+    $('#displayScore').text(count);
+    //document.getElementById("Score").value = count;
+    //document.getElementById("displayScore").innerText = count;
 }
 
+//This image only implementation of a mute button is from Tarun at 
+//http://stackoverflow.com/questions/22918220/how-to-create-a-only-mute-unmute-button-like-youtube-in-html
 //Toggle whether sound will play
-function ToggleMute() {
+function ToggleMute(img) {
     //if the muteSound cookie is set to true
     if (getCookie("muteSound") === "true") {
-        //set the cookie to false
+        //set the cookie to false and display the speaker symbol
         setCookie("muteSound", "false", 365);
+        img.src = '/PerceptualLearning/Content/Images/speaker.png';
     }
     else {
-        //otherwise, set muteSound to true
+        //otherwise, set muteSound to true and display the mute symbol
         setCookie("muteSound", "true", 365);
+        img.src = '/PerceptualLearning/Content/Images/mute.png';
+    }
+}
+
+function CheckMute() {
+    if (getCookie("muteSound") === "true") {
+        document.getElementById('soundToggle').setAttribute('src', '/PerceptualLearning/Content/Images/mute.png');
+    } else {
+        document.getElementById('soundToggle').setAttribute('src', '/PerceptualLearning/Content/Images/speaker.png');
+    }
+}
+
+function CheckIn() {
+    //Stop the timer when you click the "Next" button.
+    clearInterval(intervalID);
+    //Then get the time remaining.
+    $('#Time').val($('#clockdiv').text());
+    return true;
+}
+
+function startCountdown(time) {
+    var dur = moment.duration(time);
+    //Global variable intervalID is used to index the interval
+    intervalID = setInterval(function () {
+        //subtract a single second
+        dur = dur.subtract(1, 's');
+        //forces a leading zero if there is only one digit in the time by 
+        //taking the last two characters of a string: 
+        //"0" + "1" becomes "01", while "0" + "12" becomes "12"
+        $('#clockdiv').text(
+            ('0' + dur.hours()).slice(-2) + ':'
+            + ('0' + dur.minutes()).slice(-2) + ':'
+            + ('0' + dur.seconds()).slice(-2)
+            );
+        //If time is up
+        if (dur.hours() == 0 & dur.minutes() == 0 & dur.seconds() == 0) {
+            //stop the timer
+            clearInterval(intervalID);
+            //update the data
+            CheckIn();
+            //submit the form
+            document.getElementById("GameForm").submit();
+        }
+    }, 1000);
+}
+
+function fixAspect(img) {
+    if (img.height > img.width) {
+        img.height = '100%';
+        img.width = 'auto';
     }
 }

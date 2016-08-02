@@ -2,10 +2,18 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">    @Styles.Render("~/Content/css")
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">    
+    @Styles.Render("~/Content/css")
     <title>PLM | @ViewBag.Title</title>
     @Scripts.Render("~/bundles/modernizr")
     <script src="~/Scripts/jquery-1.10.2.js"></script>
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet">
+    <link href="~/Content/font-awesome.min.css" rel="stylesheet">
+    <link href="~/Content/animate.min.css" rel="stylesheet">
+    <link href="~/Content/lightbox.css" rel="stylesheet">
+    <link href="~/Content/main.css" rel="stylesheet">
+    <link href="~/Content/responsive.css" rel="stylesheet">
+    <link href="~/Content/Site.css" rel="stylesheet">
     <link type="image/png" rel="icon" href="~/Content/Images/ico/Title-logo.png"/>
 </head>
 
@@ -22,17 +30,16 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li><a href="@Url.Action("Index", "Home")"><img src="~/Content/Images/logo.png" class="navbar-brand" id="navImg" alt="Our Logo" /></a></li>
+                    <li><a href="@Url.Action("Index", "Home")"><img onerror="this.src='Content/images/Error.bmp';" src="~/Content/Images/logo.png" class="navbar-brand" id="navImg" alt="Our Logo" /></a></li>
                     @*<li>@Html.ActionLink("Home", "Index", "Home")</li>*@
+                    @*@if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
+                    {
                     <li>@Html.ActionLink("Profile", "Index", "Profile")</li>
+                    }*@   
                     <li>@Html.ActionLink("Modules", "Index", "Modules")</li>
                     <li>@Html.ActionLink("About Us", "AboutUs", "Home")</li>
                     <li>@Html.ActionLink("Contact Us", "ContactUs", "Home")</li>
-                    @*<li>@Html.ActionLink("Blog", "Blog", "Home")</li>*@
-                    @*<li>@Html.ActionLink("Game", "Play", "Game")</li>*@
-                    @*<li>@Html.ActionLink("Edit Answers", "Index", "Answers")</li>
-                    <li>@Html.ActionLink("Edit Modules", "Index", "ModulesEDIT")</li>
-                    <li>@Html.ActionLink("Edit Pictures", "Index", "Pictures")</li>*@
+                    <li>@Html.ActionLink("FAQ", "FAQ", "Home")</li>
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>
@@ -40,10 +47,9 @@
     </div>
     <div class="container">
         @RenderBody()
-        <hr />
-        <footer>
+        @*<footer>
             <p></p>
-        </footer>
+        </footer>*@
     </div>
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")

@@ -1,21 +1,15 @@
 ﻿@model PLM.Picture
-
+@{
+    ViewBag.Title = "Add Picture";
+}
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="">
     <title>Add Picture</title>
-    <link href="~/Content/bootstrap.min.css" rel="stylesheet">
-    <link href="~/Content/font-awesome.min.css" rel="stylesheet">
-    <link href="~/Content/animate.min.css" rel="stylesheet">
-    <link href="~/Conetnt/lightbox.css" rel="stylesheet">
-    <link href="~/Content/main.css" rel="stylesheet">
-    <link href="~/Content/responsive.css" rel="stylesheet">
-
     <link rel="shortcut icon" href="~/Content/images/ico/favicon.ico">
 </head>
-
 <section id="page-breadcrumb">
     <div class="vertical-center sun">
         <div class="container">
@@ -29,58 +23,37 @@
         </div>
     </div>
 </section>
-
 <br />
-<br />
-<br />
-
-
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
-
-    <div class="form-horizontal">
-        @Html.ValidationSummary(true)
-
-        @*<div class="form-group">
-            @Html.LabelFor(model => model.Location, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Location)
-                @Html.ValidationMessageFor(model => model.Location)
-            </div>
-        </div>*@
-
-        @*<div class="form-group" hidden="hidden">
-            @Html.LabelFor(model => model.AnswerID, "AnswerID", new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("AnswerID", String.Empty)
-                @Html.ValidationMessageFor(model => model.AnswerID)
-            </div>
-        </div>*@
-
-
-
-        @*<div class="form-group">
-                <div class="col-md-offset-2 col-md-10">
-                    <input type="submit" value="Create" class="btn btn-default" />
-                </div>
-            </div>*@
-    </div>
-}
-
 <div class="jumbotron">
-    <form action="~/Pictures/Create?id=@ViewBag.AnswerID" method="post" enctype="multipart/form-data" class="dropzone" id="dropzoneForm" style="width: 50px; background: none; border: none;">
+    <form action="~/Pictures/Create?id=@ViewBag.AnswerID" method="post" enctype="multipart/form-data" class="dropzone" id="dropzoneForm" style="background: none; border: none;" >
         @Html.AntiForgeryToken()
+        @*<input type="text" name="attribution"/>*@
+
+        
+
         <div class="fallback">
-            <input name="file" type="file" multiple />
-            <input type="submit" value="Upload"/>
+            <input name="file" type="file"/> 
+            <br />
+            @Html.ActionLink("Sources for free use images", "FreeUseImages", "Home")
+            <div class="form-group" title="Attribution is needed to give credit to the original creator of the image">
+                @Html.LabelFor(model => model.Attribution, "Attribution", new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.TextAreaFor(model => model.Attribution, new { rows = "20", cols = "500" })
+                    @Html.ValidationMessageFor(model => model.Attribution, "", new { @class = "text-danger" })
+                </div>
+
+
+            <br />
+            <br />
+            <br />
+            <input type="submit" value="Upload" class="btn btn-success"/>
         </div>
+
     </form>
 </div>
 
-
 <div>
-    @Html.ActionLink("Back to List", "Index", new { controller = "Profile" });
+    @Html.ActionLink("Back to List", "Create", "Answers", new { id = Model.Answer.Module.ModuleID }, null)
 </div>
 
 @section Scripts {

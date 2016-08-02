@@ -1,6 +1,6 @@
 ﻿@model PLM.PlayViewModel
 @{
-    ViewBag.Title = "View1";
+    ViewBag.Title = "Play";
 }
 <head>
     <meta charset="utf-8">
@@ -10,13 +10,13 @@
     <title>Play Game</title>
     <link href="~/Content/bootstrap.min.css" rel="stylesheet">
     <link href="~/Content/font-awesome.min.css" rel="stylesheet">
-    <link href="~/Conent/animate.min.css" rel="stylesheet">
-    <link href="~/Conetnt/lightbox.css" rel="stylesheet">
+    <link href="~/Content/animate.min.css" rel="stylesheet">
+    <link href="~/Content/lightbox.css" rel="stylesheet">
     <link href="~/Content/main.css" rel="stylesheet">
     <link href="~/Content/responsive.css" rel="stylesheet">
-    <link href="~/Content/test.css" rel="stylesheet">
+    <script type="text/javascript" src="~/Scripts/moment.js"></script>
 </head>
-<body>
+<body onload="windowOnload('@Model.Time.ToString()')">
     <audio id="audioCorrect" preload="auto">
         <source src="~/Content/Audio/correctSound.mp3" type="audio/mp3" />
     </audio>
@@ -25,16 +25,39 @@
     </audio>
 
     <div id="gameBoard">
-        <div id="ScoreBoard">
-            <p>Score:</p>
-            <p id="displayScore">@Model.Score</p>
+        <div style="float:right">
+            <div id="ScoreBoard">
+                <p>Score:</p>
+                <p id="displayScore">@Model.Score</p>
+                <br />
+                <p>Time Left:</p>
+                <p><div id="clockdiv">@Model.Time.ToString()</div></p>
+            </div>
+            <div id="statsOptions">
+                <p>Question @Model.CurrentQuestion out of @Model.TotalQuestions</p>
+                <br />
+                <p>@Model.NumCorrect correct out of @Model.TotalQuestions</p>
+                <br />
+                <!--This image only implementation of a mute button is from Tarun at
+                http://stackoverflow.com/questions/22918220/how-to-create-a-only-mute-unmute-button-like-youtube-in-html
+                -->
+                <img src="@Url.Content("~/Content/Images/speaker.png")" alt="speaker" id="soundToggle" onclick="ToggleMute(this)" />
+            </div>
         </div>
 
-        <img id="picture" src="@Model.ImageURL"/>
-        <p id="StoredAnswer" hidden="hidden">@Model.Answer</p>
+        <div id="container">
+            @*<div class="helper">*@
+                <img onerror="this.src='/Content/Images/Error.bmp';" @*id="picture"*@ 
+                     style="max-height:480px;max-width:640px;background-size:contain" src="@Model.ImageURL"  
+                    @*onload="fixAspect(this)"*@ title="Image Courtesy of @Model.Attribution" />
+            @*</div>*@
 
+            
+
+        </div>
+        <p id="StoredAnswer" hidden="hidden">@Model.Answer</p>
         <div>
-            <div id="answerButtons">
+            <div id="answerButtons" tabindex="0">
                 @for (int i = 0; i < Model.possibleAnswers.Count; i++)
                 {
                     @*the javascript "this" keyword is used in the function call to refer to the sender, instead of an id.*@
@@ -43,16 +66,24 @@
             </div>
         </div>
         <br />
-        <form method="post">
+        <div id="Attribution">
+            <p>Image Provided By @Model.Attribution</p>
+        </div>
+        <br />
+        @using (Html.BeginForm("Play", "Game", FormMethod.Post, new { id = "GameForm", onsubmit = "return CheckIn();" }))
+        {
+            @Html.AntiForgeryToken()
             <input id="Score" name="Score" hidden="hidden" type="number" value="@Model.Score" />
+            <input id="Time" name="Time" hidden="hidden" type="text" value="@Model.Time.ToString()" />
+            <input type="radio" name="isCorrect" value="True" hidden="hidden" />
+            <input type="radio" name="isCorrect" value="False" hidden="hidden" checked="checked" />
+
             <div id="nextButton" style="display:none;">
-                <button id="next" type="submit" value="">Next</button>
+                <button id="next" type="submit" value="" class="button-enter">Next</button>
                 <h1 id="resultText">Correct</h1>
             </div>
-        </form>
-        <br />
-        <br />
-        <button onclick="ToggleMute()">Mute/Unmute</button>
+        }
+        @Html.ActionLink("Quit Game", "Quit", "Game", null, new {type = "button-warning", onclick = "return confirm('Are you sure? Your progress will not be saved.');" })
         <script type="text/javascript" src="~/Scripts/gameplay.js"></script>
     </div>
 </body>

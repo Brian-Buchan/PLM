@@ -4,6 +4,8 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.IO;
+using Microsoft.AspNet.Identity;
+using PLM.CutomAttributes;
 
 namespace PLM.Controllers
 {
@@ -17,28 +19,11 @@ namespace PLM.Controllers
         {
             return View();
         }
-        //public ActionResult FileUpload(HttpPostedFileBase file)
-        //{
-        //    if (file != null)
-        //    {
-        //        string pic = System.IO.Path.GetFileName(file.FileName);
-        //        string path = System.IO.Path.Combine(
-        //                               Server.MapPath("~/Content/Images/Profile"), pic);
-        //        // file is uploaded
-        //        file.SaveAs(path);
+        public ActionResult TOU()
+        {
+            return View();
+        }
                 
-        //        // save the image path path to the database or you can send image 
-        //        // directly to database
-        //        // in-case if you want to store byte[] ie. for DB
-        //        using (MemoryStream ms = new MemoryStream())
-        //        {
-        //            file.InputStream.CopyTo(ms);
-        //            byte[] array = ms.GetBuffer();
-        //        }
-        //        return RedirectToAction("Index", "Profile", new { imageurl = path });
-        //    }
-        //    return View();
-        //}
         public ActionResult AboutUs()
         {
             ViewBag.Message = "Learning Without Thinking";
@@ -52,11 +37,25 @@ namespace PLM.Controllers
 
             return View();
         }
+        [AuthorizeOrRedirectAttribute(Roles = "Admin")]
+        public ActionResult Admin()
+        {
+            return View();
+        }
+        public ActionResult FreeUseImages()
+        {
+            return View();
+        }
 
         public ActionResult Blog()
         {
             ViewBag.Message = "Please feel free to contact me!";
 
+            return View();
+        }
+
+        public ActionResult TemplateStyles()
+        {
             return View();
         }
     }

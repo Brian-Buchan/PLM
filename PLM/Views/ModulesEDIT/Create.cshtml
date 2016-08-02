@@ -1,18 +1,17 @@
 ﻿@model PLM.Module
-
+@{
+    ViewBag.Title = "Create New Module";
+    
+    //Sets default value to true when creating modules so that a module will not be public unless intended
+    //while in the process of creation. 
+    bool defaultPrivateSetting = true;
+}
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="">
     <title>Create Module</title>
-    <link href="~/Content/bootstrap.min.css" rel="stylesheet">
-    <link href="~/Content/font-awesome.min.css" rel="stylesheet">
-    <link href="~/Content/animate.min.css" rel="stylesheet">
-    <link href="~/Conetnt/lightbox.css" rel="stylesheet">
-    <link href="~/Content/main.css" rel="stylesheet">
-    <link href="~/Content/responsive.css" rel="stylesheet">
-
     <link rel="shortcut icon" href="~/Content/images/ico/favicon.ico">
 </head>
 <section id="page-breadcrumb">
@@ -28,79 +27,93 @@
         </div>
     </div>
 </section>
-
-<br />
-<br />
-<br />
-
-
-@using (Html.BeginForm()) 
+@if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated) {
+using (Html.BeginForm()) 
 {
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
         @Html.ValidationSummary(true)
 
-        <div class="form-group">
+        <div class="form-group" title="Name of the module">
             @Html.LabelFor(model => model.Name, new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.Name)
-                @Html.ValidationMessageFor(model => model.Name)
+                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
             </div>
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.CategoryId, new { @class = "control-label col-md-2" })
+        <div class="form-group" title="What category does the module belong to?">
+            @Html.LabelFor(model => model.Category.CategoryName, new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.CategoryId)
-                @Html.ValidationMessageFor(model => model.CategoryId)
+                @Html.DropDownList("CategoryId")
+                @Html.ValidationMessageFor(model => model.Category, "", new { @class = "text-danger" })
             </div>
         </div>
 
-        <div class="form-group">
+        <div class="form-group" title="A quick description of the module">
             @Html.LabelFor(model => model.Description, new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Description)
-                @Html.ValidationMessageFor(model => model.Description)
+                @Html.TextAreaFor(model => model.Description, new { rows = "5", cols = "25", maxlength = 200 })
+                @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
             </div>
         </div>
+        @*<div class="form-group" title="String displayed when a the answer is correct">
+            @Html.LabelFor(model => model.rightAnswerString, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.rightAnswerString, new { @class = "control-label col-md-2" })
+                @Html.ValidationMessageFor(model => model.rightAnswerString, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group" title="String displayed when a the answer is incorrect">
+            @Html.LabelFor(model => model.wrongAnswerString, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.wrongAnswerString, new { @class = "control-label col-md-2" })
+                @Html.ValidationMessageFor(model => model.wrongAnswerString, "", new { @class = "text-danger" })
+            </div>
+        </div>*@
 
-        <div class="form-group">
+
+        <div class="form-group" title="The number of answers per question to choose from provided.">
             @Html.LabelFor(model => model.DefaultNumAnswers, new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.DefaultNumAnswers)
-                @Html.ValidationMessageFor(model => model.DefaultNumAnswers)
+                <input type="range" id="numAnswers" name="DefaultNumAnswers" step="3" min="3" max="15" value="12" oninput="outputUpdate(value, '#numAnswersOutput')" />
+                <output for="numAnswers" id="numAnswersOutput">12</output>
+                @*@Html.EditorFor(model => model.DefaultNumAnswers)
+                @Html.ValidationMessageFor(model => model.DefaultNumAnswers)*@
             </div>
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.DefaultNumPictures, new { @class = "control-label col-md-2" })
+        <div class="form-group" title="The default number of pictures shown to the user when playing the module">
+            @Html.LabelFor(model => model.DefaultNumQuestions, new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.DefaultNumPictures)
-                @Html.ValidationMessageFor(model => model.DefaultNumPictures)
+                <input type="range" id="numQuestions" name="DefaultNumQuestions" step="5" min="5" max="260" value="50" oninput="outputUpdate(value, '#numQuestionsOutput')" />
+                <output for="numQuestions" id="numQuestionsOutput">50</output>
+                @*@Html.EditorFor(model => model.DefaultNumPictures)
+                @Html.ValidationMessageFor(model => model.DefaultNumPictures)*@
             </div>
         </div>
 
-        <div class="form-group">
+        <div class="form-group" title="The number of minutes the user has to complete the module by default.">
             @Html.LabelFor(model => model.DefaultTime, new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.DefaultTime)
-                @Html.ValidationMessageFor(model => model.DefaultTime)
+                <input type="range" id="time" name="DefaultTime" value="6" min="2" max="32" step="2" oninput="outputUpdate(value, '#timeOutput')" />
+                <output for="time" id="timeOutput">2</output>
+                @*@Html.EditorFor(model => model.DefaultTime)
+                @Html.ValidationMessageFor(model => model.DefaultTime)*@
             </div>
         </div>
 
-        <div class="form-group">
+        <div class="form-group" title="Check this if you don't want the module to be open to the public">
             @Html.LabelFor(model => model.isPrivate, new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.isPrivate)
+                @Html.EditorFor(model => defaultPrivateSetting, new { htmlAttributes = new {@class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.isPrivate)
             </div>
         </div>
-
-        <br/>
-
-        <br/>
-        <br/>
+        <br />
+        <br />
+        <br />
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Create" class="btn btn-submit" />
@@ -108,11 +121,16 @@
         </div>
     </div>
 }
-
+}
+else
+{
+    Response.Redirect("~/Account/Login");
+}
 <div>
-    @Html.ActionLink("Back to List", "Index", new { controller = "Profile"});
+    @Html.ActionLink("Back to Profile Page", "Index", new { controller = "Profile"})
 </div>
 
 @section Scripts {
+    <script src="~/Scripts/Setup.js"></script>
     @Scripts.Render("~/bundles/jqueryval")
 }

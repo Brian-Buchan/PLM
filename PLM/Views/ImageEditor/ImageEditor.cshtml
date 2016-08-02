@@ -1,0 +1,69 @@
+﻿@{
+    ViewBag.Title = "Image Editor";
+}
+
+<h2>Image Editor</h2>
+
+<img onerror="this.src='Content/images/Error.bmp';" data-orig-source="~/Content/Images/logo.png" id="3" src="~/Content/Images/logo.png" title="1" alt="Photo To Edit" />
+
+<script @*data-preload="true"*@ data-path="@Url.Content("~\\pixie-image-editor\\pixie")" 
+        src="@Url.Content("~/pixie-image-editor/pixie/pixie-integrate.js")"></script>
+
+@*<button id="save" name="save" onclick="saveAll()">Save Changes</button>*@
+@*<button id="discard" name="discard" onclick="discardChanges()">Discard Changes</button>*@
+
+@using (Html.BeginForm("Confirm", "ImageEditor", FormMethod.Post)){
+    @Html.AntiForgeryToken()
+
+    <input type="text" name="imgId" id="imgId" hidden="hidden" required="required" value="" />
+    <input type="text" name="answerId" id="answerId" hidden="hidden" required="required" value="" />
+    <input type="text" name="imgData" id="imgData" hidden="hidden" required="required" value="" />
+    <input type="text" name="origUrl" id="origUrl" hidden="hidden" required="required" value="" />
+    <input type="text" name="tempUrl" id="tempUrl" hidden="hidden" required="required" value="" />
+    <input type="submit" value="Save"/>
+    
+}
+
+@*<script>
+    var imgEdit = document.getElementById("3");
+    var imgIdInput = document.getElementById("imgId");
+    var answerIdInput = document.getElementById("answerId");
+    var imgDataInput = document.getElementById("imgData");
+    var origUrlInput = document.getElementById("origUrl");
+    var tempUrlInput = document.getElementById("tempUrl");
+
+    var myPixie = Pixie.setOptions({
+        replaceOriginal: true,
+        appendTo: 'body',
+        onSave: function (data, img) {
+            $.ajax({
+                type: 'POST',
+                url: '/ImageEditor/ImageEditor',
+                data: { imgData: data, imgId: img.id, answerId: img.title, origUrl: img.dataset.origSource },
+                success: function (xhr, status, text) {
+                    imgIdInput.value = imgEdit.id;
+                    answerIdInput.value = imgEdit.title;
+                    imgDataInput.value = imgEdit.src;
+                    origUrlInput.value = imgEdit.dataset.origSource;
+                    tempUrlInput.value = text.statusText;
+
+                    alert('Image changes have been saved successfully. \nRemember to ' +
+                    'click the save button to finalize your changes.');
+                    myPixie.close();
+                },
+                error: function (xhr, status, text) {
+                    alert(text);
+                    myPixie.close();
+                }
+            });
+        }
+    });
+
+    $('#3').on('click', function (e) {
+        myPixie.open({
+            url: e.target.src,
+            image: e.target
+        });
+    });
+</script>*@
+<script type="text/javascript" src="@Url.Content("~/Scripts/ImageEditorTestBed.js")"></script>
