@@ -157,7 +157,17 @@ namespace PLM.Controllers
 
                 db.Entry(report).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("YourReports");
+              
+                    if (User.IsInRole("Admin"))
+                    {
+                        return RedirectToAction("Index");
+                    }
+                    else
+                    {
+                        return RedirectToAction("YourReports");
+                    }
+             
+               
             }
             return View(report);
         }
