@@ -357,10 +357,15 @@ namespace PLM.Controllers
         [NonAction]
         private void CheckMaxAnswers()
         {
-            if (currentModule.Answers.Count <= ((UserGameSession)Session["userGameSession"]).numAnswers)
-            {
-                ((UserGameSession)Session["userGameSession"]).numAnswers = currentModule.Answers.Count - 2;
-            }
+            //if (currentModule.Answers.Count <= ((UserGameSession)Session["userGameSession"]).numAnswers)
+            //{
+            //    ((UserGameSession)Session["userGameSession"]).numAnswers = currentModule.Answers.Count - 2;
+            //}
+
+
+
+
+
         }
 
         /// <summary>
