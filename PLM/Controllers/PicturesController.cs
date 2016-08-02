@@ -69,11 +69,11 @@ namespace PLM.Controllers
         {
             pictureToSave = new Picture();
             pictureToSave.AnswerID = (int)id;
+            pictureToSave.Location = "NotYetConstructed";
             if (picture.Attribution == null)
                 pictureToSave.Attribution = "";
             else
                 pictureToSave.Attribution = picture.Attribution;
-            db.Pictures.Add(pictureToSave);
 
             ViewBag.AnswerID = id;
 
@@ -96,7 +96,8 @@ namespace PLM.Controllers
                 else
                 {
                     pictureToSave.Location = location;
-                    db.Entry(pictureToSave).State = EntityState.Modified;
+                    db.Pictures.Add(pictureToSave);
+                    //db.Entry(pictureToSave).State = EntityState.Modified;
                     db.SaveChanges();
                 }
 
@@ -181,6 +182,7 @@ namespace PLM.Controllers
                 using (ApplicationDbContext db3 = new ApplicationDbContext())
                 {
                     db3.Answers.Find(id).PictureCount++;
+                    db3.Entry(db3.Answers.Find(id)).State = EntityState.Modified;
                     db3.SaveChanges();
                 }
                 return relpath;
