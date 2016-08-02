@@ -537,7 +537,7 @@ namespace PLM.Controllers
             }
             catch (Exception ex)
             {
-                return "FAILED";
+                return ex.Message;
             }
         }
 
