@@ -26,7 +26,7 @@
 {
     <form action="~/Account/ApproveAllRequests" method="post">
         @Html.AntiForgeryToken()
-        <button name="ApproveAllRequests" value="ApproveAllRequests" type="submit" class="btn-success">Approve All</button>
+        <button name="ApproveAllRequests" value="ApproveAllRequests" type="submit" class="button-enter">Approve All</button>
     </form>
 }
 <table class="table">
@@ -78,7 +78,7 @@
         <td>
             <form action="~/Account/RoleRequest?userID=@item.Id" method="post">
                 @Html.AntiForgeryToken()
-                <button name="subject" type="submit" class="btn-success" value="fav_CSS">Approve</button>
+                <button name="subject" type="submit" class="button-enter" value="fav_CSS">Approve</button>
             </form>
         </td>
         <td>
