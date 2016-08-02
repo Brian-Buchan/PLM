@@ -12,5 +12,8 @@ namespace PLM
 
         //public static string connectionStringName = "Production";
         //public static string baseFileDirectory = "/PerceptualLearning/Content/Images/";
+
+        //CHANGE IN: ImageEditorProd.js
+        //ADD: [NonAction] to all actionresult stuff in ImageEditorController
     }
 }
