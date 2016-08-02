@@ -121,19 +121,19 @@ namespace PLM.Controllers
             bool isSavedSuccessfully = false;
             int picCount;
             string answerString;
+
             using (ApplicationDbContext db2 = new ApplicationDbContext())
             {
                 Session["upload"] = db2.Answers.Find(id).Module.GetModuleDirectory();
                 answerString = db2.Answers.Find(id).AnswerString;
                 picCount = db2.Answers.Find(id).PictureCount;
                 picCount++;
-                db2.SaveChanges();
             }
+
             string fName = "";
             string path = "";
             string relpath = "";
-            //try
-            //{
+
             foreach (string fileName in Request.Files)
             {
                 HttpPostedFileBase file = Request.Files[fileName];
@@ -155,10 +155,6 @@ namespace PLM.Controllers
                     if (file != null && file.ContentLength > 0)
                     {
                         string moduleDirectory = (DevPro.baseFileDirectory + "PLM/" + Session["upload"].ToString() + "/");
-                        //if (!Directory.Exists(moduleDirectory))
-                        //{
-                        //    Directory.CreateDirectory(moduleDirectory);
-                        //}
                         string filetype = Path.GetExtension(fName);
                         if (filetype == ".jpeg")
                         {
@@ -169,26 +165,25 @@ namespace PLM.Controllers
                         string basefname = Path.GetFileNameWithoutExtension(fName);
                         fName = basefname + filetype;
                         path = moduleDirectory + fName;
+
                         // Saves the file through the HttpPostedFileBase class
                         file.SaveAs(path);
                         string newfName = (answerString + "-" + picCount.ToString() + filetype);
                         relpath = (moduleDirectory + newfName);
                         System.IO.File.Copy(path, relpath);
                         System.IO.File.Delete(path);
-
-                        //db.SaveChanges();
                         isSavedSuccessfully = true;
                     }
                 }
             }
-            //}
-            //catch (Exception ex)
-            //{
-            //    isSavedSuccessfully = false;
-            //}
 
             if (isSavedSuccessfully)
             {
+                using (ApplicationDbContext db3 = new ApplicationDbContext())
+                {
+                    db3.Answers.Find(id).PictureCount++;
+                    db3.SaveChanges();
+                }
                 return relpath;
             }
             else
@@ -330,7 +325,7 @@ namespace PLM.Controllers
             string imgId = Request.Form.Get("imgId");
             string answerId = Request.Form.Get("answerId");
             string imgData = Request.Form.Get("imgData");
-            
+
             //This section of code was to check that the extension was the same for both files.
             //string origUrl = Request.Form.Get("origUrl");
             //string imageFormat = "." + imgData.Substring(imgData.IndexOf('/') + 1, imgData.IndexOf(';'));
