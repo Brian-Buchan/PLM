@@ -7,13 +7,14 @@ namespace PLM
 {
     public static class DevPro
     {
-        public static string connectionStringName = "Development";
-        public static string baseFileDirectory = "/PerceptualLearningDevelopment/Content/Images/";
+        //public static string connectionStringName = "Development";
+        //public static string baseFileDirectory = "/PerceptualLearningDevelopment/Content/Images/";
 
-        //public static string connectionStringName = "Production";
-        //public static string baseFileDirectory = "/PerceptualLearning/Content/Images/";
+        public static string connectionStringName = "Production";
+        public static string baseFileDirectory = "/PerceptualLearning/Content/Images/";
 
         //CHANGE IN: ImageEditorProd.js
+        //In Scripts Folder
         //ADD: [NonAction] to all actionresult stuff in ImageEditorController
     }
 }
