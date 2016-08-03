@@ -15,7 +15,6 @@ namespace PLM.Controllers
             // GET: IdentityRole
 
             private ApplicationDbContext db = new ApplicationDbContext();
-
             public ActionResult Index()
             {
                 return View(db.Roles.ToList());
@@ -36,7 +35,6 @@ namespace PLM.Controllers
                     db.SaveChanges();
                     return RedirectToAction("Index");
                 }
-
                 return View(role);
             }
 
@@ -51,7 +49,6 @@ namespace PLM.Controllers
                 {
                     return HttpNotFound();
                 }
-
                 return View(role);
             }
 
@@ -65,7 +62,6 @@ namespace PLM.Controllers
                     db.SaveChanges();
                     return RedirectToAction("Index");
                 }
-
                 return View(role);
             }
 
@@ -81,7 +77,6 @@ namespace PLM.Controllers
                 {
                     return HttpNotFound();
                 }
-
                 return View(role);
             }
 

@@ -31,23 +31,18 @@
         <dt>
             @Html.DisplayNameFor(model => model.Answer.AnswerString)
         </dt>
-
         <dd>
             @Html.DisplayFor(model => model.Answer.AnswerString)
         </dd>
-
         <dt>
             @Html.DisplayNameFor(model => model.Location)
         </dt>
-
         <dd>
             @Html.DisplayFor(model => model.Location)
         </dd>
     </dl>
-
     @using (Html.BeginForm()) {
         @Html.AntiForgeryToken()
-
         <div class="form-actions no-color">
             <input type="submit" value="Delete" class="btn btn-danger" /> |
             @Html.ActionLink("Back to List", "edit", new { controller = "Answers", id = Model.AnswerID })

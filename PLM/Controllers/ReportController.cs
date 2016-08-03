@@ -15,7 +15,6 @@ namespace PLM.Controllers
     public class ReportController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
-
         // GET: /Report/
         public ActionResult YourReports()
         {
@@ -59,7 +58,6 @@ namespace PLM.Controllers
             ViewBag.ReporterUserName = Reporter.UserName;
             return View(report);
         }
-
         // GET: /Report/Create
         public ActionResult Create(int? id)
         {
@@ -85,7 +83,6 @@ namespace PLM.Controllers
                 return View(placeholder);
             }
         }
-
         // POST: /Report/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
@@ -102,7 +99,6 @@ namespace PLM.Controllers
 
             return View(report);
         }
-
         // GET: /Report/Edit/5
         public ActionResult Edit(int? id)
         {
@@ -118,7 +114,6 @@ namespace PLM.Controllers
             
             return View(report);
         }
-
         // POST: /Report/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
@@ -145,7 +140,6 @@ namespace PLM.Controllers
             }
             return View(report);
         }
-
         // GET: /Report/Delete/5
         public ActionResult Delete(int? id)
         {
@@ -160,7 +154,6 @@ namespace PLM.Controllers
             }
             return View(report);
         }
-
         // POST: /Report/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
@@ -171,7 +164,6 @@ namespace PLM.Controllers
             db.SaveChanges();
             return RedirectToAction("YourReports");
         }
-
         protected override void Dispose(bool disposing)
         {
             if (disposing)

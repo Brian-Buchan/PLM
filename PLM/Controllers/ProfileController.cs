@@ -24,7 +24,6 @@ namespace PLM.Controllers
             }
             else
             {
-
                 ViewBag.UserID = User.Identity.Name;
                 var name = User.Identity.GetUserName();
                 ApplicationUser currentUser = (ApplicationUser)db.Users.Single(x => x.UserName == name);

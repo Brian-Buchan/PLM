@@ -187,6 +187,9 @@
     <Compile Include="Controllers\ReportController.cs" />
     <Compile Include="DevPro Resources\DevPro.cs" />
     <Compile Include="Extensions\DirectoryHandler.cs" />
+    <Compile Include="Extensions\FTPDirectoryWriter.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Migrations\201606141648191_InitialCreate.cs" />
     <Compile Include="Migrations\201606141648191_InitialCreate.Designer.cs">
       <DependentUpon>201606141648191_InitialCreate.cs</DependentUpon>
@@ -263,14 +266,12 @@
     <Compile Include="Controllers\PicturesController.cs" />
     <Compile Include="Controllers\ProfileController.cs" />
     <Compile Include="CustomAttributes\AuthorizeOrRedirectAttribute.cs" />
-    <Compile Include="Extensions\FTPDirectoryWriter.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Answer.cs" />
     <Compile Include="Extensions\Extensions.cs" />
-    <Compile Include="Models\Assignment.cs" />
     <Compile Include="Models\Category.cs" />
     <Compile Include="Models\Course.cs" />
     <Compile Include="Models\CourseWork.cs" />
@@ -1285,7 +1286,6 @@
     <Content Include="Views\Account\DisabledUsersList.cshtml" />
     <Content Include="Views\Account\AccessDenied.cshtml" />
     <Content Include="Views\ModulesEDIT\AdminDelete.cshtml" />
-    <Content Include="Views\Home\TemplateStyles.cshtml" />
     <Content Include="Views\Pictures\UploadError.cshtml" />
     <Content Include="Views\Pictures\FileToLarge.cshtml" />
   </ItemGroup>

@@ -30,8 +30,7 @@
 </section>
 <div style="width: 100%;">
     <div class="panel-item" style="float: left; width: 30%;">
-        <img onerror="this.src='Content/images/Error.bmp';" @*class="floatLeft"*@ src="@location" alt="Profile Picture" style="max-height:300px; max-width:200px;" />
-
+        <img onerror="this.src='Content/images/Error.bmp';" src="@location" alt="Profile Picture" style="max-height:300px; max-width:200px;" />
         <div id="accordion-container">
             <div class="panel-group" id="accordion">
                 <div class="panel panel-default">
@@ -59,7 +58,6 @@
                 </div>
             </div><!--/#accordion-->
         </div><!--/#accordion-container-->
-
     </div>
     <div class="panel-item" style="float: left; width: 35%;">
         <article>
@@ -83,12 +81,10 @@
             {
                 <p class="items-list">@Html.ActionLink("Request Instructor status for your account", "StatusRequest")</p>
             }
-
     </div>
     <br style="clear: left;" />
 </div>
 <hr class="line-through" />
-
 <div>
     <h2>Courses Created:</h2>
     <table class="table">
@@ -108,7 +104,6 @@
             <th></th>
             <th></th>
         </tr>
-
         @foreach (var item in Model)
         {
             var style = (item.isDisabled == true) ? "background-color: #ff8080" : "";
@@ -148,8 +143,3 @@
         @Html.ActionLink("Create New Module", "Create", new { controller = "ModulesEdit" }, new { type = "button" })
     </div>
 }
-
-<br />
-<br />
-
-

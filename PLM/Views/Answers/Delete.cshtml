@@ -32,24 +32,18 @@
         <dt>
             @Html.DisplayNameFor(model => model.Module.Name)
         </dt>
-
         <dd>
             @Html.DisplayFor(model => model.Module.Name)
         </dd>
-
         <dt>
             @Html.DisplayNameFor(model => model.AnswerString)
         </dt>
-
         <dd>
             @Html.DisplayFor(model => model.AnswerString)
         </dd>
-
     </dl>
-
     @using (Html.BeginForm()) {
         @Html.AntiForgeryToken()
-
         <div class="form-actions no-color">
             <input type="submit" value="Delete" class="btn btn-danger" /> |
             @Html.ActionLink("Back to List", "edit", new { controller = "ModulesEdit", id = Model.ModuleID })

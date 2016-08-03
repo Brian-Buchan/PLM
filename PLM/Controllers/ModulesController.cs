@@ -11,7 +11,6 @@ namespace PLM.Controllers
     {
         private ApplicationDbContext db = new ApplicationDbContext();
         private ModuleViewModel ModuleModel = new ModuleViewModel();
-        
          //GET: Profile
         public int categoryCount(int cat)
         {
@@ -42,7 +41,6 @@ namespace PLM.Controllers
             modules = (from m in modules
                             where m.isPrivate == false && m.isDisabled == false 
                             select m).ToList();
-
             if (searchString != null)
             {
                 page = 1;
@@ -60,12 +58,10 @@ namespace PLM.Controllers
                 modules = modules.Where(m => m.Name.ToLower().Contains(searchString)).ToList();
                                        //|| m.Description.Contains(searchString)).ToList();
             }
-
             if(filterParam > 0)
             {
                 modules = modules.Where(m => m.CategoryId == filterParam).ToList();
             }
-
             ViewBag.filterParam = filterParam;
             ViewBag.Cat1Count = categoryCount(1);
             ViewBag.Cat2Count = categoryCount(2);
@@ -80,7 +76,6 @@ namespace PLM.Controllers
             ViewBag.Cat11Count = categoryCount(11);
             int pageSize = 3;
             int pageNumber = (page ?? 1);
-
             return View(modules.ToPagedList(pageNumber, pageSize));
         }
 

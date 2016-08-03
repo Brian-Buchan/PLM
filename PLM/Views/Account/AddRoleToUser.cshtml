@@ -7,7 +7,6 @@
 </head>
 @ViewBag.Title ="Add Role to User";
 <body>
-
     <section id="page-breadcrumb">
         <div class="vertical-center sun">
             <div class="container">
@@ -22,12 +21,10 @@
         </div>
     </section>
     <h3>User Name: @ViewBag.UserName</h3>
-
     @if (ViewBag.ErrorMessage != null)
     {
         <div class="alert alert-warning">@ViewBag.ErrorMessage</div>
     }
-
     @using (Html.BeginForm("AddRoleToUser", "Account"))
     {
         @Html.AntiForgeryToken()

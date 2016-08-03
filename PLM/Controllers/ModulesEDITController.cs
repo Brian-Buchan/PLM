@@ -120,7 +120,6 @@ namespace PLM.Controllers
                     ApplicationUser currentUser = (ApplicationUser)db.Users.Single(x => x.Id == userID);
                     module.User = currentUser;
                 }
-
                 db.Modules.Add(module);
                 db.SaveChanges();
                 PopulateCategoryDropDownList(module.CategoryId);
@@ -204,7 +203,6 @@ namespace PLM.Controllers
             }
             return View(userModule);
         }
-
         private void PopulateCategoryDropDownList(object selectedCategory = null)
         {
             var categoryQuery = from c in db.Categories
@@ -227,7 +225,6 @@ namespace PLM.Controllers
             }
             return View(module);
         }
-
         // POST: /ModulesEDIT/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]

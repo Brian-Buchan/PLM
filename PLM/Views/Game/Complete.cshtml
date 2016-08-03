@@ -16,7 +16,6 @@
     <link href="~/Conetnt/lightbox.css" rel="stylesheet">
     <link href="~/Content/main.css" rel="stylesheet">
     <link href="~/Content/responsive.css" rel="stylesheet">
-
     <link rel="shortcut icon" href="~/Content/images/ico/favicon.ico">
     <link rel="apple-touch-icon-precomposed" sizes="144x144" href="~/Content/images/ico/apple-touch-icon-144-precomposed.png">
     <link rel="apple-touch-icon-precomposed" sizes="114x114" href="~/Content/images/ico/apple-touch-icon-114-precomposed.png">
@@ -38,7 +37,6 @@
     </section>
     <div style="width:100%">
     <div class="about-us" style="width:50%; float:left">
-        
         <h1>Your Score: @{ string userScore = (Model.CorrectAnswers * 100).ToString(); }@userScore</h1>
         <h2> @Model.CorrectAnswers out of @Model.TotalAnswers Correct </h2>
         <h2>@ViewBag.ErrorMessage</h2>
@@ -55,7 +53,6 @@
                     }
                     @Html.ActionLink("Return to module select", "Index", "Modules")
             </div>
-
         </div>
     </div>
         <div class="about-us" style="width:50%; float:left">
@@ -76,7 +73,6 @@
                         </div>
                     }
                 }
-
             </div>
         </div>
     </div>

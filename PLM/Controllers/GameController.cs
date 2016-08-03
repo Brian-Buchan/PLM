@@ -9,7 +9,6 @@ using System.Net;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using PLM.Extensions;
-
 namespace PLM.Controllers
 {
     public class GameController : Controller
@@ -49,7 +48,6 @@ namespace PLM.Controllers
                 return RedirectToAction("Play");
             }
         }
-
         /// <summary>
         /// Generate a module and create a UserGameSession session variable with that module.
         /// </summary>
@@ -77,7 +75,6 @@ namespace PLM.Controllers
             }
             // Shuffle the list of pictures so Users itterate through them randomly
             currentGameSession.PictureIndices.Shuffle();
-
             //stuff that would be normally defined during setup. Will be overwritten in the setup POST action if it is accessed
             int timeHours = (currentGameSession.currentModule.DefaultTime / 60);
             int timeMinutes = (currentGameSession.currentModule.DefaultTime % 60);
@@ -86,10 +83,8 @@ namespace PLM.Controllers
             currentGameSession.numQuestions = currentGameSession.currentModule.DefaultNumQuestions;
             currentGameSession.time = currentGameSession.currentModule.DefaultTime;
             currentGameSession.timeLeft = new TimeSpan(timeHours, timeMinutes, 0);
-
             Session["userGameSession"] = currentGameSession;
         }
-
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Setup([Bind(Include = "numAnswers,numQuestions,time")] UserGameSession ugs)
@@ -102,7 +97,6 @@ namespace PLM.Controllers
             ((UserGameSession)Session["userGameSession"]).timeLeft = new TimeSpan(timeHours, timeMinutes, 0);
             return RedirectToAction("Play");
         }
-
         [HttpGet]
         public ActionResult Play()
         {
@@ -113,7 +107,6 @@ namespace PLM.Controllers
             currentGuess.NumCorrect = ((UserGameSession)Session["userGameSession"]).numCorrect;
             return View(currentGuess);
         }
-
         /// <summary>
         /// Generate a question, loops through each picture in each answer
         /// The same answer will be chosen multiple times with different pictures
@@ -136,19 +129,16 @@ namespace PLM.Controllers
                 currentGuess.Attribution = "";
             else
                 currentGuess.Attribution = currentModule.Answers.ElementAt(answerIndex).Pictures.ElementAt(pictureID).Attribution;
-
             GeneratedGuessIDs.Add(answerIndex);
             GenerateWrongAnswers();
             currentGuess.possibleAnswers.Shuffle();
         }
-
         [NonAction]
         private int[] GetPictureID(int currentGuessNum)
         {
             AnsPicIndex IndexItem = ((UserGameSession)Session["userGameSession"]).PictureIndices.ElementAt(currentGuessNum);
             return new int[] { IndexItem.AnswerIndex, IndexItem.PictureIndex };
         }
-
         /// <summary>
         /// Generate the wrong answers to be displayed during each question
         /// </summary>
@@ -164,7 +154,6 @@ namespace PLM.Controllers
                 {
                     wrongAnswerID = rand.Next(0, (currentModule.Answers.Count - 1));
                 } while (GeneratedGuessIDs.Contains(wrongAnswerID));
-
                 //add the selected answer to both the stuff to send over and the list of no longer addable answers
                 currentGuess.possibleAnswers.Add(currentModule.Answers.ElementAt(wrongAnswerID).AnswerString);
                 GeneratedGuessIDs.Add(wrongAnswerID);
@@ -175,15 +164,12 @@ namespace PLM.Controllers
                 }
             }
         }
-
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Play(int Score, string Time, string isCorrect)
         {
             bool BoolIsCorrect;
-
             //Update the user's score, progress, and time
-
             //If the isCorrect string is correctly parsed 
             if (Boolean.TryParse(isCorrect, out BoolIsCorrect))
             {
@@ -341,7 +327,6 @@ namespace PLM.Controllers
             {
                 ((UserGameSession)Session["userGameSession"]).numAnswers--;
             }
-
         }
 
         /// <summary>

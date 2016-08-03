@@ -38,7 +38,6 @@
                     @Html.ValidationMessageFor(model => model.Attribution, "", new { @class = "text-danger" })
                 </div>
             </div>
-
             <br />
             <br />
             <br />
@@ -47,11 +46,9 @@
 
     </form>
 </div>
-
 <div>
     @Html.ActionLink("Back to List", "Create", "Answers", new { id = Model.Answer.Module.ModuleID }, null)
 </div>
-
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }

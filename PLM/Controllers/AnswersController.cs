@@ -17,14 +17,12 @@ namespace PLM.Controllers
     public class AnswersController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
-
         // GET: /Answers/
         public ActionResult Index()
         {
             var answers = db.Answers.Include(a => a.Module);
             return View(answers.ToList());
         }
-
         // GET: /Answers/Details/5
         public ActionResult Details(int? id)
         {
@@ -79,11 +77,7 @@ namespace PLM.Controllers
                     return RedirectToAction("Create", new { id = answer.ModuleID });
                 }
             }
-            catch (Exception)
-            {
-
-            }
-            //answer.Module = db.Modules.Find(answer.ModuleID);
+            catch (Exception){}
             return RedirectToAction("Create", new { error = "You cannot add duplicate answers" });
         }
 
@@ -117,7 +111,6 @@ namespace PLM.Controllers
         {
             if (ModelState.IsValid)
             {
-
                 db.Entry(answer).State = EntityState.Modified;
                 if (ModuleID != null)
                 {
@@ -129,9 +122,6 @@ namespace PLM.Controllers
             ViewBag.ModuleID = new SelectList(db.Modules, "ModuleID", "Name");
             return View(answer);
         }
-
-
-
         // GET: /Answers/Delete/5
         [AuthorizeOrRedirectAttribute(Roles = "Instructor")]
         public ActionResult Delete(int? id)
