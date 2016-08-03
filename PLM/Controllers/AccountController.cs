@@ -531,25 +531,31 @@ namespace PLM.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = await UserManager.FindAsync(model.Email, model.Password);
-                if (user.Status == ApplicationUser.AccountStatus.Disabled)
-                {
-                    return RedirectToAction("AccountDisabled");
+                try { 
+                    var user = await UserManager.FindAsync(model.Email, model.Password);
+                    if (user.Status == ApplicationUser.AccountStatus.Disabled)
+                    {
+                        return RedirectToAction("AccountDisabled");
+                    }
+                    if (user != null)
+                    {
+                        //if (!await UserManager.IsEmailConfirmedAsync(user.Id))
+                        //{
+                        //string callbackUrl = await SendEmailConfirmationTokenAsync(user.Id, "Confirm your account-Resend");
+                        ViewBag.errorMessage = "You must have a confirmed email to log on.";
+                        //return View("Error");
+                        await SignInAsync(user, model.RememberMe);
+                        return RedirectToLocal(returnUrl);
+                        //}
+                    }
+                    else
+                    {
+                        ModelState.AddModelError("", "Invalid username or password.");
+                    }
                 }
-                if (user != null)
+                catch(NullReferenceException)
                 {
-                    //if (!await UserManager.IsEmailConfirmedAsync(user.Id))
-                    //{
-                    //string callbackUrl = await SendEmailConfirmationTokenAsync(user.Id, "Confirm your account-Resend");
-                    ViewBag.errorMessage = "You must have a confirmed email to log on.";
-                    //return View("Error");
-                    await SignInAsync(user, model.RememberMe);
-                    return RedirectToLocal(returnUrl);
-                    //}
-                }
-                else
-                {
-                    ModelState.AddModelError("", "Invalid username or password.");
+                    RedirectToAction("Login");
                 }
             }
 
