@@ -270,10 +270,7 @@
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Answer.cs" />
     <Compile Include="Extensions\Extensions.cs" />
-    <Compile Include="Models\Assignment.cs" />
     <Compile Include="Models\Category.cs" />
-    <Compile Include="Models\Course.cs" />
-    <Compile Include="Models\CourseWork.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Module.cs" />
     <Compile Include="Models\Picture.cs" />
