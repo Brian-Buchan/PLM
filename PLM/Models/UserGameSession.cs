@@ -40,9 +40,14 @@ namespace PLM
         public List<AnsPicIndex> PictureIndices { get; set; }
         
         /// <summary>
-        /// The number of answers to be displayed each question
+        /// The number of answers to be displayed each question (after checking for display)
         /// </summary>
         public int numAnswers { get; set; }
+
+        /// <summary>
+        /// The number of answers to be displayed each question (before checking for display)
+        /// </summary>
+        public int defaultNumAnswer { get; set; }
         
         /// <summary>
         /// The number of questions to be asked during this game

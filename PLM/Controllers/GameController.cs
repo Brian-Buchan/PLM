@@ -26,13 +26,16 @@ namespace PLM.Controllers
         private bool WrongAnswersGenerationNOTcompleted = true;
         private int answerID;
         private int pictureID;
+        private bool loggedIn;
+        private bool correctSettings;
+
         [HttpGet]
         public ActionResult Setup(int PLMid, int changeSettings)
         {
             int IDtoPASS = PLMid;
 
-            if (PLMgenerated == false) 
-            { 
+            if (PLMgenerated == false)
+            {
                 GenerateModule(IDtoPASS);
             }
 
@@ -45,7 +48,6 @@ namespace PLM.Controllers
             {
                 return RedirectToAction("Play");
             }
-            //return View(((UserGameSession)Session["userGameSession"]).currentModule);
         }
 
         /// <summary>
@@ -80,6 +82,7 @@ namespace PLM.Controllers
             int timeHours = (currentGameSession.currentModule.DefaultTime / 60);
             int timeMinutes = (currentGameSession.currentModule.DefaultTime % 60);
             currentGameSession.numAnswers = currentGameSession.currentModule.DefaultNumAnswers;
+            currentGameSession.defaultNumAnswer = currentGameSession.currentModule.DefaultNumAnswers;
             currentGameSession.numQuestions = currentGameSession.currentModule.DefaultNumQuestions;
             currentGameSession.time = currentGameSession.currentModule.DefaultTime;
             currentGameSession.timeLeft = new TimeSpan(timeHours, timeMinutes, 0);
@@ -244,21 +247,25 @@ namespace PLM.Controllers
             newScore = new Score();
             if (Request.IsAuthenticated)
             {
-                if (((UserGameSession)Session["userGameSession"]).currentModule.DefaultNumAnswers == ((UserGameSession)Session["userGameSession"]).numAnswers
+                loggedIn = true;
+                if (((UserGameSession)Session["userGameSession"]).currentModule.DefaultNumAnswers == ((UserGameSession)Session["userGameSession"]).defaultNumAnswer
                     && ((UserGameSession)Session["userGameSession"]).currentModule.DefaultNumQuestions == ((UserGameSession)Session["userGameSession"]).numQuestions
                     && ((UserGameSession)Session["userGameSession"]).currentModule.DefaultTime == ((UserGameSession)Session["userGameSession"]).time)
-                    {
-                        SaveScore(score);
-                    }
+                {
+                    correctSettings = true;
+                }
                 else
                 {
+                    correctSettings = false;
                     ViewBag.ErrorMessage = "You must use default settings for your score to save";
                 }
-            
-            }else
+            }
+            else
             {
+                loggedIn = false;
                 ViewBag.ErrorMessage = "You must be logged in for your score to save";
             }
+            SaveScore(score);
             ViewBag.ModuleID = ((UserGameSession)Session["userGameSession"]).currentModule.ModuleID;
             List<Score> scores = TopTenScore.GetTopTenScores(((UserGameSession)Session["userGameSession"]).currentModule.ModuleID);
             List<string[]> scoresToSend = new List<string[]>();
@@ -268,8 +275,7 @@ namespace PLM.Controllers
                 ApplicationUser player = db.Users.Find(top10score.UserID);
                 try
                 {
-
-                stringToSend[0] = (player.FirstName + ", " + player.LastName[0]);
+                    stringToSend[0] = (player.FirstName + ", " + player.LastName[0]);
                 }
                 catch
                 {
@@ -277,8 +283,7 @@ namespace PLM.Controllers
                 }
                 try
                 {
-
-                stringToSend[1] = (top10score.CorrectAnswers + " out of " + top10score.TotalAnswers);
+                    stringToSend[1] = (top10score.CorrectAnswers + " out of " + top10score.TotalAnswers);
                 }
                 catch
                 {
@@ -286,9 +291,8 @@ namespace PLM.Controllers
                 }
                 try
                 {
-
-                stringToSend[2] = top10score.TimeStamp.ToShortDateString();
-                 }
+                    stringToSend[2] = top10score.TimeStamp.ToShortDateString();
+                }
                 catch
                 {
                     stringToSend[2] = "Error";
@@ -305,11 +309,13 @@ namespace PLM.Controllers
         {
             newScore.CorrectAnswers = (score / 100);
             newScore.ModuleID = ((UserGameSession)Session["userGameSession"]).currentModule.ModuleID;
-            newScore.UserID = User.Identity.GetUserId();
             newScore.TotalAnswers = ((UserGameSession)Session["userGameSession"]).numQuestions;
-
-            db.Entry(newScore).State = EntityState.Added;
-            db.SaveChanges();
+            if (loggedIn && correctSettings)
+            {
+                newScore.UserID = User.Identity.GetUserId();
+                db.Entry(newScore).State = EntityState.Added;
+                db.SaveChanges();
+            }
         }
 
         public ActionResult Error()
@@ -335,7 +341,7 @@ namespace PLM.Controllers
             {
                 ((UserGameSession)Session["userGameSession"]).numAnswers--;
             }
-            
+
         }
 
         /// <summary>
