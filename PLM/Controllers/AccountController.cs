@@ -13,7 +13,6 @@ using Owin;
 using PLM.Models;
 using System.Net;
 using System.Data.Entity;
-using SendGrid;
 using System.Configuration;
 using System.Diagnostics;
 using PLM.CutomAttributes;

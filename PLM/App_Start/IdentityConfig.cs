@@ -4,7 +4,6 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using PLM.Models;
-using SendGrid;
 using System.Net;
 using System.Configuration;
 using System.Diagnostics;
@@ -52,7 +51,6 @@ namespace PLM
                 Subject = "Security Code",
                 BodyFormat = "Your security code is: {0}"
             });
-            manager.EmailService = new EmailService();
             manager.SmsService = new SmsService();
             var dataProtectionProvider = options.DataProtectionProvider;
             if (dataProtectionProvider != null)
@@ -62,73 +60,6 @@ namespace PLM
             return manager;
         }
     }
-
-    public class EmailService : IIdentityMessageService
-    {
-        public async Task SendAsync(IdentityMessage message)
-        {
-            // Plug in your email service here to send an email.
-            //return Task.FromResult(0);
-            await configSendGridasync(message);
-        }
-
-         //Use NuGet to install SendGrid (Basic C# client lib) 
-        private async Task configSendGridasync(IdentityMessage message)
-        {
-            var myMessage = new SendGridMessage();
-            myMessage.AddTo(message.Destination);
-            myMessage.From = new System.Net.Mail.MailAddress(
-                                "plm.nmc.edu", "Jacqueline R.");
-            myMessage.Subject = message.Subject;
-            myMessage.Text = message.Body;
-            myMessage.Html = message.Body;
-
-            var credentials = new NetworkCredential(
-                       ConfigurationManager.AppSettings["mailAccount"],
-                       ConfigurationManager.AppSettings["mailPassword"]
-                       );
-
-            // Create a Web transport for sending email.
-            var transportWeb = new Web(credentials);
-
-            // Send the email.
-            if (transportWeb != null)
-            {
-                await transportWeb.DeliverAsync(myMessage);
-            }
-            else
-            {
-                Trace.TraceError("Failed to create Web transport.");
-                await Task.FromResult(0);
-            }
-        }
-        //private async Task configSendGridasync(IdentityMessage message)
-        //{
-        //    var smtp = new SmtpClient(Properties.Resources.SendGridURL, 587);
-
-        //    var creds = new NetworkCredential(Properties.Resources.SendGridUser, Properties.Resources.SendGridPassword);
-
-        //    smtp.UseDefaultCredentials = false;
-        //    smtp.Credentials = creds;
-        //    smtp.EnableSsl = false;
-
-        //    var to = new MailAddress(message.Destination);
-        //    var from = new MailAddress("jacquelineradtke@gmail.com", "Your Contractor Connection");
-
-        //    var msg = new MailMessage();
-
-        //    msg.To.Add(to);
-        //    msg.From = from;
-        //    msg.IsBodyHtml = true;
-        //    msg.Subject = message.Subject;
-        //    msg.Body = message.Body;
-
-        //    await smtp.SendMailAsync(msg);
-        //}
-
-
-    }
-
     public class SmsService : IIdentityMessageService
     {
         public Task SendAsync(IdentityMessage message)
