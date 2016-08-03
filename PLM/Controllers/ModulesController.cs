@@ -60,7 +60,6 @@ namespace PLM.Controllers
                 modules = modules.Where(m => m.Name.ToLower().Contains(searchString)).ToList();
                                        //|| m.Description.Contains(searchString)).ToList();
             }
-
             if(filterParam > 0)
             {
                 modules = modules.Where(m => m.CategoryId == filterParam).ToList();
@@ -80,7 +79,6 @@ namespace PLM.Controllers
             ViewBag.Cat11Count = categoryCount(11);
             int pageSize = 3;
             int pageNumber = (page ?? 1);
-
             return View(modules.ToPagedList(pageNumber, pageSize));
         }
 

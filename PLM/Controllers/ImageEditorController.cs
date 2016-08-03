@@ -124,17 +124,13 @@ namespace PLM.Controllers
             string tempUrl = Request.Form.Get("tempUrl");
             //string noRedirect = Request.Form.Get("noRedirect");
             string temporaryFileName = Path.GetFileName(tempUrl);
-
             DiscardChanges(temporaryFileName);
-
             //if (noRedirect == Boolean.TrueString)
             //{
             //    return new HttpStatusCodeResult(HttpStatusCode.OK);
             //}
-
             return RedirectToAction("Index", "Home");
         }
-
         /// <summary>
         /// Saves an image from data obtained from a POST.
         /// Returns the filepath if it succeeds.

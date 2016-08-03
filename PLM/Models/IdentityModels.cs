@@ -55,7 +55,6 @@ namespace PLM
 
         [Display(Name = "Note")]
         public string DisableAccountNote { get; set; }
-
         public enum Reason
         {
             None,
@@ -89,7 +88,6 @@ namespace PLM
         {
             return new ApplicationDbContext();
         }
-
         public DbSet<Module> Modules { get; set; }
         public DbSet<Answer> Answers { get; set; }
         public DbSet<Picture> Pictures { get; set; }
