@@ -210,7 +210,7 @@ namespace PLM.Controllers
                 }
                 return dirPath + TempFileName;
             }
-            catch (Exception ex)
+            catch 
             {
                 return "FAILED";
             }

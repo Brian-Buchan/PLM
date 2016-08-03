@@ -1301,8 +1301,6 @@
     <Content Include="Views\Report\YourReports.cshtml" />
     <Content Include="Views\Report\YourModulesReported.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
-    <Content Include="Views\Account\VerifyCode.cshtml" />
-    <Content Include="Views\Account\SendCode.cshtml" />
     <Content Include="Views\Account\DisplayEmail.cshtml" />
     <Content Include="Views\Game\Error.cshtml" />
     <Content Include="Views\ImageEditor\Confirm.cshtml" />

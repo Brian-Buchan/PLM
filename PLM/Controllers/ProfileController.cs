@@ -120,7 +120,7 @@ namespace PLM.Controllers
                     }
                 }
             }
-            catch (Exception ex)
+            catch
             {
                 isSavedSuccessfully = false;
             }
