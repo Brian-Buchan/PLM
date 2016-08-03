@@ -27,8 +27,6 @@
             </div>
         </div>
     </section>
-    <!--/#page-breadcrumb-->
-
     <div class="container">
         @using (Html.BeginForm("Index", "Modules", FormMethod.Get))
         {
@@ -48,10 +46,6 @@
                         <div class="sidebar-item categories">
                             <h3>Subject Categories</h3>
                             <ul class="nav navbar-stacked">
-                                @*@foreach (Category cat in Model.Cats)
-                                {
-                                    <li><a href="#">@cat<span class="pull-right">@CategoriesCount(cat.CategoryID)</span></a></li>
-                                }*@
                                 <li>@Html.ActionLink((string)("Aviation - " + ViewBag.Cat1Count), "Index", new { filterParam = 1 })</li>
                                 <li>@Html.ActionLink((string)("Business - " + ViewBag.Cat2Count), "Index", new { filterParam = 2 })</li>
                                 <li>@Html.ActionLink((string)("Communications - " + ViewBag.Cat3Count), "Index", new { filterParam = 3 })</li>
@@ -63,19 +57,6 @@
                                 <li>@Html.ActionLink((string)("Social Science - " + ViewBag.Cat9Count), "Index", new { filterParam = 9 })</li>
                                 <li>@Html.ActionLink((string)("Technical - " + ViewBag.Cat10Count), "Index", new { filterParam = 10 })</li>
                                 <li>@Html.ActionLink((string)("Other - " + ViewBag.Cat11Count), "Index", new { filterParam = 11 })</li>
-
-
-                                @*<li><a href="#">Aviation<span class="pull-right">@ViewBag.Cat1Count</span></a></li>
-                                <li><a href="#">Business<span class="pull-right">@ViewBag.Cat2Count</span></a></li>
-                                <li><a href="#">Communications<span class="pull-right">@ViewBag.Cat3Count</span></a></li>
-                                <li><a href="#">Humanities<span class="pull-right">@ViewBag.Cat4Count</span></a></li>
-                                <li><a href="#">Maritime<span class="pull-right">@ViewBag.Cat5Count</span></a></li>
-                                <li><a href="#">Math<span class="pull-right">@ViewBag.Cat6Count</span></a></li>
-                                <li><a href="#">Medical<span class="pull-right">@ViewBag.Cat7Count</span></a></li>
-                                <li><a href="#">Science<span class="pull-right">@ViewBag.Cat8Count</span></a></li>
-                                <li><a href="#">Social Science<span class="pull-right">@ViewBag.Cat9Count</span></a></li>
-                                <li><a href="#">Technical<span class="pull-right">@ViewBag.Cat10Count</span></a></li>
-                                <li><a href="#">Other<span class="pull-right">@ViewBag.Cat11Count</span></a></li>*@
                             </ul>
                         </div>
                     </div>
@@ -131,7 +112,6 @@
         </div>
     </section>
     <!--/#projects-->
-
     <footer>
         <div>Icons made by <a href="http://www.flaticon.com/authors/gregor-cresnar" title="Gregor Cresnar">Gregor Cresnar</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
     </footer>

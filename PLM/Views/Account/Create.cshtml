@@ -9,10 +9,7 @@
     <meta name="author" content="">
     <title>Account Create</title>
 </head>
-
 <body>
-
-    
     <section id="page-breadcrumb">
         <div class="vertical-center sun">
             <div class="container">
@@ -26,7 +23,7 @@
             </div>
         </div>
     </section>
-    <!--/#page-breadcrumb-->
+    
     @using (Html.BeginForm())
     {
         @Html.AntiForgeryToken()
@@ -86,7 +83,6 @@
             </div>
         </div>
     }
-
     <div>
         @Html.ActionLink("Back to List", "Index")
     </div>

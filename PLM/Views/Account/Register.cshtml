@@ -40,7 +40,6 @@
         </div>
     </div>
 </section>
-
     @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
 {
     @Html.AntiForgeryToken()
@@ -87,7 +86,7 @@
         </div>
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
-            <input type="checkbox" name="TermsOfUse" value="Accepted">I accept the <a target="_blank" href="@Url.Action("TOU", "Home")"> Terms Of Use</a>
+            <input type="checkbox" name="TermsOfUse" id="check" value="Accepted">I accept the <a target="_blank" href="@Url.Action("TOU", "Home")"> Terms Of Use</a>
             </div>
         </div>
     <div class="form-group" onload="myFunction()">
@@ -95,9 +94,7 @@
                 <input type="submit" class="btn btn-submit" id="btncheck" value="Register" disabled="disabled" />
             </div>
         </div>
-        
 }
-
     @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
     }

@@ -9,9 +9,7 @@
     <meta name="author" content="">
     <title>Roles</title>
 </head>
-
 <body>
-
     <section id="page-breadcrumb">
         <div class="vertical-center sun">
             <div class="container">
@@ -25,11 +23,6 @@
             </div>
         </div>
     </section>
-    <!--/#page-breadcrumb-->
-
-    @*<p>
-        @Html.ActionLink("Create New", "Create")
-    </p>*@
     <table class="table">
         <tr>
             <th>
@@ -37,7 +30,6 @@
             </th>
             <th></th>
         </tr>
-
         @foreach (var role in Model)
         {
             <tr>
@@ -50,7 +42,6 @@
                 </td>
             </tr>
         }
-
     </table>
     @Html.ActionLink("Back to Administration Page", "Admin", "Home")
 </body>

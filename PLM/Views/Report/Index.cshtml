@@ -58,18 +58,12 @@
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.userID)
-                    @*@{
-                    string Username = db.Users.Where(x => x.Id == item.userID);
-                    @ViewBag.username = Username;
-                    }
-                    <p>@ViewBag.username</p>*@
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.category)
                 </td>
                 <td>
                     @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
-                    @*@Html.ActionLink("Details", "Details", new { id = item.ID }) |*@
                     @Html.ActionLink("Delete", "Delete", new { id = item.ID })
                 </td>
             </tr>

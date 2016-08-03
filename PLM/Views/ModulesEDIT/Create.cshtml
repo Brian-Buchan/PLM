@@ -58,29 +58,11 @@ using (Html.BeginForm())
                 @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
             </div>
         </div>
-        @*<div class="form-group" title="String displayed when a the answer is correct">
-            @Html.LabelFor(model => model.rightAnswerString, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.rightAnswerString, new { @class = "control-label col-md-2" })
-                @Html.ValidationMessageFor(model => model.rightAnswerString, "", new { @class = "text-danger" })
-            </div>
-        </div>
-        <div class="form-group" title="String displayed when a the answer is incorrect">
-            @Html.LabelFor(model => model.wrongAnswerString, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.wrongAnswerString, new { @class = "control-label col-md-2" })
-                @Html.ValidationMessageFor(model => model.wrongAnswerString, "", new { @class = "text-danger" })
-            </div>
-        </div>*@
-
-
         <div class="form-group" title="The number of answers per question to choose from provided.">
             @Html.LabelFor(model => model.DefaultNumAnswers, new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 <input type="range" id="numAnswers" name="DefaultNumAnswers" step="3" min="3" max="15" value="12" oninput="outputUpdate(value, '#numAnswersOutput')" />
                 <output for="numAnswers" id="numAnswersOutput">12</output>
-                @*@Html.EditorFor(model => model.DefaultNumAnswers)
-                @Html.ValidationMessageFor(model => model.DefaultNumAnswers)*@
             </div>
         </div>
 
@@ -89,8 +71,6 @@ using (Html.BeginForm())
             <div class="col-md-10">
                 <input type="range" id="numQuestions" name="DefaultNumQuestions" step="5" min="5" max="260" value="50" oninput="outputUpdate(value, '#numQuestionsOutput')" />
                 <output for="numQuestions" id="numQuestionsOutput">50</output>
-                @*@Html.EditorFor(model => model.DefaultNumPictures)
-                @Html.ValidationMessageFor(model => model.DefaultNumPictures)*@
             </div>
         </div>
 
@@ -99,8 +79,6 @@ using (Html.BeginForm())
             <div class="col-md-10">
                 <input type="range" id="time" name="DefaultTime" value="6" min="2" max="32" step="2" oninput="outputUpdate(value, '#timeOutput')" />
                 <output for="time" id="timeOutput">2</output>
-                @*@Html.EditorFor(model => model.DefaultTime)
-                @Html.ValidationMessageFor(model => model.DefaultTime)*@
             </div>
         </div>
 

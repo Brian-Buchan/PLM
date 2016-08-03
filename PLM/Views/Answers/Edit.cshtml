@@ -1,7 +1,6 @@
 ﻿@model PLM.Answer
 @{
     ViewBag.Title = "Edit answer";
-    int defaultPictureCount = 0;
 }
 <head>
     <meta charset="utf-8">
@@ -11,9 +10,6 @@
     <title>Edit Answer</title>
     <link rel="shortcut icon" href="~/Content/images/ico/favicon.ico">
 </head>
-
-
-
 <section id="page-breadcrumb">
     <div class="vertical-center sun">
         <div class="container">
@@ -27,25 +23,14 @@
         </div>
     </div>
 </section>
-
 <br />
-
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-
-
-    @*<div class="floatRight">*@
     <div>
         @Html.ActionLink("Add Picture", "Create", new { Controller = "Pictures", id = Model.AnswerID, ModuleID = Model.ModuleID }, new { type = "button-enter" })
     </div>
-
     <div class="form-horizontal floatLeft" style="width:100%;">
-        @*<div style="text-align:right; float:right">
-            <a href="http://plmeditor.azurewebsites.net" target="_blank">Edit an image to upload.</a>
-        </div>*@
-
-
         @Html.ValidationSummary(true)
         @Html.HiddenFor(model => model.AnswerID)
         <div class="form-group">
@@ -85,22 +70,13 @@
                                 </div>
                             </div>
                             <div class="portfolio-info ">
-                                @*<div class="halfPanel">*@
                                     @Html.ActionLink("Edit Image", "ImageEditor", new { controller = "Pictures", id = pic.PictureID }) |
-                                @*</div>
-                                <div class="halfPanel">*@
                                     @Html.ActionLink("Attribution", "Edit", new { controller = "Pictures", id = pic.PictureID }) |
-                                @*</div>
-                                <div class="halfPanel">*@
                                     @Html.ActionLink("Delete", "Delete", new { controller = "Pictures", id = pic.PictureID })
-                                @*</div>*@
-                                @*<h2><a href="@Url.Action("Edit", "Pictures",new { Controller = "Pictures", id = pic.PictureID})">Attribution</a></h2>
-                                    <a href="@Url.Action("Delete", "Pictures",new { Controller = "Pictures", id = pic.PictureID})"></a>*@
+                              
                             </div>
                         </div>
                     </div>
-                    @*<a href="@Url.Action("Delete", "Pictures",new { Controller = "Pictures", id = pic.PictureID})">*@
-                    @*<img onerror="this.src='C:/PerceptualLearning/Content/images/Error.bmp';" src="@pic.Location" alt="Answer Image" class="img-thumbnail" width="225" />*@
                 }
                                      
             </div>
@@ -173,15 +149,6 @@
         });
     });
 </script>
-
-
-@*<div style="text-align:right; float:right">
-    <a href="http://plmeditor.azurewebsites.net" target="_blank">Edit an image to upload.</a>
-</div>*@
-@*<div class="clearLeft floatRight">
-    @Html.ActionLink("Done", "Index", new { controller = "Profile" }, new { type = "button" })
-</div>*@
-
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }

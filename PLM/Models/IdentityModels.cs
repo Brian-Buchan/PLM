@@ -31,13 +31,6 @@ namespace PLM
 
         [Display(Name = "Modules List")]
         public List <Module> ModuleList { get; set; }
-
-        //[Display(Name = "Enrolled Courses")]
-        //public List<Course> EnrolledCourses { get; set; }
-
-        //[Display(Name = "Instructed Courses")]
-        //public List<Course> InstructedCourses { get; set; }
-
         public int OverrideNumberOfAnswers { get; set; }
 
         public enum AccountType
@@ -81,7 +74,6 @@ namespace PLM
             userIdentity.AddClaim(new Claim("FirstName", this.FirstName));
             userIdentity.AddClaim(new Claim("LastName", this.LastName));
             userIdentity.AddClaim(new Claim("Instution", this.Institution));
-            //userIdentity.AddClaim(new Claim("ProfilePicture", this.ProfilePicture));
             return userIdentity;
         }
     }
@@ -102,14 +94,12 @@ namespace PLM
         public DbSet<Answer> Answers { get; set; }
         public DbSet<Picture> Pictures { get; set; }
         public DbSet<Category> Categories { get; set; }
-        //public DbSet<Course> Courses { get; set; }
-        //public DbSet<CourseWork> CourseWork { get; set; }
-        //public DbSet<Assignment> Assignments { get; set; }
+
         public DbSet<Score> Scores { get; set; }
         public DbSet<PLM.Models.Report> Reports { get; set; }
 
         public System.Data.Entity.DbSet<PLM.DisableModuleViewModel> DisableModuleViewModels { get; set; }
         
-        //public System.Data.Entity.DbSet<PLM.ApplicationUser> ApplicationUsers { get; set; }
+
     }
 }

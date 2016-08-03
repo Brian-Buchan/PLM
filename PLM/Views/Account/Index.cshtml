@@ -9,10 +9,7 @@
     <meta name="author" content="">
     <title>Accounts</title>
 </head>
-
 <body>
-
-    
     <section id="page-breadcrumb">
         <div class="vertical-center sun">
             <div class="container">
@@ -26,8 +23,6 @@
             </div>
         </div>
     </section>
-    <!--/#page-breadcrumb-->
-
     <p class="floatRight">
         @Html.ActionLink("Create New Account", "Create", new { type = "btn btn-default" })
     </p>
@@ -81,7 +76,6 @@
                 <td>
                     @Html.ActionLink("Edit", "Edit", new { userName = item.UserName }) |
                     @Html.ActionLink("Roles", "ViewUserRoles", new { userName = item.UserName })
-                    @*@Html.ActionLink("Delete", "Delete", new { userName = item.UserName })*@
                 </td>
                 <th>
                     @Html.ActionLink("Change Status", "AccountDisable", new { userName = item.UserName }, new { type = "button-enter" })

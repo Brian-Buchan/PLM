@@ -21,8 +21,6 @@
             </div>
         </div>
     </section>
-    <!--/#page-breadcrumb-->
-
     <h3>User Name: @ViewBag.UserName</h3>
 
     @if (ViewBag.ErrorMessage != null)
@@ -34,13 +32,10 @@
     {
         @Html.AntiForgeryToken()
         @Html.ValidationSummary(true)
-
         <p>
             Role Name: @Html.DropDownList("RoleName", ViewBag.Roles as SelectList)
         </p>
-
         @Html.Hidden("userName", ViewBag.UserName as string)
-
         <input type="submit" value="Save" />
     }<a href="~/Account/Index">Click here to return to the list of users.</a>
 </body>

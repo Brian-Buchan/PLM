@@ -46,36 +46,18 @@
                 @Html.ValidationMessageFor(model => model.CategoryId, "", new { @class = "text-danger" })
             </div>
         </div>
-
         <div class="form-group">
             @Html.LabelFor(model => model.Description, new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @*@Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "LargeTextBox" } })*@
                 @Html.TextAreaFor(model => model.Description, new { rows="5", cols="25"})
                 @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
             </div>
         </div>
-        @*<div class="form-group" title="String displayed when a the answer is correct">
-            @Html.LabelFor(model => model.rightAnswerString, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.rightAnswerString, new { @class = "control-label col-md-2" })
-                @Html.ValidationMessageFor(model => model.rightAnswerString)
-            </div>
-        </div>
-        <div class="form-group" title="String displayed when a the answer is incorrect">
-            @Html.LabelFor(model => model.wrongAnswerString, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.wrongAnswerString, new { @class = "control-label col-md-2" })
-                @Html.ValidationMessageFor(model => model.wrongAnswerString)
-            </div>
-        </div>*@
         <div class="form-group">
             @Html.LabelFor(model => model.DefaultNumAnswers, new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 <input type="range" id="numAnswers" name="DefaultNumAnswers" step="3" min="3" max="15" value="@Model.DefaultNumAnswers" oninput="outputUpdate(value, '#numAnswersOutput')" />
                 <output for="numAnswers" id="numAnswersOutput">@Model.DefaultNumAnswers</output>
-                @*@Html.EditorFor(model => model.DefaultNumAnswers)
-                @Html.ValidationMessageFor(model => model.DefaultNumAnswers)*@
             </div>
         </div>
 
@@ -84,8 +66,6 @@
             <div class="col-md-10">
                 <input type="range" id="numQuestions" name="DefaultNumQuestions" step="5" min="5" max="260" value="@Model.DefaultNumQuestions" oninput="outputUpdate(value, '#numQuestionsOutput')" />
                 <output for="numQuestions" id="numQuestionsOutput">@Model.DefaultNumQuestions</output>
-                @*@Html.EditorFor(model => model.DefaultNumPictures)
-                @Html.ValidationMessageFor(model => model.DefaultNumPictures)*@
             </div>
         </div>
 
@@ -94,11 +74,8 @@
             <div class="col-md-10">
                 <input type="range" id="time" name="DefaultTime" value="@Model.DefaultTime" min="2" max="32" step="2" oninput="outputUpdate(value, '#timeOutput')" />
                 <output for="time" id="timeOutput">@Model.DefaultTime</output>
-                @*@Html.EditorFor(model => model.DefaultTime)
-                @Html.ValidationMessageFor(model => model.DefaultTime)*@
             </div>
         </div>
-
         <div class="form-group">
             @Html.LabelFor(model => model.isPrivate, new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -153,7 +130,6 @@
                         </td>
                         <td>
                             @Html.ActionLink("Edit", "Edit", new { controller = "Answers", id = ans.AnswerID }) |
-                            @*@Html.ActionLink("Details", "Details", new { controller = "Answers", id = ans.AnswerID }) |*@
                             @Html.ActionLink("Delete", "Delete", new { controller = "Answers", id = ans.AnswerID })
                         </td>
                     </tr>

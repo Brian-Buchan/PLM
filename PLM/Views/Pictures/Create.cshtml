@@ -27,10 +27,6 @@
 <div class="jumbotron">
     <form action="~/Pictures/Create?id=@ViewBag.AnswerID" method="post" enctype="multipart/form-data" class="dropzone" id="dropzoneForm" style="background: none; border: none;" >
         @Html.AntiForgeryToken()
-        @*<input type="text" name="attribution"/>*@
-
-        
-
         <div class="fallback">
             <input name="file" type="file"/> 
             <br />

@@ -125,8 +125,7 @@ namespace PLM.Controllers
                 db.SaveChanges();
                 PopulateCategoryDropDownList(module.CategoryId);
                 DirectoryHandler.CreateDirectory(module);
-                if (module.CategoryId != null) { return RedirectToAction("Create", "Answers", new { id = module.ModuleID }); }
-                else{return RedirectToAction("Create", "ModulesEDIT");}
+                return RedirectToAction("Create", "Answers", new { id = module.ModuleID });
             }
             return View(module);
         }

@@ -56,12 +56,5 @@
 {
     <input type="text" name="tempUrl" value="@Html.Encode(Model.tempUrl)" hidden="hidden" />
     <input type="number" name="answerID" value="@Model.answerID" hidden="hidden" />
-    @*<input type="text" name="noRedirect" value="false" />*@
     <input class="btn btn-primary" style="background-color:red" type="submit" value="Discard" />
 }
-
-@*@using (Html.BeginForm("Discard", "ImageEditor", FormMethod.Post, new {id = "LeavePage"}))
-{
-    <input type="text" name="tempUrl" value="@Model.tempUrl" hidden="hidden" />
-    <input type="text" name="noRedirect" value="true" />
-}*@

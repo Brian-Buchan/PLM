@@ -10,9 +10,7 @@
     <title>Edit Picture</title>
     <link rel="shortcut icon" href="~/Content/images/ico/favicon.ico">
 </head>
-
 <br />
-
 <section id="page-breadcrumb">
     <div class="vertical-center sun">
         <div class="container">
@@ -26,7 +24,6 @@
         </div>
     </div>
 </section>
-
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
@@ -54,10 +51,8 @@
         <div class="col-sm-offset-1">
             <img onerror="this.src = 'Content/images/Error.bmp';" src="@Model.Location" class="img-responsive moduleImage img-hover" alt="Answer Image">
         </div>
-
         <br />
         <br />
-
         <div class="form-group">
             @Html.LabelFor(model => model.Attribution, "Attribution", new { @class = "control-label col-md-2" })
             <div class="col-md-10">
