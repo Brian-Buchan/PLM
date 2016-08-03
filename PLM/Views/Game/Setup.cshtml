@@ -2,7 +2,6 @@
 @{
     ViewBag.Title = "Setup";
 }
-
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -17,7 +16,6 @@
     <link href="~/Content/responsive.css" rel="stylesheet">
     <link href="~/Content/Site.css" rel="stylesheet" />
 </head>
-
 <section id="page-breadcrumb">
     <div class="vertical-center sun">
         <div class="container">
@@ -31,9 +29,7 @@
         </div>
     </div>
 </section>
-
 @* If you want a confirmation popup, uncomment the 'onsubmit = "return validate();"' part *@
-
 @using (Html.BeginForm("Setup", "Game", FormMethod.Post@*, new { onsubmit = "return validate();" }*@))
 { 
     @Html.AntiForgeryToken()
@@ -53,6 +49,5 @@
         <input type="submit" name="btnPlay" value="Play" class="button-enter"/>
     </div>
 }
-
 @Html.ActionLink("Back to Modules List", "Index", "Modules")
 <script src="~/Scripts/Setup.js"></script>

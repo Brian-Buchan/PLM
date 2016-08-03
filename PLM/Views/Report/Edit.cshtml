@@ -1,9 +1,7 @@
 ﻿@model PLM.Models.Report
-
 @{
     ViewBag.Title = "Edit Report";
 }
-
 <section id="page-breadcrumb">
     <div class="vertical-center sun">
         <div class="container">
@@ -20,12 +18,10 @@
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
     <div class="form-horizontal">
         <hr />
         @Html.ValidationSummary(true)
         @Html.HiddenFor(model => model.ID)
-
         <div class="form-group" style="display:none">
             @Html.LabelFor(model => model.moduleID, new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -33,7 +29,6 @@
                 @Html.ValidationMessageFor(model => model.moduleID, "", new { @class = "text-danger" })
             </div>
         </div>
-
         <div class="form-group">
             @Html.LabelFor(model => model.description, new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -48,7 +43,6 @@
                 @Html.ValidationMessageFor(model => model.userID, "", new { @class = "text-danger" })
             </div>
         </div>
-
         <div class="form-group">
             @Html.LabelFor(model => model.category, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -63,7 +57,6 @@
             </div>
         </div>
 }
-
 <div>
     @{
         if (User.IsInRole("Admin"))
@@ -75,5 +68,4 @@
             @Html.ActionLink("Back to List", "YourReports")
         }
     }
-
 </div>

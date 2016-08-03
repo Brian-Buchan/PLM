@@ -26,11 +26,9 @@
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
     <div class="form-horizontal">
         @Html.ValidationSummary(true)
         @Html.HiddenFor(model => model.ModuleID)
-
         <div class="form-group">
             @Html.LabelFor(model => model.Name, new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -38,7 +36,6 @@
                 @Html.ValidationMessageFor(model => model.Name, "",new { @class = "text-danger" })
             </div>
         </div>
-
         <div class="form-group">
             <label class="control-label col-md-2" for="CategoryID">Category</label>
             <div class="col-md-10">
@@ -60,7 +57,6 @@
                 <output for="numAnswers" id="numAnswersOutput">@Model.DefaultNumAnswers</output>
             </div>
         </div>
-
         <div class="form-group">
             @Html.LabelFor(model => model.DefaultNumQuestions, new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -68,7 +64,6 @@
                 <output for="numQuestions" id="numQuestionsOutput">@Model.DefaultNumQuestions</output>
             </div>
         </div>
-
         <div class="form-group">
             @Html.LabelFor(model => model.DefaultTime, new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -83,9 +78,6 @@
                 @Html.ValidationMessageFor(model => model.isPrivate, "", new { @class = "text-danger" })
             </div>
         </div>
-
-        <br />
-
         <p>
             @Html.ActionLink("Add New Answer", "Create", new { controller = "Answers", ID = Model.ModuleID})
         </p>
@@ -101,7 +93,7 @@
                     <p class="text-danger">@ans.AnswerString needs pictures added to be a valid answer.</p>
                 }
             }
-}
+          }   
         <div class="form-group">
             <table class="table ">
                 <tr>
@@ -114,13 +106,11 @@
                     <th></th>
                     <th></th>
                 </tr>
-
                 @foreach (Answer ans in Model.Answers)
                 {
                     <tr>
                         <td>
                             @Html.DisplayFor(modelItem => ans.AnswerString)
-
                         </td>
                         <td>
                             @ans.Pictures.Count()
@@ -134,7 +124,6 @@
                         </td>
                     </tr>
                 }
-
             </table>
         </div>
         <div class="form-group">
@@ -144,11 +133,9 @@
         </div>
     </div>
 }
-
 <div class="floatLeft clearRight">
     @Html.ActionLink("Back to List", "Index", new { controller = "Profile", @class="btn" })
 </div>
-
 @section Scripts {
     <script src="~/Scripts/Setup.js"></script>
     @Scripts.Render("~/bundles/jqueryval")

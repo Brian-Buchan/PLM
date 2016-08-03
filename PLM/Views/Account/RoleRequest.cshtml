@@ -1,5 +1,4 @@
 ﻿@model IEnumerable<PLM.ApplicationUser>
-
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -28,7 +27,6 @@
         <button name="ApproveAllRequests" value="ApproveAllRequests" type="submit" class="col-sm-2 button-enter">Approve All</button>
     </form>
 }
-
 <br />
 <br />
 <table class="table">
@@ -54,7 +52,6 @@
         <th></th>
         <th></th>
     </tr>
-
 @foreach (var item in Model)
 {
     var style = (item.Status == ApplicationUser.AccountStatus.Disabled) ? "background-color: #ff8080" : "";
@@ -91,9 +88,7 @@
         </td>
     </tr>
 }
-    
 </table>
-
 <div class="clearLeft floatLeft">
     @Html.ActionLink("Back to Administration Page", "Admin", "Home")
 </div>

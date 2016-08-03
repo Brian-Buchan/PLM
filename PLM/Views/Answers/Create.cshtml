@@ -27,14 +27,11 @@
 </section>
 <h2>@ViewBag.ModuleName</h2>
 <br />
-
 @using (Html.BeginForm()) 
 {
     @Html.AntiForgeryToken()
-    
     <div class="form-horizontal">
         @Html.ValidationSummary(true)
-
         <div class="form-group">
             @Html.LabelFor(model => model.AnswerString, new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -63,7 +60,6 @@
 }
 <br />
 <br />
-
 <div class="form-group clearRight">
     <table class="table ">
         <tr>
@@ -76,7 +72,6 @@
             <th></th>
             <th></th>
         </tr>
-
         @foreach (Answer ans in ViewBag.ModuleAnsList)
         {
             <tr>
@@ -99,10 +94,8 @@
 
     </table>
 </div>
-
 <br />
 <br />
-
 <div class="clearLeft floatRight">
     @Html.ActionLink("Done", "Index", new { controller = "Profile" }, new{ type = "button" })
 </div>

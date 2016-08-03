@@ -23,7 +23,6 @@
     <audio id="audioIncorrect" preload="auto">
         <source src="~/Content/Audio/incorrectSound.mp3" type="audio/mp3" />
     </audio>
-
     <div id="gameBoard">
         <div style="float:right">
             <div id="ScoreBoard">
@@ -44,15 +43,10 @@
                 <img src="@Url.Content("~/Content/Images/speaker.png")" alt="speaker" id="soundToggle" onclick="ToggleMute(this)" />
             </div>
         </div>
-
         <div id="container">
                 <img onerror="this.src='/Content/Images/Error.bmp';" @*id="picture"*@ 
                      style="max-height:480px;max-width:640px;background-size:contain" src="@Model.ImageURL"  
                      title="Image Courtesy of @Model.Attribution" />
-           
-
-            
-
         </div>
         <p id="StoredAnswer" hidden="hidden">@Model.Answer</p>
         <div>

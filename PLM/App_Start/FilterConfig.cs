@@ -9,17 +9,5 @@ namespace PLM
         {
             filters.Add(new HandleErrorAttribute());
         }
-        //protected override void OnException(ExceptionContext filterContext)
-        //{
-        //    if (!filterContext.ExceptionHandled)
-        //    {
-        //        string controller = filterContext.RouteData.Values["controller"].ToString();
-        //        string action = filterContext.RouteData.Values["action"].ToString();
-        //        Exception ex = filterContext.Exception;
-        //        //do something with these details here
-        //        RedirectToAction("Error", "Home");
-        //    }
-
-        //}
     }
 }

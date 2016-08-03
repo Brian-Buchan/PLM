@@ -40,7 +40,6 @@
                 @Html.ValidationMessageFor(model => model.AnswerString, "", new { @class = "text-danger" })
             </div>
         </div>
-
         <div class="form-group hidden">
             @Html.LabelFor(model => model.ModuleID, "ModuleID", new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -48,17 +47,14 @@
                 @Html.ValidationMessageFor(model => model.ModuleID, "", new { @class = "text-danger" })
             </div>
         </div>
-
         <div class="form-group" hidden="hidden">
             @Html.LabelFor(model => model.PictureCount, new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.TextBoxFor(model => model.PictureCount, new { htmlAttributes = new { @class = "form-control" } })
             </div>
         </div>
-
         <div class="form-group">
             @Html.LabelFor(model => model.Pictures, "Pictures", new { @class = "control-label col-md-2" })
-
             <div class="form-group, scroll-box, col-md-10">
                 @foreach (Picture pic in Model.Pictures)
                 {
@@ -73,15 +69,12 @@
                                     @Html.ActionLink("Edit Image", "ImageEditor", new { controller = "Pictures", id = pic.PictureID }) |
                                     @Html.ActionLink("Attribution", "Edit", new { controller = "Pictures", id = pic.PictureID }) |
                                     @Html.ActionLink("Delete", "Delete", new { controller = "Pictures", id = pic.PictureID })
-                              
                             </div>
                         </div>
                     </div>
-                }
-                                     
+                }                     
             </div>
         </div>
-
         <br />
         <div class="form-group">
             <div class="clearLeft floatRight col-lg-2">
@@ -90,9 +83,7 @@
         </div>
     </div>
 }
-
 <script data-preload="true" data-path="@Url.Content("~/pixie-image-editor/pixie")" src="@Url.Content("~/pixie-image-editor/pixie/pixie-integrate.js")"></script>
-
 <script>
     //function saveAll() {
     //    $.ajax({
@@ -121,7 +112,6 @@
     //        }
     //    });
     //}
-
     var myPixie = Pixie.setOptions({
         replaceOriginal: true,
         appendTo: 'body',
@@ -141,7 +131,6 @@
             });
         }
     });
-
     $('#imgEdit').on('click', function (e) {
         myPixie.open({
             url: e.target.src,

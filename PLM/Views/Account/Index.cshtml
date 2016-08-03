@@ -26,7 +26,6 @@
     <p class="floatRight">
         @Html.ActionLink("Create New Account", "Create", new { type = "btn btn-default" })
     </p>
-
     @using (Html.BeginForm())
     {
         <p>
@@ -34,11 +33,9 @@
             <input type="submit" value="Search" class="btn btn-default" />
         </p>
     }
-
     <p>
         @Html.ActionLink("View Disabled Accounts", "DisabledUsersList", new { @class = "floatRight", type = "button" })
     </p>
-
     <table class="table">
         <tr>
             <th>
@@ -56,7 +53,6 @@
             <th></th>
             <th></th>
         </tr>
-
         @foreach (var item in Model)
         {
             var style = (item.Status == ApplicationUser.AccountStatus.Active) ? "background-color: #ff8080" : "";

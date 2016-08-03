@@ -1,7 +1,6 @@
 ﻿@{
     ViewBag.Title = "AccessDenied";
 }
-
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,10 +8,7 @@
     <meta name="author" content="">
     <title>Access Denied</title>
 </head>
-
 <body>
-
-
     <section id="page-breadcrumb">
         <div class="vertical-center sun">
             <div class="container">
@@ -26,10 +22,8 @@
             </div>
         </div>
     </section>
-
     <p>Warning: You are not authorized to access this area!</p>
     <p>You will be redirected to the Home page in 5 seconds or <a href="@Url.Action("Index", "Home")">click here</a> now.</p>
-
     <script>
         setTimeout(function () {
             window.location.replace('@Url.Action("Index", "Home")')
