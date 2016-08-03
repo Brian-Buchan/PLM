@@ -10,7 +10,6 @@
     <title>Modules</title>
     <link rel="shortcut icon" href="~/Content/images/ico/favicon.ico">
 </head>
-
 <body>
     <br />
     <section id="page-breadcrumb">
@@ -26,9 +25,6 @@
             </div>
         </div>
     </section>
-    <!--/#page-breadcrumb-->
-
-
     @using (Html.BeginForm())
     {
         <p>
@@ -40,15 +36,6 @@
     <p>
         @Html.ActionLink("View Disabled Modules", "DisabledModulesList", new { @class = "floatRight", type = "button" })
     </p>
-
-    @*@using (Html.BeginForm())
-    {
-        <p>
-            Find by Username: @Html.TextBox("UserSearchString")
-            <input type="submit" value="Search" />
-        </p>
-    }*@
-
     <table class="table">
         <tr>
             <th>
@@ -106,7 +93,6 @@
                         case 11:
                         <p>Other</p>
                             break;
-                            
                     }
                 </td>
                 <td>
@@ -118,7 +104,6 @@
                 </td>
             </tr>
         }
-
     </table>
     @Html.ActionLink("Back to Administration Page", "Admin", "Home")
 </body>

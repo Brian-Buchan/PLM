@@ -294,14 +294,11 @@ namespace PLM.Controllers
             {
                 var db = new ApplicationDbContext();
                 var user = db.Users.First(u => u.UserName == userModel.UserName);
-
                 user.FirstName = userModel.FirstName;
                 user.LastName = userModel.LastName;
                 user.Email = userModel.Email;
                 user.Institution = userModel.Institution;
                 user.UserName = userModel.UserName;
-
-
                 PasswordHasher ph = new PasswordHasher();
                 user.PasswordHash = ph.HashPassword(userModel.Password);
 
@@ -351,7 +348,6 @@ namespace PLM.Controllers
                 {
                     var roleStore = new RoleStore<IdentityRole>(context);
                     var roleManager = new RoleManager<IdentityRole>(roleStore);
-
                     var userStore = new UserStore<ApplicationUser>(context);
                     var userManager = new UserManager<ApplicationUser>(userStore);
 
@@ -385,7 +381,6 @@ namespace PLM.Controllers
                 {
                     var roleStore = new RoleStore<IdentityRole>(context);
                     var roleManager = new RoleManager<IdentityRole>(roleStore);
-
                     var userStore = new UserStore<ApplicationUser>(context);
                     var userManager = new UserManager<ApplicationUser>(userStore);
                     var user = userManager.FindByName(userName);
@@ -406,10 +401,8 @@ namespace PLM.Controllers
                                  let r = roleManager.FindById(id)
                                  select r.Name).ToList();
                 }
-
                 ViewBag.UserName = userName;
                 ViewBag.RolesForUser = userRoles;
-
                 return View("ViewUserRoles");
             }
 
@@ -428,7 +421,6 @@ namespace PLM.Controllers
             {
                 var roleStore = new RoleStore<IdentityRole>(context);
                 var roleManager = new RoleManager<IdentityRole>(roleStore);
-
                 roles = (from r in roleManager.Roles select r.Name).ToList();
             }
 
@@ -448,7 +440,6 @@ namespace PLM.Controllers
             {
                 var roleStore = new RoleStore<IdentityRole>(context);
                 var roleManager = new RoleManager<IdentityRole>(roleStore);
-
                 var userStore = new UserStore<ApplicationUser>(context);
                 var userManager = new UserManager<ApplicationUser>(userStore);
                 var user = userManager.FindByName(userName);
@@ -467,19 +458,15 @@ namespace PLM.Controllers
                 if (userManager.IsInRole(user.Id, role.Name))
                 {
                     ViewBag.ErrorMessage = "This user already has the role specified!";
-
                     roles = (from r in roleManager.Roles select r.Name).ToList();
                     ViewBag.Roles = new SelectList(roles);
-
                     ViewBag.UserName = userName;
-
                     return View();
                 }
                 else
                 {
                     userManager.AddToRole(user.Id, role.Name);
                     context.SaveChanges();
-
                     List<string> userRoles;
                     var userRoleIds = (from r in user.Roles select r.RoleId);
                     userRoles = (from id in userRoleIds
@@ -488,7 +475,6 @@ namespace PLM.Controllers
 
                     ViewBag.UserName = userName;
                     ViewBag.RolesForUser = userRoles;
-
                     return View("ViewUserRoles");
                 }
 
@@ -539,14 +525,10 @@ namespace PLM.Controllers
                     }
                     if (user != null)
                     {
-                        //if (!await UserManager.IsEmailConfirmedAsync(user.Id))
-                        //{
-                        //string callbackUrl = await SendEmailConfirmationTokenAsync(user.Id, "Confirm your account-Resend");
                         ViewBag.errorMessage = "You must have a confirmed email to log on.";
-                        //return View("Error");
                         await SignInAsync(user, model.RememberMe);
                         return RedirectToLocal(returnUrl);
-                        //}
+                       
                     }
                     else
                     {
@@ -657,37 +639,12 @@ namespace PLM.Controllers
                         Status = ApplicationUser.AccountStatus.Active
                     };
                 }
-                //Sets account to Free Accont Type and Active Account Status
-                //var user = new ApplicationUser()
-                //{
-                //    UserName = model.Email,
-                //    Email = model.Email,
-                //    FirstName = model.FirstName,
-                //    LastName = model.LastName,
-                //    Institution = model.Institution,
-                //    Type = ApplicationUser.AccountType.Free,
-                //    Status = ApplicationUser.AccountStatus.Active
-                //};
                 IdentityResult result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-                    //await SignInAsync(user, isPersistent: false);
-
-                    //string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-                    //var callbackUrl = Url.Action("ConfirmEmail", "Account",
-                    //   new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                    //await UserManager.SendEmailAsync(user.Id,
-                    //   "Confirm your account", "Please confirm your account by clicking <a href=\""
-                    //   + callbackUrl + "\">here</a>");
-
                     UserManager.AddToRole(user.Id, "Learner");
-
-                    //string callbackUrl = await SendEmailConfirmationTokenAsync(user.Id, "Confirm your account");
-
                     ViewBag.Message = "Check your email and confirm your account, you must be confirmed "
                         + "before you can log in.";
-
-                    //return View("Info");
                     return RedirectToAction("Index", "Home");
                 }
                 else
@@ -1006,13 +963,6 @@ namespace PLM.Controllers
                     if (result.Succeeded)
                     {
                         await SignInAsync(user, isPersistent: false);
-
-                        // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
-                        // Send an email with this link
-                        // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-                        // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                        // SendEmail(user.Email, callbackUrl, "Confirm your account", "Please confirm your account by clicking this link");
-
                         return RedirectToLocal(returnUrl);
                     }
                 }

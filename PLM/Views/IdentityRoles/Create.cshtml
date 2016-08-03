@@ -9,9 +9,7 @@
     <meta name="author" content="">
     <title>Create Role</title>
 </head>
-
 <body>
-
     <section id="page-breadcrumb">
         <div class="vertical-center sun">
             <div class="container">
@@ -25,8 +23,6 @@
             </div>
         </div>
     </section>
-    <!--/#page-breadcrumb-->
-
     @using (Html.BeginForm())
     {
         @Html.AntiForgeryToken()
@@ -41,7 +37,6 @@
                     @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
                 </div>
             </div>
-
             <div class="form-group">
                 <div class="col-md-offset-2 col-md-10">
                     <input type="submit" value="Create" class="button-submit-sm" />
@@ -49,7 +44,6 @@
             </div>
         </div>
     }
-
     <div>
         @Html.ActionLink("Back to List", "Index")
     </div>

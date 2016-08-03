@@ -16,9 +16,7 @@
     <link href="~/Content/main.css" rel="stylesheet">
     <link href="~/Content/responsive.css" rel="stylesheet">
 </head>
-
 <body>
-
     <section id="page-breadcrumb">
         <div class="vertical-center sun">
             <div class="container">
@@ -32,9 +30,7 @@
             </div>
         </div>
     </section>
-
     <h3>User: @ViewBag.UserName</h3>
-
     <p>
         @Html.ActionLink("Add a Role", "AddRoleToUser", new { userName = userName })
     </p>

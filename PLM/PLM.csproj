@@ -311,8 +311,6 @@
     <Compile Include="Models\Picture.cs" />
     <Compile Include="Models\AnsPicIndex.cs" />
     <Compile Include="Models\PlayViewModel.cs" />
-    <Compile Include="Models\PLMContext.cs" />
-    <Compile Include="Models\ProfanityEnum.cs" />
     <Compile Include="Models\Report.cs" />
     <Compile Include="Models\ReportCategoryEnum.cs" />
     <Compile Include="Models\Score.cs" />

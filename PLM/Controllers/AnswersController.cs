@@ -47,17 +47,12 @@ namespace PLM.Controllers
             try
             {
                 ViewBag.ModuleID = ID;
-
                 var modules = db.Modules.ToList();
-
                 ViewBag.ModuleName = modules.Find(x => x.ModuleID == ID).Name;
-
                 var answers = db.Answers.ToList();
-
                 ViewBag.ModuleAnsList = (from a in answers
                                          where a.ModuleID == ID
                                          select a).ToList();
-
             }
             catch (Exception)
             {

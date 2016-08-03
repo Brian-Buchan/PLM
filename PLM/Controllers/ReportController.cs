@@ -24,10 +24,6 @@ namespace PLM.Controllers
             var Reports = from u in db.Reports
                           where u.userID == currentUser.Id
                           select u;
-            //if (userID !=null)
-            //{
-            //    Reports = Reports.Where(m => m.moduleID.Equals(userID));
-            //}
             return View(Reports.ToList());
         }
         //public ActionResult Index(int? userID)
@@ -36,11 +32,6 @@ namespace PLM.Controllers
         {
             var Reports = from u in db.Reports
                           select u;
-            //ViewBag.NameUserName = (ApplicationUser)db.Users.Where(x => x.Id == id);
-            //if (userID !=null)
-            //{
-            //    Reports = Reports.Where(m => m.moduleID.Equals(userID));
-            //}
             return View(Reports.ToList());
         }
         public ActionResult YourModulesReported()
@@ -50,19 +41,6 @@ namespace PLM.Controllers
                           join m in db.Modules on r.moduleID equals m.ModuleID
                           where m.User.UserName == name
                           select r;
-            //var name = User.Identity.GetUserName();
-            //ApplicationUser currentUser = (ApplicationUser)db.Users.Single(x => x.UserName == name);
-
-            //var modules = (from i in db.Modules
-            //               where i.User == currentUser
-            //               select i.ModuleID); //gets moduleID's for modules owned by current user
-            //var Reports = from u in db.Reports
-            //              where modules.Contains(u.moduleID)
-            //              select u;
-            //if (userID !=null)
-            //{
-            //    Reports = Reports.Where(m => m.moduleID.Equals(userID));
-            //}
             return View(reports.ToList());
         }
         // GET: /Report/Details/5
@@ -94,9 +72,7 @@ namespace PLM.Controllers
                 ApplicationUser currentUser = (ApplicationUser)db.Users.Single(x => x.UserName == name);
                 placeholder.userID = currentUser.Id;
                 placeholder.moduleID = (int)id;
-                //ViewBag.module = moduleID;
 
-                //ViewBag.user = User.Identity.GetUserName();
                 return View(placeholder);
             }
             else
@@ -105,9 +81,7 @@ namespace PLM.Controllers
                 ViewBag.UserID = "guest user";
                 placeholder.userID = "guest user"; 
                 placeholder.moduleID = (int)id;
-                //ViewBag.module = moduleID;
 
-                //ViewBag.user = User.Identity.GetUserName();
                 return View(placeholder);
             }
         }
