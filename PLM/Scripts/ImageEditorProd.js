@@ -16,7 +16,7 @@
         onSave: function (data, img) {
             $.ajax({
                 type: 'POST',
-                url: '/PerceptualLearningDevelopment/Pictures/ImageEditor',
+                url: '/PerceptualLearning/Pictures/ImageEditor',
                 data: { imgData: data, imgId: img.id, answerId: img.title, origUrl: img.dataset.origSource },
                 success: function (xhr, status, text) {
                     imgIdInput.value = imgEdit.id;

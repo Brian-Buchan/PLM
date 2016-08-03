@@ -32,12 +32,14 @@ namespace PLM.Controllers
 
 
         [HttpGet]
+        [NonAction]
         public ActionResult ImageEditor()
         {
             return View();
         }
         
         [HttpPost]
+        [NonAction]
         [ActionName("ImageEditor")]
         public ActionResult ImageEditorPOST()
         {
@@ -69,6 +71,7 @@ namespace PLM.Controllers
         }
 
         [HttpGet]
+        [NonAction]
         //[RequireHttps] //Ensures http-headers work
         public ActionResult Confirm()
         {
@@ -85,6 +88,7 @@ namespace PLM.Controllers
         }
 
         [HttpPost]
+        [NonAction]
         [ValidateAntiForgeryToken]
         [ActionName("Confirm")]
         public ActionResult ConfirmPOST()
@@ -100,6 +104,7 @@ namespace PLM.Controllers
         }
 
         [HttpPost]
+        [NonAction]
         public ActionResult Save()
         {
             string origUrl = Request.Form.Get("origUrl");
@@ -113,6 +118,7 @@ namespace PLM.Controllers
         }
 
         [HttpPost]
+        [NonAction]
         public ActionResult Discard()
         {
             string tempUrl = Request.Form.Get("tempUrl");

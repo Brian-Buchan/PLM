@@ -133,26 +133,17 @@ namespace PLM.Controllers
             ((UserGameSession)Session["UserGameSession"]).currentQuestion += 1;
             ((UserGameSession)Session["UserGameSession"]).iteratedQuestion += 1;
             currentGuessNum = ((UserGameSession)Session["UserGameSession"]).iteratedQuestion;
-            //currentGuessNum = (((UserGameSession)Session["userGameSession"]).currentQuestion++);
             currentModule = ((UserGameSession)Session["userGameSession"]).currentModule;
             int[] indicies = GetPictureID(currentGuessNum);
             int answerIndex = indicies[0];
             int pictureIndex = indicies[1];
-            //pictureID = indicies[0];
-            //pictureIndex = indicies[1];
-            //answerIndex = indicies[2];
-
             currentGuess.Answer = currentModule.Answers.ElementAt(answerIndex).AnswerString;
             currentGuess.ImageURL = currentModule.Answers.ElementAt(answerIndex).Pictures.ElementAt(pictureIndex).Location;
             currentGuess.possibleAnswers.Add(currentModule.Answers.ElementAt(answerIndex).AnswerString);
             if (currentModule.Answers.ElementAt(answerIndex).Pictures.ElementAt(pictureID).Attribution == null)
-            {
                 currentGuess.Attribution = "";
-            }
             else
-            {
                 currentGuess.Attribution = currentModule.Answers.ElementAt(answerIndex).Pictures.ElementAt(pictureID).Attribution;
-            }
 
             GeneratedGuessIDs.Add(answerIndex);
             GenerateWrongAnswers();
