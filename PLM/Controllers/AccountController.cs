@@ -72,7 +72,6 @@ namespace PLM.Controllers
             return match.Groups[1].Value + domainName;
         }
     }
-    
     [Authorize]
     public class AccountController : Controller
     {
@@ -83,7 +82,7 @@ namespace PLM.Controllers
         }
 
 
-        ////[AuthorizeOrRedirectAttribute(Roles = "Admin")]
+        //
         public ActionResult Index(string sortOrder, string searchString)
         {
             ViewBag.UsernameSortParam = String.IsNullOrEmpty(sortOrder) ? "username_asc" : "";
@@ -130,7 +129,7 @@ namespace PLM.Controllers
             return View(model);
         }
 
-        ////[AuthorizeOrRedirectAttribute(Roles = "Admin")]
+        //
         public ActionResult DisabledUsersList(string sortOrder, string searchString)
         {
             ViewBag.UsernameSortParam = String.IsNullOrEmpty(sortOrder) ? "username_asc" : "";
@@ -181,7 +180,6 @@ namespace PLM.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        //[AuthorizeOrRedirectAttribute(Roles = "Admin")]
         public ActionResult RoleRequest(string userID)
         {
             ApplicationUser user = db.Users.First(x => x.Id == userID);
@@ -195,7 +193,6 @@ namespace PLM.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        //[AuthorizeOrRedirectAttribute(Roles = "Admin")]
         public ActionResult DenyRequest(string userID)
         {
             ApplicationUser user = db.Users.First(x => x.Id == userID);
@@ -205,10 +202,8 @@ namespace PLM.Controllers
 
             return RedirectToAction("RoleRequest", "Account");
         }
-
-       [HttpPost]
+        [HttpPost]
         [ValidateAntiForgeryToken]
-        //[AuthorizeOrRedirectAttribute(Roles = "Admin")]
         public ActionResult ApproveALLRequests()
         {
             var users = (from u in db.Users
@@ -225,16 +220,12 @@ namespace PLM.Controllers
             
             return RedirectToAction("RoleRequest", "Account");
         }
-
-        //[AuthorizeOrRedirectAttribute(Roles = "Admin")]
         public ActionResult Create()
         {
             return View();
         }
-
         [HttpPost]
         [ValidateAntiForgeryToken]
-        //[AuthorizeOrRedirectAttribute(Roles = "Admin")]
         public async Task<ActionResult> Create(CreateUserViewModel model)
         {
             if (ModelState.IsValid)
@@ -256,7 +247,6 @@ namespace PLM.Controllers
                 if (result.Succeeded)
                 {
                     UserManager.AddToRole(user.Id, "Learner");
-
                     return RedirectToAction("Index", "Account");
                 }
                 AddErrors(result);
@@ -264,7 +254,7 @@ namespace PLM.Controllers
             return View(model);
         }
 
-        //[AuthorizeOrRedirectAttribute(Roles = "Admin")]
+        
         public ActionResult Edit(string userName = null)
         {
             if (userName == null)
@@ -286,7 +276,7 @@ namespace PLM.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        //[AuthorizeOrRedirectAttribute(Roles = "Admin")]
+        
         public ActionResult Edit([Bind(Include = "UserName, LastName, FirstName, Institution, Email, Status, Password, ConfirmPassword")] EditUserViewModel userModel)
         {
             if (ModelState.IsValid)
@@ -300,16 +290,14 @@ namespace PLM.Controllers
                 user.UserName = userModel.UserName;
                 PasswordHasher ph = new PasswordHasher();
                 user.PasswordHash = ph.HashPassword(userModel.Password);
-
                 db.Entry(user).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-
             return View(userModel);
         }
 
-        //[AuthorizeOrRedirectAttribute(Roles = "Admin")]
+        
         public ActionResult Delete(string userName = null)
         {
             var db = new ApplicationDbContext();
@@ -326,7 +314,6 @@ namespace PLM.Controllers
 
         [ValidateAntiForgeryToken]
         [HttpPost, ActionName("Delete")]
-        //[AuthorizeOrRedirectAttribute(Roles = "Admin")]
         public ActionResult DeleteConfirmed(string userName)
         {
             var db = new ApplicationDbContext();
@@ -336,7 +323,6 @@ namespace PLM.Controllers
             return RedirectToAction("Index");
         }
 
-        //[AuthorizeOrRedirectAttribute(Roles = "Admin")]
         public ActionResult ViewUserRoles(string userName = null)
         {
             if (!string.IsNullOrWhiteSpace(userName))
@@ -361,15 +347,11 @@ namespace PLM.Controllers
                                  let r = roleManager.FindById(id)
                                  select r.Name).ToList();
                 }
-
                 ViewBag.UserName = userName;
                 ViewBag.RolesForUser = userRoles;
             }
-
             return View();
         }
-
-        //[AuthorizeOrRedirectAttribute(Roles = "Admin")]
         public ActionResult DeleteRoleForUser(string userName = null, string roleName = null)
         {
             if ((!string.IsNullOrWhiteSpace(userName)) || (!string.IsNullOrWhiteSpace(roleName)))
@@ -410,8 +392,6 @@ namespace PLM.Controllers
                 return View("Index");
             }
         }
-
-        //[AuthorizeOrRedirectAttribute(Roles = "Admin")]
         public ActionResult AddRoleToUser(string userName = null)
         {
             List<string> roles;
@@ -427,10 +407,8 @@ namespace PLM.Controllers
             ViewBag.UserName = userName;
             return View();
         }
-
         [HttpPost]
         [ValidateAntiForgeryToken]
-        //[AuthorizeOrRedirectAttribute(Roles = "Admin")]
         public ActionResult AddRoleToUser(string roleName, string userName)
         {
             List<string> roles;
@@ -476,9 +454,7 @@ namespace PLM.Controllers
                     ViewBag.RolesForUser = userRoles;
                     return View("ViewUserRoles");
                 }
-
             }
-
         }
 
         public AccountController(ApplicationUserManager userManager)
@@ -497,8 +473,6 @@ namespace PLM.Controllers
                 _userManager = value;
             }
         }
-
-        //
         // GET: /Account/Login
         [AllowAnonymous]
         public ActionResult Login(string returnUrl)
@@ -506,7 +480,6 @@ namespace PLM.Controllers
             ViewBag.ReturnUrl = returnUrl;
             return View();
         }
-
 
         //POST: /Account/Login
         [HttpPost]
@@ -539,7 +512,6 @@ namespace PLM.Controllers
                     RedirectToAction("Login");
                 }
             }
-
             // If we got this far, something failed, redisplay form
             return View(model);
         }
@@ -557,7 +529,6 @@ namespace PLM.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-
             var db = new ApplicationDbContext();
             var user = db.Users.First(u => u.UserName == userName);
             var model = new DisableUserViewModel(user);
@@ -566,13 +537,12 @@ namespace PLM.Controllers
             {
                 return HttpNotFound();
             }
-
             return View(model);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        //[AuthorizeOrRedirectAttribute(Roles = "Admin")]
+        
         public ActionResult AccountDisable([Bind(Include = "UserName, DisableAccountReason, DisableAccountNote, Status")] DisableUserViewModel userModel)
         {
             if (ModelState.IsValid)
@@ -588,19 +558,14 @@ namespace PLM.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-
             return View(userModel);
         }
-
-        //
         // GET: /Account/Register
         [AllowAnonymous]
         public ActionResult Register()
         {
             return View();
         }
-
-        //
         // POST: /Account/Register
         [HttpPost]
         [AllowAnonymous]
@@ -648,22 +613,17 @@ namespace PLM.Controllers
                 }
                 else
                 {
-                    
                     AddErrors(result);
                     RedirectToAction("Index", "Profile");
                 }
             }
-
             // If we got this far, something failed, redisplay form
             return View(model);
         }
-
         public ActionResult AccessDenied()
         {
             return View();
         }
-
-        //
         // GET: /Account/ConfirmEmail
         [AllowAnonymous]
         public async Task<ActionResult> ConfirmEmail(string userId, string code)
@@ -684,16 +644,12 @@ namespace PLM.Controllers
                 return View();
             }
         }
-
-        //
         // GET: /Account/ForgotPassword
         [AllowAnonymous]
         public ActionResult ForgotPassword()
         {
             return View();
         }
-
-        //
         // POST: /Account/ForgotPassword
         [HttpPost]
         [AllowAnonymous]
@@ -720,16 +676,12 @@ namespace PLM.Controllers
             // If we got this far, something failed, redisplay form
             return View(model);
         }
-
-        //
         // GET: /Account/ForgotPasswordConfirmation
         [AllowAnonymous]
         public ActionResult ForgotPasswordConfirmation()
         {
             return View();
         }
-
-        //
         // GET: /Account/ResetPassword
         [AllowAnonymous]
         public ActionResult ResetPassword(string code)
@@ -740,8 +692,6 @@ namespace PLM.Controllers
             }
             return View();
         }
-
-        //
         // POST: /Account/ResetPassword
         [HttpPost]
         [AllowAnonymous]
@@ -767,20 +717,15 @@ namespace PLM.Controllers
                     return View();
                 }
             }
-
             // If we got this far, something failed, redisplay form
             return View(model);
         }
-
-        //
         // GET: /Account/ResetPasswordConfirmation
         [AllowAnonymous]
         public ActionResult ResetPasswordConfirmation()
         {
             return View();
         }
-
-        //
         // POST: /Account/Disassociate
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -800,8 +745,6 @@ namespace PLM.Controllers
             }
             return RedirectToAction("Manage", new { Message = message });
         }
-
-        //
         // GET: /Account/Manage
         public ActionResult Manage(ManageMessageId? message)
         {
@@ -815,8 +758,6 @@ namespace PLM.Controllers
             ViewBag.ReturnUrl = Url.Action("Manage");
             return View();
         }
-
-        //
         // POST: /Account/Manage
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -864,12 +805,9 @@ namespace PLM.Controllers
                     }
                 }
             }
-
             // If we got this far, something failed, redisplay form
             return View(model);
         }
-
-        //
         // POST: /Account/ExternalLogin
         [HttpPost]
         [AllowAnonymous]
@@ -879,8 +817,6 @@ namespace PLM.Controllers
             // Request a redirect to the external login provider
             return new ChallengeResult(provider, Url.Action("ExternalLoginCallback", "Account", new { ReturnUrl = returnUrl }));
         }
-
-        //
         // GET: /Account/ExternalLoginCallback
         [AllowAnonymous]
         public async Task<ActionResult> ExternalLoginCallback(string returnUrl)
@@ -906,8 +842,6 @@ namespace PLM.Controllers
                 return View("ExternalLoginConfirmation", new ExternalLoginConfirmationViewModel { Email = loginInfo.Email });
             }
         }
-
-        //
         // POST: /Account/LinkLogin
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -916,8 +850,6 @@ namespace PLM.Controllers
             // Request a redirect to the external login provider to link a login for the current user
             return new ChallengeResult(provider, Url.Action("LinkLoginCallback", "Account"), User.Identity.GetUserId());
         }
-
-        //
         // GET: /Account/LinkLoginCallback
         public async Task<ActionResult> LinkLoginCallback()
         {
@@ -933,8 +865,6 @@ namespace PLM.Controllers
             }
             return RedirectToAction("Manage", new { Message = ManageMessageId.Error });
         }
-
-        //
         // POST: /Account/ExternalLoginConfirmation
         [HttpPost]
         [AllowAnonymous]
@@ -945,7 +875,6 @@ namespace PLM.Controllers
             {
                 return RedirectToAction("Manage");
             }
-
             if (ModelState.IsValid)
             {
                 // Get the information about the user from the external login provider
@@ -967,12 +896,9 @@ namespace PLM.Controllers
                 }
                 AddErrors(result);
             }
-
             ViewBag.ReturnUrl = returnUrl;
             return View(model);
         }
-
-        //
         // POST: /Account/LogOff
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -981,8 +907,6 @@ namespace PLM.Controllers
             AuthenticationManager.SignOut();
             return RedirectToAction("Index", "Home");
         }
-
-        //
         // GET: /Account/ExternalLoginFailure
         [AllowAnonymous]
         public ActionResult ExternalLoginFailure()
@@ -1007,7 +931,6 @@ namespace PLM.Controllers
             }
             base.Dispose(disposing);
         }
-
         #region Helpers
         // Used for XSRF protection when adding external logins
         private const string XsrfKey = "XsrfId";
@@ -1030,9 +953,6 @@ namespace PLM.Controllers
         {
             foreach (var error in result.Errors)
             { 
-                //Regex rgx = new Regex("Name \b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}\b is already taken.");
-                //if (!rgx.IsMatch(error))
-                //{
                 if(!(error.Contains("Name")&& error.Contains("is already taken.")))
                 {
                 ModelState.AddModelError("", error);
@@ -1049,12 +969,6 @@ namespace PLM.Controllers
             }
             return false;
         }
-
-        private void SendEmail(string email, string callbackUrl, string subject, string message)
-        {
-            // For information on sending mail, please visit http://go.microsoft.com/fwlink/?LinkID=320771
-        }
-
         public enum ManageMessageId
         {
             ChangePasswordSuccess,
@@ -1080,14 +994,12 @@ namespace PLM.Controllers
             public ChallengeResult(string provider, string redirectUri) : this(provider, redirectUri, null)
             {
             }
-
             public ChallengeResult(string provider, string redirectUri, string userId)
             {
                 LoginProvider = provider;
                 RedirectUri = redirectUri;
                 UserId = userId;
             }
-
             public string LoginProvider { get; set; }
             public string RedirectUri { get; set; }
             public string UserId { get; set; }
@@ -1110,10 +1022,8 @@ namespace PLM.Controllers
                new { userId = userID, code = code }, protocol: Request.Url.Scheme);
             await UserManager.SendEmailAsync(userID, subject,
                "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
-
             return callbackUrl;
         }
-
         #endregion
     }
 }

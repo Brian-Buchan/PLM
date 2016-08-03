@@ -1,9 +1,7 @@
 ﻿@model IEnumerable<PLM.Models.Report>
-
 @{
     ViewBag.Title = "Your Open Reports";
 }
-
 <section id="page-breadcrumb">
     <div class="vertical-center sun">
         <div class="container">
@@ -17,7 +15,6 @@
         </div>
     </div>
 </section>
-
 <table class="table">
     <tr>
         <th>
@@ -31,7 +28,6 @@
         </th>
         <th></th>
     </tr>
-
 @foreach (var item in Model) {
     <tr>
         <td>
@@ -49,6 +45,5 @@
         </td>
     </tr>
 }
-
 </table>
 @Html.ActionLink("Back to Profile Page", "Index", "Profile")

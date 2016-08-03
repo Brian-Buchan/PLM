@@ -10,7 +10,6 @@ namespace PLM.Extensions
     {
         public static bool FTPNewDirectory(string directory)
         {
-
             WebRequest request = WebRequest.Create("PLM-MGT.nmc.edu" + directory);
             request.Method = WebRequestMethods.Ftp.MakeDirectory;
             request.Credentials = new NetworkCredential("PLMAdmin", "Password1");
@@ -24,7 +23,6 @@ namespace PLM.Extensions
                 {
                     return false;
                 }
-                //Console.WriteLine(resp.StatusCode);
             }
         }
         public static bool FTPDelete(string directory)

@@ -32,21 +32,16 @@
         <dt>
             @Html.DisplayNameFor(model => model.Name)
         </dt>
-
         <dd>
             @Html.DisplayFor(model => model.Name)
         </dd>
-
         <dt>
             @Html.DisplayNameFor(model => model.Category.CategoryName)
         </dt>
-
         <dd>
             @Html.DisplayFor(model => model.Category.CategoryName)
         </dd>
-
     </dl>
-
     @using (Html.BeginForm())
     {
         @Html.AntiForgeryToken()

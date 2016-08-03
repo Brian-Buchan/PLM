@@ -2,7 +2,6 @@
 @{
     ViewBag.Title = "Invalid Image";
 }
-
 <section id="page-breadcrumb">
     <div class="vertical-center sun">
         <div class="container">
@@ -20,7 +19,6 @@ The image is of an invalid format(.jpg .jpeg .png are allowed types)
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-
     <div class="form-actions no-color">
         @Html.ActionLink("Back to List", "edit", new { controller = "Answers", id = ViewBag.AnswerID });
     </div>

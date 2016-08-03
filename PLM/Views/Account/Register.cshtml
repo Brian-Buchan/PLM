@@ -4,13 +4,6 @@
 }
 <script>
     function myFunction() {
-        //var str = document.getElementById("text-danger").innerHTML;
-        //var res = str.replace("Email Field", "Email");
-        //document.getElementById("demo").innerHTML = res;
-        //var divs = document.getElementsByClassName('text-danger');
-        //var uls = divs[0].getElementsByTagName('ul');
-        //var lis = uls[0].getElementsByTagName('li');
-        //var li = lis[0];
         var li = document.getElementById("top").firstChild.firstChild.innerHTML;
         var txt = li.replace(/Name \b[A-Z0-9._%+-]+\W[A-Z0-9.-]+\.[A-Z]{2,}\b is already taken./ig, " ");
         document.getElementById("top").firstChild.firstChild.innerHTML = txt;
@@ -26,7 +19,6 @@
         });
     });
 </script>
-
 <section id="page-breadcrumb">
     <div class="vertical-center sun">
         <div class="container">

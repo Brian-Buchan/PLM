@@ -9,7 +9,6 @@ using System.Net;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using PLM.Extensions;
-
 namespace PLM.Controllers
 {
     public class GameController : Controller
@@ -26,13 +25,16 @@ namespace PLM.Controllers
         private bool WrongAnswersGenerationNOTcompleted = true;
         private int answerID;
         private int pictureID;
+        private bool loggedIn;
+        private bool correctSettings;
+
         [HttpGet]
         public ActionResult Setup(int PLMid, int changeSettings)
         {
             int IDtoPASS = PLMid;
 
-            if (PLMgenerated == false) 
-            { 
+            if (PLMgenerated == false)
+            {
                 GenerateModule(IDtoPASS);
             }
 
@@ -45,9 +47,7 @@ namespace PLM.Controllers
             {
                 return RedirectToAction("Play");
             }
-            //return View(((UserGameSession)Session["userGameSession"]).currentModule);
         }
-
         /// <summary>
         /// Generate a module and create a UserGameSession session variable with that module.
         /// </summary>
@@ -75,18 +75,16 @@ namespace PLM.Controllers
             }
             // Shuffle the list of pictures so Users itterate through them randomly
             currentGameSession.PictureIndices.Shuffle();
-
             //stuff that would be normally defined during setup. Will be overwritten in the setup POST action if it is accessed
             int timeHours = (currentGameSession.currentModule.DefaultTime / 60);
             int timeMinutes = (currentGameSession.currentModule.DefaultTime % 60);
             currentGameSession.numAnswers = currentGameSession.currentModule.DefaultNumAnswers;
+            currentGameSession.defaultNumAnswer = currentGameSession.currentModule.DefaultNumAnswers;
             currentGameSession.numQuestions = currentGameSession.currentModule.DefaultNumQuestions;
             currentGameSession.time = currentGameSession.currentModule.DefaultTime;
             currentGameSession.timeLeft = new TimeSpan(timeHours, timeMinutes, 0);
-
             Session["userGameSession"] = currentGameSession;
         }
-
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Setup([Bind(Include = "numAnswers,numQuestions,time")] UserGameSession ugs)
@@ -99,7 +97,6 @@ namespace PLM.Controllers
             ((UserGameSession)Session["userGameSession"]).timeLeft = new TimeSpan(timeHours, timeMinutes, 0);
             return RedirectToAction("Play");
         }
-
         [HttpGet]
         public ActionResult Play()
         {
@@ -110,7 +107,6 @@ namespace PLM.Controllers
             currentGuess.NumCorrect = ((UserGameSession)Session["userGameSession"]).numCorrect;
             return View(currentGuess);
         }
-
         /// <summary>
         /// Generate a question, loops through each picture in each answer
         /// The same answer will be chosen multiple times with different pictures
@@ -133,19 +129,16 @@ namespace PLM.Controllers
                 currentGuess.Attribution = "";
             else
                 currentGuess.Attribution = currentModule.Answers.ElementAt(answerIndex).Pictures.ElementAt(pictureID).Attribution;
-
             GeneratedGuessIDs.Add(answerIndex);
             GenerateWrongAnswers();
             currentGuess.possibleAnswers.Shuffle();
         }
-
         [NonAction]
         private int[] GetPictureID(int currentGuessNum)
         {
             AnsPicIndex IndexItem = ((UserGameSession)Session["userGameSession"]).PictureIndices.ElementAt(currentGuessNum);
             return new int[] { IndexItem.AnswerIndex, IndexItem.PictureIndex };
         }
-
         /// <summary>
         /// Generate the wrong answers to be displayed during each question
         /// </summary>
@@ -161,7 +154,6 @@ namespace PLM.Controllers
                 {
                     wrongAnswerID = rand.Next(0, (currentModule.Answers.Count - 1));
                 } while (GeneratedGuessIDs.Contains(wrongAnswerID));
-
                 //add the selected answer to both the stuff to send over and the list of no longer addable answers
                 currentGuess.possibleAnswers.Add(currentModule.Answers.ElementAt(wrongAnswerID).AnswerString);
                 GeneratedGuessIDs.Add(wrongAnswerID);
@@ -172,15 +164,12 @@ namespace PLM.Controllers
                 }
             }
         }
-
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Play(int Score, string Time, string isCorrect)
         {
             bool BoolIsCorrect;
-
             //Update the user's score, progress, and time
-
             //If the isCorrect string is correctly parsed 
             if (Boolean.TryParse(isCorrect, out BoolIsCorrect))
             {
@@ -244,21 +233,25 @@ namespace PLM.Controllers
             newScore = new Score();
             if (Request.IsAuthenticated)
             {
-                if (((UserGameSession)Session["userGameSession"]).currentModule.DefaultNumAnswers == ((UserGameSession)Session["userGameSession"]).numAnswers
+                loggedIn = true;
+                if (((UserGameSession)Session["userGameSession"]).currentModule.DefaultNumAnswers == ((UserGameSession)Session["userGameSession"]).defaultNumAnswer
                     && ((UserGameSession)Session["userGameSession"]).currentModule.DefaultNumQuestions == ((UserGameSession)Session["userGameSession"]).numQuestions
                     && ((UserGameSession)Session["userGameSession"]).currentModule.DefaultTime == ((UserGameSession)Session["userGameSession"]).time)
-                    {
-                        SaveScore(score);
-                    }
+                {
+                    correctSettings = true;
+                }
                 else
                 {
+                    correctSettings = false;
                     ViewBag.ErrorMessage = "You must use default settings for your score to save";
                 }
-            
-            }else
+            }
+            else
             {
+                loggedIn = false;
                 ViewBag.ErrorMessage = "You must be logged in for your score to save";
             }
+            SaveScore(score);
             ViewBag.ModuleID = ((UserGameSession)Session["userGameSession"]).currentModule.ModuleID;
             List<Score> scores = TopTenScore.GetTopTenScores(((UserGameSession)Session["userGameSession"]).currentModule.ModuleID);
             List<string[]> scoresToSend = new List<string[]>();
@@ -268,8 +261,7 @@ namespace PLM.Controllers
                 ApplicationUser player = db.Users.Find(top10score.UserID);
                 try
                 {
-
-                stringToSend[0] = (player.FirstName + ", " + player.LastName[0]);
+                    stringToSend[0] = (player.FirstName + ", " + player.LastName[0]);
                 }
                 catch
                 {
@@ -277,8 +269,7 @@ namespace PLM.Controllers
                 }
                 try
                 {
-
-                stringToSend[1] = (top10score.CorrectAnswers + " out of " + top10score.TotalAnswers);
+                    stringToSend[1] = (top10score.CorrectAnswers + " out of " + top10score.TotalAnswers);
                 }
                 catch
                 {
@@ -286,9 +277,8 @@ namespace PLM.Controllers
                 }
                 try
                 {
-
-                stringToSend[2] = top10score.TimeStamp.ToShortDateString();
-                 }
+                    stringToSend[2] = top10score.TimeStamp.ToShortDateString();
+                }
                 catch
                 {
                     stringToSend[2] = "Error";
@@ -305,11 +295,13 @@ namespace PLM.Controllers
         {
             newScore.CorrectAnswers = (score / 100);
             newScore.ModuleID = ((UserGameSession)Session["userGameSession"]).currentModule.ModuleID;
-            newScore.UserID = User.Identity.GetUserId();
             newScore.TotalAnswers = ((UserGameSession)Session["userGameSession"]).numQuestions;
-
-            db.Entry(newScore).State = EntityState.Added;
-            db.SaveChanges();
+            if (loggedIn && correctSettings)
+            {
+                newScore.UserID = User.Identity.GetUserId();
+                db.Entry(newScore).State = EntityState.Added;
+                db.SaveChanges();
+            }
         }
 
         public ActionResult Error()
@@ -335,7 +327,6 @@ namespace PLM.Controllers
             {
                 ((UserGameSession)Session["userGameSession"]).numAnswers--;
             }
-            
         }
 
         /// <summary>

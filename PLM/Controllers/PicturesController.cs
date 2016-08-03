@@ -493,13 +493,6 @@ namespace PLM.Controllers
                 //converts the file data to a byte array
                 byte[] img = Convert.FromBase64String(imageBase64);
 
-                //Commented out causing breakage
-                //if the image is greater than 200KB, reject it and return a response.
-                //if (img.Length > 200000)
-                //{
-                //    return "TOO LARGE";
-                //}
-
                 //sets up the filename, guid part taken from Mark Synowiec at http://stackoverflow.com/questions/730268/unique-random-string-generation
                 Guid g = Guid.NewGuid();
                 string TempFileName = Convert.ToBase64String(g.ToByteArray());
@@ -547,7 +540,6 @@ namespace PLM.Controllers
                 return "FAILED";
             }
         }
-
         /// <summary>
         /// Permanently save the file with the given name in the tempUpload folder
         /// to a different folder, with a new name. Overwrites files with the same name that are already there.

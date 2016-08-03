@@ -10,7 +10,6 @@ namespace PLM
         public int AnswerIndex;
         public int PictureIndex;
         public Picture PictureOBJ;
-
         public AnsPicIndex(int ans, int pic, Picture picOBJ)
         {
             AnswerIndex = ans;

@@ -13,7 +13,6 @@ namespace PLM
         public List<Module> Mods = new List<Module>();
         public List<Category> Cats = new List<Category>();
     }
-
     public class DisableModuleViewModel
     {
         public DisableModuleViewModel() { }

@@ -1,5 +1,4 @@
 ﻿@model PLM.Models.Report
-
 @{
     ViewBag.Title = "Report Details";
 }
@@ -22,14 +21,12 @@
         <dt>
             @Html.DisplayNameFor(model => model.moduleID)
         </dt>
-
         <dd>
             @Html.DisplayFor(model => model.moduleID)
         </dd>
         <dt>
             User who reported it
         </dt>
-
         <dd>
             @ViewBag.ReporterUserName ----
             @Html.DisplayFor(model => model.userID)
@@ -37,7 +34,6 @@
         <dt>
             @Html.DisplayNameFor(model => model.category)
         </dt>
-
         <dd>
             @Html.DisplayFor(model => model.category)
         </dd>

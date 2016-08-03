@@ -32,7 +32,6 @@
             <input type="submit" value="Search" />
         </p>
     }
-
     <p>
         @Html.ActionLink("View Disabled Modules", "DisabledModulesList", new { @class = "floatRight", type = "button" })
     </p>
@@ -47,12 +46,10 @@
             <th></th>
             <th></th>
         </tr>
-
         @foreach (var item in Model)
         {
             //Styles the background color red if the module is disabled
             var style = (item.isDisabled == true) ? "background-color: #ff8080" : "";
-            
             <tr style="@style">
                 <td>
                     @Html.DisplayFor(modelItem => item.Name)
