@@ -12,6 +12,10 @@ namespace PLM.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
         private ModuleViewModel ModuleModel = new ModuleViewModel();
       
+        ///<summary>
+        /// Counts the number of modules in a category that are usable and not disabled
+        /// </summary>
+        /// <param name="cat">Id of the category to count</param>
         public int categoryCount(int cat)//Method that counts the number of valid modules in a category
         {
             int count = (from p in db.Modules
@@ -56,11 +60,12 @@ namespace PLM.Controllers
                 searchString.ToLower();
                 modules = modules.Where(m => m.Name.ToLower().Contains(searchString)).ToList();
             }
-            if(filterParam > 0)
+            if (filterParam > 0)
             {
                 modules = modules.Where(m => m.CategoryId == filterParam).ToList();
             }
             ViewBag.filterParam = filterParam;
+            //Call the category count function to get category coutns
             ViewBag.Cat1Count = categoryCount(1);
             ViewBag.Cat2Count = categoryCount(2);
             ViewBag.Cat3Count = categoryCount(3);

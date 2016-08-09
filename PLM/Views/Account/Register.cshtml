@@ -3,11 +3,7 @@
     ViewBag.Title = "Register";
 }
 <script>
-    function myFunction() {
-        var li = document.getElementById("top").firstChild.firstChild.innerHTML;
-        var txt = li.replace(/Name \b[A-Z0-9._%+-]+\W[A-Z0-9.-]+\.[A-Z]{2,}\b is already taken./ig, " ");
-        document.getElementById("top").firstChild.firstChild.innerHTML = txt;
-    }
+    //Requires you to check the checkbox agreeing to terms of use before registering
     $(document).ready(function () {
         $('#check').click(function () {
             if ($(this).attr('checked') == false) {
@@ -37,9 +33,7 @@
     @Html.AntiForgeryToken()
     <h4>Create a new account.</h4>
     <hr />
-    <div class="JavascriptTarget">
         @Html.ValidationSummary("", new { @class = "text-danger", @id = "top"} )
-    </div>
     <div class="form-group"  onload="myFunction()">
             @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
             <div class="col-md-10">

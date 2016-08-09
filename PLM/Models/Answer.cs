@@ -14,7 +14,7 @@ namespace PLM
         [Display(Name="Answer Text")]
         [MaxLength(25)]
         [Required]
-        [Index("IX_AnswerStringModuleId", 2, IsUnique = true)]
+        [Index("IX_AnswerStringModuleId", 2, IsUnique = true)] //Require answers within modules to be unique
         public string AnswerString { get; set; }
         [Display(Name="Module")]
         [Index("IX_AnswerStringModuleId", 1, IsUnique = true)]

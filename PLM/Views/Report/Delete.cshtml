@@ -48,7 +48,7 @@
 
             <div class="form-actions no-color">
                 <input type="submit" value="Delete" class="btn btn-default" /> |
-                @{
+                @{//If is in logged in as an admin provide a link to the admin list, otherwise link to your pending reports
             if (User.IsInRole("Admin"))
             {
                 @Html.ActionLink("Back to List", "Index")

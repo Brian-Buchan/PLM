@@ -26,15 +26,11 @@ namespace PLM.Controllers
                 
         public ActionResult AboutUs()
         {
-            ViewBag.Message = "Learning Without Thinking";
-
             return View();
         }
 
         public ActionResult ContactUs()
         {
-            ViewBag.Message = "Please feel free to contact me!";
-
             return View();
         }
         [AuthorizeOrRedirectAttribute(Roles = "Admin")]

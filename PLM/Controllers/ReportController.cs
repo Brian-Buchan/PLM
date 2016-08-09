@@ -19,21 +19,23 @@ namespace PLM.Controllers
         public ActionResult YourReports()
         {
             var name = User.Identity.GetUserName();
-            ApplicationUser currentUser = (ApplicationUser)db.Users.Single(x => x.UserName == name);
+            ApplicationUser currentUser = (ApplicationUser)db.Users.Single(x => x.UserName == name);//get logged in user
             var Reports = from u in db.Reports
                           where u.userID == currentUser.Id
-                          select u;
+                          select u;//get all reports for the user that is logged in
             return View(Reports.ToList());
         }
         [AuthorizeOrRedirectAttribute(Roles = "Admin")]
         public ActionResult Index()
         {
+            //Gets all reports
             var Reports = from u in db.Reports
                           select u;
             return View(Reports.ToList());
         }
         public ActionResult YourModulesReported()
         {
+            //Gets all of your pending reports
             var name = User.Identity.GetUserName();
             var reports = from r in db.Reports
                           join m in db.Modules on r.moduleID equals m.ModuleID
@@ -60,7 +62,7 @@ namespace PLM.Controllers
         // GET: /Report/Create
         public ActionResult Create(int? id)
         {
-            if (Request.IsAuthenticated)
+            if (Request.IsAuthenticated)//If the user isn't logged in make "Guest User" the id of the reporter
             {
                 Report placeholder = new Report();
                 ViewBag.UserID = User.Identity.Name;
