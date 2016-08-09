@@ -25,7 +25,6 @@ namespace PLM.Controllers
                           select u;
             return View(Reports.ToList());
         }
-        //public ActionResult Index(int? userID)
         [AuthorizeOrRedirectAttribute(Roles = "Admin")]
         public ActionResult Index()
         {
@@ -66,7 +65,6 @@ namespace PLM.Controllers
                 Report placeholder = new Report();
                 ViewBag.UserID = User.Identity.Name;
                 var name = User.Identity.GetUserName();
-                
                 ApplicationUser currentUser = (ApplicationUser)db.Users.Single(x => x.UserName == name);
                 placeholder.userID = currentUser.Id;
                 placeholder.moduleID = (int)id;
@@ -79,7 +77,6 @@ namespace PLM.Controllers
                 ViewBag.UserID = "guest user";
                 placeholder.userID = "guest user"; 
                 placeholder.moduleID = (int)id;
-
                 return View(placeholder);
             }
         }
@@ -96,7 +93,6 @@ namespace PLM.Controllers
                 db.SaveChanges();
                 return RedirectToAction("YourReports");
             }
-
             return View(report);
         }
         // GET: /Report/Edit/5
@@ -111,7 +107,6 @@ namespace PLM.Controllers
             {
                 return HttpNotFound();
             }
-            
             return View(report);
         }
         // POST: /Report/Edit/5
@@ -123,10 +118,8 @@ namespace PLM.Controllers
         {
             if (ModelState.IsValid)
             {
-
                 db.Entry(report).State = EntityState.Modified;
                 db.SaveChanges();
-              
                     if (User.IsInRole("Admin"))
                     {
                         return RedirectToAction("Index");
@@ -135,8 +128,6 @@ namespace PLM.Controllers
                     {
                         return RedirectToAction("YourReports");
                     }
-             
-               
             }
             return View(report);
         }

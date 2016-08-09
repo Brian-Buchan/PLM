@@ -10,7 +10,6 @@ namespace PLM
 {
     public class Answer
     {
-        
         public int AnswerID { get; set; }
         [Display(Name="Answer Text")]
         [MaxLength(25)]

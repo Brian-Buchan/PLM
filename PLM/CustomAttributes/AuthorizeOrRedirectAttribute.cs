@@ -19,6 +19,5 @@ namespace PLM.CutomAttributes
                 filterContext.Result = new RedirectResult("~/Account/AccessDenied");
             }
         }
-
     }
 }

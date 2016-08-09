@@ -29,15 +29,12 @@ namespace PLM.Controllers
         //which POSTs to either the Save() or Discard() actions, respectively
         //
         //Users are then returned to the Index page of the Home controller.
-
-
         [HttpGet]
         [NonAction]
         public ActionResult ImageEditor()
         {
             return View();
         }
-        
         [HttpPost]
         [NonAction]
         [ActionName("ImageEditor")]
@@ -48,10 +45,8 @@ namespace PLM.Controllers
             //where "[IMAGEDATA]" is a base64 string that converts to a jpeg image.
             //Otherwise, if the image is saved as a png, the post results in: "data:image/png;base64,[IMAGEDATA]",
             //where "[IMAGEDATA]" is a base64 string that converts to a png image.
-
             string imgId = Request.Form.Get("imgId");
             string answerId = Request.Form.Get("answerId");
-
             string result = SaveImage(Request.Form.Get("imgData"), imgId, answerId);
             
             if (result == "FAILED")
@@ -65,8 +60,6 @@ namespace PLM.Controllers
                 "Image file size larger than 200 KB. \nTry lowering the quality when you save," + 
                 " \nor resize the image to a smaller size.");
             }
-
-            //return View();
             return new HttpStatusCodeResult(HttpStatusCode.OK, result);
         }
 
@@ -76,7 +69,6 @@ namespace PLM.Controllers
         public ActionResult Confirm()
         {
             ConfirmViewModel model = (ConfirmViewModel)TempData["model"];
-            
             //Disallows using back button to return to page after saving or discarding. Does not permit caching.
             //Taken from Kornel at http://stackoverflow.com/questions/49547/making-sure-a-web-page-is-not-cached-across-all-browsers
             Response.Cache.SetCacheability(HttpCacheability.NoCache);  // HTTP 1.1.
@@ -294,7 +286,6 @@ namespace PLM.Controllers
             }
             else return "FAILED ON FILE MOVE";
         }
-
         /// <summary>
         /// Discard all the images in the temp folder with the given filename.
         /// Returns "DONE" if successful, "ERROR" if the deletion fails at any point.

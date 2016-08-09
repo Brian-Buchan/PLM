@@ -47,7 +47,6 @@
     <input type="number" name="answerID" value="@Model.answerID" hidden="hidden" />
     <input class="btn btn-primary" type="submit" style="background-color:green" value="Save" />
 }
-
 @using (Html.BeginForm("Discard", "Pictures", FormMethod.Post))
 {
     <input type="text" name="tempUrl" value="@Html.Encode(Model.tempUrl)" hidden="hidden" />

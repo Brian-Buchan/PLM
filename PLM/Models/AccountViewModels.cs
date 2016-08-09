@@ -161,7 +161,6 @@ namespace PLM.Models
     public class DisableUserViewModel
     {
         public DisableUserViewModel() { }
-
         public DisableUserViewModel(ApplicationUser user)
         {
             this.UserName = user.UserName;
@@ -189,13 +188,11 @@ namespace PLM.Models
     public class InstructorRoleRequest
     {
         public InstructorRoleRequest() { }
-
         public InstructorRoleRequest(ApplicationUser user)
         {
             this.UserName = user.UserName;
             this.Status = user.Status;
         }
-
         [Key]
         [Required]
         [Display(Name = "User Name")]

@@ -92,13 +92,11 @@
                                 }
                             }                  
                     </div>
-
                     <br />
                     Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
 
                     @Html.PagedListPager(Model, page => Url.Action("Index",
                              new { page, sortOrder = ViewBag.CurrentSort, filterParam = ViewBag.filterParam, currentFilter = ViewBag.CurrentFilter }))
-
                 </div>
             </div>
         </div>
@@ -107,8 +105,6 @@
     <footer>
         <div>Icons made by <a href="http://www.flaticon.com/authors/gregor-cresnar" title="Gregor Cresnar">Gregor Cresnar</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
     </footer>
-
-
     <script type="text/javascript" src="~/Scripts/jquery.js"></script>
     <script type="text/javascript" src="~/Scripts/bootstrap.min.js"></script>
     <script type="text/javascript" src="~/Scripts/jquery.isotope.min.js"></script>

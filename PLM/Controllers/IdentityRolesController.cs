@@ -11,9 +11,7 @@ namespace PLM.Controllers
 {
     public class IdentityRolesController : Controller
     {
-
             // GET: IdentityRole
-
             private ApplicationDbContext db = new ApplicationDbContext();
             public ActionResult Index()
             {

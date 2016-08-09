@@ -14,7 +14,6 @@ namespace PLM.Controllers
     public class ProfileController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
-
         public ActionResult Index()
         {
             if (!System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
@@ -48,7 +47,6 @@ namespace PLM.Controllers
         {
             ApplicationUser user = db.Users.First(u => u.Id == userID);
             user.Status = ApplicationUser.AccountStatus.PendingInstrustorRole;
-
             db.Entry(user).State = EntityState.Modified;
             db.SaveChanges();
             return RedirectToAction("Index");
@@ -57,7 +55,6 @@ namespace PLM.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult CreateProfile()
-        //[Bind(Include = "PictureID,Location,AnswerID")] Picture picture
         {
             if (ModelState.IsValid)
             {
@@ -72,10 +69,8 @@ namespace PLM.Controllers
                 {
                     currentUser.ProfilePicture = location;
                 }
-
                 db.SaveChanges();
             }
-
             return RedirectToAction("Index");
         }
 
@@ -123,7 +118,6 @@ namespace PLM.Controllers
             {
                 isSavedSuccessfully = false;
             }
-
             if (isSavedSuccessfully)
             {
                 return relpath;

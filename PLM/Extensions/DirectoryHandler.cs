@@ -19,7 +19,6 @@ namespace PLM
                 Answer ansToDelete = db.Answers.Find(module.Answers.ElementAt(m - 1).AnswerID);
                 DeleteAnswer(ansToDelete.AnswerID);
             }
-
             db.Modules.Remove(module);
 
             if (Directory.Exists((DevPro.baseFileDirectory + "PLM/" + module.Name).ToString()))
@@ -39,7 +38,6 @@ namespace PLM
                 db.Pictures.Remove(picToDelete);
                 File.Delete(picToDelete.Location);
             }
-
             db.Answers.Remove(answer);
             db.SaveChanges();
         }

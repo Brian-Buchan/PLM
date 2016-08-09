@@ -22,7 +22,6 @@ namespace PLM.Controllers
         private bool incorrectImageType = false;
         private bool imageSizeTooLarge = false;
         private Picture pictureToSave;
-        //private Answer currentAnswer;
 
         // GET: /Pictures/
         public ActionResult Index()
@@ -58,7 +57,6 @@ namespace PLM.Controllers
 
             return View(picture);
         }
-
         // POST: /Pictures/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
@@ -97,17 +95,14 @@ namespace PLM.Controllers
                 {
                     pictureToSave.Location = location;
                     db.Pictures.Add(pictureToSave);
-                    //db.Entry(pictureToSave).State = EntityState.Modified;
                     db.SaveChanges();
                 }
-
                 return RedirectToAction("edit", new { controller = "Answers", id = pictureToSave.AnswerID });
             }
 
             ViewBag.AnswerID = new SelectList(db.Answers, "AnswerID", "AnswerString", pictureToSave.AnswerID);
             return View(pictureToSave);
         }
-
         /// <summary>
         /// Save a picture to the server. Returns the relative path if successful, otherwise returns "FAILED"
         /// </summary>
@@ -129,7 +124,6 @@ namespace PLM.Controllers
                 picCount = db2.Answers.Find(id).PictureCount;
                 picCount++;
             }
-
             string fName = "";
             string path = "";
             string relpath = "NO FILE UPLOADED";
@@ -219,7 +213,6 @@ namespace PLM.Controllers
             ViewBag.AnswerID = id;
             return View();
         }
-
         // GET: /Pictures/Edit/5
         [AuthorizeOrRedirectAttribute(Roles = "Instructor")]
         public ActionResult Edit(int? id)
@@ -236,7 +229,6 @@ namespace PLM.Controllers
             ViewBag.AnswerID = new SelectList(db.Answers, "AnswerID", "AnswerString", picture.AnswerID);
             return View(picture);
         }
-
         // POST: /Pictures/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
@@ -268,11 +260,8 @@ namespace PLM.Controllers
             {
                 return HttpNotFound();
             }
-
-
             return View(picture);
         }
-
         // POST: /Pictures/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
@@ -285,7 +274,6 @@ namespace PLM.Controllers
             System.IO.File.Delete(picture.Location);
             return RedirectToAction("edit", new { controller = "Answers", id = picture.AnswerID });
         }
-
         #region From Image Editor
 
         //Image Editor flow:
@@ -303,7 +291,6 @@ namespace PLM.Controllers
         //which POSTs to either the Save() or Discard() actions, respectively
         //
         //Users are then returned to the Index page of the Home controller.
-
 
         [HttpGet]
         [AuthorizeOrRedirectAttribute(Roles = "Instructor")]
@@ -359,7 +346,6 @@ namespace PLM.Controllers
             //    return new HttpStatusCodeResult(HttpStatusCode.InternalServerError, e.Message);
             //}
 
-
             string result = SaveImage(imgData, imgId, answerId);
 
             if (result == "FAILED")
@@ -374,7 +360,6 @@ namespace PLM.Controllers
             //    "Image file size larger than 200 KB. \nTry lowering the quality when you save," +
             //    " \nor resize the image to a smaller size.");
             //}
-
             //return View();
             return new HttpStatusCodeResult(HttpStatusCode.OK, result);
         }
@@ -423,7 +408,6 @@ namespace PLM.Controllers
             string temporaryFileName = Path.GetFileName(tempUrl);
             string ansId = Request.Form.Get("answerID");
             //string newFileName = Path.GetFileNameWithoutExtension(origUrl);
-
             string result = PermaSave(temporaryFileName, origUrl);
 
             return RedirectToAction("Edit", "Answers", new { id = ansId });
@@ -474,19 +458,16 @@ namespace PLM.Controllers
                 {
                     Directory.CreateDirectory(dirPath);
                 }
-
                 //gets the post data
                 string imageBase64 = fromPost;
 
                 //gets the image format from the post
                 string imageFormat = imageBase64.Substring(imageBase64.IndexOf('/') + 1, imageBase64.IndexOf(';') - 11);
-
                 //If the image format is jpeg (which will break the system), 
                 if (imageFormat == "jpeg")
                 {
                     imageFormat = "jpg";
                 }
-
                 //gets the file data as a Base64 string
                 imageBase64 = imageBase64.Substring(imageBase64.LastIndexOf(',') + 1);
 
@@ -593,7 +574,6 @@ namespace PLM.Controllers
                 //If this code is reached, GetFiles didn't find any matching files.
                 return "NO FILES FOUND";
             }
-
             //for each file to be saved, 
             foreach (string filePath in filesToSave)
             {
@@ -603,7 +583,6 @@ namespace PLM.Controllers
                     filesToMove.Add(newFilePath);
                 }
             }
-
             //Make sure that filepaths were actually moved to the filesToMove list.
             if (filesToMove.Count == 0)
             {
@@ -613,9 +592,7 @@ namespace PLM.Controllers
             }
 
             string[] filesMove = filesToMove.ToArray();
-
             //Verify that all the filepaths were moved to the array intact
-
             //if filesMove.Length is either zero or unequal to filesToMove.Count
             if (filesMove.Length == 0 || filesMove.Length != filesToMove.Count)
             {
@@ -648,7 +625,6 @@ namespace PLM.Controllers
             }
             else return "ERROR";
         }
-
         #endregion
 
         protected override void Dispose(bool disposing)

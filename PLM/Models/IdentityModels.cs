@@ -76,7 +76,6 @@ namespace PLM
             return userIdentity;
         }
     }
-
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public ApplicationDbContext()
@@ -97,7 +96,5 @@ namespace PLM
         public DbSet<PLM.Models.Report> Reports { get; set; }
 
         public System.Data.Entity.DbSet<PLM.DisableModuleViewModel> DisableModuleViewModels { get; set; }
-        
-
     }
 }

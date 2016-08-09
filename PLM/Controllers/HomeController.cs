@@ -46,17 +46,5 @@ namespace PLM.Controllers
         {
             return View();
         }
-
-        public ActionResult Blog()
-        {
-            ViewBag.Message = "Please feel free to contact me!";
-
-            return View();
-        }
-
-        public ActionResult TemplateStyles()
-        {
-            return View();
-        }
     }
 }

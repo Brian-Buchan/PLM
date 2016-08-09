@@ -77,12 +77,6 @@ namespace PLM.Controllers
     {
         private ApplicationUserManager _userManager;
         private ApplicationDbContext db = new ApplicationDbContext();
-        public AccountController()
-        {
-        }
-
-
-        //
         public ActionResult Index(string sortOrder, string searchString)
         {
             ViewBag.UsernameSortParam = String.IsNullOrEmpty(sortOrder) ? "username_asc" : "";
@@ -129,7 +123,6 @@ namespace PLM.Controllers
             return View(model);
         }
 
-        //
         public ActionResult DisabledUsersList(string sortOrder, string searchString)
         {
             ViewBag.UsernameSortParam = String.IsNullOrEmpty(sortOrder) ? "username_asc" : "";
@@ -230,7 +223,6 @@ namespace PLM.Controllers
         {
             if (ModelState.IsValid)
             {
-                
                 //Sets user Account Type to Free and Account Status to Active
                 var user = new ApplicationUser()
                 {
@@ -500,7 +492,6 @@ namespace PLM.Controllers
                         ViewBag.errorMessage = "You must have a confirmed email to log on.";
                         await SignInAsync(user, model.RememberMe);
                         return RedirectToLocal(returnUrl);
-                       
                     }
                     else
                     {
@@ -791,7 +782,6 @@ namespace PLM.Controllers
                 {
                     state.Errors.Clear();
                 }
-
                 if (ModelState.IsValid)
                 {
                     IdentityResult result = await UserManager.AddPasswordAsync(User.Identity.GetUserId(), model.NewPassword);
@@ -826,7 +816,6 @@ namespace PLM.Controllers
             {
                 return RedirectToAction("Login");
             }
-
             // Sign in the user with this external login provider if the user already has a login
             var user = await UserManager.FindAsync(loginInfo.Login);
             if (user != null)

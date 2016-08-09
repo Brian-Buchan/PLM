@@ -2,7 +2,6 @@
     ViewBag.Title = "Roles by User";
     string userName = ViewBag.UserName;
 }
-
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -41,7 +40,6 @@
             </th>
             <th></th>
         </tr>
-
         @foreach (var role in ViewBag.RolesForUser)
         {
             <tr>
@@ -53,8 +51,6 @@
                 </td>
             </tr>
         }
-
     </table>
-
     <a href="~/Account/Index">Click here to return to the list of users.</a>
 </body>

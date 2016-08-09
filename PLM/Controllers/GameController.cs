@@ -180,7 +180,6 @@ namespace PLM.Controllers
                     ((UserGameSession)Session["userGameSession"]).numCorrect += 1;
                 }
             }
-
             ((UserGameSession)Session["userGameSession"]).Score = Score;
             ((UserGameSession)Session["userGameSession"]).timeLeft = TimeSpan.Parse(Time);
             if (IsGameDone())
@@ -340,51 +339,5 @@ namespace PLM.Controllers
             //reset the iterated guess counter
             ((UserGameSession)Session["userGameSession"]).iteratedQuestion = -1;
         }
-
-        #region Legacy Method GetAnswerID
-
-        //private int GetAnswerID()
-        //{
-        //    foreach (Answer answer in currentModule.Answers)
-        //    {
-        //        foreach (Picture picture in answer.Pictures)
-        //        {
-        //            if (picture.PictureID == pictureID)
-        //            {
-        //                return answer.AnswerID;
-        //            }
-        //        }
-        //    }
-        //    // Defaults to 1 so error doesn't occur
-        //    return 1;
-        //}
-        #endregion
-
-        // Generates guess, only loops through each answer once, so only
-        // one picture will be chosen per answer
-        #region Legacy Method - GenerateGuessOnePerAnswer
-        [NonAction]
-        private void GenerateGuessONEperANS()
-        {
-            ((UserGameSession)Session["userGameSession"]).currentQuestion++;
-            currentModule = ((UserGameSession)Session["userGameSession"]).currentModule;
-            answerID = ((UserGameSession)Session["userGameSession"]).currentQuestion;
-            pictureID = rand.Next(0, (currentModule.Answers.ElementAt(answerID).Pictures.Count - 1));
-
-            //add the initial stuff to the guess to send over
-            currentGuess.Answer = currentModule.Answers.ElementAt(answerID).AnswerString;
-            currentGuess.ImageURL = currentModule.Answers.ElementAt(answerID).Pictures.ElementAt(pictureID).Location;
-            currentGuess.possibleAnswers.Add(currentModule.Answers.ElementAt(answerID).AnswerString);
-
-            //add the correct answer to the generated guess ids (to prevent duplicate entries)
-            GeneratedGuessIDs.Add(answerID);
-
-            //Generate a random selection of wrong answers and add them to the possible answers.
-            GenerateWrongAnswers();
-
-            //shuffle the list of possible answers so that the first answer isn't always the right one.
-            currentGuess.possibleAnswers.Shuffle();
-        }
-        #endregion
     }
 }

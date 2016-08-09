@@ -85,7 +85,6 @@ namespace PLM
                 throw;
                 //return false;
             }
-
             //Then try deleting the old file. If this errors out, rollback changes and return false.
             try
             {
@@ -109,7 +108,6 @@ namespace PLM
             newfilepath = possibleFilePath;
             return true;
         }
-
         /// <summary>
         /// Move a number of files to a single directory, keeping their names
         /// and overwriting if the switch is toggled.
@@ -190,7 +188,6 @@ namespace PLM
             }
             return true;
         }
-
         /// <summary>
         /// Remove files (and only files) from the specified directory that are 
         /// older than the specified timespan. 

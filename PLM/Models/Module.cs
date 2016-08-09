@@ -74,6 +74,5 @@ namespace PLM
 
         [Display(Name = "Reason")]
         public DisableModuleReason DisableReason { get; set; }
-
     }
 }

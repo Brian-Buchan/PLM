@@ -44,10 +44,8 @@ namespace PLM.Controllers
                     modules = modules.OrderBy(m => m.Name);
                     break;
             }
-
             return View(modules);
         }
-
         // GET: /ModulesEDIT/
         [AuthorizeOrRedirectAttribute(Roles = "Admin")]
         public ActionResult DisabledModulesList(string sortOrder, string searchString, string userSearchString)
@@ -75,10 +73,8 @@ namespace PLM.Controllers
                     modules = modules.OrderBy(m => m.Name);
                     break;
             }
-
             return View(modules);
         }
-
         // GET: /ModulesEDIT/Details/5
         public ActionResult Details(int? id)
         {
@@ -93,7 +89,6 @@ namespace PLM.Controllers
             }
             return View(module);
         }
-
         // GET: /ModulesEDIT/Create
         [AuthorizeOrRedirectAttribute(Roles = "Instructor")]
         public ActionResult Create()
@@ -101,7 +96,6 @@ namespace PLM.Controllers
             PopulateCategoryDropDownList();
             return View();
         }
-
         // POST: /ModulesEDIT/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
@@ -128,7 +122,6 @@ namespace PLM.Controllers
             }
             return View(module);
         }
-
         // GET: /ModulesEDIT/Edit/5
         [AuthorizeOrRedirectAttribute(Roles = "Instructor")]
         public ActionResult Edit(int? id)
@@ -145,7 +138,6 @@ namespace PLM.Controllers
             PopulateCategoryDropDownList(module.CategoryId);
             return View(module);
         }
-
         // POST: /ModulesEDIT/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
@@ -232,7 +224,6 @@ namespace PLM.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             DirectoryHandler.DeleteModule(id);
-
             return RedirectToAction("Index", new { controller = "Profile" });
         }
 
@@ -250,7 +241,6 @@ namespace PLM.Controllers
             }
             return View(module);
         }
-
         // POST: /ModulesEDIT/Delete/5
         [HttpPost, ActionName("AdminDelete")]
         [ValidateAntiForgeryToken]
@@ -258,10 +248,8 @@ namespace PLM.Controllers
         public ActionResult AdminDeleteConfirmed(int id)
         {
             DirectoryHandler.DeleteModule(id);
-
             return RedirectToAction("Index", new { controller = "Profile" });
         }
-
         protected override void Dispose(bool disposing)
         {
             if (disposing)

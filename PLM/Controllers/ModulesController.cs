@@ -11,8 +11,8 @@ namespace PLM.Controllers
     {
         private ApplicationDbContext db = new ApplicationDbContext();
         private ModuleViewModel ModuleModel = new ModuleViewModel();
-         //GET: Profile
-        public int categoryCount(int cat)
+      
+        public int categoryCount(int cat)//Method that counts the number of valid modules in a category
         {
             int count = (from p in db.Modules
                          where p.CategoryId == cat && p.isDisabled == false
@@ -33,7 +33,8 @@ namespace PLM.Controllers
                 }
             }
             return (count);
-        }
+        }  
+        //GET: Profile
         public ActionResult Index(string sortOrder, string searchString, string currentFilter, int? filterParam, int? page)
         {
             ViewBag.CurrentSort = sortOrder;
@@ -49,14 +50,11 @@ namespace PLM.Controllers
             {
                 searchString = currentFilter;
             }
-
             ViewBag.CurrentFilter = searchString;
-
             if (!String.IsNullOrEmpty(searchString))
             {
                 searchString.ToLower();
                 modules = modules.Where(m => m.Name.ToLower().Contains(searchString)).ToList();
-                                       //|| m.Description.Contains(searchString)).ToList();
             }
             if(filterParam > 0)
             {
@@ -78,7 +76,6 @@ namespace PLM.Controllers
             int pageNumber = (page ?? 1);
             return View(modules.ToPagedList(pageNumber, pageSize));
         }
-
         public ActionResult AddModule()
         {
             return View();
