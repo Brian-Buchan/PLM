@@ -18,8 +18,8 @@
         <source src="~/Content/Audio/incorrectSound.mp3" type="audio/mp3" />
     </audio>
     <div id="gameBoard">
-        <div style="float:right">
-            <div id="ScoreBoard">
+        <div style="float:right" >
+            <div id="ScoreBoard" width="375px">
                 <p>Score:</p>
                 <p id="displayScore">@Model.Score</p>
                 <br />
@@ -53,9 +53,12 @@
             </div>
         </div>
         <br />
+        @if (Model.Attribution != "") 
+        { 
         <div id="Attribution">
             <p>Image Provided By @Model.Attribution</p>
         </div>
+        }
         <br />
         @using (Html.BeginForm("Play", "Game", FormMethod.Post, new { id = "GameForm", onsubmit = "return CheckIn();" }))
         {
@@ -64,7 +67,6 @@
             <input id="Time" name="Time" hidden="hidden" type="text" value="@Model.Time.ToString()" />
             <input type="radio" name="isCorrect" value="True" hidden="hidden" />
             <input type="radio" name="isCorrect" value="False" hidden="hidden" checked="checked" />
-
             <div id="nextButton" style="display:none;">
                 <button id="next" type="submit" value="" class="btn-success">Next</button>
                 <h1 id="resultText">Correct</h1>
