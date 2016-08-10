@@ -183,8 +183,52 @@ a[type="button-submit-sm"] :focus{
   opacity: .8;
 }
 
-.button-enter {
+.button-approve {
   width: 100%;
+  font-family:Arial;
+  background-color: #5cb85c;
+  color: #fff;
+  font-size: 0.8em;
+  font-weight: 300;
+  letter-spacing: 5px;
+  border-radius: 3px;
+  margin-top: 5px;
+  box-shadow: none;
+  padding: 10px;
+}
+
+.button-approve :hover, 
+.button-approve :focus{
+  color: #fff;
+  outline: none;
+  box-shadow: none;
+  opacity: .8;
+}
+
+.button-denyAccount {
+  background-color: #c12e2a;
+  width: 100%;
+  font-family:Arial;
+  color: #fff;
+  font-size: 0.8em;
+  font-weight: 300;
+  letter-spacing: 5px;
+  border-radius: 3px;
+  margin-top: 5px;
+  box-shadow: none;
+  padding: 10px;
+}
+
+.button-denyAccount :hover, 
+.button-denyAccount :focus{
+  color: #fff;
+  outline: none;
+  box-shadow: none;
+  opacity: .8;
+}
+
+.button-enter {
+  width: 15%;
   font-family:Arial;
   background-color: #5cb85c;
   color: #fff;
