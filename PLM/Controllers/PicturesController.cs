@@ -324,6 +324,7 @@ namespace PLM.Controllers
             string imgData = Request.Form.Get("imgData");
 
             //This section of code was to check that the extension was the same for both files.
+            //It is being left in in the hopes someone can use it in the future
             //string origUrl = Request.Form.Get("origUrl");
             //string imageFormat = "." + imgData.Substring(imgData.IndexOf('/') + 1, imgData.IndexOf(';'));
 
@@ -365,7 +366,6 @@ namespace PLM.Controllers
         }
 
         [HttpGet]
-        //[RequireHttps] //Ensures http-headers work
         [AuthorizeOrRedirectAttribute(Roles = "Instructor")]
         public ActionResult Confirm()
         {
@@ -407,7 +407,6 @@ namespace PLM.Controllers
             tempUrl = HttpUtility.HtmlDecode(tempUrl);
             string temporaryFileName = Path.GetFileName(tempUrl);
             string ansId = Request.Form.Get("answerID");
-            //string newFileName = Path.GetFileNameWithoutExtension(origUrl);
             string result = PermaSave(temporaryFileName, origUrl);
 
             return RedirectToAction("Edit", "Answers", new { id = ansId });
@@ -419,15 +418,10 @@ namespace PLM.Controllers
         {
             string tempUrl = Request.Form.Get("tempUrl");
             tempUrl = HttpUtility.HtmlDecode(tempUrl);
-            //string noRedirect = Request.Form.Get("noRedirect");
             string temporaryFileName = Path.GetFileName(tempUrl);
 
             DiscardChanges(temporaryFileName);
 
-            //if (noRedirect == Boolean.TrueString)
-            //{
-            //    return new HttpStatusCodeResult(HttpStatusCode.OK);
-            //}
             string ansId = Request.Form.Get("answerID");
 
             return RedirectToAction("Edit", "Answers", new { id = ansId });
@@ -551,10 +545,6 @@ namespace PLM.Controllers
             string newFileName = Path.GetFileNameWithoutExtension(toNewFilePath);
             string result;
 
-            //For checking passed in file path + created file path
-            //throw new ArgumentException(toNewFilePath + " " + newDirPath);
-            //return result;
-
             //if the selected file doesn't exist in the temp folder
             if (!(System.IO.File.Exists(dirPath + filename)))
             {
@@ -600,7 +590,6 @@ namespace PLM.Controllers
                 //or removed some or all elements from the filesMove array
                 return "BAD MOVE DURING TRANSFER";
             }
-            //REPLACE %20 with SPACE in FILENAME BEFORE SAVING
             if (FileManipExtensions.MoveSpecificFiles(filesMove, newDirPath, true))
             {
                 return "SAVED";

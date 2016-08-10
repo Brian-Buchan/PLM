@@ -116,7 +116,6 @@ namespace PLM
         {
             string dirPath = new FileInfo(filePath).Directory.FullName;
             string fileExt = new FileInfo(filePath).Extension;
-            //dirPath, 
             string possibleFilePath = Path.Combine(dirPath, newFileName + fileExt);
             newfilepath = "";
             if (!Directory.Exists(dirPath))
@@ -128,20 +127,12 @@ namespace PLM
             {
                 if (File.Exists(filePath))
                 {
-                    //throw new ArgumentException(possibleFilePath);
                     File.Copy(filePath, possibleFilePath, overWrite);
-                    //File.SetAttributes(possibleFilePath, FileAttributes.Normal);
                 }   
             }
-            //catch (IOException)
-            //{
-            //    //TODO: find some way to log this exception
-            //    return false;
-            //}
             catch (Exception)
             {
                 throw;
-                //return false;
             }
             //Then try deleting the old file. If this errors out, rollback changes and return false.
             try
@@ -151,17 +142,10 @@ namespace PLM
                     File.Delete(filePath);
                 }
             }
-            //catch (IOException)
-            //{
-            //    //TODO: find some way to log this exception
-            //    File.Delete(possibleFilePath);
-            //    return false;
-            //}
             catch (Exception)
             {
                 File.Delete(possibleFilePath);
                 throw;
-                //return false;
             }
             newfilepath = possibleFilePath;
             return true;
@@ -180,7 +164,6 @@ namespace PLM
         /// <returns>bool</returns>
         public static bool MoveSpecificFiles(string[] filePaths, string saveDirectory, bool overWrite = false)
         {
-            //REPLACE %20 with SPACE in FILENAME BEFORE SAVING
             //If the directory doesn't exist, error out.
             if (!Directory.Exists(saveDirectory))
             {
@@ -210,12 +193,10 @@ namespace PLM
                             File.Move(filePath, fullPath);
                         }
                     }
-                    //throw new ArgumentException();
                 }
             }
             catch (Exception)
             {
-                //check = saveDirectory + " " + Path.GetFileName(filePaths[0]);
                 return false;
             }
             return true;
