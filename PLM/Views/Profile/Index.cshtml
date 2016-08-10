@@ -2,6 +2,7 @@
 @using Microsoft.AspNet.Identity
 @{
     ViewBag.Title = "Your Profile";
+    ViewBag.Author = "Alexander Phillip Olson";
     var name = User.Identity.GetFirstName() + " " + User.Identity.GetLastName();
     var instution = User.Identity.GetInstution();
     var email = User.Identity.GetUserName();

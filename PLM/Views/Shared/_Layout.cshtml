@@ -3,8 +3,19 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">    
-    <meta name="description" content="">
-    <meta name="author" content="">
+    <meta name="description" content="@ViewBag.Description">
+    <meta name="keywords" content="Perceptual, Learning, Module, Education" />
+    <meta name="language" content="English"> 
+    @{
+        if (ViewBag.Author != null) 
+        { 
+            <meta name="author" content="@ViewBag.Author">
+        }
+        else
+        {
+            <meta name="author" content="Brian Buchan, Alexander Olson, Benjamin Proudfoot and Jacqueline Radtke ">
+        }
+    }
     @Styles.Render("~/Content/css")
     <title>PLM | @ViewBag.Title</title>
     @Scripts.Render("~/bundles/modernizr")
