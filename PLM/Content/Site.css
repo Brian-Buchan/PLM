@@ -184,7 +184,7 @@ a[type="button-submit-sm"] :focus{
 }
 
 .button-enter {
-  width: 15%;
+  width: 100%;
   font-family:Arial;
   background-color: #5cb85c;
   color: #fff;
