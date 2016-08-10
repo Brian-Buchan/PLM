@@ -77,6 +77,9 @@ namespace PLM.Controllers
     {
         private ApplicationUserManager _userManager;
         private ApplicationDbContext db = new ApplicationDbContext();
+        public AccountController()
+        {
+        }
         public ActionResult Index(string sortOrder, string searchString)
         {
             ViewBag.UsernameSortParam = String.IsNullOrEmpty(sortOrder) ? "username_asc" : "";
