@@ -75,7 +75,7 @@
         <td>
             <form action="~/Account/DenyRequest?userID=@item.Id" method="post">
                 @Html.AntiForgeryToken()
-                <button name="subject" type="submit" class="btn-danger" >Deny</button>
+                <button name="subject" type="submit" class="btn-deny" >Deny</button>
             </form>
         </td>
     </tr>
