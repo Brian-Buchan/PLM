@@ -205,7 +205,7 @@ a[type="button-submit-sm"] :focus{
   opacity: .8;
 }
 
-.button-deny {
+.button-denyAccount {
   background-color: #c12e2a;
   width: 100%;
   font-family:Arial;
@@ -219,8 +219,8 @@ a[type="button-submit-sm"] :focus{
   padding: 10px;
 }
 
-.button-deny :hover, 
-.button-deny :focus{
+.button-denyAccount :hover, 
+.button-denyAccount :focus{
   color: #fff;
   outline: none;
   box-shadow: none;
