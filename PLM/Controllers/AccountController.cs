@@ -15,63 +15,12 @@ using System.Net;
 using System.Data.Entity;
 using System.Configuration;
 using System.Diagnostics;
+using PLM.Extensions;
 using PLM.CutomAttributes;
 using System.Text.RegularExpressions;
 using System.Globalization;
 namespace PLM.Controllers
 {
-    public class RegexUtilities
-    {
-        bool invalid;
-        public bool IsValidEmail(string strIn)
-        {
-            invalid = false;
-            if (String.IsNullOrEmpty(strIn))
-                return false;
-
-            // Use IdnMapping class to convert Unicode domain names.
-            try
-            {
-                strIn = Regex.Replace(strIn, @"(@)(.+)$", this.DomainMapper,
-                                      RegexOptions.None, TimeSpan.FromMilliseconds(200));
-            }
-            catch (RegexMatchTimeoutException)
-            {
-                return false;
-            }
-
-            if (invalid) return false;
-
-            // Return true if strIn is in valid e-mail format.
-            try
-            {
-                return Regex.IsMatch(strIn,
-                      @"^(?("")("".+?(?<!\\)""@)|(([0-9a-z]((\.(?!\.))|[-!#\$%&'\*\+/=\?\^`\{\}\|~\w])*)(?<=[0-9a-z])@))" +
-                      @"(?(\[)(\[(\d{1,3}\.){3}\d{1,3}\])|(([0-9a-z][-\w]*[0-9a-z]*\.)+[a-z0-9][\-a-z0-9]{0,22}[a-z0-9]))$",
-                      RegexOptions.IgnoreCase, TimeSpan.FromMilliseconds(250));
-            }
-            catch (RegexMatchTimeoutException)
-            {
-                return (false);
-            }
-        }
-        private string DomainMapper(Match match)
-        {
-            // IdnMapping class with default property values.
-            IdnMapping idn = new IdnMapping();
-
-            string domainName = match.Groups[2].Value;
-            try
-            {
-                domainName = idn.GetAscii(domainName);
-            }
-            catch (ArgumentException)
-            {
-                invalid = true;
-            }
-            return match.Groups[1].Value + domainName;
-        }
-    }
     [Authorize]
     public class AccountController : Controller
     {
@@ -571,7 +520,7 @@ namespace PLM.Controllers
                 RegexUtilities emailcheck = new RegexUtilities();
                 string email = model.Email;
                 var user = new ApplicationUser();
-                if (emailcheck.IsValidEmail(email))
+                if (emailcheck.IsValidEmail(email)) // Checks whether email is valid in order to fix an error we had
                 {
                     user = new ApplicationUser()
                     {
@@ -588,7 +537,7 @@ namespace PLM.Controllers
                 {
                     user = new ApplicationUser()
                     {
-                        UserName = "Validemail@nmc.edu",
+                        UserName = "Validemail@nmc.edu",//sets up a dummy model so it doesn't crash before showing validation message and error to user
                         Email = model.Email,
                         FirstName = model.FirstName,
                         LastName = model.LastName,
@@ -945,7 +894,7 @@ namespace PLM.Controllers
         {
             foreach (var error in result.Errors)
             { 
-                if(!(error.Contains("Name")&& error.Contains("is already taken.")))
+                if(!(error.Contains("Name")&& error.Contains("is already taken.")))//Checks for name X is already taken and removes the error because it is a duplicate
                 {
                 ModelState.AddModelError("", error);
                 }
