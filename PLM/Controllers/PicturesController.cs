@@ -409,7 +409,7 @@ namespace PLM.Controllers
             string ansId = Request.Form.Get("answerID");
             string result = PermaSave(temporaryFileName, origUrl);
 
-            return RedirectToAction("Edit", "Answers", new { id = ansId });
+            return RedirectToAction("Edit", "Answers", new { id = ansId, rslt = result });
         }
 
         [HttpPost]
