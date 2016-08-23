@@ -25,6 +25,7 @@ namespace PLM.Controllers
     public class AccountController : Controller
     {
         private ApplicationUserManager _userManager;
+        private ApplicationDbContext db = new ApplicationDbContext();
         public AccountController()
         {
         }
@@ -33,44 +34,43 @@ namespace PLM.Controllers
             ViewBag.UsernameSortParam = String.IsNullOrEmpty(sortOrder) ? "username_asc" : "";
             ViewBag.NameSortParam = sortOrder == "first_asc" ? "first_desc" : "first_asc";
             ViewBag.LastSortParam = sortOrder == "last_asc" ? "last_desc" : "last_asc";
+
+            var db = new ApplicationDbContext();
+            var users = from u in db.Users
+                        where u.Status != ApplicationUser.AccountStatus.Disabled
+                        select u;
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                users = users.Where(u => u.LastName.Contains(searchString)
+                                       || u.FirstName.Contains(searchString)
+                                       && u.Status != ApplicationUser.AccountStatus.Disabled);
+            }
+            switch (sortOrder)
+            {
+                case "username_asc":
+                    users = users.OrderBy(u => u.UserName);
+                    break;
+                case "first_desc":
+                    users = users.OrderByDescending(u => u.FirstName);
+                    break;
+                case "last_desc":
+                    users = users.OrderByDescending(u => u.LastName);
+                    break;
+                case "first_asc":
+                    users = users.OrderBy(u => u.FirstName);
+                    break;
+                case "last_asc":
+                    users = users.OrderBy(u => u.LastName);
+                    break;
+            }
+
             var model = new System.Collections.Generic.List<EditUserViewModel>();
 
-            using (ApplicationDbContext db = new ApplicationDbContext())
+            foreach (var user in users)
             {
-                var users = from u in db.Users
-                            where u.Status != ApplicationUser.AccountStatus.Disabled
-                            select u;
-
-                if (!String.IsNullOrEmpty(searchString))
-                {
-                    users = users.Where(u => u.LastName.Contains(searchString)
-                                           || u.FirstName.Contains(searchString)
-                                           && u.Status != ApplicationUser.AccountStatus.Disabled);
-                }
-                switch (sortOrder)
-                {
-                    case "username_asc":
-                        users = users.OrderBy(u => u.UserName);
-                        break;
-                    case "first_desc":
-                        users = users.OrderByDescending(u => u.FirstName);
-                        break;
-                    case "last_desc":
-                        users = users.OrderByDescending(u => u.LastName);
-                        break;
-                    case "first_asc":
-                        users = users.OrderBy(u => u.FirstName);
-                        break;
-                    case "last_asc":
-                        users = users.OrderBy(u => u.LastName);
-                        break;
-                }
-
-                foreach (var user in users)
-                {
-                    var u = new EditUserViewModel(user);
-                    model.Add(u);
-                }
+                var u = new EditUserViewModel(user);
+                model.Add(u);
             }
             return View(model);
         }
@@ -80,75 +80,58 @@ namespace PLM.Controllers
             ViewBag.UsernameSortParam = String.IsNullOrEmpty(sortOrder) ? "username_asc" : "";
             ViewBag.NameSortParam = sortOrder == "first_asc" ? "first_desc" : "first_asc";
             ViewBag.LastSortParam = sortOrder == "last_asc" ? "last_desc" : "last_asc";
-            var UsersToView = new List<ApplicationUser>();
 
-            using (ApplicationDbContext db = new ApplicationDbContext())
+            var db = new ApplicationDbContext();
+            var users = from u in db.Users
+                        where u.Status == ApplicationUser.AccountStatus.Disabled
+                        select u;
+
+            if (!String.IsNullOrEmpty(searchString))
             {
-                var users = from u in db.Users
-                            where u.Status == ApplicationUser.AccountStatus.Disabled
-                            select u;
-
-                if (!String.IsNullOrEmpty(searchString))
-                {
-                    users = users.Where(u => u.LastName.Contains(searchString)
-                                           || u.FirstName.Contains(searchString)
-                                           && u.Status == ApplicationUser.AccountStatus.Disabled);
-                }
-                switch (sortOrder)
-                {
-                    case "username_asc":
-                        users = users.OrderBy(u => u.UserName);
-                        break;
-                    case "first_desc":
-                        users = users.OrderByDescending(u => u.FirstName);
-                        break;
-                    case "last_desc":
-                        users = users.OrderByDescending(u => u.LastName);
-                        break;
-                    case "first_asc":
-                        users = users.OrderBy(u => u.FirstName);
-                        break;
-                    case "last_asc":
-                        users = users.OrderBy(u => u.LastName);
-                        break;
-                }
-                foreach (var user in users)
-                {
-                    UsersToView.Add(user);
-                }
+                users = users.Where(u => u.LastName.Contains(searchString)
+                                       || u.FirstName.Contains(searchString)
+                                       && u.Status == ApplicationUser.AccountStatus.Disabled);
             }
-            return View(UsersToView);
+            switch (sortOrder)
+            {
+                case "username_asc":
+                    users = users.OrderBy(u => u.UserName);
+                    break;
+                case "first_desc":
+                    users = users.OrderByDescending(u => u.FirstName);
+                    break;
+                case "last_desc":
+                    users = users.OrderByDescending(u => u.LastName);
+                    break;
+                case "first_asc":
+                    users = users.OrderBy(u => u.FirstName);
+                    break;
+                case "last_asc":
+                    users = users.OrderBy(u => u.LastName);
+                    break;
+            }
+            return View(users);
         }
 
         public ActionResult RoleRequest()
         {
-            var UsersToView = new List<ApplicationUser>();
-            using (ApplicationDbContext db = new ApplicationDbContext())
-            {
-                var users = from u in db.Users
-                            where u.Status == ApplicationUser.AccountStatus.PendingInstrustorRole
-                            select u;
+            var db = new ApplicationDbContext();
+            var users = from u in db.Users
+                        where u.Status == ApplicationUser.AccountStatus.PendingInstrustorRole
+                        select u;
 
-                foreach (var user in users)
-                {
-                    UsersToView.Add(user);
-                }
-            }
-            return View(UsersToView);
+            return View(users);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult RoleRequest(string userID)
         {
-            using (ApplicationDbContext db = new ApplicationDbContext())
-            {
-                ApplicationUser user = db.Users.First(x => x.Id == userID);
-                user.Status = ApplicationUser.AccountStatus.Active;
-                UserManager.AddToRole(user.Id, "Instructor");
-                db.Entry(user).State = EntityState.Modified;
-                db.SaveChanges();
-            }
+            ApplicationUser user = db.Users.First(x => x.Id == userID);
+            user.Status = ApplicationUser.AccountStatus.Active;
+            UserManager.AddToRole(user.Id, "Instructor");
+            db.Entry(user).State = EntityState.Modified;
+            db.SaveChanges();
 
             return RedirectToAction("RoleRequest", "Account");
         }
@@ -157,13 +140,10 @@ namespace PLM.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DenyRequest(string userID)
         {
-            using (ApplicationDbContext db = new ApplicationDbContext())
-            {
-                ApplicationUser user = db.Users.First(x => x.Id == userID);
-                user.Status = ApplicationUser.AccountStatus.Active;
-                db.Entry(user).State = EntityState.Modified;
-                db.SaveChanges();
-            }
+            ApplicationUser user = db.Users.First(x => x.Id == userID);
+            user.Status = ApplicationUser.AccountStatus.Active;
+            db.Entry(user).State = EntityState.Modified;
+            db.SaveChanges();
 
             return RedirectToAction("RoleRequest", "Account");
         }
@@ -171,21 +151,18 @@ namespace PLM.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult ApproveALLRequests()
         {
-            using (ApplicationDbContext db = new ApplicationDbContext())
+            var users = (from u in db.Users
+                        where u.Status == ApplicationUser.AccountStatus.PendingInstrustorRole
+                        select u).ToList();
+
+            for (int i = 0; i < users.Count; i++)
             {
-                var users = (from u in db.Users
-                             where u.Status == ApplicationUser.AccountStatus.PendingInstrustorRole
-                             select u).ToList();
-
-                for (int i = 0; i < users.Count; i++)
-                {
-                    users[i].Status = ApplicationUser.AccountStatus.Active;
-                    UserManager.AddToRole(users[i].Id, "Instructor");
-                    db.Entry(users[i]).State = EntityState.Modified;
-                    db.SaveChanges();
-                }
-            }
-
+                users[i].Status = ApplicationUser.AccountStatus.Active;
+                UserManager.AddToRole(users[i].Id, "Instructor");
+                db.Entry(users[i]).State = EntityState.Modified;
+                db.SaveChanges();
+            }    
+            
             return RedirectToAction("RoleRequest", "Account");
         }
         public ActionResult Create()
@@ -221,7 +198,7 @@ namespace PLM.Controllers
             return View(model);
         }
 
-
+        
         public ActionResult Edit(string userName = null)
         {
             if (userName == null)
@@ -229,78 +206,64 @@ namespace PLM.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            EditUserViewModel UserToSend = new EditUserViewModel();
+            var db = new ApplicationDbContext();
+            var user = db.Users.First(u => u.UserName == userName);
+            var model = new EditUserViewModel(user);
 
-            using (ApplicationDbContext db = new ApplicationDbContext())
+            if (user == null)
             {
-                var user = db.Users.First(u => u.UserName == userName);
-                var model = new EditUserViewModel(user);
-
-                if (user == null)
-                {
-                    return HttpNotFound();
-                }
-
-                UserToSend = model;
+                return HttpNotFound();
             }
 
-            return View(UserToSend);
+            return View(model);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        
         public ActionResult Edit([Bind(Include = "UserName, LastName, FirstName, Institution, Email, Status, Password, ConfirmPassword")] EditUserViewModel userModel)
         {
             if (ModelState.IsValid)
             {
-                using (ApplicationDbContext db = new ApplicationDbContext())
-                {
-                    var user = db.Users.First(u => u.UserName == userModel.UserName);
-                    user.FirstName = userModel.FirstName;
-                    user.LastName = userModel.LastName;
-                    user.Email = userModel.Email;
-                    user.Institution = userModel.Institution;
-                    user.UserName = userModel.UserName;
-                    PasswordHasher ph = new PasswordHasher();
-                    user.PasswordHash = ph.HashPassword(userModel.Password);
-                    db.Entry(user).State = EntityState.Modified;
-                    db.SaveChanges();
-
-                }
+                var db = new ApplicationDbContext();
+                var user = db.Users.First(u => u.UserName == userModel.UserName);
+                user.FirstName = userModel.FirstName;
+                user.LastName = userModel.LastName;
+                user.Email = userModel.Email;
+                user.Institution = userModel.Institution;
+                user.UserName = userModel.UserName;
+                PasswordHasher ph = new PasswordHasher();
+                user.PasswordHash = ph.HashPassword(userModel.Password);
+                db.Entry(user).State = EntityState.Modified;
+                db.SaveChanges();
                 return RedirectToAction("Index");
             }
             return View(userModel);
         }
 
-
+        
         public ActionResult Delete(string userName = null)
         {
-            EditUserViewModel UserToSend = new EditUserViewModel();
-            using (ApplicationDbContext db = new ApplicationDbContext())
-            {
-                var user = db.Users.First(u => u.UserName == userName);
-                var model = new EditUserViewModel(user);
+            var db = new ApplicationDbContext();
+            var user = db.Users.First(u => u.UserName == userName);
+            var model = new EditUserViewModel(user);
 
-                if (user == null)
-                {
-                    return HttpNotFound();
-                }
-                UserToSend = model;
+            if (user == null)
+            {
+                return HttpNotFound();
             }
 
-            return View(UserToSend);
+            return View(model);
         }
 
         [ValidateAntiForgeryToken]
         [HttpPost, ActionName("Delete")]
         public ActionResult DeleteConfirmed(string userName)
         {
-            using (ApplicationDbContext db = new ApplicationDbContext())
-            {
-                var user = db.Users.First(u => u.UserName == userName);
-                db.Users.Remove(user);
-                db.SaveChanges();
-            }
+            var db = new ApplicationDbContext();
+            var user = db.Users.First(u => u.UserName == userName);
+            db.Users.Remove(user);
+            db.SaveChanges();
             return RedirectToAction("Index");
         }
 
@@ -470,8 +433,7 @@ namespace PLM.Controllers
         {
             if (ModelState.IsValid)
             {
-                try
-                {
+                try { 
                     var user = await UserManager.FindAsync(model.Email, model.Password);
                     if (user.Status == ApplicationUser.AccountStatus.Disabled)
                     {
@@ -488,7 +450,7 @@ namespace PLM.Controllers
                         ModelState.AddModelError("", "Invalid username or password.");
                     }
                 }
-                catch (NullReferenceException)
+                catch(NullReferenceException)
                 {
                     RedirectToAction("Login");
                 }
@@ -510,40 +472,33 @@ namespace PLM.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+            var db = new ApplicationDbContext();
+            var user = db.Users.First(u => u.UserName == userName);
+            var model = new DisableUserViewModel(user);
 
-            DisableUserViewModel UserToSend = new DisableUserViewModel();
-            using (ApplicationDbContext db = new ApplicationDbContext())
+            if (user == null)
             {
-                var user = db.Users.First(u => u.UserName == userName);
-                var model = new DisableUserViewModel(user);
-
-                if (user == null)
-                {
-                    return HttpNotFound();
-                }
-                UserToSend = model;
+                return HttpNotFound();
             }
-            return View(UserToSend);
+            return View(model);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-
+        
         public ActionResult AccountDisable([Bind(Include = "UserName, DisableAccountReason, DisableAccountNote, Status")] DisableUserViewModel userModel)
         {
             if (ModelState.IsValid)
             {
-                using (ApplicationDbContext db = new ApplicationDbContext())
-                {
-                    var user = db.Users.First(u => u.UserName == userModel.UserName);
+                var db = new ApplicationDbContext();
+                var user = db.Users.First(u => u.UserName == userModel.UserName);
 
-                    user.DisableAccountReason = userModel.DisableAccountReason;
-                    user.DisableAccountNote = userModel.DisableAccountNote;
-                    user.Status = userModel.Status;
+                user.DisableAccountReason = userModel.DisableAccountReason;
+                user.DisableAccountNote = userModel.DisableAccountNote;
+                user.Status = userModel.Status;
 
-                    db.Entry(user).State = EntityState.Modified;
-                    db.SaveChanges();
-                }
+                db.Entry(user).State = EntityState.Modified;
+                db.SaveChanges();
                 return RedirectToAction("Index");
             }
             return View(userModel);
@@ -937,10 +892,10 @@ namespace PLM.Controllers
         private void AddErrors(IdentityResult result)
         {
             foreach (var error in result.Errors)
-            {
-                if (!(error.Contains("Name") && error.Contains("is already taken.")))//Checks for name X is already taken and removes the error because it is a duplicate
+            { 
+                if(!(error.Contains("Name")&& error.Contains("is already taken.")))//Checks for name X is already taken and removes the error because it is a duplicate
                 {
-                    ModelState.AddModelError("", error);
+                ModelState.AddModelError("", error);
                 }
             }
         }

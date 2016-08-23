@@ -18,6 +18,7 @@ namespace PLM.Controllers
 {
     public class PicturesController : Controller
     {
+        private ApplicationDbContext db = new ApplicationDbContext();
         private bool incorrectImageType = false;
         private bool imageSizeTooLarge = false;
         private Picture pictureToSave;
@@ -25,12 +26,8 @@ namespace PLM.Controllers
         // GET: /Pictures/
         public ActionResult Index()
         {
-            List<Picture> pictures;
-            using (ApplicationDbContext db = new ApplicationDbContext())
-            {
-                pictures = db.Pictures.Include(p => p.Answer).ToList();
-            }
-            return View(pictures);
+            var pictures = db.Pictures.Include(p => p.Answer);
+            return View(pictures.ToList());
         }
 
         // GET: /Pictures/Details/5
@@ -40,11 +37,7 @@ namespace PLM.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Picture picture;
-            using (ApplicationDbContext db = new ApplicationDbContext())
-            {
-                picture = db.Pictures.Find(id);
-            }
+            Picture picture = db.Pictures.Find(id);
             if (picture == null)
             {
                 return HttpNotFound();
@@ -58,12 +51,9 @@ namespace PLM.Controllers
         {
             ViewBag.AnswerID = id;
             Picture picture = new Picture();
-            using (ApplicationDbContext db = new ApplicationDbContext())
-            {
-                picture.Answer = db.Answers
-                        .Where(a => a.AnswerID == id)
-                        .ToList().First();
-            }
+            picture.Answer = db.Answers
+                    .Where(a => a.AnswerID == id)
+                    .ToList().First();
 
             return View(picture);
         }
@@ -104,20 +94,13 @@ namespace PLM.Controllers
                 else
                 {
                     pictureToSave.Location = location;
-                    using (ApplicationDbContext db = new ApplicationDbContext())
-                    {
-                        db.Pictures.Add(pictureToSave);
-                        db.SaveChanges();
-                    }
+                    db.Pictures.Add(pictureToSave);
+                    db.SaveChanges();
                 }
                 return RedirectToAction("edit", new { controller = "Answers", id = pictureToSave.AnswerID });
             }
 
-            using (ApplicationDbContext db = new ApplicationDbContext())
-            {
-                ViewBag.AnswerID = new SelectList(db.Answers, "AnswerID", "AnswerString", pictureToSave.AnswerID);
-            }
-
+            ViewBag.AnswerID = new SelectList(db.Answers, "AnswerID", "AnswerString", pictureToSave.AnswerID);
             return View(pictureToSave);
         }
         /// <summary>
@@ -134,11 +117,11 @@ namespace PLM.Controllers
             int picCount;
             string answerString;
 
-            using (ApplicationDbContext db = new ApplicationDbContext())
+            using (ApplicationDbContext db2 = new ApplicationDbContext())
             {
-                Session["upload"] = db.Answers.Find(id).Module.GetModuleDirectory();
-                answerString = db.Answers.Find(id).AnswerString;
-                picCount = db.Answers.Find(id).PictureCount;
+                Session["upload"] = db2.Answers.Find(id).Module.GetModuleDirectory();
+                answerString = db2.Answers.Find(id).AnswerString;
+                picCount = db2.Answers.Find(id).PictureCount;
                 picCount++;
             }
             string fName = "";
@@ -199,11 +182,11 @@ namespace PLM.Controllers
 
             if (isSavedSuccessfully)
             {
-                using (ApplicationDbContext db = new ApplicationDbContext())
+                using (ApplicationDbContext db3 = new ApplicationDbContext())
                 {
-                    db.Answers.Find(id).PictureCount++;
-                    db.Entry(db.Answers.Find(id)).State = EntityState.Modified;
-                    db.SaveChanges();
+                    db3.Answers.Find(id).PictureCount++;
+                    db3.Entry(db3.Answers.Find(id)).State = EntityState.Modified;
+                    db3.SaveChanges();
                 }
                 return relpath;
             }
@@ -238,19 +221,12 @@ namespace PLM.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Picture picture;
-            using (ApplicationDbContext db = new ApplicationDbContext())
-            {
-                picture = db.Pictures.Find(id);
-            }
+            Picture picture = db.Pictures.Find(id);
             if (picture == null)
             {
                 return HttpNotFound();
             }
-            using (ApplicationDbContext db = new ApplicationDbContext())
-            {
-                ViewBag.AnswerID = new SelectList(db.Answers, "AnswerID", "AnswerString", picture.AnswerID);
-            }
+            ViewBag.AnswerID = new SelectList(db.Answers, "AnswerID", "AnswerString", picture.AnswerID);
             return View(picture);
         }
         // POST: /Pictures/Edit/5
@@ -263,17 +239,11 @@ namespace PLM.Controllers
         {
             if (ModelState.IsValid)
             {
-                using (ApplicationDbContext db = new ApplicationDbContext())
-                {
-                    db.Entry(picture).State = EntityState.Modified;
-                    db.SaveChanges();
-                }
+                db.Entry(picture).State = EntityState.Modified;
+                db.SaveChanges();
                 return RedirectToAction("edit", new { controller = "Answers", id = picture.AnswerID });
             }
-            using (ApplicationDbContext db = new ApplicationDbContext())
-            {
-                ViewBag.AnswerID = new SelectList(db.Answers, "AnswerID", "AnswerString", picture.AnswerID);
-            }
+            ViewBag.AnswerID = new SelectList(db.Answers, "AnswerID", "AnswerString", picture.AnswerID);
             return View(picture);
         }
 
@@ -285,11 +255,7 @@ namespace PLM.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Picture picture;
-            using (ApplicationDbContext db = new ApplicationDbContext())
-            {
-                picture = db.Pictures.Find(id);
-            }
+            Picture picture = db.Pictures.Find(id);
             if (picture == null)
             {
                 return HttpNotFound();
@@ -302,13 +268,9 @@ namespace PLM.Controllers
         [AuthorizeOrRedirectAttribute(Roles = "Instructor")]
         public ActionResult DeleteConfirmed(int id)
         {
-            Picture picture;
-            using (ApplicationDbContext db = new ApplicationDbContext())
-            {
-                picture = db.Pictures.Find(id);
-                db.Pictures.Remove(picture);
-                db.SaveChanges();
-            }
+            Picture picture = db.Pictures.Find(id);
+            db.Pictures.Remove(picture);
+            db.SaveChanges();
             System.IO.File.Delete(picture.Location);
             return RedirectToAction("edit", new { controller = "Answers", id = picture.AnswerID });
         }
@@ -338,11 +300,7 @@ namespace PLM.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Picture picture;
-            using (ApplicationDbContext db = new ApplicationDbContext())
-            {
-                picture = db.Pictures.Find(id);
-            }
+            Picture picture = db.Pictures.Find(id);
             if (picture == null)
             {
                 return HttpNotFound();
@@ -451,7 +409,7 @@ namespace PLM.Controllers
             string ansId = Request.Form.Get("answerID");
             string result = PermaSave(temporaryFileName, origUrl);
 
-            return RedirectToAction("Edit", "Answers", new { id = ansId, err=result });
+            return RedirectToAction("Edit", "Answers", new { id = ansId });
         }
 
         [HttpPost]
@@ -658,13 +616,13 @@ namespace PLM.Controllers
         }
         #endregion
 
-        //protected override void Dispose(bool disposing)
-        //{
-        //    if (disposing)
-        //    {
-        //        db.Dispose();
-        //    }
-        //    base.Dispose(disposing);
-        //}
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                db.Dispose();
+            }
+            base.Dispose(disposing);
+        }
     }
 }

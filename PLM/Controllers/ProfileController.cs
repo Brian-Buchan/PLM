@@ -13,27 +13,20 @@ namespace PLM.Controllers
     [Authorize]
     public class ProfileController : Controller
     {
+        private ApplicationDbContext db = new ApplicationDbContext();
         public ActionResult Index()
         {
             if (!System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
             {
-                using (ApplicationDbContext db = new ApplicationDbContext())
-                {
-                    RedirectToAction("Index", "Home");
-                    return View(db.Modules.ToList());
-                }
+                RedirectToAction("Index", "Home");
+                return View(db.Modules.ToList());
             }
             else
             {
                 ViewBag.UserID = User.Identity.Name;
                 var name = User.Identity.GetUserName();
-                ApplicationUser currentUser;
-                List<Module> modules;
-                using (ApplicationDbContext db = new ApplicationDbContext())
-                {
-                    currentUser = db.Users.Single(x => x.UserName == name);
-                    modules = db.Modules.ToList();
-                }
+                ApplicationUser currentUser = (ApplicationUser)db.Users.Single(x => x.UserName == name);
+                var modules = db.Modules.ToList();
                 modules = (from m in modules
                            where m.User == currentUser
                            select m).ToList();
@@ -52,13 +45,10 @@ namespace PLM.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult StatusRequest(string userID)
         {
-            using (ApplicationDbContext db = new ApplicationDbContext())
-            {
-                ApplicationUser user = db.Users.First(u => u.Id == userID);
-                user.Status = ApplicationUser.AccountStatus.PendingInstrustorRole;
-                db.Entry(user).State = EntityState.Modified;
-                db.SaveChanges();
-            }
+            ApplicationUser user = db.Users.First(u => u.Id == userID);
+            user.Status = ApplicationUser.AccountStatus.PendingInstrustorRole;
+            db.Entry(user).State = EntityState.Modified;
+            db.SaveChanges();
             return RedirectToAction("Index");
         }
 
@@ -69,21 +59,17 @@ namespace PLM.Controllers
             if (ModelState.IsValid)
             {
                 var name = User.Identity.GetUserName();
-                ApplicationUser currentUser;
-                using (ApplicationDbContext db = new ApplicationDbContext())
+                ApplicationUser currentUser = (ApplicationUser)db.Users.Single(x => x.UserName == name);
+                var location = SaveUploadedFileProfile(currentUser.Id);
+                if (location == "")
                 {
-                    currentUser = db.Users.Single(x => x.UserName == name);
-                    var location = SaveUploadedFileProfile(currentUser.Id);
-                    if (location == "")
-                    {
-                        //error
-                    }
-                    else
-                    {
-                        currentUser.ProfilePicture = location;
-                    }
-                    db.SaveChanges();
+                    //error
                 }
+                else
+                {
+                    currentUser.ProfilePicture = location;
+                }
+                db.SaveChanges();
             }
             return RedirectToAction("Index");
         }
@@ -92,13 +78,9 @@ namespace PLM.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult SaveProfilePicture(string userID)
         {
-            ApplicationUser user;
-            using (ApplicationDbContext db = new ApplicationDbContext())
-            {
-                user = db.Users.Find(userID);
-                user.ProfilePicture = SaveUploadedFileProfile(userID);
-                db.SaveChanges();
-            }
+            ApplicationUser user = db.Users.Find(userID);
+            user.ProfilePicture = SaveUploadedFileProfile(userID);
+            db.SaveChanges();
             return RedirectToAction("Index");
         }
 

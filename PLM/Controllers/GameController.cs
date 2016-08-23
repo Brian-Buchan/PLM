@@ -14,6 +14,7 @@ namespace PLM.Controllers
     public class GameController : Controller
     {
         private static Random rand = new Random();
+        private ApplicationDbContext db = new ApplicationDbContext();
         private UserGameSession currentGameSession;
         private Module currentModule = new Module();
         private List<int> GeneratedGuessIDs = new List<int>();
@@ -55,10 +56,7 @@ namespace PLM.Controllers
         private void GenerateModule(int PLMid)
         {
             currentGameSession = new UserGameSession();
-            using (ApplicationDbContext db = new ApplicationDbContext())
-            {
-                currentGameSession.currentModule = db.Modules.Find(PLMid);
-            }
+            currentGameSession.currentModule = db.Modules.Find(PLMid);
             currentGameSession.Score = 0;
             currentGameSession.currentQuestion = -1;// set to -1 because GenerateGuess() will increment it to 0 the first time it runs
             currentGameSession.iteratedQuestion = -1;
@@ -259,11 +257,7 @@ namespace PLM.Controllers
             foreach (Score top10score in scores)
             {
                 string[] stringToSend = new string[3];
-                ApplicationUser player;
-                using (ApplicationDbContext db = new ApplicationDbContext())
-                {
-                    player = db.Users.Find(top10score.UserID);
-                }
+                ApplicationUser player = db.Users.Find(top10score.UserID);
                 try
                 {
                     stringToSend[0] = (player.FirstName + ", " + player.LastName[0]);
@@ -303,12 +297,9 @@ namespace PLM.Controllers
             newScore.TotalAnswers = ((UserGameSession)Session["userGameSession"]).numQuestions;
             if (loggedIn && correctSettings)
             {
-                using (ApplicationDbContext db = new ApplicationDbContext())
-                {
-                    newScore.UserID = User.Identity.GetUserId();
-                    db.Entry(newScore).State = EntityState.Added;
-                    db.SaveChanges();
-                }
+                newScore.UserID = User.Identity.GetUserId();
+                db.Entry(newScore).State = EntityState.Added;
+                db.SaveChanges();
             }
         }
 
