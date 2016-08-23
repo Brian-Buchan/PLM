@@ -16,12 +16,15 @@ namespace PLM.Controllers
 {
     public class AnswersController : Controller
     {
-        private ApplicationDbContext db = new ApplicationDbContext();
         // GET: /Answers/
         public ActionResult Index()
         {
-            var answers = db.Answers.Include(a => a.Module);
-            return View(answers.ToList());
+            List<Answer> answers;
+            using (ApplicationDbContext db = new ApplicationDbContext())
+            {
+                answers = db.Answers.Include(a => a.Module).ToList();
+            }
+            return View(answers);
         }
         // GET: /Answers/Details/5
         public ActionResult Details(int? id)
@@ -30,10 +33,14 @@ namespace PLM.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Answer answer = db.Answers.Find(id);
-            if (answer == null)
+            Answer answer;
+            using (ApplicationDbContext db = new ApplicationDbContext())
             {
-                return HttpNotFound();
+                answer = db.Answers.Find(id);
+                if (answer == null)
+                {
+                    return HttpNotFound();
+                }
             }
             return View(answer);
         }
@@ -44,13 +51,16 @@ namespace PLM.Controllers
         {
             try
             {
-                ViewBag.ModuleID = ID;
-                var modules = db.Modules.ToList();
-                ViewBag.ModuleName = modules.Find(x => x.ModuleID == ID).Name;
-                var answers = db.Answers.ToList();
-                ViewBag.ModuleAnsList = (from a in answers
-                                         where a.ModuleID == ID
-                                         select a).ToList();
+                using (ApplicationDbContext db = new ApplicationDbContext())
+                {
+                    ViewBag.ModuleID = ID;
+                    var modules = db.Modules.ToList();
+                    ViewBag.ModuleName = modules.Find(x => x.ModuleID == ID).Name;
+                    var answers = db.Answers.ToList();
+                    ViewBag.ModuleAnsList = (from a in answers
+                                             where a.ModuleID == ID
+                                             select a).ToList();
+                }
             }
             catch (Exception)
             {
@@ -72,12 +82,15 @@ namespace PLM.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    db.Answers.Add(answer);
-                    db.SaveChanges();
+                    using (ApplicationDbContext db = new ApplicationDbContext())
+                    {
+                        db.Answers.Add(answer);
+                        db.SaveChanges();
+                    }
                     return RedirectToAction("Create", new { id = answer.ModuleID });
                 }
             }
-            catch (Exception){}
+            catch (Exception) { }
             return RedirectToAction("Create", new { error = "You cannot add duplicate answers" });
         }
 
@@ -92,12 +105,19 @@ namespace PLM.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Answer answer = db.Answers.Find(id);
+            Answer answer;
+            using (ApplicationDbContext db = new ApplicationDbContext())
+            {
+                answer = db.Answers.Find(id);
+            }
             if (answer == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.ModuleID = new SelectList(db.Modules, "ModuleID", "Name");
+            using (ApplicationDbContext db = new ApplicationDbContext())
+            {
+                ViewBag.ModuleID = new SelectList(db.Modules, "ModuleID", "Name");
+            }
             return View(answer);
         }
 
@@ -111,15 +131,21 @@ namespace PLM.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(answer).State = EntityState.Modified;
-                if (ModuleID != null)
+                using (ApplicationDbContext db = new ApplicationDbContext())
                 {
-                    answer.ModuleID = (int)ModuleID;
+                    db.Entry(answer).State = EntityState.Modified;
+                    if (ModuleID != null)
+                    {
+                        answer.ModuleID = (int)ModuleID;
+                    }
+                    db.SaveChanges();
                 }
-                db.SaveChanges();
                 return RedirectToAction("Create", new { controller = "Answers", id = answer.ModuleID });
             }
-            ViewBag.ModuleID = new SelectList(db.Modules, "ModuleID", "Name");
+            using (ApplicationDbContext db = new ApplicationDbContext())
+            {
+                ViewBag.ModuleID = new SelectList(db.Modules, "ModuleID", "Name");
+            }
             return View(answer);
         }
         // GET: /Answers/Delete/5
@@ -130,7 +156,11 @@ namespace PLM.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Answer answer = db.Answers.Find(id);
+            Answer answer;
+            using (ApplicationDbContext db = new ApplicationDbContext())
+            {
+                answer = db.Answers.Find(id);
+            }
             if (answer == null)
             {
                 return HttpNotFound();
@@ -144,18 +174,22 @@ namespace PLM.Controllers
         [AuthorizeOrRedirectAttribute(Roles = "Instructor")]
         public ActionResult DeleteConfirmed(int id)
         {
-            Answer answer = db.Answers.Find(id);
+            Answer answer;
+            using (ApplicationDbContext db = new ApplicationDbContext())
+            {
+                answer = db.Answers.Find(id);
+            }
             DirectoryHandler.DeleteAnswer(id);
             return RedirectToAction("Create", new { id = answer.ModuleID });
         }
 
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
-        }
+        //protected override void Dispose(bool disposing)
+        //{
+        //    if (disposing)
+        //    {
+        //        db.Dispose();
+        //    }
+        //    base.Dispose(disposing);
+        //}
     }
 }

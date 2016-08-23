@@ -9,43 +9,52 @@ namespace PLM.Controllers
 {
     public class ModulesController : Controller
     {
-        private ApplicationDbContext db = new ApplicationDbContext();
         private ModuleViewModel ModuleModel = new ModuleViewModel();
-      
+
         ///<summary>
         /// Counts the number of modules in a category that are usable and not disabled
         /// </summary>
         /// <param name="cat">Id of the category to count</param>
         public int categoryCount(int cat)//Method that counts the number of valid modules in a category
         {
-            int count = (from p in db.Modules
-                         where p.CategoryId == cat && p.isDisabled == false
-                         select p).Count();
-            foreach (Module module in db.Modules)
+            int countToSend;
+            using (ApplicationDbContext db = new ApplicationDbContext())
             {
-                if (module.Answers.Count() <= 5 && module.CategoryId == cat)
+                int count = (from p in db.Modules
+                             where p.CategoryId == cat && p.isDisabled == false
+                             select p).Count();
+                foreach (Module module in db.Modules)
                 {
-                    try
+                    if (module.Answers.Count() <= 5 && module.CategoryId == cat)
                     {
-                        Answer answer = module.Answers.ElementAt(0);
-                        Picture picture = answer.Pictures.ElementAt(0);
-                    }
-                    catch
-                    {
-                        count -= 1;
+                        try
+                        {
+                            Answer answer = module.Answers.ElementAt(0);
+                            Picture picture = answer.Pictures.ElementAt(0);
+                        }
+                        catch
+                        {
+                            count -= 1;
+                        }
                     }
                 }
+                countToSend = count;
             }
-            return (count);
-        }  
+            return (countToSend);
+        }
         //GET: Profile
         public ActionResult Index(string sortOrder, string searchString, string currentFilter, int? filterParam, int? page)
         {
             ViewBag.CurrentSort = sortOrder;
-            var modules = db.Modules.ToList();
-            modules = (from m in modules
-                            where m.isPrivate == false && m.isDisabled == false 
-                            select m).ToList();
+            List<Module> modules;
+            using (ApplicationDbContext db = new ApplicationDbContext())
+            {
+                modules = db.Modules.ToList();
+                modules = (from m in modules
+                           where m.isPrivate == false && m.isDisabled == false && m.Answers.Count >= 5
+                           select m).ToList();
+            }
+
             if (searchString != null)
             {
                 page = 1;
@@ -81,6 +90,7 @@ namespace PLM.Controllers
             int pageNumber = (page ?? 1);
             return View(modules.ToPagedList(pageNumber, pageSize));
         }
+
         public ActionResult AddModule()
         {
             return View();

@@ -16,32 +16,33 @@ namespace PLM.Controllers
 
     public class ModulesEDITController : Controller
     {
-        private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: /ModulesEDIT/
         [AuthorizeOrRedirectAttribute(Roles = "Admin")]
         public ActionResult Index(string sortOrder, string searchString, string userSearchString)
         {
             ViewBag.NameSortParam = String.IsNullOrEmpty(sortOrder) ? "name_asc" : "";
-
-            var db = new ApplicationDbContext();
-            var modules = from u in db.Modules
-                          select u;
+            List<Module> modules;
+            using (ApplicationDbContext db = new ApplicationDbContext())
+            {
+                modules = (from u in db.Modules
+                           select u).ToList();
+            }
 
             if (!String.IsNullOrEmpty(searchString))
             {
-                modules = modules.Where(m => m.Name.Contains(searchString));
+                modules = modules.Where(m => m.Name.Contains(searchString)).ToList();
             }
 
             if (!String.IsNullOrEmpty(userSearchString))
             {
-                modules = modules.Where(m => m.User.UserName.Contains(searchString));
+                modules = modules.Where(m => m.User.UserName.Contains(searchString)).ToList();
             }
 
             switch (sortOrder)
             {
                 case "name_asc":
-                    modules = modules.OrderBy(m => m.Name);
+                    modules = modules.OrderBy(m => m.Name).ToList();
                     break;
             }
             return View(modules);
@@ -52,25 +53,28 @@ namespace PLM.Controllers
         {
             ViewBag.NameSortParam = String.IsNullOrEmpty(sortOrder) ? "name_asc" : "";
 
-            var db = new ApplicationDbContext();
-            var modules = from u in db.Modules
-                          where u.isDisabled == true
-                          select u;
+            List<Module> modules;
+            using (ApplicationDbContext db = new ApplicationDbContext())
+            {
+                modules = (from u in db.Modules
+                           where u.isDisabled == true
+                           select u).ToList();
+            }
 
             if (!String.IsNullOrEmpty(searchString))
             {
-                modules = modules.Where(m => m.Name.Contains(searchString) && m.isDisabled == true);
+                modules = modules.Where(m => m.Name.Contains(searchString) && m.isDisabled == true).ToList();
             }
 
             if (!String.IsNullOrEmpty(userSearchString))
             {
-                modules = modules.Where(m => m.User.UserName.Contains(searchString) && m.isDisabled == true);
+                modules = modules.Where(m => m.User.UserName.Contains(searchString) && m.isDisabled == true).ToList();
             }
 
             switch (sortOrder)
             {
                 case "name_asc":
-                    modules = modules.OrderBy(m => m.Name);
+                    modules = modules.OrderBy(m => m.Name).ToList();
                     break;
             }
             return View(modules);
@@ -82,7 +86,11 @@ namespace PLM.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Module module = db.Modules.Find(id);
+            Module module;
+            using (ApplicationDbContext db = new ApplicationDbContext())
+            {
+                module = db.Modules.Find(id);
+            }
             if (module == null)
             {
                 return HttpNotFound();
@@ -106,16 +114,19 @@ namespace PLM.Controllers
         {
             if (ModelState.IsValid)
             {
-                //**********NOTE****************//
-                //Make sure that a user is logged in to access this page
-                if (((User.IsInRole("Learner")) || (User.IsInRole("Admin"))))
+                using (ApplicationDbContext db = new ApplicationDbContext())
                 {
-                    var userID = User.Identity.GetUserId();
-                    ApplicationUser currentUser = (ApplicationUser)db.Users.Single(x => x.Id == userID);
-                    module.User = currentUser;
+                    //**********NOTE****************//
+                    //Make sure that a user is logged in to access this page
+                    if (((User.IsInRole("Learner")) || (User.IsInRole("Admin"))))
+                    {
+                        var userID = User.Identity.GetUserId();
+                        ApplicationUser currentUser = (ApplicationUser)db.Users.Single(x => x.Id == userID);
+                        module.User = currentUser;
+                    }
+                    db.Modules.Add(module);
+                    db.SaveChanges();
                 }
-                db.Modules.Add(module);
-                db.SaveChanges();
                 PopulateCategoryDropDownList(module.CategoryId);
                 DirectoryHandler.CreateDirectory(module);
                 return RedirectToAction("Create", "Answers", new { id = module.ModuleID });
@@ -130,7 +141,11 @@ namespace PLM.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Module module = db.Modules.Find(id);
+            Module module;
+            using (ApplicationDbContext db = new ApplicationDbContext())
+            {
+                module = db.Modules.Find(id);
+            }
             if (module == null)
             {
                 return HttpNotFound();
@@ -148,8 +163,11 @@ namespace PLM.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(module).State = EntityState.Modified;
-                db.SaveChanges();
+                using (ApplicationDbContext db = new ApplicationDbContext())
+                {
+                    db.Entry(module).State = EntityState.Modified;
+                    db.SaveChanges();
+                }
                 return RedirectToAction("Index", new { controller = "Profile" });
             }
             PopulateCategoryDropDownList(module.CategoryId);
@@ -163,7 +181,11 @@ namespace PLM.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Module module = db.Modules.Find(id);
+            Module module;
+            using (ApplicationDbContext db = new ApplicationDbContext())
+            {
+                module = db.Modules.Find(id);
+            }
             var model = new DisableModuleViewModel(module);
             if (module == null)
             {
@@ -182,23 +204,30 @@ namespace PLM.Controllers
         {
             if (ModelState.IsValid)
             {
-                var db = new ApplicationDbContext();
-                Module module = db.Modules.First(m => m.Name == userModule.Name);
+                using (ApplicationDbContext db = new ApplicationDbContext())
+                {
+                    Module module = db.Modules.First(m => m.Name == userModule.Name);
 
-                module.isDisabled = userModule.isDisabled;
-                module.DisableModuleNote = userModule.DisableModuleNote;
-                module.DisableReason = userModule.DisableReason;
+                    module.isDisabled = userModule.isDisabled;
+                    module.DisableModuleNote = userModule.DisableModuleNote;
+                    module.DisableReason = userModule.DisableReason;
 
-                db.Entry(module).State = EntityState.Modified;
-                db.SaveChanges();
+                    db.Entry(module).State = EntityState.Modified;
+                    db.SaveChanges();
+
+                }
                 return RedirectToAction("Index", new { controller = "ModulesEdit" });
             }
             return View(userModule);
         }
         private void PopulateCategoryDropDownList(object selectedCategory = null)
         {
-            var categoryQuery = from c in db.Categories
-                                select c;
+            List<Category> categoryQuery;
+            using (ApplicationDbContext db = new ApplicationDbContext())
+            {
+                categoryQuery = (from c in db.Categories
+                                select c).ToList();
+            }
             ViewBag.CategoryId = new SelectList(categoryQuery.Distinct().ToList(), "CategoryId", "CategoryName", selectedCategory);
         }
 
@@ -210,7 +239,11 @@ namespace PLM.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Module module = db.Modules.Find(id);
+            Module module;
+            using (ApplicationDbContext db = new ApplicationDbContext())
+            {
+                module = db.Modules.Find(id);
+            }
             if (module == null)
             {
                 return HttpNotFound();
@@ -234,7 +267,11 @@ namespace PLM.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Module module = db.Modules.Find(id);
+            Module module;
+            using (ApplicationDbContext db = new ApplicationDbContext())
+            {
+                module = db.Modules.Find(id);
+            }
             if (module == null)
             {
                 return HttpNotFound();
@@ -250,13 +287,13 @@ namespace PLM.Controllers
             DirectoryHandler.DeleteModule(id);
             return RedirectToAction("Index", new { controller = "Profile" });
         }
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
-        }
+        //protected override void Dispose(bool disposing)
+        //{
+        //    if (disposing)
+        //    {
+        //        db.Dispose();
+        //    }
+        //    base.Dispose(disposing);
+        //}
     }
 }
