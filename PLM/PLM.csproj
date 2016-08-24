@@ -1028,7 +1028,6 @@
     <Content Include="Scripts\gmaps.js" />
     <Content Include="Scripts\holder.js" />
     <Content Include="Scripts\html5shiv.js" />
-    <Content Include="Scripts\image-editor-confirm.js" />
     <Content Include="Scripts\ImageEditorProd.js" />
     <Content Include="Scripts\ImageEditorTestbed.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
