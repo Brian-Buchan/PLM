@@ -16,5 +16,6 @@ namespace PLM
         public string Attribution { get; set; }
         [MaxLength(40)]
         public virtual Answer Answer { get; set; }
+        public string PictureData { get; set; }
     }
 }

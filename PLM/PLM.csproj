@@ -254,6 +254,10 @@
     <Compile Include="Migrations\201609161944499_AttributionLength.Designer.cs">
       <DependentUpon>201609161944499_AttributionLength.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201609161950505_PictureAsString.cs" />
+    <Compile Include="Migrations\201609161950505_PictureAsString.Designer.cs">
+      <DependentUpon>201609161950505_PictureAsString.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AdminViewModel.cs" />
     <Compile Include="Models\ConfirmViewModel.cs" />
@@ -1347,6 +1351,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201609161944499_AttributionLength.resx">
       <DependentUpon>201609161944499_AttributionLength.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201609161950505_PictureAsString.resx">
+      <DependentUpon>201609161950505_PictureAsString.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

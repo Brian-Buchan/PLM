@@ -93,6 +93,11 @@ namespace PLM.Controllers
                 }
                 else
                 {
+                    Stream stream = Request.Files[0].InputStream;
+                    int imgLenth = Convert.ToInt32(stream.Length);
+                    byte[] imgArr = new byte[imgLenth];
+                    pictureToSave.PictureData = System.Convert.ToBase64String(imgArr);
+
                     pictureToSave.Location = location;
                     db.Pictures.Add(pictureToSave);
                     db.SaveChanges();
