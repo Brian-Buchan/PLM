@@ -3,7 +3,7 @@ namespace PLM.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class fix : DbMigration
+    public partial class AttributionLength : DbMigration
     {
         public override void Up()
         {
