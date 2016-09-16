@@ -164,7 +164,7 @@ namespace PLM.Controllers
                         string moduleDirectory = (DevPro.baseFileDirectory + "PLM/" + Session["upload"].ToString() + "/");
                         string newfName = (answerString + "-" + picCount.ToString() + ".png");
                         relpath = (moduleDirectory + newfName);
-                        //file.SaveAs(relpath);
+                        file.SaveAs(relpath);
                         isSavedSuccessfully = true;
                     }
                 }
