@@ -96,6 +96,15 @@ namespace PLM.Controllers
                     Stream stream = Request.Files[0].InputStream;
                     int imgLenth = Convert.ToInt32(stream.Length);
                     byte[] imgArr = new byte[imgLenth];
+
+                    using (StreamReader sr = new StreamReader(stream))
+                    {
+                        for (int streamIndex = 0; streamIndex < imgLenth; streamIndex++)
+                        {
+                            imgArr[streamIndex] = (byte)sr.Read();
+                        }
+                    }
+
                     pictureToSave.PictureData = System.Convert.ToBase64String(imgArr);
 
                     pictureToSave.Location = location;
@@ -155,7 +164,7 @@ namespace PLM.Controllers
                         string moduleDirectory = (DevPro.baseFileDirectory + "PLM/" + Session["upload"].ToString() + "/");
                         string newfName = (answerString + "-" + picCount.ToString() + ".png");
                         relpath = (moduleDirectory + newfName);
-                        file.SaveAs(relpath);
+                        //file.SaveAs(relpath);
                         isSavedSuccessfully = true;
                     }
                 }
