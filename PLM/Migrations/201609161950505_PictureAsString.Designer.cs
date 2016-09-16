@@ -7,13 +7,13 @@ namespace PLM.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class attributionlength : IMigrationMetadata
+    public sealed partial class PictureAsString : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(attributionlength));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(PictureAsString));
         
         string IMigrationMetadata.Id
         {
-            get { return "201608021803154_attributionlength"; }
+            get { return "201609161950505_PictureAsString"; }
         }
         
         string IMigrationMetadata.Source

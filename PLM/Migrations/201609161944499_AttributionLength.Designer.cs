@@ -7,13 +7,13 @@ namespace PLM.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class fix : IMigrationMetadata
+    public sealed partial class AttributionLength : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(fix));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(AttributionLength));
         
         string IMigrationMetadata.Id
         {
-            get { return "201608021824528_fix"; }
+            get { return "201609161944499_AttributionLength"; }
         }
         
         string IMigrationMetadata.Source

@@ -45,7 +45,7 @@
             });
         }
         else {
-            alert("We can't seem to find your image. Try deleting this one, then reupload the image.");
+            alert("We can't seem to find your image. Try deleting this one, then re-upload the image.");
         }
     });
 });

@@ -250,13 +250,13 @@
     <Compile Include="Migrations\201607131944284_dualAnswer.Designer.cs">
       <DependentUpon>201607131944284_dualAnswer.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201608021803154_attributionlength.cs" />
-    <Compile Include="Migrations\201608021803154_attributionlength.Designer.cs">
-      <DependentUpon>201608021803154_attributionlength.cs</DependentUpon>
+    <Compile Include="Migrations\201609161944499_AttributionLength.cs" />
+    <Compile Include="Migrations\201609161944499_AttributionLength.Designer.cs">
+      <DependentUpon>201609161944499_AttributionLength.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201608021824528_fix.cs" />
-    <Compile Include="Migrations\201608021824528_fix.Designer.cs">
-      <DependentUpon>201608021824528_fix.cs</DependentUpon>
+    <Compile Include="Migrations\201609161950505_PictureAsString.cs" />
+    <Compile Include="Migrations\201609161950505_PictureAsString.Designer.cs">
+      <DependentUpon>201609161950505_PictureAsString.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AdminViewModel.cs" />
@@ -1349,11 +1349,11 @@
     <EmbeddedResource Include="Migrations\201607131944284_dualAnswer.resx">
       <DependentUpon>201607131944284_dualAnswer.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201608021803154_attributionlength.resx">
-      <DependentUpon>201608021803154_attributionlength.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201609161944499_AttributionLength.resx">
+      <DependentUpon>201609161944499_AttributionLength.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201608021824528_fix.resx">
-      <DependentUpon>201608021824528_fix.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201609161950505_PictureAsString.resx">
+      <DependentUpon>201609161950505_PictureAsString.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
