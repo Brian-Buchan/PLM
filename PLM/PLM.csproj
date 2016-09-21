@@ -1286,6 +1286,7 @@
     <Content Include="Views\ModulesEDIT\AdminDelete.cshtml" />
     <Content Include="Views\Pictures\UploadError.cshtml" />
     <Content Include="Views\Pictures\FileToLarge.cshtml" />
+    <Content Include="Views\Pictures\Admin.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -1,36 +1,40 @@
 ﻿@{
     ViewBag.Title = "Administration";
 }
-    <section id="page-breadcrumb">
-        <div class="vertical-center sun">
-            <div class="container">
-                <div class="row">
-                    <div class="action">
-                        <div class="col-sm-12">
-                            <h1 class="title">Administration</h1>
-                        </div>
+<section id="page-breadcrumb">
+    <div class="vertical-center sun">
+        <div class="container">
+            <div class="row">
+                <div class="action">
+                    <div class="col-sm-12">
+                        <h1 class="title">Administration</h1>
                     </div>
                 </div>
             </div>
         </div>
-    </section>
-    <div>
-        <h2>Users Requesting Instructor Status</h2>
-        @Html.ActionLink("Click here for a list of all users.", "RoleRequest", "Account")
     </div>
-    <div>
-        <h2>Users</h2>
-        @Html.ActionLink("Click here for a list of all users.", "Index", "Account")
-    </div>
-    <div>
-        <h2>User Roles</h2>
-        @Html.ActionLink("Click here for a list of all user roles.", "Index", "IdentityRoles")
-    </div>
-    <div>
-        <h2>Modules</h2>
-        @Html.ActionLink("Click here for a list of all modules.", "Index", "ModulesEDIT")
-    </div>
-    <div>
-        <h2>Reports</h2>
-        @Html.ActionLink("Click here for a list of reports of modules.", "Index", "Report")
-    </div>
+</section>
+<div>
+    <h2>Instructor Requests</h2>
+    @Html.ActionLink("Click to manage Instructor Requests.", "RoleRequest", "Account")
+</div>
+<div>
+    <h2>Users</h2>
+    @Html.ActionLink("Click to manage Users.", "Index", "Account")
+</div>
+<div>
+    <h2>Picture Management</h2>
+    @Html.ActionLink("Click to manage Pictures.", "Admin", "Picture")
+</div>
+<div>
+    <h2>User Role Management</h2>
+    @Html.ActionLink("Click to manage User Roles.", "Index", "IdentityRoles")
+</div>
+<div>
+    <h2>Modules</h2>
+    @Html.ActionLink("Click to manage Modules.", "Index", "ModulesEDIT")
+</div>
+<div>
+    <h2>Reports</h2>
+    @Html.ActionLink("Click to manage Reports.", "Index", "Report")
+</div>

@@ -30,6 +30,24 @@ namespace PLM.Controllers
             return View(pictures.ToList());
         }
 
+        // GET: /Pictures/Admin
+        [AuthorizeOrRedirectAttribute(Roles = "Admin")]
+        public ActionResult Admin()
+        {
+            List<Picture> pictures = db.Pictures.Where(p => p.PictureData == null).ToList();
+            return View(pictures);
+        }
+
+        // POST: /Pictures/Admin
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [AuthorizeOrRedirectAttribute(Roles = "Admin")]
+        public ActionResult Admin(Picture picture)
+        {
+
+            return View();
+        }
+
         // GET: /Pictures/Details/5
         public ActionResult Details(int? id)
         {
