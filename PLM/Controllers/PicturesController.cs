@@ -26,26 +26,10 @@ namespace PLM.Controllers
         // GET: /Pictures/
         public ActionResult Index()
         {
+            //ConvertPicToStringData();
+
             var pictures = db.Pictures.Include(p => p.Answer);
             return View(pictures.ToList());
-        }
-
-        // GET: /Pictures/Admin
-        [AuthorizeOrRedirectAttribute(Roles = "Admin")]
-        public ActionResult Admin()
-        {
-            List<Picture> pictures = db.Pictures.Where(p => p.PictureData == null).ToList();
-            return View(pictures);
-        }
-
-        // POST: /Pictures/Admin
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        [AuthorizeOrRedirectAttribute(Roles = "Admin")]
-        public ActionResult Admin(Picture picture)
-        {
-
-            return View();
         }
 
         // GET: /Pictures/Details/5
@@ -62,6 +46,28 @@ namespace PLM.Controllers
             }
             return View(picture);
         }
+
+        // Convert all pictures saved in file system to image data in database
+        //public void ConvertAllPicturesToStringData()
+        //{
+        //    Image image;
+        //    Picture picToChange;
+        //    var pictures = db.Pictures.Where(p => p.PictureData == null).ToList();
+
+        //    foreach (Picture pic in pictures)
+        //    {
+        //        picToChange = db.Pictures.Find(pic.PictureID);
+        //        image = Image.FromFile("C:\\" + pic.Location.Replace("/", "\\").ToString());
+                
+        //        MemoryStream ms = new MemoryStream();
+        //        image.Save(ms, ImageFormat.Png);
+        //        byte[] imgArr = ms.ToArray();
+
+        //        picToChange.PictureData = Convert.ToBase64String(imgArr);
+
+        //        db.SaveChanges();
+        //    }
+        //}
 
         // GET: /Pictures/Create
         [AuthorizeOrRedirectAttribute(Roles = "Instructor")]
@@ -546,6 +552,7 @@ namespace PLM.Controllers
         {
 
             List<string> filesToMove = new List<string>();
+
             string dirPath = (Path.Combine(Server.MapPath("~/Content/Images/tempUploads/")));
             //string dirPath = DevPro.baseFileDirectory + "tempUploads";
             string newDirPath = Path.GetDirectoryName(Server.MapPath(toNewFilePath)) + @"\";

@@ -1286,13 +1286,13 @@
     <Content Include="Views\ModulesEDIT\AdminDelete.cshtml" />
     <Content Include="Views\Pictures\UploadError.cshtml" />
     <Content Include="Views\Pictures\FileToLarge.cshtml" />
-    <Content Include="Views\Pictures\Admin.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Content\Images\permUploads\" />
     <Folder Include="Content\Images\Profile\" />
     <Folder Include="Content\Images\tempUploads\" />
+    <Folder Include="Views\Partial\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
