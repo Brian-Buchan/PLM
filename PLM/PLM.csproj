@@ -277,6 +277,7 @@
     <Compile Include="Models\Module.cs" />
     <Compile Include="Models\Picture.cs" />
     <Compile Include="Models\AnsPicIndex.cs" />
+    <Compile Include="Models\PictureToView.cs" />
     <Compile Include="Models\PlayViewModel.cs" />
     <Compile Include="Models\Report.cs" />
     <Compile Include="Models\ReportCategoryEnum.cs" />
@@ -1292,7 +1293,6 @@
     <Folder Include="Content\Images\permUploads\" />
     <Folder Include="Content\Images\Profile\" />
     <Folder Include="Content\Images\tempUploads\" />
-    <Folder Include="Views\Partial\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

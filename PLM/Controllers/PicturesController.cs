@@ -47,7 +47,20 @@ namespace PLM.Controllers
             return View(picture);
         }
 
-        // Convert all pictures saved in file system to image data in database
+        public ActionResult PictureView(int id)
+        {
+            PictureToView pic = new PictureToView();
+
+            Picture picture = db.Pictures.Find(id);
+            pic.Attribution = picture.Attribution;
+            pic.PictureData = picture.PictureData;
+            pic.PictureID = picture.PictureID;
+
+            return View(pic);
+        }
+
+        // Convert all pictures saved in file
+        // system to image data in database
         //public void ConvertAllPicturesToStringData()
         //{
         //    Image image;
