@@ -1,28 +1,16 @@
 ﻿@model PLM.Models.PictureToView
 
 <div>
-    <h4>PictureToView</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.PictureData)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.PictureData)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Attribution)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Attribution)
-        </dd>
-
-    </dl>
+    @{
+        if (Model.PictureData == null)
+        {
+            <img src="Content/Images/Error.bmp"/>
+        }
+        else
+        {
+            string PictureData64 = Model.PictureData;
+            string PictureSRC = string.Format("data:{0};base64,{1}", "image/png", PictureData64);
+            <img onerror="this.src='Content/images/Error.bmp';" src="@PictureSRC"/>
+        }
+    }
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.PictureID }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>

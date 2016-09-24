@@ -61,7 +61,9 @@
                                     <div class="portfolio-wrapper">
                                         <div class="portfolio-single">
                                             <div class="portfolio-thumb">
-                                                <img onerror="this.src='Content/images/Error.bmp';" src="@picture.Location"  class="img-responsive moduleImage" alt="PLM Logo">
+                                                
+                                                @Html.Partial("PictureView", picture.PictureID);
+                                                @*<img onerror="this.src='Content/images/Error.bmp';" src="@picture.Location"  class="img-responsive moduleImage" alt="PLM Logo">*@
                                             </div>
                                             <div class="portfolio-view">
                                                 <ul class="nav nav-pills">

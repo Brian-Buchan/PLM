@@ -96,7 +96,5 @@ namespace PLM
         public DbSet<PLM.Models.Report> Reports { get; set; }
 
         public System.Data.Entity.DbSet<PLM.DisableModuleViewModel> DisableModuleViewModels { get; set; }
-
-        public System.Data.Entity.DbSet<PLM.Models.PictureToView> PictureToViews { get; set; }
     }
 }

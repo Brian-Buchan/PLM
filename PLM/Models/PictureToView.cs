@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
-namespace PLM.Models
+namespace PLM
 {
     public class PictureToView
     {

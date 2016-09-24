@@ -27,7 +27,6 @@ namespace PLM.Controllers
         public ActionResult Index()
         {
             //ConvertPicToStringData();
-
             var pictures = db.Pictures.Include(p => p.Answer);
             return View(pictures.ToList());
         }
