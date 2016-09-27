@@ -67,22 +67,11 @@ article{
     scrollbar-face-color:#00aeef;
 }
 
-.gameButton{
-    margin: 1.5%;
-    width: 30%;
-    overflow: hidden;
-}
-
-#answerButtons{
-    padding-bottom:10px;
-}
-
 #navImg{
     height:40px;
     padding-top:0px;
     visibility:visible;
 }
-
 
 .maxWidth{
     width:100%;
@@ -286,7 +275,6 @@ input[type='range']::-webkit-slider-thumb {
    width: 640px;
    height: 480px;
     white-space: nowrap;
-    
     text-align: center; margin: 1em 0;
 }
 
@@ -337,12 +325,9 @@ hr {
 }
 
   #ScoreBoard {
-      float: right;
-      margin: 10px, 10px, 0px, 10px;
+      padding: 10px;
       background-color: lightgray;
       border: 2px solid black;
-      width: 300px;
-      height: 100px;
   }
 
   #picture {
@@ -354,9 +339,7 @@ hr {
   }
 
   #gameBoard {
-      width: 1000px;
-      resize: none;
-      margin: 10px;
+      padding: 10px;
   }
 
   #ScoreBoard p {
@@ -366,9 +349,6 @@ hr {
   }
 
   #answerButtons {
-      width: 640px;
-      height: auto;
-      resize: none;
       background-color: lightgray;
       border: 3px solid black;
   }
@@ -378,3 +358,13 @@ hr {
     width: 30%;
     overflow: hidden;
   }
+
+.gameButton{
+    margin: 1.5%;
+    width: 30%;
+    overflow: hidden;
+}
+
+#answerButtons{
+    padding-bottom:10px;
+}
