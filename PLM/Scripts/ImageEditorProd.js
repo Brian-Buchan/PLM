@@ -16,7 +16,7 @@
         onSave: function (data, img) {
             $.ajax({
                 type: 'POST',
-                url: '/PerceptualLearning/Pictures/ImageEditor',
+                url: '/PerceptualLearningDevelopment/Pictures/ImageEditor',
                 data: { imgData: data, imgId: img.id, answerId: img.title, origUrl: img.dataset.origSource },
                 success: function (xhr, status, text) {
                     imgIdInput.value = imgEdit.id;
@@ -38,7 +38,7 @@
     });
 
     $('#' + $vars.imageId).on('click', function (e) {
-        if (e.target.src !== "/PerceprtualLearning/Content/Images/Error.bmp") {
+        if (e.target.src !== "/PerceprtualLearningDevelopment/Content/Images/Error.bmp") {
             myPixie.open({
                 url: e.target.src,
                 image: e.target

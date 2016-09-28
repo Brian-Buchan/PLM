@@ -46,15 +46,10 @@ namespace PLM.Controllers
             return View(picture);
         }
 
-        public ActionResult PictureView(int id)
+        public ActionResult PictureView(int? id)
         {
-            PictureToView pic = new PictureToView();
-
             Picture picture = db.Pictures.Find(id);
-            pic.Attribution = picture.Attribution;
-            pic.PictureData = picture.PictureData;
-            pic.PictureID = picture.PictureID;
-
+            PictureToView pic = new PictureToView(picture);
             return View(pic);
         }
 
@@ -129,17 +124,21 @@ namespace PLM.Controllers
                 }
                 else
                 {
-                    Stream stream = Request.Files[0].InputStream;
-                    int imgLenth = Convert.ToInt32(stream.Length);
-                    byte[] imgArr = new byte[imgLenth];
+                    //Stream stream = Request.Files[0].InputStream;
+                    //int imgLenth = Convert.ToInt32(stream.Length);
+                    //byte[] imgArr = new byte[imgLenth];
+                    //using (StreamReader sr = new StreamReader(stream))
+                    //{
+                    //    for (int streamIndex = 0; streamIndex < imgLenth; streamIndex++)
+                    //    {
+                    //        imgArr[streamIndex] = (byte)sr.Read();
+                    //    }
+                    //}
 
-                    using (StreamReader sr = new StreamReader(stream))
-                    {
-                        for (int streamIndex = 0; streamIndex < imgLenth; streamIndex++)
-                        {
-                            imgArr[streamIndex] = (byte)sr.Read();
-                        }
-                    }
+                    Image image = Image.FromStream(Request.Files[0].InputStream);
+                    ImageConverter IC = new ImageConverter();
+                    byte[] imgArr = (byte[])IC.ConvertTo(image, typeof(byte[]));
+
 
                     pictureToSave.PictureData = System.Convert.ToBase64String(imgArr);
 

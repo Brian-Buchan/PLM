@@ -271,16 +271,7 @@ input[type='range']::-webkit-slider-thumb {
 	 height: 20px;
 	 width: 20px;
 }
-#container {
-   width: 640px;
-   height: 480px;
-    white-space: nowrap;
-    text-align: center; margin: 1em 0;
-}
 
-#container img {
-   vertical-align: middle;
-}
 .helper{
      display: inline-block;
     height: 480px;
@@ -297,6 +288,7 @@ input[type='range']::-webkit-slider-thumb {
     height:100px; 
     overflow:hidden;
 }
+
 hr {
     height: 12px;
     border: 0;
@@ -325,9 +317,9 @@ hr {
 }
 
   #ScoreBoard {
-      padding: 10px;
       background-color: lightgray;
       border: 2px solid black;
+      padding-bottom:  10px;
   }
 
   #picture {
@@ -343,9 +335,9 @@ hr {
   }
 
   #ScoreBoard p {
-      float: left;
-      font-size: 20pt;
-      margin: 5px;
+      font-size: 15px;
+      width: 45%;
+      margin: 2.5%;
   }
 
   #answerButtons {
@@ -367,4 +359,8 @@ hr {
 
 #answerButtons{
     padding-bottom:10px;
+}
+
+.NoMargin{
+    margin: 0px;
 }

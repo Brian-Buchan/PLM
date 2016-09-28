@@ -62,7 +62,7 @@
                                         <div class="portfolio-single">
                                             <div class="portfolio-thumb">
                                                 
-                                                @Html.Partial("PictureView", picture.PictureID);
+                                                @Html.Action("PictureView", "Pictures", new { id = picture.PictureID })
                                                 @*<img onerror="this.src='Content/images/Error.bmp';" src="@picture.Location"  class="img-responsive moduleImage" alt="PLM Logo">*@
                                             </div>
                                             <div class="portfolio-view">

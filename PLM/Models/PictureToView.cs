@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
-namespace PLM
+namespace PLM.Models
 {
     public class PictureToView
     {
@@ -12,5 +12,17 @@ namespace PLM
         public int PictureID { get; set; }
         public string PictureData { get; set; }
         public string Attribution { get; set; }
+
+        public PictureToView()
+        {
+
+        }
+
+        public PictureToView(Picture picture)
+        {
+            PictureID = picture.PictureID;
+            PictureData = picture.PictureData;
+            Attribution = picture.Attribution;
+        }
     }
 }
