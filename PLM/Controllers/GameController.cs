@@ -58,7 +58,7 @@ namespace PLM.Controllers
             currentGameSession = new UserGameSession();
             currentGameSession.currentModule = db.Modules.Find(PLMid);
             currentGameSession.Score = 0;
-            currentGameSession.currentQuestion = -1;// set to -1 because GenerateGuess() will increment it to 0 the first time it runs
+            currentGameSession.currentQuestion = -1;
             currentGameSession.iteratedQuestion = -1;
             int answerIndex = -1;
             int pictureIndex;
@@ -123,7 +123,7 @@ namespace PLM.Controllers
             int answerIndex = indicies[0];
             int pictureIndex = indicies[1];
             currentGuess.Answer = currentModule.Answers.ElementAt(answerIndex).AnswerString;
-            currentGuess.ImageURL = currentModule.Answers.ElementAt(answerIndex).Pictures.ElementAt(pictureIndex).Location;
+            currentGuess.PictureID = currentModule.Answers.ElementAt(answerIndex).Pictures.ElementAt(pictureIndex).PictureID;
             currentGuess.possibleAnswers.Add(currentModule.Answers.ElementAt(answerIndex).AnswerString);
             if (currentModule.Answers.ElementAt(answerIndex).Pictures.ElementAt(pictureID).Attribution == null)
                 currentGuess.Attribution = "";
