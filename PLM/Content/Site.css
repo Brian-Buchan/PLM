@@ -364,3 +364,7 @@ hr {
 .NoMargin{
     margin: 0px;
 }
+
+.NoPadding{
+    padding: 0px;
+}
