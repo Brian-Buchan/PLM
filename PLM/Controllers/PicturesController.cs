@@ -26,7 +26,7 @@ namespace PLM.Controllers
         // GET: /Pictures/
         public ActionResult Index()
         {
-            //ConvertPicToStringData();
+            //ConvertAllPicturesToStringData();
             var pictures = db.Pictures.Include(p => p.Answer);
             return View(pictures.ToList());
         }
@@ -53,8 +53,8 @@ namespace PLM.Controllers
             return View(pic);
         }
 
-        // Convert all pictures saved in file
-        // system to image data in database
+        //Convert all pictures saved in file
+        //system to image data in database
         //public void ConvertAllPicturesToStringData()
         //{
         //    Image image;
@@ -65,7 +65,7 @@ namespace PLM.Controllers
         //    {
         //        picToChange = db.Pictures.Find(pic.PictureID);
         //        image = Image.FromFile("C:\\" + pic.Location.Replace("/", "\\").ToString());
-                
+
         //        MemoryStream ms = new MemoryStream();
         //        image.Save(ms, ImageFormat.Png);
         //        byte[] imgArr = ms.ToArray();
