@@ -11,8 +11,8 @@
     <audio id="audioCorrect" preload="auto"><source src="~/Content/Audio/correctSound.mp3" type="audio/mp3" /></audio>
     <audio id="audioIncorrect" preload="auto"><source src="~/Content/Audio/incorrectSound.mp3" type="audio/mp3" /></audio>
 
-    <div id="gameBoard" class="col-lg-9">
-        <img onerror="this.src='~/Content/Images/Error.bmp';" src="@Model.ImageURL" title="Image Courtesy of @Model.Attribution" />
+    <div id="gameBoard" class="col-xs-9">
+        @Html.Action("PictureView", "Pictures", new { id = Model.PictureID })
         <p id="StoredAnswer" hidden="hidden">@Model.Answer</p>
 
         <div id="answerButtons" tabindex="0">
@@ -33,13 +33,13 @@
         <script type="text/javascript" src="~/Scripts/gameplay.js"></script>
     </div>
 
-    <div id="ScoreBoard" class="col-md-3">
-        <p class="col-sm-6">Score:</p>
-        <p class="col-sm-6" id="displayScore">@Model.Score</p>
-        <p class="col-sm-6">Time Left:</p>
+    <div id="ScoreBoard" class="col-xs-3">
+        <p class="col-xs-6 NoPadding">Score:</p>
+        <p class="col-xs-6 NoPadding" id="displayScore">@Model.Score</p>
+        <p class="col-xs-6 NoPadding">Time Left:</p>
         <div id="clockdiv">@Model.Time.ToString()</div>
-        <p class="col-sm-12">Question @Model.CurrentQuestion of @Model.TotalQuestions</p>
-        <p class="col-sm-12">@Model.NumCorrect correct</p>
+        <p class="col-xs-12 NoPadding">Question @Model.CurrentQuestion of @Model.TotalQuestions</p>
+        <p class="col-xs-12 NoPadding">@Model.NumCorrect correct</p>
 
         <!--This image only implementation of a mute button is from Tarun at http://stackoverflow.com/questions/22918220/how-to-create-a-only-mute-unmute-button-like-youtube-in-html-->
         <img src="@Url.Content("~/Content/Images/speaker.png")" alt="speaker" id="soundToggle" onclick="ToggleMute(this)" />

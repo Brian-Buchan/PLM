@@ -7,7 +7,7 @@ namespace PLM
 {
     public class PlayViewModel
     {
-        public string ImageURL { get; set; }
+        public int PictureID { get; set; }
         [MaxLength(25)]
         public string Attribution { get; set; }
         public List<string> possibleAnswers { get; set; }

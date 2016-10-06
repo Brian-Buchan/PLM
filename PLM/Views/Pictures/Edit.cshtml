@@ -36,7 +36,8 @@
             </div>
         </div>
         <div class="col-sm-offset-1">
-            <img onerror="this.src = 'Content/images/Error.bmp';" src="@Model.Location" class="img-responsive moduleImage img-hover" alt="Answer Image">
+            @Html.Action("PictureView", "Pictures", new { id = Model.PictureID })
+            @*<img onerror="this.src = 'Content/images/Error.bmp';" src="@Model.Location" class="img-responsive moduleImage img-hover" alt="Answer Image">*@
         </div>
         <br />
         <br />

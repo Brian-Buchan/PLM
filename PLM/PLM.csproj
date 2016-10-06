@@ -1152,8 +1152,9 @@
     <Content Include="pixie-image-editor\pixie\assets\less\vendor\spectrum.less" />
     <Content Include="pixie-image-editor\pixie\config.json" />
     <Content Include="pixie-image-editor\pixie\package.json" />
-    <None Include="Properties\PublishProfiles\Azure-PLM-Production.pubxml" />
     <None Include="Properties\PublishProfiles\NMC-PLM-Development.pubxml" />
+    <None Include="Properties\PublishProfiles\PerceptualLearningBeta - FTP.pubxml" />
+    <None Include="Properties\PublishProfiles\PerceptualLearningBeta - Web Deploy.pubxml" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
