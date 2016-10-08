@@ -206,7 +206,7 @@ namespace PLM.Controllers
             {
                 HttpPostedFileBase file = Request.Files[fileName];
                 fName = file.FileName;
-                if (file.ContentLength >= 200000)
+                if (file.ContentLength >= 3000000)
                 {
                     //File To Big
                     imageSizeTooLarge = true;
