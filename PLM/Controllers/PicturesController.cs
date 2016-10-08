@@ -108,8 +108,10 @@ namespace PLM.Controllers
 
             if (ModelState.IsValid)
             {
-                var location = SaveUploadedFile(pictureToSave, (int)id);
 
+                //TODO: Removed save to file
+                // var location = SaveUploadedFile(pictureToSave, (int)id);
+                string location = "";
                 if (location == "FAILED" || location == null)
                 {
                     if (incorrectImageType)
