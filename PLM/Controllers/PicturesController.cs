@@ -137,16 +137,40 @@ namespace PLM.Controllers
                     //    }
                     //}
 
+
+
+                   
+                    //TODO: Dar 10/8/16
+                    // Removed Reference to Image Converter and use pictureresizer
+                    //ImageConverter IC = new ImageConverter();
+                    //byte[] imgArr = (byte[])IC.ConvertTo(image, typeof(byte[]));
+                    //TODO:
+                    /* DWD 10/8/16*/
+                    int maxWidth = 600;
+                    int maxHeight = 400;
+                    string strBase64String = "";
+
                     Image image = Image.FromStream(Request.Files[0].InputStream);
-                    ImageConverter IC = new ImageConverter();
-                    byte[] imgArr = (byte[])IC.ConvertTo(image, typeof(byte[]));
+                    image = PictureResizer.ScaleImage(image, maxWidth, maxHeight);
+                    strBase64String = System.Convert.ToBase64String(PictureResizer.GetByteArrayFromImage(image));
+                   
+                    //TODO: 
+                    //ImageConverter IC = new ImageConverter();
+                    //byte[] imgArr = (byte[])IC.ConvertTo(image, typeof(byte[]));
+                    // pictureToSave.PictureData = System.Convert.ToBase64String(imgArr);
+                    // DWD - 10/8/16
 
-
-                    pictureToSave.PictureData = System.Convert.ToBase64String(imgArr);
-
-                    //pictureToSave.Location = location;
+                    pictureToSave.PictureData = strBase64String;
+                    pictureToSave.Location = ""; //location;
                     db.Pictures.Add(pictureToSave);
                     db.SaveChanges();
+
+
+                    //  OLD DWD 10/8/16
+                    //  pictureToSave.PictureData = System.Convert.ToBase64String(imgArr);
+                    //  pictureToSave.Location = location;
+                    //  db.Pictures.Add(pictureToSave);
+                    //  db.SaveChanges();
                 }
                 return RedirectToAction("edit", new { controller = "Answers", id = pictureToSave.AnswerID });
             }
