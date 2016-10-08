@@ -117,7 +117,7 @@ namespace PLM.Controllers
                 db.Modules.Add(module);
                 db.SaveChanges();
                 PopulateCategoryDropDownList(module.CategoryId);
-                DirectoryHandler.CreateDirectory(module);
+                //DirectoryHandler.CreateDirectory(module);
                 return RedirectToAction("Create", "Answers", new { id = module.ModuleID });
             }
             return View(module);
@@ -223,7 +223,7 @@ namespace PLM.Controllers
         [AuthorizeOrRedirectAttribute(Roles = "Instructor")]
         public ActionResult DeleteConfirmed(int id)
         {
-            DirectoryHandler.DeleteModule(id);
+            //DirectoryHandler.DeleteModule(id);
             return RedirectToAction("Index", new { controller = "Profile" });
         }
 

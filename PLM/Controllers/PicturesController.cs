@@ -142,7 +142,7 @@ namespace PLM.Controllers
 
                     pictureToSave.PictureData = System.Convert.ToBase64String(imgArr);
 
-                    pictureToSave.Location = location;
+                    //pictureToSave.Location = location;
                     db.Pictures.Add(pictureToSave);
                     db.SaveChanges();
                 }
@@ -196,10 +196,10 @@ namespace PLM.Controllers
                 {
                     if (file != null && file.ContentLength > 0)
                     {
-                        string moduleDirectory = (DevPro.baseFileDirectory + "PLM/" + Session["upload"].ToString() + "/");
-                        string newfName = (answerString + "-" + picCount.ToString() + ".png");
-                        relpath = (moduleDirectory + newfName);
-                        file.SaveAs(relpath);
+                        //string moduleDirectory = (DevPro.baseFileDirectory + "PLM/" + Session["upload"].ToString() + "/");
+                        //string newfName = (answerString + "-" + picCount.ToString() + ".png");
+                        //relpath = (moduleDirectory + newfName);
+                        //file.SaveAs(relpath);
                         isSavedSuccessfully = true;
                     }
                 }
@@ -209,7 +209,7 @@ namespace PLM.Controllers
             {
                 using (ApplicationDbContext db3 = new ApplicationDbContext())
                 {
-                    db3.Answers.Find(id).PictureCount++;
+                    //db3.Answers.Find(id).PictureCount++;
                     db3.Entry(db3.Answers.Find(id)).State = EntityState.Modified;
                     db3.SaveChanges();
                 }
@@ -296,7 +296,7 @@ namespace PLM.Controllers
             Picture picture = db.Pictures.Find(id);
             db.Pictures.Remove(picture);
             db.SaveChanges();
-            System.IO.File.Delete(picture.Location);
+            //System.IO.File.Delete(picture.Location);
             return RedirectToAction("edit", new { controller = "Answers", id = picture.AnswerID });
         }
         #region From Image Editor
