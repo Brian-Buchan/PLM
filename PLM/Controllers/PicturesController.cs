@@ -111,7 +111,7 @@ namespace PLM.Controllers
 
                 //TODO: Removed save to file
                 // var location = SaveUploadedFile(pictureToSave, (int)id);
-                string location = "";
+                string location = "asdf";
                 if (location == "FAILED" || location == null)
                 {
                     if (incorrectImageType)
