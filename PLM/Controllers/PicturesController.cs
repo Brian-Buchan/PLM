@@ -112,20 +112,23 @@ namespace PLM.Controllers
                 //TODO: Removed save to file
                 // var location = SaveUploadedFile(pictureToSave, (int)id);
                 string location = "asdf";
-                if (location == "FAILED" || location == null)
-                {
-                    if (incorrectImageType)
-                    {
-                        return RedirectToAction("InvalidImage", new { controller = "Pictures", id = pictureToSave.AnswerID });
-                    }
-                    else if (imageSizeTooLarge)
-                    {
-                        return RedirectToAction("FileToLarge", new { controller = "Pictures", id = pictureToSave.AnswerID });
-                    }
-                    return RedirectToAction("UploadError", new { controller = "Pictures", id = pictureToSave.AnswerID });
-                }
-                else
-                {
+
+
+
+                //if (location == "FAILED" || location == null)
+                //{
+                //    if (incorrectImageType)
+                //    {
+                //        return RedirectToAction("InvalidImage", new { controller = "Pictures", id = pictureToSave.AnswerID });
+                //    }
+                //    else if (imageSizeTooLarge)
+                //    {
+                //        return RedirectToAction("FileToLarge", new { controller = "Pictures", id = pictureToSave.AnswerID });
+                //    }
+                //    return RedirectToAction("UploadError", new { controller = "Pictures", id = pictureToSave.AnswerID });
+                //}
+                //else
+                //{
                     //Stream stream = Request.Files[0].InputStream;
                     //int imgLenth = Convert.ToInt32(stream.Length);
                     //byte[] imgArr = new byte[imgLenth];
@@ -150,13 +153,19 @@ namespace PLM.Controllers
                     int maxHeight = 400;
                     string strBase64String = "";
 
+                    if (Request.Files[0].ContentLength > (1024 * 1024 * 3)) {
+                        return RedirectToAction("FileToLarge", new { controller = "Pictures", id = pictureToSave.AnswerID });
+                    }
+
                     Image image = Image.FromStream(Request.Files[0].InputStream);
+
+
                     image = PictureResizer.ScaleImage(image, maxWidth, maxHeight);
                     strBase64String = System.Convert.ToBase64String(PictureResizer.GetByteArrayFromImage(image));
                    
                     //TODO: 
-                    //ImageConverter IC = new ImageConverter();
-                    //byte[] imgArr = (byte[])IC.ConvertTo(image, typeof(byte[]));
+                    // ImageConverter IC = new ImageConverter();
+                    // byte[] imgArr = (byte[])IC.ConvertTo(image, typeof(byte[]));
                     // pictureToSave.PictureData = System.Convert.ToBase64String(imgArr);
                     // DWD - 10/8/16
 
@@ -166,12 +175,12 @@ namespace PLM.Controllers
                     db.SaveChanges();
 
 
-                    //  OLD DWD 10/8/16
+                    // TODO: OLD DWD 10/8/16
                     //  pictureToSave.PictureData = System.Convert.ToBase64String(imgArr);
                     //  pictureToSave.Location = location;
                     //  db.Pictures.Add(pictureToSave);
                     //  db.SaveChanges();
-                }
+                //}
                 return RedirectToAction("edit", new { controller = "Answers", id = pictureToSave.AnswerID });
             }
 
