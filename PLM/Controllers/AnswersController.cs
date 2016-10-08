@@ -145,7 +145,7 @@ namespace PLM.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             Answer answer = db.Answers.Find(id);
-            DirectoryHandler.DeleteAnswer(id);
+            //DirectoryHandler.DeleteAnswer(id);
             return RedirectToAction("Create", new { id = answer.ModuleID });
         }
 
