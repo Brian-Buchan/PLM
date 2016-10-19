@@ -8,7 +8,7 @@
         <div class="portfolio-single">
             <div class="portfolio-thumb img-hover">
                 <figure>
-                    <img src="@Url.Content(Model.originalUrl)" alt="Original Image" />
+                    <img src="@Url.Content(Model.originalBase64ImgData)" alt="Original Image" />
                     <figcaption>Original Image</figcaption>
                 </figure>
             </div>
@@ -30,18 +30,12 @@
 <p>Are these changes OK? You won't be able to undo these changes any further.</p>
 @using (Html.BeginForm("Save", "ImageEditor", FormMethod.Post))
 {
-    <input type="text" name="origUrl" value="@Model.originalUrl" hidden="hidden" />
-    <input type="text" name="tempUrl" value="@Model.tempUrl" hidden="hidden" />
+    <input type="text" name="originalImgData" value="@Model.originalBase64ImgData" hidden="hidden" />
+    <input type="text" name="newImgData" value="@Model.Base64ImgData" hidden="hidden" />
     <input type="submit" value="Save" />
 }
 @using (Html.BeginForm("Discard", "ImageEditor", FormMethod.Post))
 {
-    <input type="text" name="tempUrl" value="@Model.tempUrl" hidden="hidden" />
-    @*<input type="text" name="noRedirect" value="false" />*@
+    <input type="text" name="newImgData" value="@Model.Base64ImgData" hidden="hidden" />
     <input type="submit" value="Discard" />
 }
-@*@using (Html.BeginForm("Discard", "ImageEditor", FormMethod.Post, new {id = "LeavePage"}))
-{
-    <input type="text" name="tempUrl" value="@Model.tempUrl" hidden="hidden" />
-    <input type="text" name="noRedirect" value="true" />
-}*@

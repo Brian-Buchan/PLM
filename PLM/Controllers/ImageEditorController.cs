@@ -14,53 +14,19 @@ namespace PLM.Controllers
 {
     public class ImageEditorController : Controller
     {
-        //Image Editor flow:
-        //
-        //User goes to the Image Editor (ImgEd) page
-        //
-        //AJAX call from ImgEd page saves image data
-        //
-        //User hits "Save" button, which is in fact a form submit button that POSTs data 
-        //to the ConfirmPOST() action.
-        //
-        //This action redirects the user to the Confirm GET action after processing the nessecary data
-        //
-        //The user selects either "Save" or "Discard" on the Confirm page, 
-        //which POSTs to either the Save() or Discard() actions, respectively
-        //
-        //Users are then returned to the Index page of the Home controller.
         [HttpGet]
         [NonAction]
         public ActionResult ImageEditor()
         {
             return View();
         }
+
         [HttpPost]
         [NonAction]
         [ActionName("ImageEditor")]
         public ActionResult ImageEditorPOST()
         {
-            //Image Editor post string format:
-            //If the image is saved as a jpeg, the post results in: "data:image/jpeg;base64,[IMAGEDATA]", 
-            //where "[IMAGEDATA]" is a base64 string that converts to a jpeg image.
-            //Otherwise, if the image is saved as a png, the post results in: "data:image/png;base64,[IMAGEDATA]",
-            //where "[IMAGEDATA]" is a base64 string that converts to a png image.
-            string imgId = Request.Form.Get("imgId");
-            string answerId = Request.Form.Get("answerId");
-            string result = SaveImage(Request.Form.Get("imgData"), imgId, answerId);
-            
-            if (result == "FAILED")
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.InternalServerError,
-                        "Something went wrong with your request. \nContact an administrator.");
-            }
-            else if (result=="TOO LARGE")
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.RequestEntityTooLarge, 
-                "Image file size larger than 200 KB. \nTry lowering the quality when you save," + 
-                " \nor resize the image to a smaller size.");
-            }
-            return new HttpStatusCodeResult(HttpStatusCode.OK, result);
+            return new HttpStatusCodeResult(HttpStatusCode.OK);
         }
 
         [HttpGet]
@@ -85,12 +51,11 @@ namespace PLM.Controllers
         [ActionName("Confirm")]
         public ActionResult ConfirmPOST()
         {
-            string b64Img = Request.Form.Get("imgData");
-            string origUrl = Request.Form.Get("origUrl");
+            string newImgData = Request.Form.Get("newImgData");
+            string originalImgData = Request.Form.Get("originalImgData");
             string imgID = Request.Form.Get("imgId");
             string answerID = Request.Form.Get("answerId");
-            string tempUrl = Request.Form.Get("tempUrl");
-            ConfirmViewModel model = new ConfirmViewModel(b64Img, origUrl, imgID, answerID, tempUrl);
+            ConfirmViewModel model = new ConfirmViewModel(newImgData, originalImgData, imgID, answerID);
             TempData["model"] = model;
             return RedirectToAction("Confirm");
         }
@@ -204,7 +169,7 @@ namespace PLM.Controllers
                 }
                 return dirPath + TempFileName;
             }
-            catch 
+            catch
             {
                 return "FAILED";
             }

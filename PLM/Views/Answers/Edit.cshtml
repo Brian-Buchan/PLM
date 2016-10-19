@@ -54,8 +54,7 @@
                         <div class="portfolio-wrapper defaultHeight">
                             <div class="portfolio-single">
                                 <div class="portfolio-thumb img-hover">
-                                    @Html.Action("PictureView", "Pictures", new { id = pic.PictureID })
-                                    @*<img onerror="this.src = '/PerceptualLearning/Content/images/Error.bmp';" src="@pic.Location" id="@pic.PictureID" title="@pic.AnswerID" class="img-responsive moduleImage" alt="Answer Image">*@
+                                    @Html.Action("EditPictureView", "Pictures", new { id = pic.PictureID })
                                 </div>
                             </div>
                             <div class="portfolio-info ">

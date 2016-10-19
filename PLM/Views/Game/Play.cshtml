@@ -12,7 +12,7 @@
     <audio id="audioIncorrect" preload="auto"><source src="~/Content/Audio/incorrectSound.mp3" type="audio/mp3" /></audio>
 
     <div id="gameBoard" class="col-xs-9">
-        @Html.Action("PictureView", "Pictures", new { id = Model.PictureID })
+        @Html.Action("PictureView", "Pictures", new { pic = Model.PictureToView })
         <p id="StoredAnswer" hidden="hidden">@Model.Answer</p>
 
         <div id="answerButtons" tabindex="0">

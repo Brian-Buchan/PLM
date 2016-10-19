@@ -2,6 +2,7 @@
 @{
     ViewBag.Title = "Confirm";
 }
+<h2>Confirm</h2>
 <section id="page-breadcrumb">
     <div class="vertical-center sun">
         <div class="container">
@@ -20,7 +21,10 @@
         <div class="portfolio-single">
             <div class="portfolio-thumb img-hover">
                 <figure>
-                    <img src="@Url.Content(Model.originalUrl)" alt="Original Image" />
+                    @{ 
+                        PLM.Models.PictureToView Opicture = new PLM.Models.PictureToView(Model.originalBase64ImgData);
+                    }
+                    @Html.Action("PictureView", "Pictures", new { pic = Opicture });
                     <figcaption>Original Image</figcaption>
                 </figure>
             </div>
@@ -32,7 +36,10 @@
         <div class="portfolio-single">
             <div class="portfolio-thumb img-hover">
                 <figure>
-                    <img src="@Model.Base64ImgData" alt="New Image" />
+                    @{
+                        PLM.Models.PictureToView Npicture = new PLM.Models.PictureToView(Model.Base64ImgData);
+                    }
+                    @Html.Action("PictureView", "Pictures", new { pic = Npicture });
                     <figcaption>New Image</figcaption>
                 </figure>
             </div>
@@ -42,14 +49,15 @@
 <p>Are these changes OK? You won't be able to undo these changes any further.</p>
 @using (Html.BeginForm("Save", "Pictures", FormMethod.Post))
 {
-    <input type="text" name="origUrl" value="@Html.Encode(Model.originalUrl)" hidden="hidden" />
-    <input type="text" name="tempUrl" value="@Html.Encode(Model.tempUrl)" hidden="hidden" />
+    <input type="text" name="originalImgData" value="@Model.originalBase64ImgData" hidden="hidden" />
+    <input type="text" name="newImgData" value="@Model.Base64ImgData" hidden="hidden" />
     <input type="number" name="answerID" value="@Model.answerID" hidden="hidden" />
+    <input type="number" name="imageID" value="@Model.imageID" hidden="hidden" />
     <input class="btn btn-primary" type="submit" style="background-color:green" value="Save" />
 }
 @using (Html.BeginForm("Discard", "Pictures", FormMethod.Post))
 {
-    <input type="text" name="tempUrl" value="@Html.Encode(Model.tempUrl)" hidden="hidden" />
+    <input type="text" name="newImgData" value="@Model.Base64ImgData" hidden="hidden" />
     <input type="number" name="answerID" value="@Model.answerID" hidden="hidden" />
     <input class="btn btn-primary" style="background-color:red" type="submit" value="Discard" />
 }

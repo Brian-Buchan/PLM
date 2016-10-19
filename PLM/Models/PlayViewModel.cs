@@ -10,6 +10,7 @@ namespace PLM
         public int PictureID { get; set; }
         [MaxLength(25)]
         public string Attribution { get; set; }
+        public PLM.Models.PictureToView PictureToView { get; set; }
         public List<string> possibleAnswers { get; set; }
         [MaxLength(25)]
         public string Answer { get; set; }
@@ -21,6 +22,7 @@ namespace PLM
 
         public PlayViewModel()
         {
+            PictureToView = new Models.PictureToView();
             possibleAnswers = new List<string>();
             Score = 0;
         }

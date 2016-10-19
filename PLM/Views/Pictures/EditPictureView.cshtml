@@ -1,4 +1,4 @@
-﻿@model  PLM.Models.PictureToView
+﻿@model PLM.Picture
 
 @{
     if (Model.PictureData == null)
@@ -9,6 +9,11 @@
     {
         string PictureData64 = Model.PictureData;
         string PictureSRC = string.Format("data:{0};base64,{1}", "image/png", PictureData64);
-        <img src="@PictureSRC" style="height: 200px; width:auto" />
+        <img src="@PictureSRC"
+             data-orig-source="@PictureData64"
+             id="@Model.PictureID"
+             title="@Model.AnswerID"
+             alt="Photo To Edit"
+             style="height: 200px; width:auto" />
     }
 }

@@ -18,24 +18,25 @@ namespace PLM.Controllers
         /// <param name="cat">Id of the category to count</param>
         public int categoryCount(int cat)//Method that counts the number of valid modules in a category
         {
-            int count = (from p in db.Modules
-                         where p.CategoryId == cat && p.isDisabled == false
-                         select p).Count();
-            foreach (Module module in db.Modules)
-            {
-                if (module.Answers.Count() <= 5 && module.CategoryId == cat)
-                {
-                    try
-                    {
-                        Answer answer = module.Answers.ElementAt(0);
-                        Picture picture = answer.Pictures.ElementAt(0);
-                    }
-                    catch
-                    {
-                        count -= 1;
-                    }
-                }
-            }
+            //int count = (from p in db.Modules
+            //             where p.CategoryId == cat && p.isDisabled == false
+            //             select p).Count();
+            //foreach (Module module in db.Modules)
+            //{
+            //    if (module.Answers.Count() <= 5 && module.CategoryId == cat)
+            //    {
+            //        try
+            //        {
+            //            Answer answer = module.Answers.ElementAt(0);
+            //            Picture picture = answer.Pictures.ElementAt(0);
+            //        }
+            //        catch
+            //        {
+            //            count -= 1;
+            //        }
+            //    }
+            //}
+            int count = 0;
             return (count);
         }  
         //GET: Profile

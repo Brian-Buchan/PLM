@@ -9,34 +9,27 @@ namespace PLM.Models
 {
     public class ConfirmViewModel
     {
-        /// <summary>
-        /// Base 64 image data
-        /// </summary>
         public string Base64ImgData { get; set; }
-        /// <summary>
-        /// The original image's url
-        /// </summary>
-        public string originalUrl { get; set; }
-        /// <summary>
-        /// The ID of the image in the database
-        /// </summary>
-        public string imageID { get; set; }
-        /// <summary>
-        /// The ID of the answer in the database
-        /// </summary>
-        public string answerID { get; set; }
-        /// <summary>
-        /// The absolute path to the image file in the temp folder
-        /// </summary>
-        public string tempUrl { get; set; }
 
-        public ConfirmViewModel(string b64Img, string origUrl, string imgID, string ansID, string tmpUrl)
+        public string originalBase64ImgData { get; set; }
+
+        public string imageID { get; set; }
+
+        public string answerID { get; set; }
+
+        public ConfirmViewModel(string b64Img, string originalb64Img, string imgID, string ansID)
         {
-            Base64ImgData = b64Img;
-            originalUrl = origUrl;
+            Base64ImgData = CleanPictureData(b64Img);
+            originalBase64ImgData = CleanPictureData(originalb64Img);
             imageID = imgID;
             answerID = ansID;
-            tempUrl = tmpUrl;
+        }
+
+        private static string CleanPictureData(string pictureData)
+        {
+            pictureData = pictureData.Replace("data:image/png;base64,", "");
+            pictureData = pictureData.Replace("data:image/jpeg;base64,", "");
+            return pictureData;
         }
     }
 }

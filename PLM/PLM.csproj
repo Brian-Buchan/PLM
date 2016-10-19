@@ -190,6 +190,7 @@
     <Compile Include="Extensions\FTPDirectoryWriter.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Extensions\PicToPicView.cs" />
     <Compile Include="Extensions\PictureResizer.cs" />
     <Compile Include="Migrations\201606141648191_InitialCreate.cs" />
     <Compile Include="Migrations\201606141648191_InitialCreate.Designer.cs">
@@ -1290,6 +1291,7 @@
     <Content Include="Views\Pictures\UploadError.cshtml" />
     <Content Include="Views\Pictures\FileToLarge.cshtml" />
     <Content Include="Views\Pictures\PictureView.cshtml" />
+    <Content Include="Views\Pictures\EditPictureView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

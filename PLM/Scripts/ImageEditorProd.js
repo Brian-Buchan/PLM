@@ -4,11 +4,10 @@
     var $vars = $('#jslink').data();
 
     var imgEdit = document.getElementById($vars.imageId);
-    var imgIdInput = document.getElementById("imgId");
+    var imgIdInput = document.getElementById("imageId");
     var answerIdInput = document.getElementById("answerId");
-    var imgDataInput = document.getElementById("imgData");
-    var origUrlInput = document.getElementById("origUrl");
-    var tempUrlInput = document.getElementById("tempUrl");
+    var newImgDataInput = document.getElementById("newImgData");
+    var originalImgDataInput = document.getElementById("originalImgData");
 
     var myPixie = Pixie.setOptions({
         replaceOriginal: true,
@@ -16,21 +15,17 @@
         onSave: function (data, img) {
             $.ajax({
                 type: 'POST',
-                url: '/PerceptualLearningBeta/Pictures/ImageEditor',
-                data: { imgData: data, imgId: img.id, answerId: img.title, origUrl: img.dataset.origSource },
+                url: '/Pictures/ImageEditor',
+                data: { imageData: data, imgId: img.id, answerId: img.title, origURL: img.dataset.origSource },
                 success: function (xhr, status, text) {
                     imgIdInput.value = imgEdit.id;
                     answerIdInput.value = imgEdit.title;
-                    imgDataInput.value = imgEdit.src;
-                    origUrlInput.value = imgEdit.dataset.origSource;
-                    tempUrlInput.value = text.statusText;
+                    newImgDataInput.value = imgEdit.src;
+                    originalImgDataInput.value = imgEdit.dataset.origSource;
 
-                    alert('Image changes have been saved successfully. \nRemember to ' +
-                    'click the save button to finalize your changes.');
                     myPixie.close();
                 },
                 error: function (xhr, status, text) {
-                    alert(text);
                     myPixie.close();
                 }
             });
@@ -38,7 +33,7 @@
     });
 
     $('#' + $vars.imageId).on('click', function (e) {
-        if (e.target.src !== "/PerceprtualLearningBeta/Content/Images/Error.bmp") {
+        if (e.target.src !== "/Content/Images/Error.bmp") {
             myPixie.open({
                 url: e.target.src,
                 image: e.target
