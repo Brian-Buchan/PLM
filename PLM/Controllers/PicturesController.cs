@@ -165,7 +165,7 @@ namespace PLM.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [AuthorizeOrRedirectAttribute(Roles = "Instructor")]
-        public ActionResult Edit([Bind(Include = "PictureID,Location,AnswerID,Attribution")] Picture picture)
+        public ActionResult Edit([Bind(Include = "PictureID,AnswerID,Attribution,PictureData")] Picture picture)
         {
             if (ModelState.IsValid)
             {

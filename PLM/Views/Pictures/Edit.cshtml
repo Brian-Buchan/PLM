@@ -17,41 +17,25 @@
 </section>
 @using (Html.BeginForm())
 {
-    @Html.AntiForgeryToken()
     <div class="form-horizontal">
         @Html.ValidationSummary(true)
-        @Html.HiddenFor(model => model.PictureID)
         <div class="form-group hidden">
-            @Html.LabelFor(model => model.Location, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Location)
-                @Html.ValidationMessageFor(model => model.Location, "", new { @class = "text-danger" })
-            </div>
+            @Html.HiddenFor(model => model.PictureID)
+            @Html.HiddenFor(model => model.AnswerID)
+            @Html.HiddenFor(model => model.PictureData)
         </div>
-        <div class="form-group hidden">
-            @Html.LabelFor(model => model.AnswerID, "AnswerID", new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("AnswerID", String.Empty)
-                @Html.ValidationMessageFor(model => model.AnswerID, "", new { @class = "text-danger" })
-            </div>
+        <div>
+            @Html.Action("EditPictureView", "Pictures", new { pic = Model.PictureID })
         </div>
-        <div class="col-sm-offset-1">
-            @Html.Action("PictureView", "Pictures", new { id = Model.PictureID })
-            @*<img onerror="this.src = 'Content/images/Error.bmp';" src="@Model.Location" class="img-responsive moduleImage img-hover" alt="Answer Image">*@
-        </div>
-        <br />
-        <br />
         <div class="form-group">
-            @Html.LabelFor(model => model.Attribution, "Attribution", new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
+            <div class="col-xs-10">
+                @Html.LabelFor(model => model.Attribution, "Attribution", new { @class = "control-label col-xs-2" })
                 @Html.TextAreaFor(model => model.Attribution, new { rows = "5", cols = "25" })
                 @Html.ValidationMessageFor(model => model.Attribution, "", new { @class = "text-danger" })
             </div>
         </div>
-        <div class="form-group">
-            <div class="clearLeft floatRight">
-                <input type="submit" value="Save" class="btn btn-submit" />
-            </div>
+        <div class="clearLeft floatRight">
+            <input type="submit" value="Save" class="btn btn-submit" />
         </div>
     </div>
 }

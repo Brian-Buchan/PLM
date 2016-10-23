@@ -7,9 +7,17 @@ namespace PLM
 {
     public static class PicToPicView
     {
-        public static PLM.Models.PictureToView Convert(Picture picture)
+        public static Models.PictureToView Convert(Picture picture)
         {
-            PLM.Models.PictureToView pic = new PLM.Models.PictureToView(picture.PictureData, picture.Attribution);
+            Models.PictureToView pic;
+            if (picture.Attribution == null)
+            {
+                pic = new Models.PictureToView(picture.PictureData);
+            }
+            else
+            {
+                pic = new Models.PictureToView(picture.PictureData, picture.Attribution);
+            }
             return pic;
         }
     }
