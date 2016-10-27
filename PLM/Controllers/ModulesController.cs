@@ -11,7 +11,18 @@ namespace PLM.Controllers
     {
         private ApplicationDbContext db = new ApplicationDbContext();
         private ModuleViewModel ModuleModel = new ModuleViewModel();
-      
+
+
+
+        public ActionResult pvModuleFilterList()
+        {
+            var db_ = new Repos();
+
+            var lst = db_.GetModuleFilterMenuList();
+
+            return View(lst);
+        }
+
         ///<summary>
         /// Counts the number of modules in a category that are usable and not disabled
         /// </summary>
@@ -114,5 +125,6 @@ namespace PLM.Controllers
                 return Redirect("/Modules/AddModule");
             }
         }
+
     }
 }

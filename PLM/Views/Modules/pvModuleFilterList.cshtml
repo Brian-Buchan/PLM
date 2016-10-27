@@ -1,0 +1,18 @@
+﻿@model IEnumerable<PLM.ModuleFilterMenuList>
+
+
+<div class="sidebar-item categories">
+    <h3>Subject Categories</h3>
+    <ul class="nav navbar-stacked">
+
+        @foreach (var item in Model)
+        {
+            <li>
+                @Html.ActionLink(item.CategoryName + "-(" + item.ModuleCount + ")", "Index", new { filterParam = item.CategoryId })
+            </li>
+        }
+
+    </ul>
+</div>
+
+

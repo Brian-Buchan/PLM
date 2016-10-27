@@ -38,4 +38,24 @@ namespace PLM
         [Display(Name = "Reason")]
         public Module.DisableModuleReason DisableReason { get; set; }
     }
+
+
+
+    //TODO: COPY OVER
+    /// <summary>
+    /// Used in pvModuleFilterList (Modules Index)
+    /// </summary>
+    public class ModuleFilterMenuList
+    {
+        [Display(Name = "Category")]
+        public string CategoryName { get; set; }
+
+        [Key]
+        [Display(Name = "CategoryID")]
+        public virtual int CategoryId { get; set; }
+
+        [Display(Name = "Module Count")]
+        public int ModuleCount { get; set; }
+
+    }
 }
