@@ -9,65 +9,18 @@ namespace PLM
 {
     public class UserGameSession
     {
-        /// <summary>
-        /// The user that is associated with the session
-        /// </summary>
-        public ApplicationUser currentUser { get; set; }
-        
-        /// <summary>
-        /// The current score of the user
-        /// </summary>
-        public int Score { get; set; }
-        
-        /// <summary>
-        /// The current question number the user is on.
-        /// </summary>
-        public int currentQuestion { get; set; }
-        
-        /// <summary>
-        /// The user's current position in the PictureIndices list. Resets each loop through said list
-        /// </summary>
-        public int iteratedQuestion { get; set; }
-
-        /// <summary>
-        /// The module being played
-        /// </summary>
-        public Module currentModule { get; set; }
-
-        /// <summary>
-        /// The list of pictures with associated answers, used as the building block for questions
-        /// </summary>
         public List<AnsPicIndex> PictureIndices { get; set; }
-        
-        /// <summary>
-        /// The number of answers to be displayed each question (after checking for display)
-        /// </summary>
-        public int numAnswers { get; set; }
-
-        /// <summary>
-        /// The number of answers to be displayed each question (before checking for display)
-        /// </summary>
+        public ApplicationUser currentUser { get; set; }
+        public int iteratedQuestion { get; set; }
+        public Module currentModule { get; set; }
         public int defaultNumAnswer { get; set; }
-        
-        /// <summary>
-        /// The number of questions to be asked during this game
-        /// </summary>
-        public int numQuestions { get; set; }
-
-        /// <summary>
-        /// The amount of time (in minutes) alloted for the module
-        /// </summary>
-        public int time { get; set; }
-
-        /// <summary>
-        /// The amount of time left in the module
-        /// </summary>
+        public int currentQuestion { get; set; }
         public TimeSpan timeLeft { get; set; }
-
-        /// <summary>
-        /// The number of questions answered correctly this session.
-        /// </summary>
+        public int numQuestions { get; set; }
         public int numCorrect { get; set; }
+        public int numAnswers { get; set; }
+        public int Score { get; set; }
+        public int time { get; set; }
 
         public UserGameSession()
         {

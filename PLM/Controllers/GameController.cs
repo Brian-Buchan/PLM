@@ -13,29 +13,29 @@ namespace PLM.Controllers
 {
     public class GameController : Controller
     {
-        private static Random rand = new Random();
         private ApplicationDbContext db = new ApplicationDbContext();
-        private UserGameSession currentGameSession;
-        private Module currentModule = new Module();
-        private List<int> GeneratedGuessIDs = new List<int>();
         private PlayViewModel currentGuess = new PlayViewModel();
-        private int currentGuessNum;
+        private List<int> GeneratedGuessIDs = new List<int>();
+        private Module currentModule = new Module();
+        private UserGameSession currentGameSession;
+        private static Random rand = new Random();
         private Score newScore;
-        private bool PLMgenerated = false;
-        private bool WrongAnswersGenerationNOTcompleted = true;
         private int answerID;
         private int pictureID;
         private bool loggedIn;
+        private int currentGuessNum;
         private bool correctSettings;
+        private bool PLMgenerated = false;
+        private bool WrongAnswersGenerationNOTcompleted = true;
 
         [HttpGet]
         public ActionResult Setup(int PLMid, int changeSettings)
         {
-            int IDtoPASS = PLMid;
+            int ModuleID = PLMid;
 
             if (PLMgenerated == false)
             {
-                GenerateModule(IDtoPASS);
+                GenerateModule(ModuleID);
             }
 
             //If the user wants to change the settings of the game session
@@ -48,10 +48,7 @@ namespace PLM.Controllers
                 return RedirectToAction("Play");
             }
         }
-        /// <summary>
-        /// Generate a module and create a UserGameSession session variable with that module.
-        /// </summary>
-        /// <param name="PLMid">The ID of the PLM to use</param>
+
         [NonAction]
         private void GenerateModule(int PLMid)
         {
@@ -85,6 +82,7 @@ namespace PLM.Controllers
             currentGameSession.timeLeft = new TimeSpan(timeHours, timeMinutes, 0);
             Session["userGameSession"] = currentGameSession;
         }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Setup([Bind(Include = "numAnswers,numQuestions,time")] UserGameSession ugs)
@@ -97,6 +95,7 @@ namespace PLM.Controllers
             ((UserGameSession)Session["userGameSession"]).timeLeft = new TimeSpan(timeHours, timeMinutes, 0);
             return RedirectToAction("Play");
         }
+
         [HttpGet]
         public ActionResult Play()
         {
@@ -109,10 +108,7 @@ namespace PLM.Controllers
             currentGuess.PictureToView.PictureData = db.Pictures.Find(currentGuess.PictureID).PictureData;
             return View(currentGuess);
         }
-        /// <summary>
-        /// Generate a question, loops through each picture in each answer
-        /// The same answer will be chosen multiple times with different pictures
-        /// </summary>
+        
         [NonAction]
         private void GenerateQuestionONEperPIC()
         {
@@ -135,12 +131,14 @@ namespace PLM.Controllers
             GenerateWrongAnswers();
             currentGuess.possibleAnswers.Shuffle();
         }
+
         [NonAction]
         private int[] GetPictureID(int currentGuessNum)
         {
             AnsPicIndex IndexItem = ((UserGameSession)Session["userGameSession"]).PictureIndices.ElementAt(currentGuessNum);
             return new int[] { IndexItem.AnswerIndex, IndexItem.PictureIndex };
         }
+
         /// <summary>
         /// Generate the wrong answers to be displayed during each question
         /// </summary>
@@ -166,6 +164,7 @@ namespace PLM.Controllers
                 }
             }
         }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Play(int Score, string Time, string isCorrect)
@@ -194,6 +193,8 @@ namespace PLM.Controllers
             currentGuess.TotalQuestions = ((UserGameSession)Session["userGameSession"]).numQuestions;
             currentGuess.NumCorrect = ((UserGameSession)Session["userGameSession"]).numCorrect;
             currentGuess.Score = Score;
+            var test = int.Parse(Request.Form.Get("Score"));
+            currentGuess.Score = test;
             currentGuess.Time = ((UserGameSession)Session["userGameSession"]).timeLeft;
             return View(currentGuess);
         }

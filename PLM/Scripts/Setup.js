@@ -164,7 +164,5 @@ $('input[type="range"]').each(function () {
 
         nm.css('box-shadow', 'inset 0 0 16px rgb(' + r3 + ',' + g3 + ',0)' +
             ',inset 16px 0 20px rgb(' + r3 + ',' + g3 + ',0)');
-
     });
 });
-
