@@ -368,3 +368,11 @@ hr {
 .NoPadding{
     padding: 0px;
 }
+
+.clearBoth{
+    clear: both;
+}
+
+.flex{
+    display: flex;
+}
