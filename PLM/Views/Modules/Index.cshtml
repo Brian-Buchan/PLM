@@ -26,6 +26,10 @@
     @Html.ActionLink("Reset Search Criteria", "Index", "Modules")
 </div>
 <section id="projects" class="padding-top">
+
+    <!-- Partial View Here -->
+
+    <!-- Delete This Div -->
     <div class="col-xs-3">
         <div class="sidebar portfolio-sidebar">
             <div class="sidebar-item categories">
@@ -46,6 +50,8 @@
             </div>
         </div>
     </div>
+
+
     <div class="col-mxs-9 flex">
         @foreach (Module module in Model)
         {
@@ -61,7 +67,6 @@
                             <div class="portfolio-single">
                                 <div class="portfolio-thumb">
                                     @Html.Action("PictureView", "Pictures", new { pic = pic })
-                                    @*<img onerror="this.src='Content/images/Error.bmp';" src="@picture.Location"  class="img-responsive moduleImage" alt="PLM Logo">*@
                                 </div>
                                 <div class="portfolio-view">
                                     <ul class="nav nav-pills">
@@ -83,12 +88,12 @@
                 catch (ArgumentOutOfRangeException) { }
             }
         }
-        <div class="col-xs-12">
-            Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+    </div>
+    <div class="col-xs-12">
+        Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
 
-            @Html.PagedListPager(Model, page => Url.Action("Index",
+        @Html.PagedListPager(Model, page => Url.Action("Index",
                              new { page, sortOrder = ViewBag.CurrentSort, filterParam = ViewBag.filterParam, currentFilter = ViewBag.CurrentFilter }))
-        </div>
     </div>
 </section>
 <!--/#projects-->
