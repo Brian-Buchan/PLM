@@ -1,0 +1,16 @@
+﻿@model  PLM.Models.PictureToView
+@{ 
+    Layout = null;
+}
+@{
+    if (Model.PictureData == null)
+    {
+        <img src="/Content/Images/Error.bmp" style="max-height: 500px; width:auto"/>
+    }
+    else
+    {
+        string PictureData64 = Model.PictureData;
+        string PictureSRC = string.Format("data:{0};base64,{1}", "image/png", PictureData64);
+        <img src="@PictureSRC" style="max-height: 500px; width:auto;"/>
+    }
+}

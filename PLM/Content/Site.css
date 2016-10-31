@@ -317,27 +317,41 @@ hr {
 }
 
   #ScoreBoard {
+      display: flex;
+      flex-direction: column;
       background-color: lightgray;
       border: 2px solid black;
-      padding-bottom:  10px;
   }
 
-  #picture {
-      display: block;
-      height: 480px;
-      width: 640px;
-      resize: none;
+  #ScoreBoard div {
+      display: flex;
+  }
+
+  .SBrow {
+      margin: 5px 10px;
+  }
+
+  .SBitem {
+      margin: 0px 15px;
+  }
+
+  #soundToggle {
+      margin-left: auto;
+  }
+
+  .btn-wrapper {
+      margin-left: auto;
+  }
+
+  .picture {
+      max-height: 500px;
       background-color: gray;
+      display: flex;
+      justify-content: space-around;
   }
 
   #gameBoard {
       padding: 10px;
-  }
-
-  #ScoreBoard p {
-      font-size: 15px;
-      width: 45%;
-      margin: 2.5%;
   }
 
   #answerButtons {
@@ -346,16 +360,10 @@ hr {
   }
 
   #answerButtons Button {      
-    margin: 1.5%;
+    margin: 1%;
     width: 30%;
     overflow: hidden;
   }
-
-.gameButton{
-    margin: 1.5%;
-    width: 30%;
-    overflow: hidden;
-}
 
 #answerButtons{
     padding-bottom:10px;

@@ -1300,6 +1300,7 @@
     <Content Include="Views\Categories\Edit.cshtml" />
     <Content Include="Views\Categories\Index.cshtml" />
     <Content Include="Views\Modules\pvModuleFilterList.cshtml" />
+    <Content Include="Views\Pictures\GamePictureView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

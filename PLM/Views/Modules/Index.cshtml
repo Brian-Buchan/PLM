@@ -52,7 +52,7 @@
     </div>
 
 
-    <div class="col-mxs-9 flex">
+    <div class="col-xs-9 flex NoPadding">
         @foreach (Module module in Model)
         {
             if (module.Answers.Count >= 5)
@@ -62,7 +62,7 @@
                     Answer answer = module.Answers.ElementAt(0);
                     Picture picture = answer.Pictures.ElementAt(0);
                     PLM.Models.PictureToView pic = PicToPicView.Convert(picture);
-                    <div class="col-xs-4 NoPadding">
+                    <div class="col-xs-4">
                         <div class="portfolio-wrapper">
                             <div class="portfolio-single">
                                 <div class="portfolio-thumb">

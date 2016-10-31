@@ -104,8 +104,6 @@ namespace PLM.Controllers
             currentGuess.CurrentQuestion = ((UserGameSession)Session["userGameSession"]).currentQuestion + 1;
             currentGuess.TotalQuestions = ((UserGameSession)Session["userGameSession"]).numQuestions;
             currentGuess.NumCorrect = ((UserGameSession)Session["userGameSession"]).numCorrect;
-            currentGuess.PictureToView.Attribution = currentGuess.Attribution;
-            currentGuess.PictureToView.PictureData = db.Pictures.Find(currentGuess.PictureID).PictureData;
             return View(currentGuess);
         }
         
@@ -128,6 +126,8 @@ namespace PLM.Controllers
             else
                 currentGuess.Attribution = currentModule.Answers.ElementAt(answerIndex).Pictures.ElementAt(pictureID).Attribution;
             GeneratedGuessIDs.Add(answerIndex);
+            currentGuess.PictureToView.PictureData = db.Pictures.Find(currentGuess.PictureID).PictureData;
+            currentGuess.PictureToView.Attribution = currentGuess.Attribution;
             GenerateWrongAnswers();
             currentGuess.possibleAnswers.Shuffle();
         }

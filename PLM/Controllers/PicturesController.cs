@@ -53,6 +53,11 @@ namespace PLM.Controllers
             return View(picture);
         }
 
+        public ActionResult GamePictureView(PictureToView pic)
+        {
+            return View(pic);
+        }
+
         //Convert all pictures saved in file
         //system to image data in database
         //public void ConvertAllPicturesToStringData()
