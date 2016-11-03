@@ -1,4 +1,4 @@
-﻿@model IEnumerable<PLM.Answer>
+﻿@model IEnumerable<PLM.AnswerViewModel>
 @{
     ViewBag.Title = "Index";
 }
@@ -21,7 +21,7 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Module.Name)
+            @Html.DisplayNameFor(model => model.ModuleName)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.AnswerString)
@@ -31,7 +31,7 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.Module.Name)
+            @Html.DisplayFor(modelItem => item.ModuleName)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.AnswerString)

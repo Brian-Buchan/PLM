@@ -18,10 +18,13 @@ namespace PLM.Controllers
     {
         private ApplicationDbContext db = new ApplicationDbContext();
         // GET: /Answers/
-        public ActionResult Index()
+        public ActionResult Index(int id = 0)
         {
-            var answers = db.Answers.Include(a => a.Module);
-            return View(answers.ToList());
+            Repos repos = new Repos();
+            var answers = repos.GetAnswerList(id);
+
+            //var answers = db.Answers.Include(a => a.Module);
+            return View(answers);
         }
         // GET: /Answers/Details/5
         public ActionResult Details(int? id)

@@ -47,24 +47,26 @@
         </div>
         <div class="form-group">
             @Html.LabelFor(model => model.Pictures, "Pictures", new { @class = "control-label col-md-2" })
-            <div class="form-group, scroll-box, col-md-10">
+            <div class="form-group, scroll-box, col-xs-10 flex">
                 @foreach (Picture pic in Model.Pictures)
                 {
-                    <div class="col-xs-6 col-sm-6 col-md-4 portfolio-item branded logos">
-                        <div class="portfolio-wrapper defaultHeight">
+                   
+                    <div class="col-xs-6">
+                        <div class="portfolio-wrapper">
                             <div class="portfolio-single">
-                                <div class="portfolio-thumb img-hover">
-                                    @Html.Action("EditPictureView", "Pictures", new { id = pic.PictureID })
+                                <div class="portfolio-thumb">
+                                    @Html.Action("PictureView", "Pictures", new { pic = PicToPicView.Convert(pic) })
                                 </div>
                             </div>
                             <div class="portfolio-info ">
-                                    @Html.ActionLink("Edit Image", "ImageEditor", new { controller = "Pictures", id = pic.PictureID }) |
-                                    @Html.ActionLink("Attribution", "Edit", new { controller = "Pictures", id = pic.PictureID }) |
-                                    @Html.ActionLink("Delete", "Delete", new { controller = "Pictures", id = pic.PictureID })
+                                @Html.ActionLink("Edit Image", "ImageEditor", new { controller = "Pictures", id = pic.PictureID }) |
+                                @Html.ActionLink("Attribution", "Edit", new { controller = "Pictures", id = pic.PictureID }) |
+                                @Html.ActionLink("Delete", "Delete", new { controller = "Pictures", id = pic.PictureID })
                             </div>
                         </div>
                     </div>
-                }                     
+
+                }
             </div>
         </div>
         <br />

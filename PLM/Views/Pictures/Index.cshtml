@@ -24,9 +24,14 @@
             @Html.DisplayNameFor(model => model.Answer.AnswerString)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Location)
+            @Html.DisplayNameFor(model => model.PictureData)
         </th>
-        <th></th>
+        <th>
+            @Html.DisplayNameFor(model => model.Attribution)
+        </th>
+        <th>
+
+        </th>
     </tr>
 @foreach (var item in Model) {
     <tr>
@@ -34,7 +39,10 @@
             @Html.DisplayFor(modelItem => item.Answer.AnswerString)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Location)
+            @Html.Action("PictureView", "Pictures", new { pic = PicToPicView.Convert(item) })
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Attribution)
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.PictureID }) |
