@@ -47,14 +47,15 @@
         </div>
         <div class="form-group">
             @Html.LabelFor(model => model.Pictures, "Pictures", new { @class = "control-label col-md-2" })
-            <div class="form-group, scroll-box, col-md-10">
+            <div class="form-group, scroll-box, col-xs-10 flex">
                 @foreach (Picture pic in Model.Pictures)
                 {
-                    <div class="col-xs-6 portfolio-item branded logos">
-                        <div class="portfolio-wrapper defaultHeight">
+                   
+                    <div class="col-xs-6">
+                        <div class="portfolio-wrapper">
                             <div class="portfolio-single">
                                 <div class="portfolio-thumb">
-                                    @Html.Action("EditPictureView", "Pictures", new { id = pic.PictureID })
+                                    @Html.Action("PictureView", "Pictures", new { pic = PicToPicView.Convert(pic) })
                                 </div>
                             </div>
                             <div class="portfolio-info ">
@@ -64,6 +65,7 @@
                             </div>
                         </div>
                     </div>
+
                 }                     
             </div>
         </div>

@@ -264,6 +264,7 @@
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AdminViewModel.cs" />
+    <Compile Include="Models\AnswerViewModel.cs" />
     <Compile Include="Models\ConfirmViewModel.cs" />
     <Compile Include="Models\GameModule.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
