@@ -10,6 +10,12 @@ namespace PLM
     {
         ApplicationDbContext _dc = new ApplicationDbContext();
 
+        //public Module GetModule(int id)
+        //{
+        //    var module = _dc.Database.SqlQuery(Module,
+        //        "Select from Modules")
+        //}
+
         public IEnumerable<Module> GetModuleList()
         {
             // IngredientListView ingredients = new IngredientListView();

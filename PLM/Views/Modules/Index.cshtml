@@ -71,10 +71,10 @@
                                 <div class="portfolio-view">
                                     <ul class="nav nav-pills">
                                         <li>
-                                            <a href="@Url.Action("Setup", "Game", new { PLMid = module.ModuleID, changeSettings = 0}, null)" class="elements"><img onerror="this.src='Content/images/Error.bmp';" height="33" width="33" src="~/Content/Images/home/PlayIcon.png" /></a>
+                                            <a href="@Url.Action("Setup", "Game", new { PLMid = module.ModuleID, changeSettings = false}, null)" class="elements"><img onerror="this.src='Content/images/Error.bmp';" height="33" width="33" src="~/Content/Images/home/PlayIcon.png" /></a>
                                         </li>
                                         <li>
-                                            <a href="@Url.Action("Setup", "Game", new { PLMid = module.ModuleID, changeSettings = 1}, null)" class="elements"><img onerror="this.src='Content/images/Error.bmp';" height="33" width="33" src="~/Content/Images/home/settings.png" /></a>
+                                            <a href="@Url.Action("Setup", "Game", new { PLMid = module.ModuleID, changeSettings = true}, null)" class="elements"><img onerror="this.src='Content/images/Error.bmp';" height="33" width="33" src="~/Content/Images/home/settings.png" /></a>
                                         </li>
                                     </ul>
                                 </div>

@@ -29,34 +29,61 @@ namespace PLM.Controllers
         private bool WrongAnswersGenerationNOTcompleted = true;
 
         [HttpGet]
-        public ActionResult Setup(int PLMid, int changeSettings)
+        public ActionResult Setup(int PLMid, bool changeSettings)
         {
-            int ModuleID = PLMid;
-
+            //Remove
             if (PLMgenerated == false)
             {
-                GenerateModule(ModuleID);
+                GenerateModule(PLMid);
             }
 
             //If the user wants to change the settings of the game session
-            if (changeSettings == 1)
+            if (changeSettings)
             {
                 return View(((UserGameSession)Session["userGameSession"]).currentModule);
             }
             else
             {
                 return RedirectToAction("Play");
+
+                ////////////////////////////////////
+                //if (currentGameSession == null)
+                //{
+                //    GenerateSession();
+                //    GenerateModule(PLMid);
+                //}
             }
         }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Setup([Bind(Include = "numAnswers,numQuestions,time")] UserGameSession ugs)
+        {
+            int timeHours = (ugs.time / 60);
+            int timeMinutes = (ugs.time % 60);
+            ((UserGameSession)Session["userGameSession"]).numAnswers = ugs.numAnswers;
+            ((UserGameSession)Session["userGameSession"]).numQuestions = ugs.numQuestions;
+            ((UserGameSession)Session["userGameSession"]).time = ugs.time;
+            ((UserGameSession)Session["userGameSession"]).timeLeft = new TimeSpan(timeHours, timeMinutes, 0);
+            return RedirectToAction("Play");
+        }
+
+
+
+
 
         [NonAction]
         private void GenerateModule(int PLMid)
         {
+            // Create Session Variable
             currentGameSession = new UserGameSession();
+            // Load Module
             currentGameSession.currentModule = db.Modules.Find(PLMid);
+            // Reset Game Parameters
             currentGameSession.Score = 0;
             currentGameSession.currentQuestion = -1;
             currentGameSession.iteratedQuestion = -1;
+
+
             int answerIndex = -1;
             int pictureIndex;
             foreach (Answer answer in currentGameSession.currentModule.Answers)
@@ -82,19 +109,17 @@ namespace PLM.Controllers
             currentGameSession.timeLeft = new TimeSpan(timeHours, timeMinutes, 0);
             Session["userGameSession"] = currentGameSession;
         }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Setup([Bind(Include = "numAnswers,numQuestions,time")] UserGameSession ugs)
-        {
-            int timeHours = (ugs.time / 60);
-            int timeMinutes = (ugs.time % 60);
-            ((UserGameSession)Session["userGameSession"]).numAnswers = ugs.numAnswers;
-            ((UserGameSession)Session["userGameSession"]).numQuestions = ugs.numQuestions;
-            ((UserGameSession)Session["userGameSession"]).time = ugs.time;
-            ((UserGameSession)Session["userGameSession"]).timeLeft = new TimeSpan(timeHours, timeMinutes, 0);
-            return RedirectToAction("Play");
-        }
+        //private void GenerateSession()
+        //{
+        //    currentGameSession = new UserGameSession();
+        //    Session["userGameSession"] = currentGameSession;
+        //}
+        //private void GenerateModule(int PLMid)
+        //{
+        //    Module module = db.Modules.Find(PLMid);
+        //    GameModule gameModule = new GameModule(module);
+        //    currentGameSession.gameModule = gameModule;
+        //}
 
         [HttpGet]
         public ActionResult Play()

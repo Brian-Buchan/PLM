@@ -50,10 +50,10 @@
             <div class="form-group, scroll-box, col-md-10">
                 @foreach (Picture pic in Model.Pictures)
                 {
-                    <div class="col-xs-6 col-sm-6 col-md-4 portfolio-item branded logos">
+                    <div class="col-xs-6 portfolio-item branded logos">
                         <div class="portfolio-wrapper defaultHeight">
                             <div class="portfolio-single">
-                                <div class="portfolio-thumb img-hover">
+                                <div class="portfolio-thumb">
                                     @Html.Action("EditPictureView", "Pictures", new { id = pic.PictureID })
                                 </div>
                             </div>

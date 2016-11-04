@@ -265,6 +265,7 @@
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AdminViewModel.cs" />
     <Compile Include="Models\ConfirmViewModel.cs" />
+    <Compile Include="Models\GameModule.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\ModuleViewModel.cs" />
     <Compile Include="Controllers\PicturesController.cs" />
