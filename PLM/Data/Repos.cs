@@ -13,8 +13,15 @@ namespace PLM
 
         //public Module GetModule(int id)
         //{
-        //    var module = _dc.Database.SqlQuery(Module,
-        //        "Select from Modules")
+        //    var idParam = new SqlParameter
+        //    {
+        //        ParameterName = "ModuleID",
+        //        Value = id
+        //    };
+        //    Module module = _dc.Database.SqlQuery<Module>(
+        //        "Select from Modules Where Modules.ModuleID = id", idParam
+        //        ).Cast<Module>;
+        //    return module;
         //}
 
         public IEnumerable<Module> GetModuleList()

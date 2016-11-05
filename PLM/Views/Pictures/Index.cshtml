@@ -39,7 +39,7 @@
             @Html.DisplayFor(modelItem => item.Answer.AnswerString)
         </td>
         <td>
-            @Html.Action("PictureView", "Pictures", new { pic = PicToPicView.Convert(item) })
+            @Html.Action("PictureView", "Pictures", new { pic = new PLM.Models.PictureToView(item) })
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Attribution)

@@ -42,7 +42,7 @@ namespace PLM.Controllers
             return View(picture);
         }
 
-        public ActionResult PictureView(PictureToView pic)
+        public ActionResult PictureView(GamePicture pic)
         {
             return View(pic);
         }
@@ -53,7 +53,7 @@ namespace PLM.Controllers
             return View(picture);
         }
 
-        public ActionResult GamePictureView(PictureToView pic)
+        public ActionResult GamePictureView(GamePicture pic)
         {
             return View(pic);
         }

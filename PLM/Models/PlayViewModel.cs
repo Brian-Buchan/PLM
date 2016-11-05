@@ -7,22 +7,17 @@ namespace PLM
 {
     public class PlayViewModel
     {
-        public int PictureID { get; set; }
-        [MaxLength(25)]
-        public string Attribution { get; set; }
-        public PLM.Models.PictureToView PictureToView { get; set; }
+        public PLM.Models.GamePicture PictureToView { get; set; }
         public List<string> possibleAnswers { get; set; }
-        [MaxLength(25)]
         public string Answer { get; set; }
         public int Score { get; set; }
         public TimeSpan Time { get; set; }
         public int CurrentQuestion { get; set; }
-        public int NumCorrect { get; set; }
         public int TotalQuestions { get; set; }
 
         public PlayViewModel()
         {
-            PictureToView = new Models.PictureToView();
+            PictureToView = new Models.GamePicture();
             possibleAnswers = new List<string>();
             Score = 0;
         }

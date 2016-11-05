@@ -27,12 +27,13 @@ function getCookie(cname) {
 }
 
 function ButtonClick(guess) {
-    pictureAnswer = $("#StoredAnswer").text();
-    if (!revealed) {
-        if (isGuessRight(pictureAnswer, guess)) {
-            Correct();
-        }
-    }
+    document.getElementById("Guess").value = guess;
+    //pictureAnswer = $("#StoredAnswer").text();
+    //if (!revealed) {
+    //    if (isGuessRight(pictureAnswer, guess)) {
+    //        Correct();
+    //    }
+    //}
 }
 
 function isGuessRight(answer, guess) {
@@ -79,7 +80,7 @@ function Correct() {
     count = (parseInt(count, 10) + 100);
     //check the unchecked radio button (set "Correct" to true)
     $('input[type="radio"]').not(':checked').prop("checked", true);
-    $('#Score').val(count);
+    //$('#Score').val(count);
     $('#displayScore').text(count);
 }
 

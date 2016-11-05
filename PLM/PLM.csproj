@@ -192,7 +192,6 @@
     <Compile Include="Extensions\FTPDirectoryWriter.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Extensions\PicToPicView.cs" />
     <Compile Include="Extensions\PictureResizer.cs" />
     <Compile Include="Migrations\201606141648191_InitialCreate.cs" />
     <Compile Include="Migrations\201606141648191_InitialCreate.Designer.cs">
@@ -266,7 +265,9 @@
     <Compile Include="Models\AdminViewModel.cs" />
     <Compile Include="Models\AnswerViewModel.cs" />
     <Compile Include="Models\ConfirmViewModel.cs" />
+    <Compile Include="Models\GameAnswer.cs" />
     <Compile Include="Models\GameModule.cs" />
+    <Compile Include="Models\GameSettings.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\ModuleViewModel.cs" />
     <Compile Include="Controllers\PicturesController.cs" />
@@ -283,8 +284,9 @@
     <Compile Include="Models\Module.cs" />
     <Compile Include="Models\Picture.cs" />
     <Compile Include="Models\AnsPicIndex.cs" />
-    <Compile Include="Models\PictureToView.cs" />
+    <Compile Include="Models\GamePicture.cs" />
     <Compile Include="Models\PlayViewModel.cs" />
+    <Compile Include="Models\Question.cs" />
     <Compile Include="Models\Report.cs" />
     <Compile Include="Models\ReportCategoryEnum.cs" />
     <Compile Include="Models\Score.cs" />

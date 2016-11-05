@@ -55,7 +55,7 @@
                         <div class="portfolio-wrapper">
                             <div class="portfolio-single">
                                 <div class="portfolio-thumb">
-                                    @Html.Action("PictureView", "Pictures", new { pic = PicToPicView.Convert(pic) })
+                                    @Html.Action("PictureView", "Pictures", new { pic = new PLM.Models.PictureToView(pic) })
                                 </div>
                             </div>
                             <div class="portfolio-info ">
