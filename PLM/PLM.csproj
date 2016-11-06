@@ -266,6 +266,7 @@
     <Compile Include="Models\AnswerViewModel.cs" />
     <Compile Include="Models\ConfirmViewModel.cs" />
     <Compile Include="Models\GameAnswer.cs" />
+    <Compile Include="Models\GameCompleted.cs" />
     <Compile Include="Models\GameModule.cs" />
     <Compile Include="Models\GameSettings.cs" />
     <Compile Include="Models\ManageViewModels.cs" />

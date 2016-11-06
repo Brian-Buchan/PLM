@@ -33,5 +33,22 @@ namespace PLM
         {
             TimeStamp = DateTime.Now;
         }
+
+        public Score(int score, int moduleID, int answers)
+        {
+            CorrectAnswers = (score / 100);
+            ModuleID = moduleID;
+            TotalAnswers = answers;
+            TimeStamp = DateTime.Now;
+        }
+
+        public Score(int score, int moduleID, int answers, string userID)
+        {
+            CorrectAnswers = (score / 100);
+            ModuleID = moduleID;
+            TotalAnswers = answers;
+            UserID = UserID;
+            TimeStamp = DateTime.Now;
+        }
     }
 }

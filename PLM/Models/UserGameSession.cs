@@ -20,8 +20,8 @@ namespace PLM
         public int time { get; set; }
         public int Score { get; set; }
         public int currentQuestion { get; set; }
-        public int iteratedQuestion { get; set; }
 
+        public int iteratedQuestion { get; set; }
         public List<AnsPicIndex> PictureIndices { get; set; }
         public int defaultNumAnswer { get; set; }
         public int numQuestions { get; set; }

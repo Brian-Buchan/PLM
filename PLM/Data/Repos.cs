@@ -38,6 +38,11 @@ namespace PLM
             return _List;
         }
 
+        //public IEnumerable<string[]> GetTop10Scores(int moduleID)
+        //{
+        //    var _List
+        //}
+
         public IEnumerable<AnswerViewModel> GetAnswerList(int moduleID = 0)
         {
             var idParam = new SqlParameter
