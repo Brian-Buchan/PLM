@@ -9,6 +9,7 @@ namespace PLM
     {
         public string AnswerString { get; set; }
         public List<Models.GamePicture> Pictures { get; set; }
+        public bool Usable { get; set; }
 
         public GameAnswer()
         {
@@ -17,6 +18,7 @@ namespace PLM
 
         public GameAnswer(Answer answer)
         {
+            Usable = true; ;
             AnswerString = answer.AnswerString;
             Pictures = ConvertPictures(answer.Pictures);
         }

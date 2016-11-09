@@ -19,40 +19,79 @@ namespace PLM
 
         public Question()
         {
-
+            Guesses = new List<string>();
         }
 
-        public Question(GameModule gm, GameSettings gs)
+        public Question(UserGameSession gameSession)
         {
-            Score = 0;
-            TimeRemaining = gs.Time;
-            CurrentQuestion = 0;
-            TotalQuestions = gs.Questions;
-            GamePicture = gm.Answers.ElementAt(0).Pictures.ElementAt(0);
-            AddAnswers(gm.Answers, gs.Questions);
-            CorrectAnswerString = gm.rightAnswerString;
-            IncorrectAnswerString = gm.wrongAnswerString;
-        }
-
-        private void AddAnswers(List<GameAnswer> gas, int gameSettingQuestions)
-        {
-            List<string> AddedAnswers = new List<string>();
-            CorrectAnswer = gas.ElementAt(0).AnswerString;
-            Guesses.Add(CorrectAnswer);
-            AddedAnswers.Add(CorrectAnswer);
-            gas.Remove(gas.ElementAt(0));
-
-            Random r = new Random(DateTime.Now.Millisecond);
-            while (Guesses.Count < gameSettingQuestions)
+            Guesses = new List<string>();
+            Score = gameSession.Score;
+            CurrentQuestion = gameSession.currentQuestion;
+            TimeRemaining = (int)gameSession.timeLeft.TotalSeconds;
+            TotalQuestions = gameSession.GameSettings.Questions;
+            CorrectAnswerString = gameSession.gameModule.rightAnswerString;
+            IncorrectAnswerString = gameSession.gameModule.wrongAnswerString;
+            CorrectAnswer = GetCorrectAnswer(gameSession.gameModule.Answers);
+            if (CorrectAnswer == "error")
             {
-                string answerToAdd = gas.ElementAt(r.Next(0, gas.Count())).AnswerString;
-                if (!Guesses.Contains(answerToAdd))
+                Shuffle(gameSession.gameModule.Answers);
+                CorrectAnswer = GetCorrectAnswer(gameSession.gameModule.Answers);
+                // Doesn't check for error again
+            }
+            Guesses.Add(CorrectAnswer);
+            AddWrongAnswers(gameSession.GameSettings.Answers, gameSession.gameModule.Answers);
+        }
+
+        private void AddWrongAnswers(int maxAnswer, List<GameAnswer> gameAnswers)
+        {
+            string guess;
+            Random r = new Random(DateTime.Now.Second);
+            while (Guesses.Count < maxAnswer)
+            {
+                guess = gameAnswers.ElementAt(r.Next(0, gameAnswers.Count - 1)).AnswerString;
+                if (!Guesses.Contains(guess))
                 {
-                    Guesses.Add(answerToAdd);
-                    AddedAnswers.Remove(answerToAdd);
+                    Guesses.Add(guess);
                 }
             }
-            Guesses.Shuffle();
+        }
+
+        private void Shuffle(List<GameAnswer> ga)
+        {
+            foreach (GameAnswer a in ga)
+            {
+                foreach (Models.GamePicture gp in a.Pictures)
+                {
+                    gp.Usable = true;
+                }
+                a.Pictures.Shuffle();
+                a.Usable = true;
+            }
+            ga.Shuffle();
+        }
+
+        private string GetCorrectAnswer(List<GameAnswer> ga)
+        {
+            foreach (GameAnswer a in ga)
+            {
+                if (a.Usable)
+                {
+                    foreach (Models.GamePicture gp in a.Pictures)
+                    {
+                        if (gp.Usable)
+                        {
+                            GamePicture = gp;
+                            gp.Usable = false;
+                            a.Usable = false;
+                            return a.AnswerString;
+                        }
+                        // No available pictures for answer
+                        a.Usable = false;
+                    }
+                }
+            }
+            // No answers with available pictures
+            return "error";
         }
     }
 }

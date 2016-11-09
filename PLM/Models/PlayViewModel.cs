@@ -8,12 +8,16 @@ namespace PLM
     public class PlayViewModel
     {
         public PLM.Models.GamePicture PictureToView { get; set; }
+        [MaxLength(25)]
+        public string Attribution { get; set; }
         public List<string> possibleAnswers { get; set; }
         public string Answer { get; set; }
         public int Score { get; set; }
         public TimeSpan Time { get; set; }
         public int CurrentQuestion { get; set; }
         public int TotalQuestions { get; set; }
+        public int PictureID { get; set; }
+        public int NumCorrect { get; set; }
 
         public PlayViewModel()
         {

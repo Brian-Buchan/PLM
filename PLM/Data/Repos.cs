@@ -40,7 +40,14 @@ namespace PLM
 
         //public IEnumerable<string[]> GetTop10Scores(int moduleID)
         //{
-        //    var _List
+        //    var idParam = new SqlParameter
+        //    {
+        //        ParameterName = "moduleID",
+        //        Value = moduleID > 0 ? moduleID : SqlInt32.Null
+        //    };
+        //    var _List = _dc.Database.SqlQuery<Score>(
+        //        "Select TOP 10 Scores.CorrectAnswers, "
+        //        )
         //}
 
         public IEnumerable<AnswerViewModel> GetAnswerList(int moduleID = 0)

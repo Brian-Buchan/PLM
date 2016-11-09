@@ -17,10 +17,12 @@ namespace PLM
         public GameSettings GameSettings { get; set; }
 
         public TimeSpan timeLeft { get; set; }
-        public int time { get; set; }
         public int Score { get; set; }
         public int currentQuestion { get; set; }
 
+
+        // WONT NEED IN NEW BUILD
+        public int time { get; set; }
         public int iteratedQuestion { get; set; }
         public List<AnsPicIndex> PictureIndices { get; set; }
         public int defaultNumAnswer { get; set; }
@@ -30,10 +32,15 @@ namespace PLM
 
         public UserGameSession()
         {
-            //currentModule = new Module();
-            //numCorrect = 0;
+            //NEW
+            GameSettings = new GameSettings();
 
-            //PictureIndices = new List<AnsPicIndex>();
+
+
+            // OLD
+            currentModule = new Module();
+            numCorrect = 0;
+            PictureIndices = new List<AnsPicIndex>();
         }
     }
 }

@@ -18,7 +18,7 @@
         </div>
     </div>
 </section>
-<div class="container">
+<div class="container col-xs-3">
     @using (Html.BeginForm("Index", "Modules", FormMethod.Get))
     {
         <p>Find by name: @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)<input type="submit" value="Search" /></p>
@@ -62,7 +62,7 @@
                 {
                     Answer answer = module.Answers.ElementAt(0);
                     Picture picture = answer.Pictures.ElementAt(0);
-                    PLM.Models.PictureToView pic = new PLM.Models.PictureToView(picture);
+                    PLM.Models.GamePicture pic = new PLM.Models.GamePicture(picture);
                     <div class="col-xs-4">
                         <div class="portfolio-wrapper">
                             <div class="portfolio-single">
