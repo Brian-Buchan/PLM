@@ -18,7 +18,7 @@
         </div>
     </div>
 </section>
-<div class="container col-xs-3">
+<div class="container">
     @using (Html.BeginForm("Index", "Modules", FormMethod.Get))
     {
         <p>Find by name: @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)<input type="submit" value="Search" /></p>
@@ -28,8 +28,9 @@
 <section id="projects" class="padding-top">
 
     <!-- Partial View Here -->
-
-    @Html.Action("pvModuleFilterList", "Modules")
+    <div class="col-xs-3">
+        @Html.Action("pvModuleFilterList", "Modules")
+    </div>
     <!-- Delete This Div -->
     @*<div class="col-xs-3">
         <div class="sidebar portfolio-sidebar">

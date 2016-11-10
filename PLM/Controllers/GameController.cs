@@ -19,16 +19,16 @@ namespace PLM.Controllers
         private Module currentModule = new Module();
         private string CorrectAnswer;
 
+        //private static Random rand = new Random();
         private UserGameSession currentGameSession;
-        private static Random rand = new Random();
-        private Score newScore;
-        private int answerID;
-        private int pictureID;
-        private bool loggedIn;
-        private int currentGuessNum;
-        private bool correctSettings;
-        private bool PLMgenerated = false;
-        private bool WrongAnswersGenerationNOTcompleted = true;
+        //private Score newScore;
+        //private int answerID;
+        //private int pictureID;
+        //private bool loggedIn;
+        //private int currentGuessNum;
+        //private bool correctSettings;
+        //private bool PLMgenerated = false;
+        //private bool WrongAnswersGenerationNOTcompleted = true;
 
 
 
@@ -353,7 +353,7 @@ namespace PLM.Controllers
         private void GenerateSession()
         {
             Session["userGameSession"] = null;
-            UserGameSession currentGameSession = new UserGameSession();
+            currentGameSession = new UserGameSession();
             Session["userGameSession"] = currentGameSession;
         }
         private void GenerateModule(int PLMid)
