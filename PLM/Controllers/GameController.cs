@@ -402,10 +402,7 @@ namespace PLM.Controllers
             {
                 return true;
             }
-            else
-            {
-                return false;
-            }
+            return false;
         }
         private bool OutOfAnswers(GameModule gm)
         {
@@ -425,9 +422,25 @@ namespace PLM.Controllers
             CorrectAnswer = question.CorrectAnswer;
             return View(question);
         }
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult Play(int Time, string guess)
+        //{
+        //    HandleUserGuess(guess);
+        //    if (GameIsDone(Time))
+        //    {
+        //        return RedirectToAction("Complete", new { Score = ((UserGameSession)Session["userGameSession"]).Score });
+        //    }
+        //    else
+        //    {
+        //        Question question = new Question(((UserGameSession)Session["userGameSession"]));
+        //        CorrectAnswer = question.CorrectAnswer;
+        //        return View(question);
+        //    }
+        //}
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Play(int Time, string guess)
+        public ActionResult HandleGuess(int Time, string guess)
         {
             HandleUserGuess(guess);
             if (GameIsDone(Time))
@@ -436,9 +449,7 @@ namespace PLM.Controllers
             }
             else
             {
-                Question question = new Question(((UserGameSession)Session["userGameSession"]));
-                CorrectAnswer = question.CorrectAnswer;
-                return View(question);
+                return RedirectToAction("Play");
             }
         }
         public ActionResult Complete(int score)
@@ -459,8 +470,13 @@ namespace PLM.Controllers
                     score.UserID = User.Identity.GetUserId();
                     db.Entry(score).State = EntityState.Added;
                     db.SaveChanges();
+                    ViewBag.ErrorMessage = "No error";
                 }
-                ViewBag.ErrorMessage = "You must use default settings for your score to save";
+                else
+                {
+                    ViewBag.ErrorMessage = "You must use default settings for your score to save";
+
+                }
             }
             else
             {
