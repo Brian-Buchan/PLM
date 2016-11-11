@@ -4,9 +4,11 @@ $(function () {
     var count = Number($('#displayScore').text());
     var revealed = false;
     var intervalID;
+    var btns = document.getElementsByClassName('btn-guess');
 
     function windowOnload(timeLeft) {
         CheckMute();
+        //test();
         startCountdown(timeLeft);
     }
     //These cookie functions are from w3schools
@@ -28,13 +30,31 @@ $(function () {
         return "";
     }
 
+    function test() {
+        for (var i = 0; i < btns.length; i++) {
+            btns[i].addEventListener('click', function () { ButtonClick(this.innerText) });
+        }
+    }
+
+    $(function () {
+        $('.btn-guess').on('click', function () { ButtonClick(this.innerHTML ) });
+    });
     function ButtonClick(guess) {
         pictureAnswer = $("#StoredAnswer").text();
-        if (!revealed) {
-            if (isGuessRight(pictureAnswer, guess)) {
-                Correct();
-            }
-        }
+        $('#Guess').val(guess);
+        //reveal();
+        showNext();
+        // click next
+        clickNext();
+        //if (!revealed) {
+        //    if (isGuessRight(pictureAnswer, guess)) {
+        //        Correct();
+        //    }
+        //}
+    }
+
+    function clickNext() {
+        document.getElementById('next').click();
     }
 
     function isGuessRight(answer, guess) {

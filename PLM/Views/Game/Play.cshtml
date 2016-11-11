@@ -2,13 +2,11 @@
 @{
     ViewBag.Title = "Play Game";
 }
-<head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Play Game</title>
-    <script type="text/javascript" src="~/Scripts/moment.js"></script>
+<div>
     <script type="text/javascript" src="~/Scripts/gameplay.js"></script>
-</head>
-<body onload="windowOnload('@Model.TimeRemaining.ToString()')">
+    <script type="text/javascript" src="~/Scripts/moment.js"></script>
+</div>
+<div onload="windowOnload('@Model.TimeRemaining.ToString()')">
     <audio id="audioCorrect" preload="auto"><source src="~/Content/Audio/correctSound.mp3" type="audio/mp3" /></audio>
     <audio id="audioIncorrect" preload="auto"><source src="~/Content/Audio/incorrectSound.mp3" type="audio/mp3" /></audio>
 
@@ -36,8 +34,9 @@
                 @using (Html.BeginForm("HandleGuess", "Game", FormMethod.Post, new { id = "GameForm", onsubmit = "return CheckIn();" }))
                 {
                     @Html.AntiForgeryToken()
-                    <input id="Time" name="Time" hidden="hidden" type="number" value="@Model.TimeRemaining" />
-                    <input id="Guess" name="Guess" hidden="hidden" type="text" value="" />
+                    <input id="Time" name="Time" hidden="hidden" type="text" value="@Model.TimeRemaining.ToString()" />
+                    <input id="Guess" name="Guess" hidden="hidden" type="text" value=""/>
+                    <input id="correctAnswer" name="correctAnswer" hidden="hidden" type="text" value="@Model.CorrectAnswer"/>
                     <div id="nextButton" style="display:none;">
                         <button id="next" type="submit" value="" class="btn-success">Next</button>
                         <h1 class="NoMargin" id="resultText">Correct</h1>
@@ -67,8 +66,8 @@
         <div id="answerButtons" tabindex="0">
             @for (int i = 0; i < Model.Guesses.Count; i++)
             {
-                <button class="btn btn-primary" onclick="ButtonClick(this.textContent)">@Model.Guesses.ElementAt(i)</button>
+                <button class="btn btn-primary btn-guess" @*onclick="ButtonClick(this.textContent)"*@>@Model.Guesses.ElementAt(i)</button>
             }
         </div>
     </div>
-</body>
+</div>

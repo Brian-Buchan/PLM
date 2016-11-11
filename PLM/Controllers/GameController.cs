@@ -372,15 +372,15 @@ namespace PLM.Controllers
         }
         private void SetTime()
         {
-            int timeHours = (((UserGameSession)Session["userGameSession"]).time / 60);
-            int timeMinutes = (((UserGameSession)Session["userGameSession"]).time % 60);
+            int timeHours = (((UserGameSession)Session["userGameSession"]).GameSettings.Time / 60);
+            int timeMinutes = (((UserGameSession)Session["userGameSession"]).GameSettings.Time % 60);
             ((UserGameSession)Session["userGameSession"]).timeLeft = new TimeSpan(timeHours, timeMinutes, 0);
         }
         private void TakeDefaultGameSettings()
         {
             ((UserGameSession)Session["userGameSession"]).GameSettings.Questions = ((UserGameSession)Session["userGameSession"]).gameModule.DefaultNumQuestions;
             ((UserGameSession)Session["userGameSession"]).GameSettings.Time = ((UserGameSession)Session["userGameSession"]).gameModule.DefaultTime;
-            ((UserGameSession)Session["userGameSession"]).GameSettings.Answers = ((UserGameSession)Session["userGameSession"]).defaultNumAnswer;
+            ((UserGameSession)Session["userGameSession"]).GameSettings.Answers = ((UserGameSession)Session["userGameSession"]).gameModule.DefaultNumAnswers;
         }
         private void TakeUserGameSettings(GameSettings ugs)
         {
@@ -396,9 +396,9 @@ namespace PLM.Controllers
             }
                 ((UserGameSession)Session["userGameSession"]).currentQuestion++;
         }
-        private bool GameIsDone(int Time)
+        private bool GameIsDone(TimeSpan Time)
         {
-            if (((UserGameSession)Session["userGameSession"]).currentQuestion <= ((UserGameSession)Session["userGameSession"]).GameSettings.Questions | (Time <= 0))
+            if (((UserGameSession)Session["userGameSession"]).currentQuestion >= ((UserGameSession)Session["userGameSession"]).GameSettings.Questions | (Time.CompareTo(new TimeSpan(0, 0, 0)) < 1))
             {
                 return true;
             }
@@ -440,10 +440,12 @@ namespace PLM.Controllers
         //}
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult HandleGuess(int Time, string guess)
+        public ActionResult HandleGuess(string Time, string Guess, string correctAnswer)
         {
-            HandleUserGuess(guess);
-            if (GameIsDone(Time))
+            ((UserGameSession)Session["userGameSession"]).timeLeft = TimeSpan.Parse(Time);
+            CorrectAnswer = correctAnswer;
+            HandleUserGuess(Guess);
+            if (GameIsDone(((UserGameSession)Session["userGameSession"]).timeLeft))
             {
                 return RedirectToAction("Complete", new { Score = ((UserGameSession)Session["userGameSession"]).Score });
             }
@@ -457,7 +459,43 @@ namespace PLM.Controllers
             Score newScore = new Score(score, ((UserGameSession)Session["userGameSession"]).gameModule.ModuleID, ((UserGameSession)Session["userGameSession"]).GameSettings.Questions);
             SaveScore(newScore);
 
-            return View();
+
+            ViewBag.ModuleID = ((UserGameSession)Session["userGameSession"]).currentModule.ModuleID;
+            List<Score> scores = TopTenScore.GetTopTenScores(((UserGameSession)Session["userGameSession"]).currentModule.ModuleID);
+            List<string[]> scoresToSend = new List<string[]>();
+            foreach (Score top10score in scores)
+            {
+                string[] stringToSend = new string[3];
+                ApplicationUser player = db.Users.Find(top10score.UserID);
+                try
+                {
+                    stringToSend[0] = (player.FirstName + ", " + player.LastName[0]);
+                }
+                catch
+                {
+                    stringToSend[0] = "Error";
+                }
+                try
+                {
+                    stringToSend[1] = (top10score.CorrectAnswers + " out of " + top10score.TotalAnswers);
+                }
+                catch
+                {
+                    stringToSend[1] = "Error";
+                }
+                try
+                {
+                    stringToSend[2] = top10score.TimeStamp.ToShortDateString();
+                }
+                catch
+                {
+                    stringToSend[2] = "Error";
+                }
+                scoresToSend.Add(stringToSend);
+            }
+            ViewBag.Top10Scores = scoresToSend;
+
+            return View(newScore);
         }
         private void SaveScore(Score score)
         {
@@ -470,7 +508,6 @@ namespace PLM.Controllers
                     score.UserID = User.Identity.GetUserId();
                     db.Entry(score).State = EntityState.Added;
                     db.SaveChanges();
-                    ViewBag.ErrorMessage = "No error";
                 }
                 else
                 {

@@ -8,7 +8,7 @@ namespace PLM
     public class Question
     {
         public int Score { get; set; }
-        public int TimeRemaining { get; set; }
+        public TimeSpan TimeRemaining { get; set; }
         public int CurrentQuestion { get; set; }
         public int TotalQuestions { get; set; }
         public Models.GamePicture GamePicture { get; set; }
@@ -27,7 +27,7 @@ namespace PLM
             Guesses = new List<string>();
             Score = gameSession.Score;
             CurrentQuestion = gameSession.currentQuestion;
-            TimeRemaining = (int)gameSession.timeLeft.TotalSeconds;
+            TimeRemaining = gameSession.timeLeft;
             TotalQuestions = gameSession.GameSettings.Questions;
             CorrectAnswerString = gameSession.gameModule.rightAnswerString;
             IncorrectAnswerString = gameSession.gameModule.wrongAnswerString;
@@ -45,13 +45,43 @@ namespace PLM
         private void AddWrongAnswers(int maxAnswer, List<GameAnswer> gameAnswers)
         {
             string guess;
-            Random r = new Random(DateTime.Now.Second);
-            while (Guesses.Count < maxAnswer)
+            int igameAns = maxAnswer;
+            if (maxAnswer > gameAnswers.Count)
             {
+                igameAns = gameAnswers.Count;
+            }
+            int maxIteration = gameAnswers.Count * 5;
+            int iterations = 0;
+            Random r = new Random(DateTime.Now.Second);
+            while (Guesses.Count <= igameAns)
+            {
+                if (maxIteration > iterations)
+                {
+                    break;
+                }
                 guess = gameAnswers.ElementAt(r.Next(0, gameAnswers.Count - 1)).AnswerString;
                 if (!Guesses.Contains(guess))
                 {
                     Guesses.Add(guess);
+                }
+                iterations++;
+            }
+            if (Guesses.Count < igameAns)
+            {
+                ForceAnswers(gameAnswers, igameAns);
+            }
+        }
+
+        private void ForceAnswers(List<GameAnswer> ga, int igameAns)
+        {
+            foreach (GameAnswer item in ga)
+            {
+                if (!Guesses.Contains(item.AnswerString))
+                {
+                    if (Guesses.Count <= igameAns)
+                    {
+                        Guesses.Add(item.AnswerString);
+                    }
                 }
             }
         }

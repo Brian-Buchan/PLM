@@ -34,7 +34,7 @@ namespace PLM
         {
             //NEW
             GameSettings = new GameSettings();
-
+            Score = 0;
 
 
             // OLD
