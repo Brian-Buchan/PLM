@@ -2,13 +2,13 @@
 @{
     ViewBag.Title = "Play Game";
 }
-<head>
+
+@*<head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Play Game</title>
-    <script type="text/javascript" src="~/Scripts/moment.js"></script>
-    <script type="text/javascript" src="~/Scripts/gameplay.js"></script>
+ 
 </head>
-<body onload="windowOnload('@Model.TimeRemaining.ToString()')">
+<body onload="windowOnload('@Model.TimeRemaining.ToString()')">*@
     <audio id="audioCorrect" preload="auto"><source src="~/Content/Audio/correctSound.mp3" type="audio/mp3" /></audio>
     <audio id="audioIncorrect" preload="auto"><source src="~/Content/Audio/incorrectSound.mp3" type="audio/mp3" /></audio>
 
@@ -71,4 +71,9 @@
             }
         </div>
     </div>
-</body>
+
+<script type="text/javascript" src="~/Scripts/moment.js"></script>
+<script type="text/javascript" src="~/Scripts/gameplay.js"></script>
+
+
+@*</body>*@
