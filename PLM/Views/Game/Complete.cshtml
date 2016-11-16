@@ -1,62 +1,60 @@
-﻿@model PLM.Score
+﻿@model PLM.GameCompleted
 @{
     ViewBag.Title = "Results";
     ViewBag.Author = "Alexander Phillip Olson";
-    ApplicationDbContext db = new ApplicationDbContext();
-    ApplicationUser user = new ApplicationUser();
 }
-    <section id="page-breadcrumb">
-        <div class="vertical-center sun">
-            <div class="container">
-                <div class="row">
-                    <div class="action">
-                        <div class="col-sm-12">
-                            <h1 class="title">Your Results</h1>
-                        </div>
+<section id="page-breadcrumb">
+    <div class="vertical-center sun">
+        <div class="container">
+            <div class="row">
+                <div class="action">
+                    <div class="col-sm-12">
+                        <h1 class="title">Your Results</h1>
                     </div>
                 </div>
             </div>
         </div>
-        <hr class="line-through"/>
-    </section>
-    <div style="width:100%">
+    </div>
+    <hr class="line-through" />
+</section>
+<div style="width:100%">
     <div class="about-us" style="width:50%; float:left">
-        <h1>Your Score: @{ string userScore = (Model.CorrectAnswers * 100).ToString(); }@userScore</h1>
-        <h2> @Model.CorrectAnswers out of @Model.TotalAnswers Correct </h2>
+        <h1>Your Score:@{ string userScore = (Model.correctAnswers * 100).ToString(); } @userScore</h1>
+        <h2>@Model.correctAnswers out of @Model.totalQuestions Correct</h2>
         <h2>@ViewBag.ErrorMessage</h2>
         <hr />
         <div>
             <div>
-                @Html.ActionLink("Play Again", "Setup", "Game", new { PLMid = ViewBag.ModuleID, changeSettings = 0}, new { Type = "button-submit-sm" })
-                <br/>
-                <br/>
-                    @if (User.IsInRole("Learner"))
-                    {
-                        @Html.ActionLink("Report this module", "Create", "Report", new { id = ViewBag.ModuleID },null)
-                        <br />
-                    }
-                    @Html.ActionLink("Return to module select", "Index", "Modules")
-            </div>
-        </div>
-    </div>
-        <div class="about-us" style="width:50%; float:left">
-            <h3>Top Scores</h3>
-            <div class="Top10ScoreBoard">
-                @{
-                    <div class="Top10ScoreItem ScoreHeader">
-                        <p class="Top10Score">Name</p>
-                        <p class="Top10Score">Score</p>
-                        <p class="Top10Score">Date</p>
-                    </div>
-                    foreach (String[] score in ViewBag.Top10Scores)
-                    {
-                        <div class="Top10ScoreItem">
-                            <p class="Top10Score">@score[0]</p>
-                            <p class="Top10Score">@score[1]</p>
-                            <p class="Top10Score">@score[2]</p>
-                        </div>
-                    }
+                @Html.ActionLink("Play Again", "Setup", "Game", new { PLMid = ViewBag.ModuleID, changeSettings = 0 }, new { Type = "button-submit-sm" })
+                <br />
+                <br />
+                @if (User.IsInRole("Learner"))
+                {
+                    @Html.ActionLink("Report this module", "Create", "Report", new { id = ViewBag.ModuleID }, null)
+                    <br />
                 }
+                @Html.ActionLink("Return to module select", "Index", "Modules")
             </div>
         </div>
     </div>
+    <div class="about-us" style="width:50%; float:left">
+        <h3>Top Scores</h3>
+        <div class="Top10ScoreBoard">
+            @{
+                <div class="Top10ScoreItem ScoreHeader">
+                    <p class="Top10Score">Name</p>
+                    <p class="Top10Score">Score</p>
+                    <p class="Top10Score">Date</p>
+                </div>
+                foreach (Top10Score score in Model.Top10Scores)
+                {
+                    <div class="Top10ScoreItem">
+                        <p class="Top10Score">@score.Name</p>
+                        <p class="Top10Score">@score.Score</p>
+                        <p class="Top10Score">@score.Date</p>
+                    </div>
+                }
+            }
+        </div>
+    </div>
+</div>

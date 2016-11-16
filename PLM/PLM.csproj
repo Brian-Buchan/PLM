@@ -266,6 +266,7 @@
     <Compile Include="Models\AnswerViewModel.cs" />
     <Compile Include="Models\ConfirmViewModel.cs" />
     <Compile Include="Models\GameAnswer.cs" />
+    <Compile Include="Models\Top10Score.cs" />
     <Compile Include="Models\GameCompleted.cs" />
     <Compile Include="Models\GameModule.cs" />
     <Compile Include="Models\GameSettings.cs" />
@@ -1254,7 +1255,7 @@
     <Content Include="Views\ModulesEDIT\Details.cshtml" />
     <Content Include="Views\ModulesEDIT\Edit.cshtml" />
     <Content Include="Views\ModulesEDIT\Index.cshtml" />
-    <Content Include="Views\Game\Complete.cshtml" />
+    <Content Include="Views\Game\CompleteOrig.cshtml" />
     <Content Include="Views\Home\FAQ.cshtml" />
     <Content Include="Views\Game\Setup.cshtml" />
     <Content Include="Views\Report\Delete.cshtml" />
@@ -1306,6 +1307,7 @@
     <Content Include="Views\Categories\Index.cshtml" />
     <Content Include="Views\Modules\pvModuleFilterList.cshtml" />
     <Content Include="Views\Pictures\GamePictureView.cshtml" />
+    <Content Include="Views\Game\Complete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

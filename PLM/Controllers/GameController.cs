@@ -457,47 +457,26 @@ namespace PLM.Controllers
         public ActionResult Complete(int score)
         {
             Score newScore = new Score(score, ((UserGameSession)Session["userGameSession"]).gameModule.ModuleID, ((UserGameSession)Session["userGameSession"]).GameSettings.Questions);
-            SaveScore(newScore);
-
-
-            ViewBag.ModuleID = ((UserGameSession)Session["userGameSession"]).currentModule.ModuleID;
-            List<Score> scores = TopTenScore.GetTopTenScores(((UserGameSession)Session["userGameSession"]).currentModule.ModuleID);
-            List<string[]> scoresToSend = new List<string[]>();
-            foreach (Score top10score in scores)
+            string error = "";
+            SaveScore(newScore, error);
+            GameCompleted resultScreen = new GameCompleted();
+            resultScreen.correctAnswers = newScore.CorrectAnswers;
+            resultScreen.totalQuestions = newScore.TotalAnswers;
+            if (error != "")
             {
-                string[] stringToSend = new string[3];
-                ApplicationUser player = db.Users.Find(top10score.UserID);
-                try
-                {
-                    stringToSend[0] = (player.FirstName + ", " + player.LastName[0]);
-                }
-                catch
-                {
-                    stringToSend[0] = "Error";
-                }
-                try
-                {
-                    stringToSend[1] = (top10score.CorrectAnswers + " out of " + top10score.TotalAnswers);
-                }
-                catch
-                {
-                    stringToSend[1] = "Error";
-                }
-                try
-                {
-                    stringToSend[2] = top10score.TimeStamp.ToShortDateString();
-                }
-                catch
-                {
-                    stringToSend[2] = "Error";
-                }
-                scoresToSend.Add(stringToSend);
+                resultScreen.errorMessage = error;
             }
-            ViewBag.Top10Scores = scoresToSend;
-
-            return View(newScore);
+            using (Repos repo = new Repos())
+            {
+                var dbScores = repo.GetTop10Scores(((UserGameSession)Session["userGameSession"]).gameModule.ModuleID);
+                foreach (var dbs in dbScores)
+                {
+                    resultScreen.Top10Scores.Add(dbs);
+                }
+            }
+            return View(resultScreen);
         }
-        private void SaveScore(Score score)
+        private void SaveScore(Score score, string error)
         {
             if (Request.IsAuthenticated)
             {
@@ -511,13 +490,13 @@ namespace PLM.Controllers
                 }
                 else
                 {
-                    ViewBag.ErrorMessage = "You must use default settings for your score to save";
+                    error = "You must use default settings for your score to save";
 
                 }
             }
             else
             {
-                ViewBag.ErrorMessage = "You must be logged in for your score to save";
+                error = "You must be logged in for your score to save";
             }
         }
         #endregion
