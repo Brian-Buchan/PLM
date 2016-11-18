@@ -48,14 +48,13 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Pictures, "Pictures", new { @class = "control-label col-md-2" })
             <div class="form-group, scroll-box, col-xs-10 flex">
-                @foreach (Picture pic in Model.Pictures)
+                @foreach (Picture pic in ViewBag.Pictures)
                 {
-                   
                     <div class="col-xs-6">
                         <div class="portfolio-wrapper">
                             <div class="portfolio-single">
                                 <div class="portfolio-thumb">
-                                    @Html.Action("PictureView", "Pictures", new { pic = new PLM.Models.PictureToView(pic) })
+                                    @Html.Action("PictureView", "Pictures", new { pic = new PLM.Models.GamePicture(pic) })
                                 </div>
                             </div>
                             <div class="portfolio-info ">

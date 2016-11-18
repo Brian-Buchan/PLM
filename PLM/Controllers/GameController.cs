@@ -359,7 +359,10 @@ namespace PLM.Controllers
         private void GenerateModule(int PLMid)
         {
             ((UserGameSession)Session["userGameSession"]).gameModule = null;
-            ((UserGameSession)Session["userGameSession"]).gameModule = new GameModule(db.Modules.Find(PLMid));
+            using (Repos repo = new Repos())
+            {
+                ((UserGameSession)Session["userGameSession"]).gameModule = new GameModule(repo.GetModuleByID(PLMid));
+            }
         }
         private void SetupGame()
         {
@@ -422,22 +425,6 @@ namespace PLM.Controllers
             CorrectAnswer = question.CorrectAnswer;
             return View(question);
         }
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult Play(int Time, string guess)
-        //{
-        //    HandleUserGuess(guess);
-        //    if (GameIsDone(Time))
-        //    {
-        //        return RedirectToAction("Complete", new { Score = ((UserGameSession)Session["userGameSession"]).Score });
-        //    }
-        //    else
-        //    {
-        //        Question question = new Question(((UserGameSession)Session["userGameSession"]));
-        //        CorrectAnswer = question.CorrectAnswer;
-        //        return View(question);
-        //    }
-        //}
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult HandleGuess(string Time, string Guess, string correctAnswer)

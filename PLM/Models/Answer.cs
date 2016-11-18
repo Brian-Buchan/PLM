@@ -23,8 +23,7 @@ namespace PLM
 
         public Answer()
         {
-            PictureCount = 0;
-        }
+            PictureCount = 0;        }
 
         public virtual Module Module { get; set; }
         public virtual List<Picture> Pictures { get; set; }

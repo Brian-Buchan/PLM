@@ -11,6 +11,34 @@ namespace PLM
     {
         ApplicationDbContext _dc = new ApplicationDbContext();
 
+        #region CREATE
+        public bool AddAnswer(Answer answer)
+        {
+            var idParam = new SqlParameter
+            {
+                ParameterName = "AnswerString",
+                Value = answer.AnswerString
+            };
+            var idParam1 = new SqlParameter
+            {
+                ParameterName = "ModuleID",
+                Value = answer.ModuleID
+            };
+            try
+            {
+                _dc.Database.ExecuteSqlCommand(
+                    "INSERT INTO [dbo].[Answers] ([AnswerString],[ModuleID]) VALUES (@AnswerString, @ModuleID)", idParam, idParam1
+                    );
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+            return true;
+        }
+        #endregion
+
+        #region READ
 
         public Models.Report GetReportByID(int id)
         {
@@ -24,7 +52,7 @@ namespace PLM
                 ).Single<Models.Report>();
             return _Item;
         }
-        
+
         public Module GetModuleByID(int id)
         {
             var idParam = new SqlParameter
@@ -33,11 +61,24 @@ namespace PLM
                 Value = id
             };
             var module = _dc.Database.SqlQuery<Module>(
-                "Select from Modules Where Modules.ModuleID = @ModuleID", idParam
+                "Select * from Modules Where Modules.ModuleID = @ModuleID", idParam
                 ).Single<Module>();
             return module;
         }
-        
+
+        public Answer GetAnswerByID(int id)
+        {
+            var idParam = new SqlParameter
+            {
+                ParameterName = "AnswerID",
+                Value = id
+            };
+            var answer = _dc.Database.SqlQuery<Answer>(
+                "Select * from Answers Where AnswerID = @AnswerID", idParam
+                ).Single<Answer>();
+            return answer;
+        }
+
         public IEnumerable<Models.Report> GetReportList()
         {
             var _List = _dc.Database.SqlQuery<Models.Report>(
@@ -101,7 +142,7 @@ namespace PLM
             return _List;
         }
 
-        public IEnumerable<AnswerViewModel> GetAnswerList(int moduleID = 0)
+        public IEnumerable<AnswerViewModel> GetAnswerViewList(int moduleID = 0)
         {
             var idParam = new SqlParameter
             {
@@ -114,6 +155,19 @@ namespace PLM
             return _List;
         }
 
+        public IEnumerable<Answer> GetAnswerList(int moduleID = 0)
+        {
+            var idParam = new SqlParameter
+            {
+                ParameterName = "moduleID",
+                Value = moduleID > 0 ? moduleID : SqlInt32.Null
+            };
+            var _List = _dc.Database.SqlQuery<Answer>(
+                "Select * from Answers Where Answers.ModuleID = @moduleID or @moduleID is null", idParam
+            ).ToList<Answer>();
+            return _List;
+        }
+
         public IEnumerable<Picture> GetPictureList(int answerID = 0)
         {
             var idParam = new SqlParameter
@@ -122,7 +176,7 @@ namespace PLM
                 Value = answerID > 0 ? answerID : SqlInt32.Null
             };
             var _List = _dc.Database.SqlQuery<Picture>(
-                "Select PictureID, AnswerID, Attribution, PictureData, Answers.AnswerString as AnswerString from Pictures join Answer on Picture.AnswerID = Answers.AnswerID Where Picture.AnswerID = @answerID or @answerID is null", idParam
+                "Select p.PictureID, p.AnswerID, p.Location, p.Attribution, p.PictureData, a.AnswerString from Pictures p join Answers a on p.AnswerID = a.AnswerID Where p.AnswerID = @answerID or @answerID is null", idParam
             ).ToList<Picture>();
             return _List;
         }
@@ -142,6 +196,66 @@ namespace PLM
             ).ToList<ModuleFilterMenuList>();
             return _List;
         }
+        #endregion
+
+        #region UPDATE
+        public bool UpdateAnswer(Answer answer)
+        {
+            var idParam = new SqlParameter
+            {
+                ParameterName = "AnswerString",
+                Value = answer.AnswerString
+            };
+            var idParam1 = new SqlParameter
+            {
+                ParameterName = "ModuleID",
+                Value = answer.ModuleID
+            };
+            var idParam2 = new SqlParameter
+            {
+                ParameterName = "AnswerID",
+                Value = answer.AnswerID
+            };
+            try
+            {
+                _dc.Database.ExecuteSqlCommand(
+                    "UPDATE Answers SET AnswerString = @AnswerString, ModuleID = @ModuleID WHERE AnswerID = @AnswerID", idParam, idParam1, idParam2
+                    );
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+            return true;
+        }
+
+        #endregion
+
+        #region DELETE
+        public bool DeleteAnswer(int answerID)
+        {
+            if (answerID <= 0)
+            {
+                return false;
+            }
+            var idParam = new SqlParameter
+            {
+                ParameterName = "AnswerID",
+                Value = answerID
+            };
+            try
+            {
+                _dc.Database.ExecuteSqlCommand(
+                    "DELETE FROM Answers WHERE AnswerID = @AnswerID", idParam
+                    );
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+            return true;
+        }
+        #endregion
 
         public void Dispose()
         {

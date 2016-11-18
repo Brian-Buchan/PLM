@@ -56,9 +56,6 @@
             <th>
                 Answer
             </th>
-            <th>
-                Picture Count
-            </th>
             <th></th>
             <th></th>
         </tr>
@@ -67,10 +64,6 @@
             <tr>
                 <td>
                     @Html.DisplayFor(modelItem => ans.AnswerString)
-
-                </td>
-                <td>
-                    @ans.Pictures.Count()
                 </td>
                 <td>
                     @Html.ActionLink("Add Picture", "Create", new { controller = "Pictures", id = ans.AnswerID })

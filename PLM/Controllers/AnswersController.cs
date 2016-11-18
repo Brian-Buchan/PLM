@@ -20,46 +20,55 @@ namespace PLM.Controllers
         // GET: /Answers/
         public ActionResult Index(int id = 0)
         {
-            Repos repos = new Repos();
-            var answers = repos.GetAnswerList(id);
-
-            //var answers = db.Answers.Include(a => a.Module);
+            IEnumerable<Answer> answers;
+            using (Repos repos = new Repos())
+            {
+                answers = repos.GetAnswerList(id);
+            }
             return View(answers);
         }
         // GET: /Answers/Details/5
         public ActionResult Details(int? id)
         {
+            int ID = id ?? 0;
+            Answer answer;
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Answer answer = db.Answers.Find(id);
-            if (answer == null)
+            else
             {
-                return HttpNotFound();
+                using (Repos repo = new Repos())
+                {
+                    answer = repo.GetAnswerByID(ID);
+                }
+                if (answer == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(answer);
             }
-            return View(answer);
         }
 
         // GET: /Answers/Create
         [AuthorizeOrRedirectAttribute(Roles = "Instructor")]
         public ActionResult Create(int ID, string error)
         {
+            Module module;
             try
             {
-                ViewBag.ModuleID = ID;
-                var modules = db.Modules.ToList();
-                ViewBag.ModuleName = modules.Find(x => x.ModuleID == ID).Name;
-                var answers = db.Answers.ToList();
-                ViewBag.ModuleAnsList = (from a in answers
-                                         where a.ModuleID == ID
-                                         select a).ToList();
+                using (Repos repo = new Repos())
+                {
+                    module = repo.GetModuleByID(ID);
+                    ViewBag.ModuleID = module.ModuleID;
+                    ViewBag.ModuleName = module.Name;
+                    ViewBag.ModuleAnsList = repo.GetAnswerList(module.ModuleID);
+                }
             }
             catch (Exception)
             {
-                ViewBag.Error = "You cannot add duplicate answers";
+                ViewBag.Error = error;
             }
-            ViewBag.Error = error;
             return View();
         }
 
@@ -75,12 +84,14 @@ namespace PLM.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    db.Answers.Add(answer);
-                    db.SaveChanges();
+                    using (Repos repo = new Repos())
+                    {
+                        repo.AddAnswer(answer);
+                    }
                     return RedirectToAction("Create", new { id = answer.ModuleID });
                 }
             }
-            catch (Exception){}
+            catch (Exception) { }
             return RedirectToAction("Create", new { error = "You cannot add duplicate answers" });
         }
 
@@ -88,6 +99,7 @@ namespace PLM.Controllers
         [AuthorizeOrRedirectAttribute(Roles = "Instructor")]
         public ActionResult Edit(int? id)
         {
+            int ID = id ?? 0;
             Response.Cache.SetCacheability(HttpCacheability.NoCache);
             Response.AppendHeader("Pragma", "no-cache"); // HTTP 1.0.
             Response.AppendHeader("Expires", "-1"); // Proxies.
@@ -95,11 +107,17 @@ namespace PLM.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Answer answer = db.Answers.Find(id);
+            Answer answer;
+            using (Repos repo = new Repos())
+            {
+                answer = repo.GetAnswerByID(ID);
+                ViewBag.Pictures = repo.GetPictureList(answer.AnswerID);
+            }
             if (answer == null)
             {
                 return HttpNotFound();
             }
+
             ViewBag.ModuleID = new SelectList(db.Modules, "ModuleID", "Name");
             return View(answer);
         }
@@ -114,12 +132,12 @@ namespace PLM.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(answer).State = EntityState.Modified;
-                if (ModuleID != null)
+                using (Repos repo = new Repos())
                 {
-                    answer.ModuleID = (int)ModuleID;
+                    repo.UpdateAnswer(answer);
+                    ViewBag.Pictures = repo.GetPictureList(answer.AnswerID);
                 }
-                db.SaveChanges();
+                
                 return RedirectToAction("Create", new { controller = "Answers", id = answer.ModuleID });
             }
             ViewBag.ModuleID = new SelectList(db.Modules, "ModuleID", "Name");
@@ -129,11 +147,16 @@ namespace PLM.Controllers
         [AuthorizeOrRedirectAttribute(Roles = "Instructor")]
         public ActionResult Delete(int? id)
         {
+            int ID = id ?? 0;
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Answer answer = db.Answers.Find(id);
+            Answer answer;
+            using (Repos repo = new Repos())
+            {
+                answer = repo.GetAnswerByID(ID);
+            }
             if (answer == null)
             {
                 return HttpNotFound();
@@ -147,8 +170,12 @@ namespace PLM.Controllers
         [AuthorizeOrRedirectAttribute(Roles = "Instructor")]
         public ActionResult DeleteConfirmed(int id)
         {
-            Answer answer = db.Answers.Find(id);
-            //DirectoryHandler.DeleteAnswer(id);
+            Answer answer;
+            using (Repos repo = new Repos())
+            {
+                answer = repo.GetAnswerByID(id);
+                repo.DeleteAnswer(id);
+            }
             return RedirectToAction("Create", new { id = answer.ModuleID });
         }
 
