@@ -18,7 +18,7 @@
 </section>
 <h2>@ViewBag.ModuleName</h2>
 <br />
-@using (Html.BeginForm()) 
+@using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
     <div class="form-horizontal">
@@ -59,25 +59,29 @@
             <th></th>
             <th></th>
         </tr>
-        @foreach (Answer ans in ViewBag.ModuleAnsList)
+        @if (ViewBag.ModuleAnsList != null)
         {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => ans.AnswerString)
-                </td>
-                <td>
-                    @Html.ActionLink("Add Picture", "Create", new { controller = "Pictures", id = ans.AnswerID })
-                </td>
-                <td>
-                    @Html.ActionLink("Edit", "Edit", new { controller = "Answers", id = ans.AnswerID }) |
-                    @Html.ActionLink("Delete", "Delete", new { controller = "Answers", id = ans.AnswerID })
-                </td>
-            </tr>
+            foreach (Answer ans in ViewBag.ModuleAnsList)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => ans.AnswerString)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Add Picture", "Create", new { controller = "Pictures", id = ans.AnswerID })
+                    </td>
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", new { controller = "Answers", id = ans.AnswerID }) |
+                        @Html.ActionLink("Delete", "Delete", new { controller = "Answers", id = ans.AnswerID })
+                    </td>
+                </tr>
+            }
+
         }
     </table>
 </div>
 <br />
 <br />
 <div class="clearLeft floatRight">
-    @Html.ActionLink("Done", "Index", new { controller = "Profile" }, new{ type = "button" })
+    @Html.ActionLink("Done", "Index", new { controller = "Profile" }, new { type = "button" })
 </div>

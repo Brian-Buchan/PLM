@@ -136,7 +136,7 @@ namespace PLM.Controllers
                     }
                 }
                 PopulateCategoryDropDownList(module.CategoryId);
-                return RedirectToAction("Create", "Answers", new { id = module.ModuleID });
+                return RedirectToAction("Index", "Profile");
             }
             return View(module);
         }

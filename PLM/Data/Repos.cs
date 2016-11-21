@@ -11,6 +11,15 @@ namespace PLM
     {
         ApplicationDbContext _dc = new ApplicationDbContext();
 
+        public SqlParameter NullChecker(SqlParameter param)
+        {
+            if (param.Value == null)
+            {
+                return new SqlParameter { ParameterName = param.ParameterName, Value = DBNull.Value };
+            }
+            return param;
+        }
+
         #region CREATE
         public bool AddAnswer(Answer answer)
         {
@@ -95,22 +104,22 @@ namespace PLM
         public bool AddModule(Module module)
         {
             var idParam = new SqlParameter { ParameterName = "Name", Value = module.Name };
-            var idParam1 = new SqlParameter { ParameterName = "Description", Value = module.Description };
+            var idParam1 = NullChecker(new SqlParameter { ParameterName = "Description", Value = module.Description });
             var idParam2 = new SqlParameter { ParameterName = "CategoryID", Value = module.CategoryId };
             var idParam3 = new SqlParameter { ParameterName = "DefaultNumAnswers", Value = module.DefaultNumAnswers };
             var idParam4 = new SqlParameter { ParameterName = "DefaultTime", Value = module.DefaultTime };
             var idParam5 = new SqlParameter { ParameterName = "DefaultNumQuestions", Value = module.DefaultNumQuestions };
             var idParam6 = new SqlParameter { ParameterName = "isPrivate", Value = module.isPrivate };
             var idParam7 = new SqlParameter { ParameterName = "user_Id", Value = module.User.Id };
-            var idParam8 = new SqlParameter { ParameterName = "rightAnswerString", Value = module.rightAnswerString };
-            var idParam9 = new SqlParameter { ParameterName = "wrongAnswerString", Value = module.wrongAnswerString };
+            var idParam8 = NullChecker(new SqlParameter { ParameterName = "rightAnswerString", Value = module.rightAnswerString });
+            var idParam9 = NullChecker(new SqlParameter { ParameterName = "wrongAnswerString", Value = module.wrongAnswerString });
             var idParam10 = new SqlParameter { ParameterName = "isDisabled", Value = module.isDisabled };
-            var idParam11 = new SqlParameter { ParameterName = "DisableModuleNote", Value = module.DisableModuleNote };
-            var idParam12 = new SqlParameter { ParameterName = "DisableReason", Value = module.DisableReason };
+            var idParam11 = NullChecker(new SqlParameter { ParameterName = "DisableModuleNote", Value = module.DisableModuleNote });
+            var idParam12 = NullChecker(new SqlParameter { ParameterName = "DisableReason", Value = module.DisableReason });
             try
             {
                 _dc.Database.ExecuteSqlCommand(
-                    "INSERT INTO Modules(Name, Description, CategoryId, DefaultNumAnswers, DefaultTime, DefaultNumQuestions, isPrivate, User_Id, rightAnswerString, wrongAnswerString, isDisabled, DisableModuleNote, DisableReason) VALUES(@Name, @Description, @CategoryId, @DefaultNumAnswers, @DefaultTime, @DefaultNumQuestions, @isPrivate, @User_Id, @rightAnswerString, @wrongAnswerString, @isDisabled, @DisableModuleNote, @DisableReason",
+                    "INSERT INTO Modules(Name, Description, CategoryId, DefaultNumAnswers, DefaultTime, DefaultNumQuestions, isPrivate, User_Id, rightAnswerString, wrongAnswerString, isDisabled, DisableModuleNote, DisableReason) VALUES (@Name, @Description, @CategoryId, @DefaultNumAnswers, @DefaultTime, @DefaultNumQuestions, @isPrivate, @User_Id, @rightAnswerString, @wrongAnswerString, @isDisabled, @DisableModuleNote, @DisableReason)",
                     idParam, idParam1, idParam2, idParam3, idParam4, idParam5, idParam6, idParam7, idParam8, idParam9, idParam10, idParam11, idParam12
                     );
             }
@@ -402,21 +411,21 @@ namespace PLM
 
         public bool UpdatePicture(Picture picture)
         {
-            var idParam = new SqlParameter
+            var idParam = NullChecker(new SqlParameter
             {
                 ParameterName = "Location",
                 Value = picture.Location
-            };
+            });
             var idParam1 = new SqlParameter
             {
                 ParameterName = "AnswerID",
                 Value = picture.AnswerID
             };
-            var idParam2 = new SqlParameter
+            var idParam2 = NullChecker(new SqlParameter
             {
                 ParameterName = "Attribution",
                 Value = picture.Attribution
-            };
+            });
             var idParam3 = new SqlParameter
             {
                 ParameterName = "PictureData",
@@ -425,7 +434,7 @@ namespace PLM
             try
             {
                 _dc.Database.ExecuteSqlCommand(
-                    "UPDATE Pictures SET Location = @Location, AnswerID = @AnswerID, Attribution = @Attribution, PictureData = @PictureData)", idParam, idParam1, idParam2, idParam3
+                    "UPDATE Pictures SET Location = @Location, AnswerID = @AnswerID, Attribution = @Attribution, PictureData = @PictureData", idParam, idParam1, idParam2, idParam3
                     );
             }
             catch (Exception)

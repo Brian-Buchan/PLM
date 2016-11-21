@@ -17,6 +17,7 @@
 </section>
 @using (Html.BeginForm())
 {
+    @Html.AntiForgeryToken()
     <div class="form-horizontal">
         @Html.ValidationSummary(true)
         <div class="form-group hidden">

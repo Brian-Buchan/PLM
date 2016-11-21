@@ -22,7 +22,8 @@
             <div class="portfolio-thumb img-hover">
                 <figure>
                     @{ 
-                        PLM.Models.PictureToView Opicture = new PLM.Models.PictureToView(Model.originalBase64ImgData);
+                        PLM.Models.GamePicture Opicture = new PLM.Models.GamePicture();
+                        Opicture.PictureData = Model.originalBase64ImgData;
                     }
                     @Html.Action("PictureView", "Pictures", new { pic = Opicture });
                     <figcaption>Original Image</figcaption>
@@ -37,7 +38,8 @@
             <div class="portfolio-thumb img-hover">
                 <figure>
                     @{
-                        PLM.Models.PictureToView Npicture = new PLM.Models.PictureToView(Model.Base64ImgData);
+                        PLM.Models.GamePicture Npicture = new PLM.Models.GamePicture();
+                        Npicture.PictureData = Model.Base64ImgData;
                     }
                     @Html.Action("PictureView", "Pictures", new { pic = Npicture });
                     <figcaption>New Image</figcaption>

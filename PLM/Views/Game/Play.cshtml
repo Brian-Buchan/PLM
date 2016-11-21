@@ -6,7 +6,7 @@
     <script type="text/javascript" src="~/Scripts/gameplay.js"></script>
     <script type="text/javascript" src="~/Scripts/moment.js"></script>
 </div>
-<div onload="windowOnload('@Model.TimeRemaining.ToString()')">
+<div onload="startClock(@Model.TimeRemaining.ToString())">
     <audio id="audioCorrect" preload="auto"><source src="~/Content/Audio/correctSound.mp3" type="audio/mp3" /></audio>
     <audio id="audioIncorrect" preload="auto"><source src="~/Content/Audio/incorrectSound.mp3" type="audio/mp3" /></audio>
 
@@ -22,9 +22,7 @@
                 </div>
                 <div class="SBitem">
                     <p>Time Left:</p>
-                    <div id="clockdiv">
-                        <p>@Model.TimeRemaining.ToString()</p>
-                    </div>
+                    <div id="clockdiv">@Model.TimeRemaining.ToString()</div>
                 </div>
                 <p class="SBitem">Question @Model.CurrentQuestion.ToString() of @Model.TotalQuestions.ToString()</p>
                 <!--This image only implementation of a mute button is from Tarun at http://stackoverflow.com/questions/22918220/how-to-create-a-only-mute-unmute-button-like-youtube-in-html-->

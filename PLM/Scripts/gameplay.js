@@ -6,7 +6,7 @@ $(function () {
     var intervalID;
     var btns = document.getElementsByClassName('btn-guess');
 
-    function windowOnload(timeLeft) {
+    function startClock(timeLeft) {
         CheckMute();
         //test();
         startCountdown(timeLeft);
@@ -30,11 +30,11 @@ $(function () {
         return "";
     }
 
-    function test() {
-        for (var i = 0; i < btns.length; i++) {
-            btns[i].addEventListener('click', function () { ButtonClick(this.innerText) });
-        }
-    }
+    //function test() {
+    //    for (var i = 0; i < btns.length - 1; i++) {
+    //        btns[i].addEventListener('click', function () { ButtonClick(this.innerText) });
+    //    }
+    //}
 
     $(function () {
         $('.btn-guess').on('click', function () { ButtonClick(this.innerHTML ) });
