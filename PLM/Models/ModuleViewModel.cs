@@ -19,15 +19,19 @@ namespace PLM
 
         public DisableModuleViewModel(Module module)
         {
-            this.Name = module.Name;
-            this.DisableReason = module.DisableReason;
-            this.DisableModuleNote = module.DisableModuleNote;
-            this.isDisabled = module.isDisabled;
+            ModuleID = module.ModuleID;
+            Name = module.Name;
+            DisableReason = module.DisableReason;
+            DisableModuleNote = module.DisableModuleNote;
+            isDisabled = module.isDisabled;
         }
 
         [Key]
         [Display(Name = "Module Name")]
         public string Name { get; set; }
+        
+        [Display(Name = "Module ID")]
+        public int ModuleID { get; set; }
 
         [Display(Name = "Is Disabled")]
         public bool isDisabled { get; set; }
@@ -38,8 +42,6 @@ namespace PLM
         [Display(Name = "Reason")]
         public Module.DisableModuleReason DisableReason { get; set; }
     }
-
-
 
     //TODO: COPY OVER
     /// <summary>

@@ -16,10 +16,11 @@ namespace PLM.Controllers
 
         public ActionResult pvModuleFilterList()
         {
-            var db_ = new Repos();
-
-            var lst = db_.GetModuleFilterMenuList();
-
+            IEnumerable<ModuleFilterMenuList> lst;
+            using (Repos repo = new Repos())
+            {
+                lst = repo.GetModuleFilterMenuList();
+            }
             return View(lst);
         }
 

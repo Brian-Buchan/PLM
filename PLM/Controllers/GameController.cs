@@ -472,13 +472,17 @@ namespace PLM.Controllers
                     ((UserGameSession)Session["userGameSession"]).GameSettings.Questions == ((UserGameSession)Session["userGameSession"]).gameModule.DefaultNumQuestions)
                 {
                     score.UserID = User.Identity.GetUserId();
-                    db.Entry(score).State = EntityState.Added;
-                    db.SaveChanges();
+                    using (Repos repo = new Repos())
+                    {
+                        if (!repo.AddScore(score))
+                        {
+                            error = "There was an error saving the score to the database";
+                        }
+                    }
                 }
                 else
                 {
                     error = "You must use default settings for your score to save";
-
                 }
             }
             else

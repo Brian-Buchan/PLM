@@ -23,10 +23,11 @@ namespace PLM.Controllers
         public ActionResult Index(string sortOrder, string searchString, string userSearchString)
         {
             ViewBag.NameSortParam = String.IsNullOrEmpty(sortOrder) ? "name_asc" : "";
-
-            var db = new ApplicationDbContext();
-            var modules = from u in db.Modules
-                          select u;
+            IEnumerable<Module> modules;
+            using (Repos repo = new Repos())
+            {
+                modules = repo.GetModuleList();
+            }
 
             if (!String.IsNullOrEmpty(searchString))
             {
@@ -52,10 +53,11 @@ namespace PLM.Controllers
         {
             ViewBag.NameSortParam = String.IsNullOrEmpty(sortOrder) ? "name_asc" : "";
 
-            var db = new ApplicationDbContext();
-            var modules = from u in db.Modules
-                          where u.isDisabled == true
-                          select u;
+            IEnumerable<Module> modules;
+            using (Repos repo = new Repos())
+            {
+                modules = repo.GetModuleList();
+            }
 
             if (!String.IsNullOrEmpty(searchString))
             {
@@ -82,13 +84,24 @@ namespace PLM.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Module module = db.Modules.Find(id);
+            int ID = id ?? 0;
+            Module module;
+            using (Repos repo = new Repos())
+            {
+                module = repo.GetModuleByID(ID);
+                module.Answers = repo.GetAnswerList(ID).ToList();
+                foreach (Answer answer in module.Answers)
+                {
+                    answer.Pictures = repo.GetPicturesByAnswerID(answer.AnswerID).ToList();
+                }
+            }
             if (module == null)
             {
                 return HttpNotFound();
             }
             return View(module);
         }
+
         // GET: /ModulesEDIT/Create
         [AuthorizeOrRedirectAttribute(Roles = "Instructor")]
         public ActionResult Create()
@@ -96,6 +109,7 @@ namespace PLM.Controllers
             PopulateCategoryDropDownList();
             return View();
         }
+
         // POST: /ModulesEDIT/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
@@ -111,17 +125,22 @@ namespace PLM.Controllers
                 if (((User.IsInRole("Learner")) || (User.IsInRole("Admin"))))
                 {
                     var userID = User.Identity.GetUserId();
-                    ApplicationUser currentUser = (ApplicationUser)db.Users.Single(x => x.Id == userID);
+                    ApplicationUser currentUser = db.Users.Single(x => x.Id == userID);
                     module.User = currentUser;
                 }
-                db.Modules.Add(module);
-                db.SaveChanges();
+                using (Repos repo = new Repos())
+                {
+                    if (!repo.AddModule(module))
+                    {
+                        //ERROR SAVING TO DATABASE
+                    }
+                }
                 PopulateCategoryDropDownList(module.CategoryId);
-                //DirectoryHandler.CreateDirectory(module);
                 return RedirectToAction("Create", "Answers", new { id = module.ModuleID });
             }
             return View(module);
         }
+
         // GET: /ModulesEDIT/Edit/5
         [AuthorizeOrRedirectAttribute(Roles = "Instructor")]
         public ActionResult Edit(int? id)
@@ -130,7 +149,17 @@ namespace PLM.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Module module = db.Modules.Find(id);
+            int ID = id ?? 0;
+            Module module;
+            using (Repos repo = new Repos())
+            {
+                module = repo.GetModuleByID(ID);
+                module.Answers = repo.GetAnswerList(ID).ToList();
+                foreach (Answer answer in module.Answers)
+                {
+                    answer.Pictures = repo.GetPicturesByAnswerID(answer.AnswerID).ToList();
+                }
+            }
             if (module == null)
             {
                 return HttpNotFound();
@@ -148,8 +177,13 @@ namespace PLM.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(module).State = EntityState.Modified;
-                db.SaveChanges();
+                using (Repos repo = new Repos())
+                {
+                    if (!repo.UpdateModule(module))
+                    {
+                        //ERROR SAVING TO DATABASE
+                    }
+                }
                 return RedirectToAction("Index", new { controller = "Profile" });
             }
             PopulateCategoryDropDownList(module.CategoryId);
@@ -163,7 +197,17 @@ namespace PLM.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Module module = db.Modules.Find(id);
+            int ID = id ?? 0;
+            Module module;
+            using (Repos repo = new Repos())
+            {
+                module = repo.GetModuleByID(ID);
+                module.Answers = repo.GetAnswerList(ID).ToList();
+                foreach (Answer answer in module.Answers)
+                {
+                    answer.Pictures = repo.GetPicturesByAnswerID(answer.AnswerID).ToList();
+                }
+            }
             var model = new DisableModuleViewModel(module);
             if (module == null)
             {
@@ -182,23 +226,40 @@ namespace PLM.Controllers
         {
             if (ModelState.IsValid)
             {
-                var db = new ApplicationDbContext();
-                Module module = db.Modules.First(m => m.Name == userModule.Name);
+                Module module;
+                using (Repos repo = new Repos())
+                {
+                    module = repo.GetModuleByID(userModule.ModuleID);
+                    module.Answers = repo.GetAnswerList(userModule.ModuleID).ToList();
+                    foreach (Answer answer in module.Answers)
+                    {
+                        answer.Pictures = repo.GetPicturesByAnswerID(answer.AnswerID).ToList();
+                    }
+                }
 
                 module.isDisabled = userModule.isDisabled;
                 module.DisableModuleNote = userModule.DisableModuleNote;
                 module.DisableReason = userModule.DisableReason;
 
-                db.Entry(module).State = EntityState.Modified;
-                db.SaveChanges();
+                using (Repos repo = new Repos())
+                {
+                    if (!repo.UpdateModule(module))
+                    {
+                        //ERROR SAVING TO DATABASE
+                    }
+                }
                 return RedirectToAction("Index", new { controller = "ModulesEdit" });
             }
             return View(userModule);
         }
+
         private void PopulateCategoryDropDownList(object selectedCategory = null)
         {
-            var categoryQuery = from c in db.Categories
-                                select c;
+            IEnumerable<Category> categoryQuery;
+            using (Repos repo = new Repos())
+            {
+                categoryQuery = repo.GetCategoryList();
+            }
             ViewBag.CategoryId = new SelectList(categoryQuery.Distinct().ToList(), "CategoryId", "CategoryName", selectedCategory);
         }
 
@@ -210,7 +271,17 @@ namespace PLM.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Module module = db.Modules.Find(id);
+            int ID = id ?? 0;
+            Module module;
+            using (Repos repo = new Repos())
+            {
+                module = repo.GetModuleByID(ID);
+                module.Answers = repo.GetAnswerList(ID).ToList();
+                foreach (Answer answer in module.Answers)
+                {
+                    answer.Pictures = repo.GetPicturesByAnswerID(answer.AnswerID).ToList();
+                }
+            }
             if (module == null)
             {
                 return HttpNotFound();
@@ -223,7 +294,13 @@ namespace PLM.Controllers
         [AuthorizeOrRedirectAttribute(Roles = "Instructor")]
         public ActionResult DeleteConfirmed(int id)
         {
-            //DirectoryHandler.DeleteModule(id);
+            using (Repos repo = new Repos())
+            {
+                if (!repo.DeleteModule(id))
+                {
+                    //ERROR DELETING MODULE
+                }
+            }
             return RedirectToAction("Index", new { controller = "Profile" });
         }
 
@@ -234,7 +311,17 @@ namespace PLM.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Module module = db.Modules.Find(id);
+            int ID = id ?? 0;
+            Module module;
+            using (Repos repo = new Repos())
+            {
+                module = repo.GetModuleByID(ID);
+                module.Answers = repo.GetAnswerList(ID).ToList();
+                foreach (Answer answer in module.Answers)
+                {
+                    answer.Pictures = repo.GetPicturesByAnswerID(answer.AnswerID).ToList();
+                }
+            }
             if (module == null)
             {
                 return HttpNotFound();
@@ -247,7 +334,13 @@ namespace PLM.Controllers
         [AuthorizeOrRedirectAttribute(Roles = "Admin")]
         public ActionResult AdminDeleteConfirmed(int id)
         {
-            DirectoryHandler.DeleteModule(id);
+            using (Repos repo = new Repos())
+            {
+                if (!repo.DeleteModule(id))
+                {
+                    //ERROR DELETING MODULE
+                }
+            }
             return RedirectToAction("Index", new { controller = "Profile" });
         }
         protected override void Dispose(bool disposing)

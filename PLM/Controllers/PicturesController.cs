@@ -24,8 +24,12 @@ namespace PLM.Controllers
         public ActionResult Index()
         {
             //ConvertAllPicturesToStringData();
-            var pictures = db.Pictures.Include(p => p.Answer);
-            return View(pictures.ToList());
+            IEnumerable<Picture> pictures;
+            using (Repos repo = new Repos())
+            {
+                pictures = repo.GetAllPictures();
+            }
+            return View(pictures);
         }
         
         public ActionResult Details(int? id)
@@ -34,7 +38,12 @@ namespace PLM.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Picture picture = db.Pictures.Find(id);
+            int ID = id ?? 0;
+            Picture picture;
+            using (Repos repo = new Repos())
+            {
+                picture = repo.GetPictureByID(ID);
+            }
             if (picture == null)
             {
                 return HttpNotFound();
@@ -49,7 +58,12 @@ namespace PLM.Controllers
 
         public ActionResult EditPictureView(int? id)
         {
-            Picture picture = db.Pictures.Find(id);
+            int ID = id ?? 0;
+            Picture picture;
+            using (Repos repo = new Repos())
+            {
+                picture = repo.GetPictureByID(ID);
+            }
             return View(picture);
         }
 
@@ -86,10 +100,11 @@ namespace PLM.Controllers
         {
             ViewBag.AnswerID = id;
             Picture picture = new Picture();
-            picture.Answer = db.Answers
-                    .Where(a => a.AnswerID == id)
-                    .ToList().First();
-
+            int ID = id ?? 0;
+            using (Repos repo = new Repos())
+            {
+                picture.Answer = repo.GetAnswerByID(ID);
+            }
             return View(picture);
         }
 
@@ -100,8 +115,9 @@ namespace PLM.Controllers
         [AuthorizeOrRedirectAttribute(Roles = "Instructor")]
         public ActionResult Create([Bind(Include = "Attribution,PictureID")] Picture picture, int? id)
         {
+            int ID = id ?? 0;
             pictureToSave = new Picture();
-            pictureToSave.AnswerID = (int)id;
+            pictureToSave.AnswerID = ID;
             pictureToSave.Location = "NotYetConstructed";
             if (picture.Attribution == null)
                 pictureToSave.Attribution = "";
@@ -109,15 +125,19 @@ namespace PLM.Controllers
                 pictureToSave.Attribution = picture.Attribution;
 
             ConvertImageToDataString(pictureToSave, Request.Files[0].InputStream);
-            ViewBag.AnswerID = id;
+            ViewBag.AnswerID = ID;
 
             if (ModelState.IsValid)
             {
-                db.Pictures.Add(pictureToSave);
-                db.SaveChanges();
+                using (Repos repo = new Repos())
+                {
+                    if (!repo.AddPicture(pictureToSave))
+                    {
+                        //ERROR SAVING TO DATABASE
+                    }
+                }
                 return RedirectToAction("edit", new { controller = "Answers", id = pictureToSave.AnswerID });
             }
-
             ViewBag.AnswerID = new SelectList(db.Answers, "AnswerID", "AnswerString", pictureToSave.AnswerID);
             return View(pictureToSave);
         }
@@ -156,7 +176,12 @@ namespace PLM.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Picture picture = db.Pictures.Find(id);
+            int ID = id ?? 0;
+            Picture picture;
+            using (Repos repo = new Repos())
+            {
+                picture = repo.GetPictureByID(ID);
+            }
             if (picture == null)
             {
                 return HttpNotFound();
@@ -174,8 +199,13 @@ namespace PLM.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(picture).State = EntityState.Modified;
-                db.SaveChanges();
+                using (Repos repo = new Repos())
+                {
+                    if (!repo.UpdatePicture(picture))
+                    {
+                        //ERROR UPDATING DATABASE
+                    }
+                }
                 return RedirectToAction("edit", new { controller = "Answers", id = picture.AnswerID });
             }
             ViewBag.AnswerID = new SelectList(db.Answers, "AnswerID", "AnswerString", picture.AnswerID);
@@ -189,7 +219,12 @@ namespace PLM.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Picture picture = db.Pictures.Find(id);
+            int ID = id ?? 0;
+            Picture picture;
+            using (Repos repo = new Repos())
+            {
+                picture = repo.GetPictureByID(ID);
+            }
             if (picture == null)
             {
                 return HttpNotFound();
@@ -203,10 +238,13 @@ namespace PLM.Controllers
         [AuthorizeOrRedirectAttribute(Roles = "Instructor")]
         public ActionResult DeleteConfirmed(int id)
         {
-            Picture picture = db.Pictures.Find(id);
-            db.Pictures.Remove(picture);
-            db.SaveChanges();
-            return RedirectToAction("edit", new { controller = "Answers", id = picture.AnswerID });
+            int answerID;
+            using (Repos repo = new Repos())
+            {
+                answerID = repo.GetPictureByID(id).AnswerID;
+                repo.DeletePicture(id);
+            }
+            return RedirectToAction("edit", new { controller = "Answers", id = answerID });
         }
 
         #region From Image Editor
@@ -218,7 +256,12 @@ namespace PLM.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Picture picture = db.Pictures.Find(id);
+            int ID = id ?? 0;
+            Picture picture;
+            using (Repos repo = new Repos())
+            {
+                picture = repo.GetPictureByID(ID);
+            }
             if (picture == null)
             {
                 return HttpNotFound();

@@ -111,7 +111,7 @@ namespace PLM.Controllers
             using (Repos repo = new Repos())
             {
                 answer = repo.GetAnswerByID(ID);
-                ViewBag.Pictures = repo.GetPictureList(answer.AnswerID);
+                ViewBag.Pictures = repo.GetViewBagPictureList(answer.AnswerID);
             }
             if (answer == null)
             {
@@ -135,7 +135,7 @@ namespace PLM.Controllers
                 using (Repos repo = new Repos())
                 {
                     repo.UpdateAnswer(answer);
-                    ViewBag.Pictures = repo.GetPictureList(answer.AnswerID);
+                    ViewBag.Pictures = repo.GetViewBagPictureList(answer.AnswerID);
                 }
                 
                 return RedirectToAction("Create", new { controller = "Answers", id = answer.ModuleID });
@@ -174,7 +174,7 @@ namespace PLM.Controllers
             using (Repos repo = new Repos())
             {
                 answer = repo.GetAnswerByID(id);
-                repo.DeleteAnswer(id);
+                repo.DeleteAnswer(answer.AnswerID);
             }
             return RedirectToAction("Create", new { id = answer.ModuleID });
         }

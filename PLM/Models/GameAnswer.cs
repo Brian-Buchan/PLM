@@ -20,6 +20,10 @@ namespace PLM
         {
             Usable = true; ;
             AnswerString = answer.AnswerString;
+            using (Repos repo = new Repos())
+            {
+                answer.Pictures = repo.GetPicturesByAnswerID(answer.AnswerID).ToList();
+            }
             Pictures = ConvertPictures(answer.Pictures);
         }
 

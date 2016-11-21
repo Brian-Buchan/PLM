@@ -36,6 +36,130 @@ namespace PLM
             }
             return true;
         }
+
+        public bool AddPicture(Picture picture)
+        {
+            var idParam = new SqlParameter
+            {
+                ParameterName = "Location",
+                Value = picture.Location
+            };
+            var idParam1 = new SqlParameter
+            {
+                ParameterName = "AnswerID",
+                Value = picture.AnswerID
+            };
+            var idParam2 = new SqlParameter
+            {
+                ParameterName = "Attribution",
+                Value = picture.Attribution
+            };
+            var idParam3 = new SqlParameter
+            {
+                ParameterName = "PictureData",
+                Value = picture.PictureData
+            };
+            try
+            {
+                _dc.Database.ExecuteSqlCommand(
+                    "INSERT INTO Pictures (Location, AnswerID, Attribution, PictureData) VALUES (@Location, @AnswerID, @Attribution, @PictureData)", idParam, idParam1, idParam2, idParam3
+                    );
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+            return true;
+        }
+
+        public bool AddCategory(Category category)
+        {
+            var idParam = new SqlParameter
+            {
+                ParameterName = "categoryName",
+                Value = category.CategoryName
+            };
+            try
+            {
+                _dc.Database.ExecuteSqlCommand(
+                    "INSERT INTO Categories (CategoryName) VALUES (@CategoryName)", idParam
+                    );
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+            return true;
+        }
+
+        public bool AddModule(Module module)
+        {
+            var idParam = new SqlParameter { ParameterName = "Name", Value = module.Name };
+            var idParam1 = new SqlParameter { ParameterName = "Description", Value = module.Description };
+            var idParam2 = new SqlParameter { ParameterName = "CategoryID", Value = module.CategoryId };
+            var idParam3 = new SqlParameter { ParameterName = "DefaultNumAnswers", Value = module.DefaultNumAnswers };
+            var idParam4 = new SqlParameter { ParameterName = "DefaultTime", Value = module.DefaultTime };
+            var idParam5 = new SqlParameter { ParameterName = "DefaultNumQuestions", Value = module.DefaultNumQuestions };
+            var idParam6 = new SqlParameter { ParameterName = "isPrivate", Value = module.isPrivate };
+            var idParam7 = new SqlParameter { ParameterName = "user_Id", Value = module.User.Id };
+            var idParam8 = new SqlParameter { ParameterName = "rightAnswerString", Value = module.rightAnswerString };
+            var idParam9 = new SqlParameter { ParameterName = "wrongAnswerString", Value = module.wrongAnswerString };
+            var idParam10 = new SqlParameter { ParameterName = "isDisabled", Value = module.isDisabled };
+            var idParam11 = new SqlParameter { ParameterName = "DisableModuleNote", Value = module.DisableModuleNote };
+            var idParam12 = new SqlParameter { ParameterName = "DisableReason", Value = module.DisableReason };
+            try
+            {
+                _dc.Database.ExecuteSqlCommand(
+                    "INSERT INTO Modules(Name, Description, CategoryId, DefaultNumAnswers, DefaultTime, DefaultNumQuestions, isPrivate, User_Id, rightAnswerString, wrongAnswerString, isDisabled, DisableModuleNote, DisableReason) VALUES(@Name, @Description, @CategoryId, @DefaultNumAnswers, @DefaultTime, @DefaultNumQuestions, @isPrivate, @User_Id, @rightAnswerString, @wrongAnswerString, @isDisabled, @DisableModuleNote, @DisableReason",
+                    idParam, idParam1, idParam2, idParam3, idParam4, idParam5, idParam6, idParam7, idParam8, idParam9, idParam10, idParam11, idParam12
+                    );
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+            return true;
+        }
+
+        public bool AddScore(Score score)
+        {
+            var idParam = new SqlParameter
+            {
+                ParameterName = "CorrectAnswers",
+                Value = score.CorrectAnswers
+            };
+            var idParam1 = new SqlParameter
+            {
+                ParameterName = "TotalAnswers",
+                Value = score.TotalAnswers
+            };
+            var idParam2 = new SqlParameter
+            {
+                ParameterName = "TimeStamp",
+                Value = score.TimeStamp
+            };
+            var idParam3 = new SqlParameter
+            {
+                ParameterName = "UserID",
+                Value = score.UserID
+            };
+            var idParam4 = new SqlParameter
+            {
+                ParameterName = "ModuleID",
+                Value = score.ModuleID
+            };
+            try
+            {
+                _dc.Database.ExecuteSqlCommand(
+                    "INSERT INTO Scores (CorrectAnswers, TotalAnswers, TimeStamp, UserID, ModuleID) VALUES (@CorrectAnswers, @TotalAnswers, @TimeStamp, @UserID, @ModuleID", idParam, idParam1, idParam2, idParam3, idParam4
+                    );
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+            return true;
+        }
         #endregion
 
         #region READ
@@ -75,8 +199,21 @@ namespace PLM
             };
             var answer = _dc.Database.SqlQuery<Answer>(
                 "Select * from Answers Where AnswerID = @AnswerID", idParam
-                ).Single<Answer>();
+                ).Single();
             return answer;
+        }
+
+        public Picture GetPictureByID(int id)
+        {
+            var idParam = new SqlParameter
+            {
+                ParameterName = "PictureID",
+                Value = id
+            };
+            var picture = _dc.Database.SqlQuery<Picture>(
+                "Select * from Pictures Where PictureID = @PictureID", idParam
+                ).Single();
+            return picture;
         }
 
         public IEnumerable<Models.Report> GetReportList()
@@ -168,7 +305,7 @@ namespace PLM
             return _List;
         }
 
-        public IEnumerable<Picture> GetPictureList(int answerID = 0)
+        public IEnumerable<Picture> GetViewBagPictureList(int answerID = 0)
         {
             var idParam = new SqlParameter
             {
@@ -181,12 +318,46 @@ namespace PLM
             return _List;
         }
 
-        public IEnumerable<Module> GetCategoryList()
+        public IEnumerable<Picture> GetAllPictures()
         {
-            var _List = _dc.Database.SqlQuery<Module>(
-                "Select * from Categories"
-            ).ToList<Module>();
+            var _List = _dc.Database.SqlQuery<Picture>(
+                "Select * from Pictures"
+            ).ToList();
             return _List;
+        }
+
+        public IEnumerable<Picture> GetPicturesByAnswerID(int answerID = 0)
+        {
+            var idParam = new SqlParameter
+            {
+                ParameterName = "AnswerID",
+                Value = answerID
+            };
+            var _List = _dc.Database.SqlQuery<Picture>(
+                "Select * from Pictures where AnswerID = @AnswerID", idParam
+                ).ToList<Picture>();
+            return _List;
+        }
+
+        public IEnumerable<Category> GetCategoryList()
+        {
+            var _List = _dc.Database.SqlQuery<Category>(
+                "Select * from Categories"
+            ).ToList<Category>();
+            return _List;
+        }
+
+        public Category GetCategoryByID(int id = 0)
+        {
+            var idParam = new SqlParameter
+            {
+                ParameterName = "categoryID",
+                Value = id
+            };
+            var category = _dc.Database.SqlQuery<Category>(
+                "Select * from Categories Where CategoryID = @categoryID", idParam
+                ).Single<Category>();
+            return category;
         }
 
         public IEnumerable<ModuleFilterMenuList> GetModuleFilterMenuList()
@@ -229,15 +400,121 @@ namespace PLM
             return true;
         }
 
-        #endregion
-
-        #region DELETE
-        public bool DeleteAnswer(int answerID)
+        public bool UpdatePicture(Picture picture)
         {
-            if (answerID <= 0)
+            var idParam = new SqlParameter
+            {
+                ParameterName = "Location",
+                Value = picture.Location
+            };
+            var idParam1 = new SqlParameter
+            {
+                ParameterName = "AnswerID",
+                Value = picture.AnswerID
+            };
+            var idParam2 = new SqlParameter
+            {
+                ParameterName = "Attribution",
+                Value = picture.Attribution
+            };
+            var idParam3 = new SqlParameter
+            {
+                ParameterName = "PictureData",
+                Value = picture.PictureData
+            };
+            try
+            {
+                _dc.Database.ExecuteSqlCommand(
+                    "UPDATE Pictures SET Location = @Location, AnswerID = @AnswerID, Attribution = @Attribution, PictureData = @PictureData)", idParam, idParam1, idParam2, idParam3
+                    );
+            }
+            catch (Exception)
             {
                 return false;
             }
+            return true;
+        }
+
+        public bool UpdateModule(Module module)
+        {
+            var idParam = new SqlParameter { ParameterName = "Name", Value = module.Name };
+            var idParam1 = new SqlParameter { ParameterName = "Description", Value = module.Description };
+            var idParam2 = new SqlParameter { ParameterName = "CategoryID", Value = module.CategoryId };
+            var idParam3 = new SqlParameter { ParameterName = "DefaultNumAnswers", Value = module.DefaultNumAnswers };
+            var idParam4 = new SqlParameter { ParameterName = "DefaultTime", Value = module.DefaultTime };
+            var idParam5 = new SqlParameter { ParameterName = "DefaultNumQuestions", Value = module.DefaultNumQuestions };
+            var idParam6 = new SqlParameter { ParameterName = "isPrivate", Value = module.isPrivate };
+            var idParam7 = new SqlParameter { ParameterName = "user_Id", Value = module.User.Id };
+            var idParam8 = new SqlParameter { ParameterName = "rightAnswerString", Value = module.rightAnswerString };
+            var idParam9 = new SqlParameter { ParameterName = "wrongAnswerString", Value = module.wrongAnswerString };
+            var idParam10 = new SqlParameter { ParameterName = "isDisabled", Value = module.isDisabled };
+            var idParam11 = new SqlParameter { ParameterName = "DisableModuleNote", Value = module.DisableModuleNote };
+            var idParam12 = new SqlParameter { ParameterName = "DisableReason", Value = module.DisableReason };
+            var idParam13 = new SqlParameter { ParameterName = "ModuleID", Value = module.ModuleID };
+            try
+            {
+                _dc.Database.ExecuteSqlCommand(
+                    "Update Modules SET Name = @Name, Description = @Description, CategoryId = @CategoryID, DefaultNumAnswers = @DefaultNumAnswers, DefaultTime = @DefaultTime, DefaultNumQuestions = @DefaultNumQuestions, isPrivate = @isPrivate, User_Id = @User_Id, rightAnswerString = @rightAnswerString, wrongAnswerString = @wrongAnswerString, isDisabled = @isDisabled, DisableModuleNote = @DisableModuleNote, DisableReason = @DisableReason where ModuleID = @ModuleID",
+                    idParam, idParam1, idParam2, idParam3, idParam4, idParam5, idParam6, idParam7, idParam8, idParam9, idParam10, idParam11, idParam12, idParam13
+                    );
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+            return true;
+
+        }
+
+        public bool UpdateCategory(Category category)
+        {
+            var idParam = new SqlParameter
+            {
+                ParameterName = "CategoryName",
+                Value = category.CategoryName
+            };
+            var idParam1 = new SqlParameter
+            {
+                ParameterName = "CategoryID",
+                Value = category.CategoryID
+            };
+            try
+            {
+                _dc.Database.ExecuteSqlCommand(
+                    "UPDATE Categories SET CategoryName = @CategoryName WHERE CategoryID = @CategoryID", idParam, idParam1
+                    );
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+            return true;
+        }
+        #endregion
+
+        #region DELETE
+        public bool DeleteModule(int ModuleID)
+        {
+            var idParam = new SqlParameter
+            {
+                ParameterName = "ModuleID",
+                Value = ModuleID
+            };
+            try
+            {
+                _dc.Database.ExecuteSqlCommand(
+                    "DELETE FROM modules WHERE ModuleID = @ModuleID", idParam
+                    );
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+            return true;
+        }
+
+        public bool DeleteAnswer(int answerID)
+        {
             var idParam = new SqlParameter
             {
                 ParameterName = "AnswerID",
@@ -247,6 +524,46 @@ namespace PLM
             {
                 _dc.Database.ExecuteSqlCommand(
                     "DELETE FROM Answers WHERE AnswerID = @AnswerID", idParam
+                    );
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+            return true;
+        }
+
+        public bool DeletePicture(int pictureID)
+        {
+            var idParam = new SqlParameter
+            {
+                ParameterName = "PictureID",
+                Value = pictureID
+            };
+            try
+            {
+                _dc.Database.ExecuteSqlCommand(
+                    "DELETE FROM Pictures WHERE PictureID = @PictureID", idParam
+                    );
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+            return true;
+        }
+
+        public bool DeleteCategory(int categoryID)
+        {
+            var idParam = new SqlParameter
+            {
+                ParameterName = "CategoryID",
+                Value = categoryID
+            };
+            try
+            {
+                _dc.Database.ExecuteSqlCommand(
+                    "DELETE FROM Categories WHERE CategoryID = @CategoryID", idParam
                     );
             }
             catch (Exception)

@@ -32,6 +32,10 @@ namespace PLM
             DefaultNumAnswers = module.DefaultNumAnswers;
             DefaultNumQuestions = module.DefaultNumQuestions;
             DefaultTime = module.DefaultTime;
+            using (Repos repo = new Repos())
+            {
+                module.Answers = repo.GetAnswerList(module.ModuleID).ToList();
+            }
             Answers = ConvertAnswers(module.Answers);
             rightAnswerString = module.rightAnswerString;
             wrongAnswerString = module.wrongAnswerString;

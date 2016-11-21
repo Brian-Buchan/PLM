@@ -19,7 +19,13 @@ namespace PLM.Controllers
         [AuthorizeOrRedirectAttribute(Roles = "Admin")]
         public ActionResult Index()
         {
-            return View(db.Categories.ToList());
+            IEnumerable<Category> cats;
+            using (Repos repo = new Repos())
+            {
+                cats = repo.GetCategoryList();
+            }
+
+            return View(cats);
         }
 
         // GET: Categories/Details/5
@@ -30,7 +36,12 @@ namespace PLM.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Category category = db.Categories.Find(id);
+            int ID = id ?? 0;
+            Category category;
+            using (Repos repo = new Repos())
+            {
+                category = repo.GetCategoryByID(ID);
+            }
             if (category == null)
             {
                 return HttpNotFound();
@@ -53,14 +64,23 @@ namespace PLM.Controllers
         [AuthorizeOrRedirectAttribute(Roles = "Admin")]
         public ActionResult Create([Bind(Include = "CategoryID,CategoryName")] Category category)
         {
-            if (ModelState.IsValid)
+            try
             {
-                db.Categories.Add(category);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                if (ModelState.IsValid)
+                {
+                    using (Repos repo = new Repos())
+                    {
+                        repo.AddCategory(category);
+                    }
+                    return RedirectToAction("Index");
+                }
+                return View(category);
             }
+            catch (Exception) { }
 
-            return View(category);
+            //TODO - error when adding new category
+            //return RedirectToAction("Create", new { error = "You cannot add duplicate answers" });
+            return RedirectToAction("Create");
         }
 
         // GET: Categories/Edit/5
@@ -71,7 +91,12 @@ namespace PLM.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Category category = db.Categories.Find(id);
+            int ID = id ?? 0;
+            Category category;
+            using (Repos repo = new Repos())
+            {
+                category = repo.GetCategoryByID(ID);
+            }
             if (category == null)
             {
                 return HttpNotFound();
@@ -87,24 +112,35 @@ namespace PLM.Controllers
         [AuthorizeOrRedirectAttribute(Roles = "Admin")]
         public ActionResult Edit([Bind(Include = "CategoryID,CategoryName")] Category category)
         {
-            if (ModelState.IsValid)
+            try
             {
-                db.Entry(category).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                if (ModelState.IsValid)
+                {
+                    using (Repos repo = new Repos())
+                    {
+                        repo.AddCategory(category);
+                    }
+                    return View(category);
+                }
             }
-            return View(category);
+            catch (Exception) { }
+            return RedirectToAction("Index");
         }
 
         // GET: Categories/Delete/5
         [AuthorizeOrRedirectAttribute(Roles = "Admin")]
         public ActionResult Delete(int? id)
         {
+            int ID = id ?? 0;
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Category category = db.Categories.Find(id);
+            Category category;
+            using (Repos repo = new Repos())
+            {
+                category = repo.GetCategoryByID(ID);
+            }
             if (category == null)
             {
                 return HttpNotFound();
@@ -118,9 +154,12 @@ namespace PLM.Controllers
         [AuthorizeOrRedirectAttribute(Roles = "Admin")]
         public ActionResult DeleteConfirmed(int id)
         {
-            Category category = db.Categories.Find(id);
-            db.Categories.Remove(category);
-            db.SaveChanges();
+            Category category;
+            using (Repos repo = new Repos())
+            {
+                category = repo.GetCategoryByID(id);
+                repo.DeleteCategory(category.CategoryID);
+            }
             return RedirectToAction("Index");
         }
 

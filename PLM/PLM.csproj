@@ -261,6 +261,10 @@
     <Compile Include="Migrations\201609161950505_PictureAsString.Designer.cs">
       <DependentUpon>201609161950505_PictureAsString.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201611212125270_ModuleIDinDisableModuleViewModel.cs" />
+    <Compile Include="Migrations\201611212125270_ModuleIDinDisableModuleViewModel.Designer.cs">
+      <DependentUpon>201611212125270_ModuleIDinDisableModuleViewModel.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AdminViewModel.cs" />
     <Compile Include="Models\AnswerViewModel.cs" />
@@ -1376,6 +1380,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201609161950505_PictureAsString.resx">
       <DependentUpon>201609161950505_PictureAsString.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201611212125270_ModuleIDinDisableModuleViewModel.resx">
+      <DependentUpon>201611212125270_ModuleIDinDisableModuleViewModel.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
