@@ -1,4 +1,4 @@
-﻿@model PLM.Module
+﻿@model GameModule
 @{
     ViewBag.Title = "Setup";
 }
@@ -21,7 +21,7 @@
     @Html.AntiForgeryToken()
     <div class="form-horizontal col-lg-offset-1">
         <label>Number of Answers to Choose From per Question</label>
-        <input type="range" id="numAnswers" name="numAnswers" step="3" min="3" max="15" value="@Model.DefaultNumAnswers" oninput="outputUpdate(value, '#numAnswersOutput')" />
+        <input type="range" id="numAnswers" name="numAnswers" step="1" min="3" max="15" value="@Model.DefaultNumAnswers" oninput="outputUpdate(value, '#numAnswersOutput')" />
         <output for="numAnswers" id="numAnswersOutput">@Model.DefaultNumAnswers</output>
 
         <label>Number of Questions to Ask</label>

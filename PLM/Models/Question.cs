@@ -40,6 +40,7 @@ namespace PLM
             }
             Guesses.Add(CorrectAnswer);
             AddWrongAnswers(gameSession.GameSettings.Answers, gameSession.gameModule.Answers);
+            Guesses.Shuffle();
         }
 
         private void AddWrongAnswers(int maxAnswer, List<GameAnswer> gameAnswers)

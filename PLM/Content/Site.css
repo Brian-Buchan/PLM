@@ -384,3 +384,7 @@ hr {
 .flex{
     display: flex;
 }
+
+.hideOverflow {
+    overflow: hidden;
+}

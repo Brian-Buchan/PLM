@@ -8,7 +8,6 @@ $(function () {
 
     function startClock(timeLeft) {
         CheckMute();
-        //test();
         startCountdown(timeLeft);
     }
     //These cookie functions are from w3schools
@@ -30,27 +29,19 @@ $(function () {
         return "";
     }
 
-    //function test() {
-    //    for (var i = 0; i < btns.length - 1; i++) {
-    //        btns[i].addEventListener('click', function () { ButtonClick(this.innerText) });
-    //    }
-    //}
-
     $(function () {
-        $('.btn-guess').on('click', function () { ButtonClick(this.innerHTML ) });
+        $('.btn-guess').on('click', function () { ButtonClick(this.innerHTML) });
+        $('#soundToggle').on('click', function () { ToggleSound(this) });
     });
+
     function ButtonClick(guess) {
         pictureAnswer = $("#StoredAnswer").text();
         $('#Guess').val(guess);
-        //reveal();
+        isGuessRight(pictureAnswer, guess);
+        reveal();
         showNext();
         // click next
         clickNext();
-        //if (!revealed) {
-        //    if (isGuessRight(pictureAnswer, guess)) {
-        //        Correct();
-        //    }
-        //}
     }
 
     function clickNext() {
@@ -63,15 +54,13 @@ $(function () {
                 document.getElementById("audioCorrect").play();
             }
             $("#resultText").text("Yes, the correct answer is " + answer);
-            reveal();
-            showNext();
             return true;
         }
         else {
             if (getCookie("muteSound") !== "true") {
                 document.getElementById("audioIncorrect").play();
             }
-            $("#resultText").text("Sorry, the correct answer was actually " + answer);
+            $("#resultText").text("Sorry, the correct answer is " + answer);
             reveal();
             showNext();
             return false;
@@ -108,7 +97,7 @@ $(function () {
     //This image only implementation of a mute button is from Tarun at 
     //http://stackoverflow.com/questions/22918220/how-to-create-a-only-mute-unmute-button-like-youtube-in-html
     //Toggle whether sound will play
-    function ToggleMute(img) {
+    function ToggleSound(img) {
         //if the muteSound cookie is set to true
         if (getCookie("muteSound") === "true") {
             //set the cookie to false and display the speaker symbol

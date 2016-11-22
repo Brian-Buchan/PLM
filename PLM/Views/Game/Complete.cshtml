@@ -25,7 +25,7 @@
         <hr />
         <div>
             <div>
-                @Html.ActionLink("Play Again", "Setup", "Game", new { PLMid = ViewBag.ModuleID, changeSettings = 0 }, new { Type = "button-submit-sm" })
+                @Html.ActionLink("Play Again", "Setup", "Game", new { PLMid = ViewBag.ModuleID, changeSettings = false }, new { Type = "button-submit-sm" })
                 <br />
                 <br />
                 @if (User.IsInRole("Learner"))

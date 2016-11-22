@@ -431,10 +431,15 @@ namespace PLM
                 ParameterName = "PictureData",
                 Value = picture.PictureData
             };
+            var idParam4 = new SqlParameter
+            {
+                ParameterName = "PictureID",
+                Value = picture.PictureID
+            };
             try
             {
                 _dc.Database.ExecuteSqlCommand(
-                    "UPDATE Pictures SET Location = @Location, AnswerID = @AnswerID, Attribution = @Attribution, PictureData = @PictureData", idParam, idParam1, idParam2, idParam3
+                    "UPDATE Pictures SET Location = @Location, AnswerID = @AnswerID, Attribution = @Attribution, PictureData = @PictureData Where PictureID = @PictureID", idParam, idParam1, idParam2, idParam3, idParam4
                     );
             }
             catch (Exception)
