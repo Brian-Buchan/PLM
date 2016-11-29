@@ -40,8 +40,9 @@ $(function () {
         isGuessRight(pictureAnswer, guess);
         reveal();
         showNext();
-        // click next
-        clickNext();
+
+        // click next used for debugging - speed up gameplay
+        //clickNext();
     }
 
     function clickNext() {
@@ -83,7 +84,7 @@ $(function () {
     }
 
     function showNext() {
-        document.getElementById("nextButton").style.display = "inline";
+        document.getElementById("nextButton").style.display = "flex";
     }
 
     function Correct() {
@@ -102,20 +103,20 @@ $(function () {
         if (getCookie("muteSound") === "true") {
             //set the cookie to false and display the speaker symbol
             setCookie("muteSound", "false", 365);
-            img.src = '/PerceptualLearning/Content/Images/speaker.png';
+            img.src = '/Content/Images/speaker.png';
         }
         else {
             //otherwise, set muteSound to true and display the mute symbol
             setCookie("muteSound", "true", 365);
-            img.src = '/PerceptualLearning/Content/Images/mute.png';
+            img.src = '/Content/Images/mute.png';
         }
     }
 
     function CheckMute() {
         if (getCookie("muteSound") === "true") {
-            document.getElementById('soundToggle').setAttribute('src', '/PerceptualLearning/Content/Images/mute.png');
+            document.getElementById('soundToggle').setAttribute('src', '/Content/Images/mute.png');
         } else {
-            document.getElementById('soundToggle').setAttribute('src', '/PerceptualLearning/Content/Images/speaker.png');
+            document.getElementById('soundToggle').setAttribute('src', '/Content/Images/speaker.png');
         }
     }
 
