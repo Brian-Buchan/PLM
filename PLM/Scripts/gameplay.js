@@ -10,6 +10,7 @@ $(function () {
         CheckMute();
         startCountdown(timeLeft);
     }
+
     //These cookie functions are from w3schools
     function setCookie(cname, cvalue, exdays) {
         var d = new Date();
@@ -120,6 +121,11 @@ $(function () {
         }
     }
 
+    function DoSubmit() {
+        CheckIn();
+        $('#next').submit();
+    }
+
     function CheckIn() {
         //Stop the timer when you click the "Next" button.
         clearInterval(intervalID);
@@ -127,6 +133,8 @@ $(function () {
         $('#Time').val($('#clockdiv').text());
         return true;
     }
+
+    $('#next').on('click', DoSubmit);
 
     function startCountdown(time) {
         var dur = moment.duration(time);
@@ -160,4 +168,6 @@ $(function () {
             img.width = 'auto';
         }
     }
+
+    startClock($('#clockdiv').text());
 });

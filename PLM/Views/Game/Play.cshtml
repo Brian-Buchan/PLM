@@ -6,7 +6,7 @@
     <script type="text/javascript" src="~/Scripts/gameplay.js"></script>
     <script type="text/javascript" src="~/Scripts/moment.js"></script>
 </div>
-<div onload="startClock(@Model.TimeRemaining.ToString())">
+<div>
     <audio id="audioCorrect" preload="auto"><source src="~/Content/Audio/correctSound.mp3" type="audio/mp3" /></audio>
     <audio id="audioIncorrect" preload="auto"><source src="~/Content/Audio/incorrectSound.mp3" type="audio/mp3" /></audio>
 
@@ -15,14 +15,18 @@
             <div class="SBrow">
                 <div class="SBitem scoreDiv">
                     <p>Score:</p>
-                    <p id="displayScore" class="scoreItem">@Model.Score.ToString()</p>
+                    <div class="scoreWrapper">
+                        <p id="displayScore" class="scoreItem">@Model.Score.ToString()</p>
+                    </div>
                     <script>
                         var count = Number($('#displayScore').text());
                     </script>
                 </div>
                 <div class="SBitem scoreDiv">
                     <p>Time Left:</p>
-                    <div id="clockdiv" class="scoreItem">@Model.TimeRemaining.ToString()</div>
+                    <div class="scoreWrapper">
+                        <div id="clockdiv" class="scoreItem">@Model.TimeRemaining.ToString()</div>
+                    </div>
                 </div>
                 <p class="SBitem">Question @Model.CurrentQuestion.ToString() of @Model.TotalQuestions.ToString()</p>
                 <!--This image only implementation of a mute button is from Tarun at http://stackoverflow.com/questions/22918220/how-to-create-a-only-mute-unmute-button-like-youtube-in-html-->
@@ -32,7 +36,7 @@
                 @using (Html.BeginForm("HandleGuess", "Game", FormMethod.Post, new { id = "GameForm", onsubmit = "return CheckIn();" }))
                 {
                     @Html.AntiForgeryToken()
-                    <input id="Time" name="Time" hidden="hidden" type="text" value="@Model.TimeRemaining.ToString()" />
+                    <input id="Time" name="Time" hidden="hidden" value="0" type="text"/>
                     <input id="Guess" name="Guess" hidden="hidden" type="text" value=""/>
                     <input id="correctAnswer" name="correctAnswer" hidden="hidden" type="text" value="@Model.CorrectAnswer"/>
                     <div id="nextButton" class="nextButton scoreDiv">
@@ -64,7 +68,7 @@
         <div id="answerButtons" tabindex="0">
             @for (int i = 0; i < Model.Guesses.Count; i++)
             {
-                <button class="btn btn-primary btn-guess col-xs-4">@Model.Guesses.ElementAt(i)</button>
+                <button class="btn btn-primary btn-guess">@Model.Guesses.ElementAt(i)</button>
             }
         </div>
     </div>

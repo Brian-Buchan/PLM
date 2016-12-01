@@ -370,12 +370,9 @@ hr {
     background-color: lightgray;
     border: 3px solid black;
     padding-bottom: 10px;
+    display: flex;
+    flex-wrap: wrap;
 }
-
-    #answerButtons Button {
-        margin: 1%;
-        overflow: hidden;
-    }
 
 .NoMargin {
     margin: 0px;
@@ -401,8 +398,30 @@ hr {
     background-color: white;
     border: solid black 1px;
     padding: 5px;
+    height: auto;
+    width: auto;
 }
 
 .nextButton {
     display: none;
+}
+
+.btn-guess {
+    display: inline-block;
+    width: 31.33%;
+    margin: 1%;
+}
+
+
+@media (max-width: 768px) {
+    .btn-guess {
+        width: 48%;
+    }
+}
+
+@media (max-width: 400px) {
+    .btn-guess {
+        display: block;
+        width: 98%;
+    }
 }
