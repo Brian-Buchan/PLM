@@ -46,22 +46,18 @@
             </div>
         </div>
         <div class="form-group">
-            @Html.LabelFor(model => model.Pictures, "Pictures", new { @class = "control-label col-md-2" })
-            <div class="form-group, scroll-box, col-xs-10 flex">
+            <h1>Pictures</h1>
+            <div class="form-group, scroll-box, col-xs-12 flex test">
                 @foreach (Picture pic in ViewBag.Pictures)
                 {
-                    <div class="col-xs-6">
-                        <div class="portfolio-wrapper">
-                            <div class="portfolio-single">
-                                <div class="portfolio-thumb">
-                                    @Html.Action("PictureView", "Pictures", new { pic = new PLM.Models.GamePicture(pic) })
-                                </div>
-                            </div>
-                            <div class="portfolio-info ">
-                                    @Html.ActionLink("Edit Image", "ImageEditor", new { controller = "Pictures", id = pic.PictureID }) |
-                                    @Html.ActionLink("Attribution", "Edit", new { controller = "Pictures", id = pic.PictureID }) |
-                                    @Html.ActionLink("Delete", "Delete", new { controller = "Pictures", id = pic.PictureID })
-                            </div>
+                    <div class="test1">
+                        <div class="test2-1">
+                            @Html.Action("PictureView", "Pictures", new { pic = new PLM.Models.GamePicture(pic) })
+                        </div>
+                        <div class="portfolio-info test2">
+                            @Html.ActionLink("Edit Image", "ImageEditor", new { controller = "Pictures", id = pic.PictureID }) |
+                            @Html.ActionLink("Attribution", "Edit", new { controller = "Pictures", id = pic.PictureID }) |
+                            @Html.ActionLink("Delete", "Delete", new { controller = "Pictures", id = pic.PictureID })
                         </div>
                     </div>
 

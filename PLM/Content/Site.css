@@ -31,6 +31,10 @@ textarea {
     width: 33%;
 }
 
+.floatRightPic {
+    float: right;
+}
+
 .halfPanel {
     width: 50%;
     float: left;
@@ -412,6 +416,24 @@ hr {
     margin: 1%;
 }
 
+.test {
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+.test1 {
+    margin-top: 10px;
+    display: flex;
+    width: 30.33%;
+    min-width: 150px;
+    position: relative;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.test2-1 {
+    min-height: 150px;
+}
 
 @media (max-width: 768px) {
     .btn-guess {
