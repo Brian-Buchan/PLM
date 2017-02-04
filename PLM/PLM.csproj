@@ -266,6 +266,10 @@
     <Compile Include="Migrations\201611212125270_ModuleIDinDisableModuleViewModel.Designer.cs">
       <DependentUpon>201611212125270_ModuleIDinDisableModuleViewModel.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201702041942406_module key.cs" />
+    <Compile Include="Migrations\201702041942406_module key.Designer.cs">
+      <DependentUpon>201702041942406_module key.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AdminViewModel.cs" />
     <Compile Include="Models\AnswerViewModel.cs" />
@@ -1387,6 +1391,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201611212125270_ModuleIDinDisableModuleViewModel.resx">
       <DependentUpon>201611212125270_ModuleIDinDisableModuleViewModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201702041942406_module key.resx">
+      <DependentUpon>201702041942406_module key.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -12,6 +12,8 @@ namespace PLM
 {
     public class Module
     {
+
+        [Key]
         public int ModuleID { get; set; }
         [Required]
         [Display(Name = "Module name")]
