@@ -120,7 +120,7 @@ namespace PLM.Controllers
         {
             if (ModelState.IsValid)
             {
-                //**********NOTE****************//
+                //**********NOTE*********  *******//
                 //Make sure that a user is logged in to access this page
                 if (((User.IsInRole("Learner")) || (User.IsInRole("Admin"))))
                 {

@@ -94,6 +94,8 @@ namespace PLM
 
         public DbSet<Score> Scores { get; set; }
         public DbSet<PLM.Models.Report> Reports { get; set; }
+        public DbSet<FAQ> FAQs { get; set; }
+
 
         public System.Data.Entity.DbSet<PLM.DisableModuleViewModel> DisableModuleViewModels { get; set; }
     }

@@ -13,7 +13,11 @@
 input,
 select,
 textarea {
-    max-width: 280px;
+    max-width: 500px;
+}
+textarea {
+     width: 70%;
+     height: 300px;
 }
 
 .moduleImage {
@@ -443,6 +447,13 @@ hr {
 
 @media (max-width: 400px) {
     .btn-guess {
+        display: block;
+        width: 98%;
+    }
+}
+
+@media (max-width: 400px) {
+    textarea {
         display: block;
         width: 98%;
     }

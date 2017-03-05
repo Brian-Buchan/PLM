@@ -20,6 +20,14 @@
     color: #000;
   }
 
+  .fontFAQAnswer {
+   
+    font-family: 'Lato', sans-serif;
+    font-weight: 400;
+
+    color:  tomato;
+  }
+
   html {
     height: 100%;
   }

@@ -150,6 +150,7 @@ namespace PLM.Controllers
                 return RedirectToAction("Play");
             }
         }
+
         public ActionResult Complete(int score)
         {
             ViewBag.ModuleID = ((UserGameSession)Session["userGameSession"]).gameModule.ModuleID;

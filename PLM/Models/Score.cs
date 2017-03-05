@@ -11,7 +11,7 @@ using System.Data.Entity;
 namespace PLM
 {
     public class Score
-    {
+    {   [Key]
         public int ID { get; set; }
 
         [Display(Name = "ModuleID")]

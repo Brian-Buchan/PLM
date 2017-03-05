@@ -180,6 +180,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AnswersController.cs" />
     <Compile Include="Controllers\CategoriesController.cs" />
+    <Compile Include="Controllers\FAQsController.cs" />
     <Compile Include="Controllers\GameController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\IdentityRolesController.cs" />
@@ -270,10 +271,15 @@
     <Compile Include="Migrations\201702041942406_module key.Designer.cs">
       <DependentUpon>201702041942406_module key.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201703051421476_FAQ.cs" />
+    <Compile Include="Migrations\201703051421476_FAQ.Designer.cs">
+      <DependentUpon>201703051421476_FAQ.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AdminViewModel.cs" />
     <Compile Include="Models\AnswerViewModel.cs" />
     <Compile Include="Models\ConfirmViewModel.cs" />
+    <Compile Include="Models\FAQ.cs" />
     <Compile Include="Models\GameAnswer.cs" />
     <Compile Include="Models\Top10Score.cs" />
     <Compile Include="Models\GameCompleted.cs" />
@@ -1320,6 +1326,11 @@
     <Content Include="Views\Game\Complete.cshtml" />
     <Content Include="Scripts\jquery-3.1.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.1.1.min.map" />
+    <Content Include="Views\FAQs\Create.cshtml" />
+    <Content Include="Views\FAQs\Delete.cshtml" />
+    <Content Include="Views\FAQs\Details.cshtml" />
+    <Content Include="Views\FAQs\Edit.cshtml" />
+    <Content Include="Views\FAQs\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -1394,6 +1405,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201702041942406_module key.resx">
       <DependentUpon>201702041942406_module key.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201703051421476_FAQ.resx">
+      <DependentUpon>201703051421476_FAQ.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

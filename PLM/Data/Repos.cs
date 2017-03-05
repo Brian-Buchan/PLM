@@ -157,16 +157,17 @@ namespace PLM
                 ParameterName = "ModuleID",
                 Value = score.ModuleID
             };
-            try
-            {
-                _dc.Database.ExecuteSqlCommand(
-                    "INSERT INTO Scores (CorrectAnswers, TotalAnswers, TimeStamp, UserID, ModuleID) VALUES (@CorrectAnswers, @TotalAnswers, @TimeStamp, @UserID, @ModuleID", idParam, idParam1, idParam2, idParam3, idParam4
+            //try
+            //{
+            var rc =     _dc.Database.ExecuteSqlCommand(
+                    "INSERT INTO Scores (CorrectAnswers, TotalAnswers, TimeStamp, UserID, ModuleID) VALUES (@CorrectAnswers, @TotalAnswers, @TimeStamp, @UserID, @ModuleID)", idParam, idParam1, idParam2, idParam3, idParam4
                     );
-            }
-            catch (Exception)
-            {
-                return false;
-            }
+           
+            //}
+            //catch (Exception)
+            //{
+            //    return false;
+            //}
             return true;
         }
         #endregion
@@ -262,7 +263,7 @@ namespace PLM
                 Value = moduleID
             };
             var _List = _dc.Database.SqlQuery<Top10Score>(
-                "Select TOP 10 CONCAT(u.[FirstName], ' ', u.[LastName]) as Name, CONCAT(CAST(s.[CorrectAnswers] as VARCHAR(10)), '/', CAST(s.[TotalAnswers] as VARCHAR(10))) as Score, s.[TimeStamp] as Date from [dbo].[Scores] as s left outer join[dbo].[AspNetUsers] as u on s.UserID = u.ID Where S.ModuleID = 3 order by s.[CorrectAnswers] DESC", idParam
+                "Select TOP 10 CONCAT(u.[FirstName], ' ', u.[LastName]) as Name, CONCAT(CAST(s.[CorrectAnswers] as VARCHAR(10)), '/', CAST(s.[TotalAnswers] as VARCHAR(10))) as Score, s.[TimeStamp] as Date from [dbo].[Scores] as s left outer join[dbo].[AspNetUsers] as u on s.UserID = u.ID Where S.ModuleID = @moduleID order by s.[CorrectAnswers] DESC", idParam
                 ).ToList<Top10Score>();
             return _List;
         }
@@ -587,6 +588,81 @@ namespace PLM
             return true;
         }
         #endregion
+
+
+
+        public int GetNextFAQSortOrder()
+        {
+            int rc = 0;
+            try
+            {
+                IQueryable<FAQ> _f = _dc.FAQs;
+                
+                rc = _f.Count() + 1;
+
+            }
+            catch (Exception e)
+            {
+                // 
+                // e.Message;
+                //TODO: do something with errors
+                rc = 0;
+            }
+
+            return rc;
+
+        }
+        public int ReOrderFAQ( FAQ _faq, int newSortOrder )
+        {
+            int rc = 0;
+            var currentid = _faq.Id;
+            string sql = "";
+            try
+            {
+                var idParam = new SqlParameter
+                {
+                    ParameterName = "id",
+                    Value = currentid,
+                    DbType = System.Data.DbType.Int32
+                };
+
+                var sortParam = new SqlParameter
+                {
+                    ParameterName = "newSortOrder",
+                    Value = newSortOrder,
+                    DbType = System.Data.DbType.Int32
+                };
+
+                var sortParam2 = new SqlParameter
+                {
+                    ParameterName = "newSortOrder",
+                    Value = newSortOrder,
+                    DbType = System.Data.DbType.Int32
+                };
+                // update sort moving everything to high number ge new sort order
+                sql = "update FAQs set SortOrder += 1000000 where SortOrder >= @newSortOrder and SortOrder < 1000000  ";
+                rc = _dc.Database.ExecuteSqlCommand(sql, sortParam2);
+
+                // set sort order for item
+                sql = "update FAQs set SortOrder = @newSortOrder where Id = @id ";
+                rc = _dc.Database.ExecuteSqlCommand(sql, sortParam, idParam);
+                // reorder
+                sql = "UPDATE x SET x.SortOrder = x.newsort from ( SELECT a.SortOrder, ROW_NUMBER() OVER (ORDER BY a.SortOrder) AS newsort       FROM FAQs a 	  join FAQs b 	   on a.Id = b.Id 	   ) x";
+                rc = _dc.Database.ExecuteSqlCommand(sql);
+
+            }
+            catch (Exception e)
+            {
+                // 
+                sql= e.Message;
+                //TODO: do something with errors
+                rc = 0;
+            }
+
+            return rc;
+
+        }
+
 
         public void Dispose()
         {
