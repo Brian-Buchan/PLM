@@ -7,14 +7,21 @@
 <script data-path="@Url.Content("~/pixie-image-editor/pixie")"
         src="@Url.Content("~/pixie-image-editor/pixie/pixie-integrate.js")"></script>
 <br />
-@using (Html.BeginForm("Confirm", "Pictures", FormMethod.Post))
+@*@using (Html.BeginForm("Confirm", "Pictures", FormMethod.Post))*@
+@using (Html.BeginForm("Save", "Pictures", FormMethod.Post))
 {
     @Html.AntiForgeryToken()
-    <input type="text" name="imageId" id="imageId" hidden="hidden" required="required" value="" />
-    <input type="text" name="answerId" id="answerId" hidden="hidden" required="required" value="" />
-    <input type="text" name="newImgData" id="newImgData" hidden="hidden" required="required" value="" />
+    <input type="text" name="imageId" id="imageId" hidden="hidden" required="required" value="@Model.PictureID" />
+    <input type="text" name="answerId" id="answerId" hidden="hidden" required="required" value="@Model.AnswerID" />
+    <input type="text" name="newImgData" id="newImgData" hidden="hidden" required="required" value="@Model.PictureData" />
     <input type="text" name="originalImgData" id="originalImgData" hidden="hidden" required="required" value="" />
     <input class="btn btn-primary" type="submit" style="background-color:green" value="Save" />
+}
+@using (Html.BeginForm("Discard", "Pictures", FormMethod.Post))
+{
+    <input type="text" name="newImgData" value="@Model.PictureData" hidden="hidden" />
+    <input type="number" name="answerID" value="@Model.AnswerID" hidden="hidden" />
+    <input class="btn btn-primary" style="background-color:red" type="submit" value="Discard" />
 }
 <br />
 <div>

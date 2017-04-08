@@ -26,15 +26,38 @@ namespace PLM.Controllers
     {
         private ApplicationUserManager _userManager;
         private ApplicationDbContext db = new ApplicationDbContext();
+
+
+
         public AccountController()
         {
         }
+        public AccountController(ApplicationUserManager userManager)
+        {
+            UserManager = userManager;
+        }
+        public ApplicationUserManager UserManager
+        {
+            get
+            {
+                return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            }
+            private set
+            {
+                _userManager = value;
+            }
+        }
+
+
+        [Authorize(Roles ="Admin")]
         public ActionResult Index(string sortOrder, string searchString)
         {
             ViewBag.UsernameSortParam = String.IsNullOrEmpty(sortOrder) ? "username_asc" : "";
             ViewBag.NameSortParam = sortOrder == "first_asc" ? "first_desc" : "first_asc";
             ViewBag.LastSortParam = sortOrder == "last_asc" ? "last_desc" : "last_asc";
-
+            ViewBag.StatusSortParam = sortOrder == "status_asc" ? "status_desc" : "status_asc";
+            ViewBag.InstitutionSortParam = sortOrder == "inst_asc" ? "inst_desc" : "inst_asc";
+            //
             var db = new ApplicationDbContext();
             var users = from u in db.Users
                         where u.Status != ApplicationUser.AccountStatus.Disabled
@@ -48,6 +71,19 @@ namespace PLM.Controllers
             }
             switch (sortOrder)
             {
+                case "inst_asc":
+                    users = users.OrderBy(u => u.Institution);
+                    break;
+                case "inst_desc":
+                    users = users.OrderByDescending(u => u.Institution);
+                    break;
+                case "status_asc":
+                    users = users.OrderBy(u => u.Status);
+                    break;
+                case "status_desc":
+                    users = users.OrderByDescending(u => u.Status);
+                    break;
+
                 case "username_asc":
                     users = users.OrderBy(u => u.UserName);
                     break;
@@ -75,6 +111,7 @@ namespace PLM.Controllers
             return View(model);
         }
 
+        [Authorize(Roles = "Admin")]
         public ActionResult DisabledUsersList(string sortOrder, string searchString)
         {
             ViewBag.UsernameSortParam = String.IsNullOrEmpty(sortOrder) ? "username_asc" : "";
@@ -113,6 +150,7 @@ namespace PLM.Controllers
             return View(users);
         }
 
+        [Authorize(Roles = "Admin")] //TODO: added authorizations 3-8-17
         public ActionResult RoleRequest()
         {
             var db = new ApplicationDbContext();
@@ -124,6 +162,7 @@ namespace PLM.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin")] //TODO: added authorizations 3-8-17
         [ValidateAntiForgeryToken]
         public ActionResult RoleRequest(string userID)
         {
@@ -137,6 +176,7 @@ namespace PLM.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin")] //TODO: added authorizations 3-8-17
         [ValidateAntiForgeryToken]
         public ActionResult DenyRequest(string userID)
         {
@@ -170,6 +210,7 @@ namespace PLM.Controllers
             return View();
         }
         [HttpPost]
+        [Authorize(Roles = "Admin")] //TODO: added authorizations 3-8-17
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create(CreateUserViewModel model)
         {
@@ -198,15 +239,17 @@ namespace PLM.Controllers
             return View(model);
         }
 
-        
+
+        [Authorize(Roles = "Admin")] //TODO: added authorizations 3-8-17
         public ActionResult Edit(string userName = null)
         {
             if (userName == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return RedirectToAction("Index", "Account");
+                //return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            var db = new ApplicationDbContext();
+            
             var user = db.Users.First(u => u.UserName == userName);
             var model = new EditUserViewModel(user);
 
@@ -220,20 +263,23 @@ namespace PLM.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        
-        public ActionResult Edit([Bind(Include = "UserName, LastName, FirstName, Institution, Email, Status, Password, ConfirmPassword")] EditUserViewModel userModel)
+        [Authorize(Roles = "Admin")] //TODO: added authorizations 3-8-17
+        public ActionResult Edit([Bind(Include = "Id,UserName, LastName, FirstName, Institution, Email, Status")] EditUserViewModel userModel)
         {
+            //, Password, ConfirmPassword
             if (ModelState.IsValid)
             {
-                var db = new ApplicationDbContext();
-                var user = db.Users.First(u => u.UserName == userModel.UserName);
+              
+                var user = db.Users.First(u => u.Id == userModel.Id);
                 user.FirstName = userModel.FirstName;
                 user.LastName = userModel.LastName;
                 user.Email = userModel.Email;
+                user.Status =  userModel.Status;
                 user.Institution = userModel.Institution;
-                user.UserName = userModel.UserName;
-                PasswordHasher ph = new PasswordHasher();
-                user.PasswordHash = ph.HashPassword(userModel.Password);
+          //TODO: Add change password button and process to reset passwords. No need to know user password.
+          //      user.UserName = userModel.UserName;
+          //      PasswordHasher ph = new PasswordHasher();
+          //      user.PasswordHash = ph.HashPassword(userModel.Password);
                 db.Entry(user).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -241,7 +287,49 @@ namespace PLM.Controllers
             return View(userModel);
         }
 
-        
+
+        [Authorize(Roles = "Admin")] //TODO: added authorizations 3-8-17
+        public ActionResult CngUserPwd(string id = null)
+        {
+            if (id == null)
+            {
+                return RedirectToAction("Index", "Account");
+            }
+
+            var user = db.Users.First(u => u.Id == id);
+            var model = new CngUserPwdViewModel();
+            ViewBag.LastName = user.LastName;
+            ViewBag.FirstName = user.FirstName;
+            if (user == null)
+            {
+                return HttpNotFound();
+            }
+
+            return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")] //TODO: added authorizations 3-8-17
+        public ActionResult CngUserPwd([Bind(Include = "Id,Password,ConfirmPassword")] CngUserPwdViewModel userModel)
+        {
+          
+
+            var user = db.Users.First(u => u.Id == userModel.Id);
+
+
+            PasswordHasher ph = new PasswordHasher();
+            user.PasswordHash = ph.HashPassword(userModel.Password);
+            db.Entry(user).State = EntityState.Modified;
+            db.SaveChanges();
+            
+
+            return RedirectToAction("Index");
+           
+            //return View(userModel);
+        }
+
+        [Authorize(Roles = "Admin")] //TODO: added authorizations 3-8-17
         public ActionResult Delete(string userName = null)
         {
             var db = new ApplicationDbContext();
@@ -258,6 +346,7 @@ namespace PLM.Controllers
 
         [ValidateAntiForgeryToken]
         [HttpPost, ActionName("Delete")]
+        [Authorize(Roles = "Admin")] //TODO: added authorizations 3-8-17
         public ActionResult DeleteConfirmed(string userName)
         {
             var db = new ApplicationDbContext();
@@ -267,6 +356,7 @@ namespace PLM.Controllers
             return RedirectToAction("Index");
         }
 
+        [Authorize(Roles = "Admin")] //TODO: added authorizations 3-8-17
         public ActionResult ViewUserRoles(string userName = null)
         {
             if (!string.IsNullOrWhiteSpace(userName))
@@ -296,6 +386,9 @@ namespace PLM.Controllers
             }
             return View();
         }
+
+
+        [Authorize(Roles = "Admin")] //TODO: added authorizations 3-8-17
         public ActionResult DeleteRoleForUser(string userName = null, string roleName = null)
         {
             if ((!string.IsNullOrWhiteSpace(userName)) || (!string.IsNullOrWhiteSpace(roleName)))
@@ -336,6 +429,8 @@ namespace PLM.Controllers
                 return View("Index");
             }
         }
+
+        [Authorize(Roles = "Admin")] //TODO: added authorizations 3-8-17
         public ActionResult AddRoleToUser(string userName = null)
         {
             List<string> roles;
@@ -351,8 +446,11 @@ namespace PLM.Controllers
             ViewBag.UserName = userName;
             return View();
         }
+
+
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")] //TODO: added authorizations 3-8-17
         public ActionResult AddRoleToUser(string roleName, string userName)
         {
             List<string> roles;
@@ -401,23 +499,8 @@ namespace PLM.Controllers
             }
         }
 
-        public AccountController(ApplicationUserManager userManager)
-        {
-            UserManager = userManager;
-        }
-
-        public ApplicationUserManager UserManager
-        {
-            get
-            {
-                return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
-            }
-            private set
-            {
-                _userManager = value;
-            }
-        }
         // GET: /Account/Login
+
         [AllowAnonymous]
         public ActionResult Login(string returnUrl)
         {
@@ -460,12 +543,14 @@ namespace PLM.Controllers
         }
 
         //User View
+        [Authorize(Roles = "Admin")] //TODO: added authorizations 3-8-17
         public ActionResult AccountDisabled()
         {
             return View();
         }
 
         //Admin options page
+        [Authorize(Roles = "Admin")] //TODO: added authorizations 3-8-17
         public ActionResult AccountDisable(string userName = null)
         {
             if (userName == null)
@@ -485,7 +570,7 @@ namespace PLM.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        
+        [Authorize(Roles = "Admin")] //TODO: added authorizations 3-8-17
         public ActionResult AccountDisable([Bind(Include = "UserName, DisableAccountReason, DisableAccountNote, Status")] DisableUserViewModel userModel)
         {
             if (ModelState.IsValid)
@@ -563,11 +648,13 @@ namespace PLM.Controllers
             // If we got this far, something failed, redisplay form
             return View(model);
         }
+
         public ActionResult AccessDenied()
         {
             return View();
         }
         // GET: /Account/ConfirmEmail
+
         [AllowAnonymous]
         public async Task<ActionResult> ConfirmEmail(string userId, string code)
         {
@@ -587,12 +674,16 @@ namespace PLM.Controllers
                 return View();
             }
         }
+
+        
         // GET: /Account/ForgotPassword
         [AllowAnonymous]
         public ActionResult ForgotPassword()
         {
             return View();
         }
+        
+        
         // POST: /Account/ForgotPassword
         [HttpPost]
         [AllowAnonymous]
@@ -618,12 +709,16 @@ namespace PLM.Controllers
             // If we got this far, something failed, redisplay form
             return View(model);
         }
+        
+        
         // GET: /Account/ForgotPasswordConfirmation
         [AllowAnonymous]
         public ActionResult ForgotPasswordConfirmation()
         {
             return View();
         }
+        
+        
         // GET: /Account/ResetPassword
         [AllowAnonymous]
         public ActionResult ResetPassword(string code)
@@ -662,12 +757,16 @@ namespace PLM.Controllers
             // If we got this far, something failed, redisplay form
             return View(model);
         }
+        
+        
         // GET: /Account/ResetPasswordConfirmation
         [AllowAnonymous]
         public ActionResult ResetPasswordConfirmation()
         {
             return View();
         }
+        
+        
         // POST: /Account/Disassociate
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -687,7 +786,10 @@ namespace PLM.Controllers
             }
             return RedirectToAction("Manage", new { Message = message });
         }
+
+
         // GET: /Account/Manage
+        [AllowAnonymous]
         public ActionResult Manage(ManageMessageId? message)
         {
             ViewBag.StatusMessage =
@@ -701,6 +803,7 @@ namespace PLM.Controllers
             return View();
         }
         // POST: /Account/Manage
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Manage(ManageUserViewModel model)
@@ -749,6 +852,8 @@ namespace PLM.Controllers
             // If we got this far, something failed, redisplay form
             return View(model);
         }
+        
+        
         // POST: /Account/ExternalLogin
         [HttpPost]
         [AllowAnonymous]
@@ -758,6 +863,7 @@ namespace PLM.Controllers
             // Request a redirect to the external login provider
             return new ChallengeResult(provider, Url.Action("ExternalLoginCallback", "Account", new { ReturnUrl = returnUrl }));
         }
+
         // GET: /Account/ExternalLoginCallback
         [AllowAnonymous]
         public async Task<ActionResult> ExternalLoginCallback(string returnUrl)
@@ -782,6 +888,7 @@ namespace PLM.Controllers
                 return View("ExternalLoginConfirmation", new ExternalLoginConfirmationViewModel { Email = loginInfo.Email });
             }
         }
+        
         // POST: /Account/LinkLogin
         [HttpPost]
         [ValidateAntiForgeryToken]

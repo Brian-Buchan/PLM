@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
+
 
 namespace PLM.Models
 {
@@ -115,15 +117,21 @@ namespace PLM.Models
 
         public EditUserViewModel(ApplicationUser user)
         {
-            this.UserName = user.UserName;
-            this.FirstName = user.FirstName;
-            this.LastName = user.LastName;
-            this.Email = user.Email;
-            this.Institution = user.Institution;
-            this.Password = user.PasswordHash;
+            Id = user.Id;   //todo: added status to EditUserViewModel constructor 4-8-17
+            UserName        = user.UserName;
+            FirstName       = user.FirstName;
+            LastName        = user.LastName;
+            Email           = user.Email;
+            Status          = user.Status;  //todo: added status to EditUserViewModel constructor  4-8-17
+            Institution     = user.Institution;
+          //  this.Password = user.PasswordHash;
         }
 
         [Key]
+        [System.Web.Mvc.HiddenInput(DisplayValue = false)] //TODO: Added ID to EditUserViewModel ;allows for changing username  4-8-17
+        public string Id { get; set; }
+
+        
         [Required]
         [Display(Name = "User Name")]
         public string UserName { get; set; }
@@ -144,7 +152,59 @@ namespace PLM.Models
 
         [Display(Name = "Account Status")]
         public ApplicationUser.AccountStatus Status { get; set; }
+        /*TODO: commented out password worn editviewmodel. This needs to be seperate function 
+        //[Required]
+        //[StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
+        //[DataType(DataType.Password)]
+        //[Display(Name = "Password")]
+        //public string Password { get; set; }
 
+        //[DataType(DataType.Password)]
+        //[Display(Name = "Confirm password")]
+        //[Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+        //public string ConfirmPassword { get; set; }
+        */
+
+    }
+
+    public class CngUserPwdViewModel  //todo: added CngUserPwdViewModel 4-8-17
+    {
+
+        public CngUserPwdViewModel() { }
+        public CngUserPwdViewModel(ApplicationUser user)
+        {
+            Id = user.Id;   
+            UserName = user.UserName;
+            FirstName = user.FirstName;
+            LastName = user.LastName;
+            Status = user.Status;  
+            Institution = user.Institution;
+            this.Password = user.PasswordHash;
+        }
+
+        [Key]
+        [System.Web.Mvc.HiddenInput(DisplayValue = false)] 
+        public string Id { get; set; }
+
+
+        [ReadOnly(true)]
+        [Display(Name = "User Name")]
+        public string UserName { get; set; }
+
+        [ReadOnly(true)]
+        [Display(Name = "First Name")]
+        public string FirstName { get; set; }
+
+        [ReadOnly(true)]
+        [Display(Name = "Last Name")]
+        public string LastName { get; set; }
+
+        [ReadOnly(true)]
+        public string Institution { get; set; }
+
+        [Display(Name = "Account Status")]
+        [ReadOnly(true)]
+        public ApplicationUser.AccountStatus Status { get; set; }
         [Required]
         [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
         [DataType(DataType.Password)]
@@ -155,7 +215,6 @@ namespace PLM.Models
         [Display(Name = "Confirm password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
-
     }
 
     public class DisableUserViewModel

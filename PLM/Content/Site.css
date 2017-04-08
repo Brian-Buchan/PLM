@@ -3,6 +3,34 @@
     padding-bottom: 20px;
 }
 
+.trow {
+    border-bottom-style: solid;
+    border-bottom-color: burlywood;
+    border-bottom-width: 1px;
+    min-height: 50px;
+    max-height: 400px;
+    height: auto;
+    overflow-y:  hidden;
+}
+.tcell {
+    padding-top: 5px;
+}
+
+.shiftleft {
+    padding-left: 5px;
+    margin-left:-30px;
+
+}
+
+.tinytext-5 {
+    font-size: .5em;
+}
+
+.tinytext-7 {
+    font-size: .7em;
+}
+
+
 /* Set padding to keep content from hitting the edges */
 .body-content {
     padding-left: 15px;
@@ -62,8 +90,13 @@ textarea {
 
 .img-hover:hover {
     border-style: solid;
-    border-color: black;
+    border-color: rgba(81, 43, 43, 0.92);
     border-width: 1px;
+    
+}
+
+.textsize_med_lg { 
+    font-size: 1.5em;
 }
 
 article {
@@ -450,11 +483,32 @@ hr {
         display: block;
         width: 98%;
     }
+    
+   
 }
 
 @media (max-width: 400px) {
     textarea {
         display: block;
         width: 98%;
+    }
+
+}
+
+@media (min-width: 400px) {
+    
+    .shiftleft {
+        padding-left: 5px;
+        margin-left: 5px;
+
+    }
+}
+
+@media (min-width: 250px) {
+    
+    .shiftleft {
+        padding-left: 10px;
+        margin-left: 5px;
+
     }
 }

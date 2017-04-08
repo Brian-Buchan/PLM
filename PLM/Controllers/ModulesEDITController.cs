@@ -222,8 +222,9 @@ namespace PLM.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [AuthorizeOrRedirectAttribute(Roles = "Admin")]
-        public ActionResult DisableModule([Bind(Include = "Name, isDisabled, DisableModuleNote, DisableReason")] DisableModuleViewModel userModule)
+        public ActionResult DisableModule([Bind(Include = "Name, isDisabled, DisableModuleNote, DisableReason, ModuleID")] DisableModuleViewModel userModule)
         {
+            //TODO: document Added MouduleID to Bind. Added hidden field to view for ModuleID
             if (ModelState.IsValid)
             {
                 Module module;

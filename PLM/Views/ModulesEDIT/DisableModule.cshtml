@@ -23,6 +23,7 @@
             <hr />
             @Html.ValidationSummary(true)
             @Html.HiddenFor(model => model.Name)
+            @Html.HiddenFor(model => model.ModuleID)
             <div class="form-group">
                 @Html.LabelFor(model => model.isDisabled, new { @class = "control-label col-md-2" })
                 <div class="col-md-10">

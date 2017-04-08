@@ -275,6 +275,10 @@
     <Compile Include="Migrations\201703051421476_FAQ.Designer.cs">
       <DependentUpon>201703051421476_FAQ.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201704081743004_usr.cs" />
+    <Compile Include="Migrations\201704081743004_usr.Designer.cs">
+      <DependentUpon>201704081743004_usr.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AdminViewModel.cs" />
     <Compile Include="Models\AnswerViewModel.cs" />
@@ -1331,6 +1335,7 @@
     <Content Include="Views\FAQs\Details.cshtml" />
     <Content Include="Views\FAQs\Edit.cshtml" />
     <Content Include="Views\FAQs\Index.cshtml" />
+    <Content Include="Views\Account\CngUserPwd.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -1408,6 +1413,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201703051421476_FAQ.resx">
       <DependentUpon>201703051421476_FAQ.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201704081743004_usr.resx">
+      <DependentUpon>201704081743004_usr.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

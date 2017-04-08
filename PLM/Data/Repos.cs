@@ -1,15 +1,19 @@
-﻿using System;
+﻿
+using PLM.Models;
+using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Data.SqlTypes;
 using System.Linq;
 using System.Web;
+using Microsoft.AspNet.Identity;
 //TODO: COPY OVER
 namespace PLM
 {
     public class Repos : IDisposable
     {
         ApplicationDbContext _dc = new ApplicationDbContext();
+       // ApplicationUserManager userManager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
 
         public SqlParameter NullChecker(SqlParameter param)
         {
@@ -450,33 +454,65 @@ namespace PLM
             return true;
         }
 
+
+        //TODO: Created GetUserIdFromModule(int id)
+        /// <summary>
+        /// Created: 3-8-17
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public string GetUserIdFromModule(int id)
+        {
+            string uid = "";
+
+            var idParam = new SqlParameter
+            {
+                ParameterName = "ModuleID",
+                Value = id
+            };
+
+             uid = _dc.Database.SqlQuery<string>(
+                "Select user_id from Modules Where Modules.ModuleID = @ModuleID", idParam
+                ).Single<string>();
+            
+            return uid;
+        }
+
+
         public bool UpdateModule(Module module)
         {
+
+            var u = GetUserIdFromModule(module.ModuleID);
+            //TODO: document Added var u = GetUserIdFromModule(module.ModuleID) to UpdateModule -3-8-17
+
+
+
             var idParam = new SqlParameter { ParameterName = "Name", Value = module.Name };
-            var idParam1 = new SqlParameter { ParameterName = "Description", Value = module.Description };
+            var idParam1 = new SqlParameter { ParameterName = "Description", Value = module.Description ?? ""};
             var idParam2 = new SqlParameter { ParameterName = "CategoryID", Value = module.CategoryId };
             var idParam3 = new SqlParameter { ParameterName = "DefaultNumAnswers", Value = module.DefaultNumAnswers };
             var idParam4 = new SqlParameter { ParameterName = "DefaultTime", Value = module.DefaultTime };
             var idParam5 = new SqlParameter { ParameterName = "DefaultNumQuestions", Value = module.DefaultNumQuestions };
             var idParam6 = new SqlParameter { ParameterName = "isPrivate", Value = module.isPrivate };
-            var idParam7 = new SqlParameter { ParameterName = "user_Id", Value = module.User.Id };
-            var idParam8 = new SqlParameter { ParameterName = "rightAnswerString", Value = module.rightAnswerString };
-            var idParam9 = new SqlParameter { ParameterName = "wrongAnswerString", Value = module.wrongAnswerString };
+            var idParam7 = new SqlParameter { ParameterName = "user_Id", Value = u  };
+
+            var idParam8 = new SqlParameter { ParameterName = "rightAnswerString", Value = module.rightAnswerString ?? "" };
+            var idParam9 = new SqlParameter { ParameterName = "wrongAnswerString", Value = module.wrongAnswerString ?? "" };
             var idParam10 = new SqlParameter { ParameterName = "isDisabled", Value = module.isDisabled };
-            var idParam11 = new SqlParameter { ParameterName = "DisableModuleNote", Value = module.DisableModuleNote };
-            var idParam12 = new SqlParameter { ParameterName = "DisableReason", Value = module.DisableReason };
+            var idParam11 = new SqlParameter { ParameterName = "DisableModuleNote", Value = module.DisableModuleNote ?? "" };
+            var idParam12 = new SqlParameter { ParameterName = "DisableReason", Value = module.DisableReason  };
             var idParam13 = new SqlParameter { ParameterName = "ModuleID", Value = module.ModuleID };
-            try
-            {
+           // try
+          //  {
                 _dc.Database.ExecuteSqlCommand(
                     "Update Modules SET Name = @Name, Description = @Description, CategoryId = @CategoryID, DefaultNumAnswers = @DefaultNumAnswers, DefaultTime = @DefaultTime, DefaultNumQuestions = @DefaultNumQuestions, isPrivate = @isPrivate, User_Id = @User_Id, rightAnswerString = @rightAnswerString, wrongAnswerString = @wrongAnswerString, isDisabled = @isDisabled, DisableModuleNote = @DisableModuleNote, DisableReason = @DisableReason where ModuleID = @ModuleID",
                     idParam, idParam1, idParam2, idParam3, idParam4, idParam5, idParam6, idParam7, idParam8, idParam9, idParam10, idParam11, idParam12, idParam13
                     );
-            }
-            catch (Exception)
-            {
+          //  }
+          //  catch (Exception)
+           // {
                 return false;
-            }
+           // }
             return true;
 
         }
@@ -505,6 +541,10 @@ namespace PLM
             }
             return true;
         }
+
+        
+
+
         #endregion
 
         #region DELETE

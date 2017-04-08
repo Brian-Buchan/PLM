@@ -2,6 +2,7 @@
 @{
     ViewBag.Title = "Accounts";
 }
+<div class="shiftleft">
     <section id="page-breadcrumb">
         <div class="vertical-center sun">
             <div class="container">
@@ -28,47 +29,54 @@
     <p>
         @Html.ActionLink("View Disabled Accounts", "DisabledUsersList", new { @class = "floatRight", type = "button" })
     </p>
-    <table class="table">
-        <tr>
-            <th>
+
+</div>
+<div class="table  col-lg-12 shiftleft">
+        <div class="row trow">
+            <div class="col-lg-2 col-md-2 col-sm-2">
                 @Html.ActionLink("Username", "Index", new { sortOrder = ViewBag.UsernameSortParam })
-            </th>
-            <th>
+            </div>
+            <div class="col-lg-1 col-md-1 col-sm-2" >
                 @Html.ActionLink("First Name", "Index", new { sortOrder = ViewBag.NameSortParam })
-            </th>
-            <th>
+            </div >
+            <div class="col-lg-1 col-md-1 col-sm-2">
                 @Html.ActionLink("Last Name", "Index", new { sortOrder = ViewBag.LastSortParam })
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Institution)
-            </th>
-            <th></th>
-            <th></th>
-        </tr>
+            </div>
+            <div class="col-lg-1 col-md-1 col-sm-2">
+                @Html.ActionLink("Status", "Index", new { sortOrder = ViewBag.StatusSortParam })
+            </div>
+            <div class="col-lg-2 col-md-2 col-sm-2">
+                @Html.ActionLink("Institution", "Index", new { sortOrder = ViewBag.InstitutionSortParam })
+            </div>
+            
+            <div class="col-lg-3 col-md-3 col-sm-2"></div>
+        </div>
         @foreach (var item in Model)
         {
-            var style = (item.Status == ApplicationUser.AccountStatus.Active) ? "background-color: #ff8080" : "";
-            <tr style="@style">
-                <td>
+            var style = (item.Status != ApplicationUser.AccountStatus.Active) ? "background-color: rgba(239, 141, 198, 0.30)" : "";
+            <div style="@style" class="row trow">
+                <div class="col-lg-2 col-md-2 col-sm-2 tcell">
                     @Html.DisplayFor(modelItem => item.Email)
-                </td>
-                <td>
+                </div>
+                <div class="col-lg-1 col-md-1 col-sm-2 tcell">
                     @Html.DisplayFor(modelItem => item.FirstName)
-                </td>
-                <td>
+                </div>
+                <div class="col-lg-1 col-md-1 col-sm-2 tcell">
                     @Html.DisplayFor(modelItem => item.LastName)
-                </td>
-                <td>
+                </div>
+                <div class="col-lg-1 col-md-1 col-sm-2 tcell">
+                    @Html.DisplayFor(modelItem => item.Status)
+                </div>
+                <div class="col-lg-2 col-md-2 col-sm-2 tcell">
                     @Html.DisplayFor(modelItem => item.Institution)
-                </td>
-                <td>
+                </div>
+                <div class="col-lg-3 col-md-3 col-sm-2 tcell">
                     @Html.ActionLink("Edit", "Edit", new { userName = item.UserName }) |
                     @Html.ActionLink("Roles", "ViewUserRoles", new { userName = item.UserName })
-                </td>
-                <th>
-                    @Html.ActionLink("Change Status", "AccountDisable", new { userName = item.UserName }, new { type = "button-enter" })
-                </th>
-            </tr>
+                    <span >@Html.ActionLink("Change Status", "AccountDisable", new { userName = item.UserName }, new { @class = "btn btn-primary btn-xs" } @*new { type = "button-enter" }*@)</span>
+                </div>
+            </div>
         }
-    </table>
+
     @Html.ActionLink("Back to Administration Page", "Admin", "Home")
+</div>

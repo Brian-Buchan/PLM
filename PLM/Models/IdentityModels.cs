@@ -97,6 +97,8 @@ namespace PLM
         public DbSet<FAQ> FAQs { get; set; }
 
 
-        public System.Data.Entity.DbSet<PLM.DisableModuleViewModel> DisableModuleViewModels { get; set; }
+       // public System.Data.Entity.DbSet<PLM.DisableModuleViewModel> DisableModuleViewModels { get; set; }
+
+       // public System.Data.Entity.DbSet<PLM.Models.CngUserPwdViewModel> CngUserPwdViewModels { get; set; }
     }
 }
