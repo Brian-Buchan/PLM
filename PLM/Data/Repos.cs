@@ -514,18 +514,18 @@ namespace PLM
             var idParam11 = new SqlParameter { ParameterName = "DisableModuleNote", Value = module.DisableModuleNote ?? "" };
             var idParam12 = new SqlParameter { ParameterName = "DisableReason", Value = module.DisableReason  };
             var idParam13 = new SqlParameter { ParameterName = "ModuleID", Value = module.ModuleID };
-           // try
-          //  {
+            try
+            {
                 _dc.Database.ExecuteSqlCommand(
                     "Update Modules SET Name = @Name, Description = @Description, CategoryId = @CategoryID, DefaultNumAnswers = @DefaultNumAnswers, DefaultTime = @DefaultTime, DefaultNumQuestions = @DefaultNumQuestions, isPrivate = @isPrivate, User_Id = @User_Id, rightAnswerString = @rightAnswerString, wrongAnswerString = @wrongAnswerString, isDisabled = @isDisabled, DisableModuleNote = @DisableModuleNote, DisableReason = @DisableReason where ModuleID = @ModuleID",
                     idParam, idParam1, idParam2, idParam3, idParam4, idParam5, idParam6, idParam7, idParam8, idParam9, idParam10, idParam11, idParam12, idParam13
                     );
-          //  }
-          //  catch (Exception)
-           // {
+            }
+            catch (Exception)
+           {
                 return false;
-           // }
-            return true;
+            }
+           return true;
 
         }
 
@@ -653,11 +653,12 @@ namespace PLM
                 rc = _f.Count() + 1;
 
             }
-            catch (Exception e)
+            catch 
             {
                 // 
                 // e.Message;
                 //TODO: do something with errors
+
                 rc = 0;
             }
 
