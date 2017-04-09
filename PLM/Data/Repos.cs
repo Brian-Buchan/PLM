@@ -84,7 +84,7 @@ namespace PLM
             }
             return true;
         }
-
+        //
         public bool AddCategory(Category category)
         {
             var idParam = new SqlParameter
