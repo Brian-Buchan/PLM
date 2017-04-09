@@ -12,15 +12,15 @@ namespace PLM.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
         private ModuleViewModel ModuleModel = new ModuleViewModel();
 
-
+        Repos repo = new Repos();
 
         public ActionResult pvModuleFilterList()
         {
             IEnumerable<ModuleFilterMenuList> lst;
-            using (Repos repo = new Repos())
-            {
-                lst = repo.GetModuleFilterMenuList();
-            }
+            
+           
+            lst = repo.GetModuleFilterMenuList();
+           
             return View(lst);
         }
 
@@ -56,9 +56,13 @@ namespace PLM.Controllers
         {
             ViewBag.CurrentSort = sortOrder;
             var modules = db.Modules.ToList();
+            // var modules = repo.GetValidModuleList();
             modules = (from m in modules
                             where m.isPrivate == false && m.isDisabled == false 
                             select m).ToList();
+
+            modules = (from m in modules where m.Answers.Count >= 5 select m).ToList();
+
             if (searchString != null)
             {
                 page = 1;
@@ -79,17 +83,17 @@ namespace PLM.Controllers
             }
             ViewBag.filterParam = filterParam;
             //Call the category count function to get category coutns
-            ViewBag.Cat1Count = categoryCount(1);
-            ViewBag.Cat2Count = categoryCount(2);
-            ViewBag.Cat3Count = categoryCount(3);
-            ViewBag.Cat4Count = categoryCount(4);
-            ViewBag.Cat5Count = categoryCount(5);
-            ViewBag.Cat6Count = categoryCount(6);
-            ViewBag.Cat7Count = categoryCount(7);
-            ViewBag.Cat8Count = categoryCount(8);
-            ViewBag.Cat9Count = categoryCount(9);
-            ViewBag.Cat10Count = categoryCount(10);
-            ViewBag.Cat11Count = categoryCount(11);
+            //ViewBag.Cat1Count = categoryCount(1);
+            //ViewBag.Cat2Count = categoryCount(2);
+            //ViewBag.Cat3Count = categoryCount(3);
+            //ViewBag.Cat4Count = categoryCount(4);
+            //ViewBag.Cat5Count = categoryCount(5);
+            //ViewBag.Cat6Count = categoryCount(6);
+            //ViewBag.Cat7Count = categoryCount(7);
+            //ViewBag.Cat8Count = categoryCount(8);
+            //ViewBag.Cat9Count = categoryCount(9);
+            //ViewBag.Cat10Count = categoryCount(10);
+            //ViewBag.Cat11Count = categoryCount(11);
             int pageSize = 3;
             int pageNumber = (page ?? 1);
             return View(modules.ToPagedList(pageNumber, pageSize));

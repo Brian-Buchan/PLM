@@ -13,6 +13,7 @@ using PLM.CutomAttributes;
 using System.Drawing;
 using System.Drawing.Imaging;
 using PLM.Models;
+using System.Text;
 
 namespace PLM.Controllers
 {
@@ -116,15 +117,18 @@ namespace PLM.Controllers
         public ActionResult Create([Bind(Include = "Attribution,PictureID")] Picture picture, int? id)
         {
             int ID = id ?? 0;
+            Stream stream = Request.Files[0].InputStream;
+
             pictureToSave = new Picture();
             pictureToSave.AnswerID = ID;
             pictureToSave.Location = "NotYetConstructed";
-            if (picture.Attribution == null)
-                pictureToSave.Attribution = "";
-            else
-                pictureToSave.Attribution = picture.Attribution;
 
-            ConvertImageToDataString(pictureToSave, Request.Files[0].InputStream);
+            ConvertImageToDataString(pictureToSave, stream);
+
+            if (picture.Attribution         ==  null    )  picture.Attribution          = "";
+            if (pictureToSave.Attribution   ==  null    )  pictureToSave.Attribution    = "";
+            if (picture.Attribution.Length  >   0       )  pictureToSave.Attribution    += picture.Attribution;
+            
             ViewBag.AnswerID = ID;
 
             if (ModelState.IsValid)
@@ -142,13 +146,44 @@ namespace PLM.Controllers
             return View(pictureToSave);
         }
 
+       
+
         [NonAction]
-        public static void ConvertImageToDataString(Picture pictureToSave, Stream stream)
+        public static void  ConvertImageToDataString(Picture pictureToSave, Stream stream)
         {
             ImageConverter IC = new ImageConverter();
             Image image = Image.FromStream(stream);
+
+            pictureToSave.Attribution = GetDefImageAttribution(image);
+
             image = PictureResizer.ScaleImage(image, 600, 400);
             pictureToSave.PictureData = Convert.ToBase64String(PictureResizer.GetByteArrayFromImage(image));
+           
+        }
+
+        [NonAction]
+        public static void ConvertImageToDataString(Picture pictureToSave, Image image)
+        {
+            ImageConverter IC = new ImageConverter();
+            
+            image = PictureResizer.ScaleImage(image, 600, 400);
+            pictureToSave.PictureData = Convert.ToBase64String(PictureResizer.GetByteArrayFromImage(image));
+
+        }
+
+        [NonAction]
+        public static string GetDefImageAttribution(Image _image) {
+            string rc = "";
+            gma.Drawing.ImageInfo.Info pInfo = new gma.Drawing.ImageInfo.Info();
+
+            pInfo.Image = _image;
+
+            if (pInfo.Copyright.Length  > 0     )   rc += "(c)"     + pInfo.Copyright   ;
+            if (pInfo.DTOrig.Length     > 0     )   rc += " "       + pInfo.DateTime    ;
+            if (pInfo.DateTime.Length   > 0     )   rc += " "       + pInfo.DTOrig      ;
+            if (pInfo.EquipMake.Length  > 0     )   rc += ": "     + pInfo.EquipMake   ;
+            if (pInfo.EquipModel.Length > 0     )   rc += " "      + pInfo.EquipModel  ;
+            return rc;
         }
 
         public ActionResult InvalidImage(int id)

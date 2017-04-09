@@ -195,6 +195,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Extensions\PictureResizer.cs" />
+    <Compile Include="glm\Constants.cs" />
+    <Compile Include="glm\Fraction.cs" />
+    <Compile Include="glm\Info.cs" />
+    <Compile Include="glm\PropertyTag.cs" />
     <Compile Include="Migrations\201606141648191_InitialCreate.cs" />
     <Compile Include="Migrations\201606141648191_InitialCreate.Designer.cs">
       <DependentUpon>201606141648191_InitialCreate.cs</DependentUpon>

@@ -1,0 +1,20 @@
+<Combine fileversion="1.0" name="gma.Drawing.ImageInfo" description="">
+  <StartMode startupentry="gma.Drawing.ImageInfo.Demo" single="True">
+    <Execute entry="gma.Drawing.ImageInfo" type="None" />
+    <Execute entry="gma.Drawing.ImageInfo.Demo" type="None" />
+  </StartMode>
+  <Entries>
+    <Entry filename=".\gma.Drawing.ImageInfo.prjx" />
+    <Entry filename="..\gma.Drawing.ImageInfo.Demo\gma.Drawing.ImageInfo.Demo.prjx" />
+  </Entries>
+  <Configurations active="Debug">
+    <Configuration name="Release">
+      <Entry name="gma.Drawing.ImageInfo" configurationname="Debug" build="False" />
+      <Entry name="gma.Drawing.ImageInfo.Demo" configurationname="Debug" build="False" />
+    </Configuration>
+    <Configuration name="Debug">
+      <Entry name="gma.Drawing.ImageInfo" configurationname="Debug" build="False" />
+      <Entry name="gma.Drawing.ImageInfo.Demo" configurationname="Debug" build="False" />
+    </Configuration>
+  </Configurations>
+</Combine>

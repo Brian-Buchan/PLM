@@ -130,6 +130,10 @@ namespace PLM.Controllers
         [HttpGet]
         public ActionResult Play()
         {
+            if ( Session["userGameSession"] == null) {
+                return RedirectToAction("Index", "Home");
+            }
+
             Question question = new Question(((UserGameSession)Session["userGameSession"]));
             CorrectAnswer = question.CorrectAnswer;
             return View(question);

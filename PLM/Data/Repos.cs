@@ -377,10 +377,22 @@ namespace PLM
         public IEnumerable<ModuleFilterMenuList> GetModuleFilterMenuList()
         {
             var _List = _dc.Database.SqlQuery<ModuleFilterMenuList>(
-                "select c.[CategoryName], c.[CategoryID], count(m.ModuleID) as ModuleCount from[dbo].[Categories] as c left outer join[dbo].[Modules] as m on m.CategoryId = c.CategoryID group by c.[CategoryName], c.[CategoryID] order by c.[CategoryName]"
+                "select c.[CategoryName], c.[CategoryID], dbo.GetValidModuleCount(c.[CategoryID]) as ModuleCount from[dbo].[Categories] as c left outer join[dbo].[Modules] as m on m.CategoryId = c.CategoryID group by c.[CategoryName], c.[CategoryID]     order by c.[CategoryName]"
             ).ToList<ModuleFilterMenuList>();
             return _List;
         }
+
+        public IEnumerable<Module> GetValidModuleList()
+        {
+            var _List = _dc.Database.SqlQuery<Module>(
+                "SELECT * from Modules m outer apply ( select dbo.IsValidModule(v.[ModuleID]) as isvalid from [dbo].[Modules] as v where v.ModuleID = m.ModuleID ) v where v.isvalid = 'True' "
+            ).ToList<Module>();
+
+
+            return _List;
+        }
+
+
         #endregion
 
         #region UPDATE

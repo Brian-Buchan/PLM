@@ -1,7 +1,7 @@
 ﻿@model PagedList.IPagedList<PLM.Module>
 @using PagedList.Mvc;
-<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
-@{
+@*<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+@{*@
     ViewBag.Title = "Modules";
 }
 <section id="page-breadcrumb">
@@ -32,13 +32,15 @@
     <div class="col-xs-9 flex NoPadding">
         @foreach (Module module in Model)
         {
-            if (module.Answers.Count >= 5)
+            //    if (module.Answers.Count >= 5)
+            //  {
+            try
             {
-                try
-                {
-                    Answer answer = module.Answers.ElementAt(0);
-                    Picture picture = answer.Pictures.ElementAt(0);
-                    PLM.Models.GamePicture pic = new PLM.Models.GamePicture(picture);
+                Answer answer = module.Answers.ElementAt(0);
+                Picture picture = new Picture();
+                if ( answer.Pictures.Count > 0) { picture = answer.Pictures.ElementAt(0); }
+
+                PLM.Models.GamePicture pic = new PLM.Models.GamePicture(picture);
                     <div class="col-xs-4">
                         <div class="portfolio-wrapper">
                             <div class="portfolio-single">
@@ -63,16 +65,18 @@
                     </div>
                 }
                 catch (ArgumentOutOfRangeException) { }
-            }
+            //}
         }
     </div>
-    <div class="col-xs-12">
-        Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
-
-        @Html.PagedListPager(Model, page => Url.Action("Index",
-                             new { page, sortOrder = ViewBag.CurrentSort, filterParam = ViewBag.filterParam, currentFilter = ViewBag.CurrentFilter }))
-    </div>
+    
 </section>
+<div class="col-xs-12 col-md-12 col-lg-12">
+    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+    @Html.PagedListPager(Model, page => Url.Action("Index",
+                             new { page, sortOrder = ViewBag.CurrentSort, filterParam = ViewBag.filterParam, currentFilter = ViewBag.CurrentFilter }))
+</div>
+
 <!--/#projects-->
 <footer>
     <div>Icons made by <a href="http://www.flaticon.com/authors/gregor-cresnar" title="Gregor Cresnar">Gregor Cresnar</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
@@ -80,6 +84,6 @@
 <script type="text/javascript" src="~/Scripts/jquery.js"></script>
 <script type="text/javascript" src="~/Scripts/bootstrap.min.js"></script>
 <script type="text/javascript" src="~/Scripts/jquery.isotope.min.js"></script>
-<script type="text/javascript" src="~/Scripts/lightbox.min.js"></script>
+@*<script type="text/javascript" src="~/Scripts/lightbox.min.js"></script>*@
 <script type="text/javascript" src="~/Scripts/wow.min.js"></script>
 <script type="text/javascript" src="~/Scripts/main.js"></script>
