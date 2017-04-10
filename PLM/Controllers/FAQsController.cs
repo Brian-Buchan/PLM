@@ -18,6 +18,8 @@ namespace PLM.Controllers
         // GET: FAQs
         public ActionResult Index()
         {
+            ViewBag.Title = "Frequently Asked Questions?";
+
             return View(db.FAQs.ToList().OrderBy(sort => sort.SortOrder ));
         }
 

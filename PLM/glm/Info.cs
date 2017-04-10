@@ -120,7 +120,7 @@ namespace gma.Drawing.ImageInfo
                 {
                     rc = (string)PropertyTag.getValue(_image.GetPropertyItem((int)PropertyTagId.EquipMake));
                 }
-                catch (Exception e)
+                catch 
                 {
                     rc = "";
                 }
@@ -141,7 +141,7 @@ namespace gma.Drawing.ImageInfo
                 {
                     rc = (string)PropertyTag.getValue(_image.GetPropertyItem((int)PropertyTagId.EquipModel));
                 }
-                catch (Exception e)
+                catch 
                 {
                     rc = ""; //e.Message;
                 }
@@ -162,7 +162,7 @@ namespace gma.Drawing.ImageInfo
                 {
                     rc = (string)PropertyTag.getValue(_image.GetPropertyItem((int)PropertyTagId.Copyright));
                 }
-                catch (Exception e) {
+                catch  {
                     rc = "none found"; // e.Message;
                 }
                 return rc;			
@@ -183,7 +183,7 @@ namespace gma.Drawing.ImageInfo
                     rc = (string)PropertyTag.getValue(_image.GetPropertyItem((int)PropertyTagId.DateTime));
 
                 }
-                catch (Exception e)
+                catch 
                 {
                     rc = ""; // e.Message;
                 }
