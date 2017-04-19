@@ -199,89 +199,9 @@
     <Compile Include="glm\Fraction.cs" />
     <Compile Include="glm\Info.cs" />
     <Compile Include="glm\PropertyTag.cs" />
-    <Compile Include="Migrations\201606141648191_InitialCreate.cs" />
-    <Compile Include="Migrations\201606141648191_InitialCreate.Designer.cs">
-      <DependentUpon>201606141648191_InitialCreate.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201606211851547_reports.cs" />
-    <Compile Include="Migrations\201606211851547_reports.Designer.cs">
-      <DependentUpon>201606211851547_reports.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201606281557434_PictureNaming.cs" />
-    <Compile Include="Migrations\201606281557434_PictureNaming.Designer.cs">
-      <DependentUpon>201606281557434_PictureNaming.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201606291608228_answerString.cs" />
-    <Compile Include="Migrations\201606291608228_answerString.Designer.cs">
-      <DependentUpon>201606291608228_answerString.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201606291641268_AccountTypeAndStatus.cs" />
-    <Compile Include="Migrations\201606291641268_AccountTypeAndStatus.Designer.cs">
-      <DependentUpon>201606291641268_AccountTypeAndStatus.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201606291751595_DisableModule.cs" />
-    <Compile Include="Migrations\201606291751595_DisableModule.Designer.cs">
-      <DependentUpon>201606291751595_DisableModule.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201607051632302_AnsStringReq.cs" />
-    <Compile Include="Migrations\201607051632302_AnsStringReq.Designer.cs">
-      <DependentUpon>201607051632302_AnsStringReq.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201607051725540_DisableModuleAccount.cs" />
-    <Compile Include="Migrations\201607051725540_DisableModuleAccount.Designer.cs">
-      <DependentUpon>201607051725540_DisableModuleAccount.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201607051913527_DisableModuleChange.cs" />
-    <Compile Include="Migrations\201607051913527_DisableModuleChange.Designer.cs">
-      <DependentUpon>201607051913527_DisableModuleChange.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201607061600524_CategoryRequired.cs" />
-    <Compile Include="Migrations\201607061600524_CategoryRequired.Designer.cs">
-      <DependentUpon>201607061600524_CategoryRequired.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201607121527318_ModuleNameLength.cs" />
-    <Compile Include="Migrations\201607121527318_ModuleNameLength.Designer.cs">
-      <DependentUpon>201607121527318_ModuleNameLength.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201607131843576_scoreupdate.cs" />
-    <Compile Include="Migrations\201607131843576_scoreupdate.Designer.cs">
-      <DependentUpon>201607131843576_scoreupdate.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201607131857400_scoreupdate2.cs" />
-    <Compile Include="Migrations\201607131857400_scoreupdate2.Designer.cs">
-      <DependentUpon>201607131857400_scoreupdate2.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201607131917595_databaseFix.cs" />
-    <Compile Include="Migrations\201607131917595_databaseFix.Designer.cs">
-      <DependentUpon>201607131917595_databaseFix.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201607131944284_dualAnswer.cs" />
-    <Compile Include="Migrations\201607131944284_dualAnswer.Designer.cs">
-      <DependentUpon>201607131944284_dualAnswer.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201609161944499_AttributionLength.cs" />
-    <Compile Include="Migrations\201609161944499_AttributionLength.Designer.cs">
-      <DependentUpon>201609161944499_AttributionLength.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201609161950505_PictureAsString.cs" />
-    <Compile Include="Migrations\201609161950505_PictureAsString.Designer.cs">
-      <DependentUpon>201609161950505_PictureAsString.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201611212125270_ModuleIDinDisableModuleViewModel.cs" />
-    <Compile Include="Migrations\201611212125270_ModuleIDinDisableModuleViewModel.Designer.cs">
-      <DependentUpon>201611212125270_ModuleIDinDisableModuleViewModel.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201702041942406_module key.cs" />
-    <Compile Include="Migrations\201702041942406_module key.Designer.cs">
-      <DependentUpon>201702041942406_module key.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201703051421476_FAQ.cs" />
-    <Compile Include="Migrations\201703051421476_FAQ.Designer.cs">
-      <DependentUpon>201703051421476_FAQ.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201704081743004_usr.cs" />
-    <Compile Include="Migrations\201704081743004_usr.Designer.cs">
-      <DependentUpon>201704081743004_usr.cs</DependentUpon>
+    <Compile Include="Migrations\201704192140188_init.cs" />
+    <Compile Include="Migrations\201704192140188_init.Designer.cs">
+      <DependentUpon>201704192140188_init.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AdminViewModel.cs" />
@@ -1358,68 +1278,8 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201606141648191_InitialCreate.resx">
-      <DependentUpon>201606141648191_InitialCreate.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201606211851547_reports.resx">
-      <DependentUpon>201606211851547_reports.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201606281557434_PictureNaming.resx">
-      <DependentUpon>201606281557434_PictureNaming.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201606291608228_answerString.resx">
-      <DependentUpon>201606291608228_answerString.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201606291641268_AccountTypeAndStatus.resx">
-      <DependentUpon>201606291641268_AccountTypeAndStatus.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201606291751595_DisableModule.resx">
-      <DependentUpon>201606291751595_DisableModule.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201607051632302_AnsStringReq.resx">
-      <DependentUpon>201607051632302_AnsStringReq.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201607051725540_DisableModuleAccount.resx">
-      <DependentUpon>201607051725540_DisableModuleAccount.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201607051913527_DisableModuleChange.resx">
-      <DependentUpon>201607051913527_DisableModuleChange.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201607061600524_CategoryRequired.resx">
-      <DependentUpon>201607061600524_CategoryRequired.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201607121527318_ModuleNameLength.resx">
-      <DependentUpon>201607121527318_ModuleNameLength.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201607131843576_scoreupdate.resx">
-      <DependentUpon>201607131843576_scoreupdate.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201607131857400_scoreupdate2.resx">
-      <DependentUpon>201607131857400_scoreupdate2.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201607131917595_databaseFix.resx">
-      <DependentUpon>201607131917595_databaseFix.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201607131944284_dualAnswer.resx">
-      <DependentUpon>201607131944284_dualAnswer.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201609161944499_AttributionLength.resx">
-      <DependentUpon>201609161944499_AttributionLength.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201609161950505_PictureAsString.resx">
-      <DependentUpon>201609161950505_PictureAsString.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201611212125270_ModuleIDinDisableModuleViewModel.resx">
-      <DependentUpon>201611212125270_ModuleIDinDisableModuleViewModel.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201702041942406_module key.resx">
-      <DependentUpon>201702041942406_module key.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201703051421476_FAQ.resx">
-      <DependentUpon>201703051421476_FAQ.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201704081743004_usr.resx">
-      <DependentUpon>201704081743004_usr.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201704192140188_init.resx">
+      <DependentUpon>201704192140188_init.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
