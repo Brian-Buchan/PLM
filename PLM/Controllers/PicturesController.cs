@@ -366,7 +366,7 @@ namespace PLM.Controllers
         [AuthorizeOrRedirectAttribute(Roles = "Instructor")]
         public ActionResult Discard()
         {
-            string ansId = Request.Form.Get("answerID");
+            string ansId = Request.Form.Get("answerId");
             return RedirectToAction("Edit", "Answers", new { id = ansId });
         }
         #endregion

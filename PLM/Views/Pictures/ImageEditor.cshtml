@@ -11,18 +11,15 @@
 @using (Html.BeginForm("Save", "Pictures", FormMethod.Post))
 {
     @Html.AntiForgeryToken()
-    <input type="text" name="imageId" id="imageId" hidden="hidden" required="required" value="@Model.PictureID" />
-    <input type="text" name="answerId" id="answerId" hidden="hidden" required="required" value="@Model.AnswerID" />
-    <input type="text" name="newImgData" id="newImgData" hidden="hidden" required="required" value="@Model.PictureData" />
-    <input type="text" name="originalImgData" id="originalImgData" hidden="hidden" required="required" value="" />
+    <input type="text" name="imageId" id="imageId" hidden="hidden"  value="@Model.PictureID" />
+    <input type="text" name="answerId" id="answerId" hidden="hidden"  value="@Model.AnswerID" />
+    <input type="text" name="newImgData" id="newImgData" hidden="hidden"  value="@Model.PictureData" />
+    <input type="text" name="originalImgData" id="originalImgData" hidden="hidden"  value="" />
     <input class="btn btn-primary" type="submit" style="background-color:green" value="Save" />
-}
-@using (Html.BeginForm("Discard", "Pictures", FormMethod.Post))
-{
-    <input type="text" name="newImgData" value="@Model.PictureData" hidden="hidden" />
-    <input type="number" name="answerID" value="@Model.AnswerID" hidden="hidden" />
+    <br />
     <input class="btn btn-primary" style="background-color:red" type="submit" value="Discard" />
 }
+
 <br />
 <div>
     @Html.ActionLink("Back to List of Pictures", "edit", new { controller = "Answers", id = Model.AnswerID })
