@@ -1187,6 +1187,8 @@
     <None Include="Properties\PublishProfiles\NMC-PLM-Development.pubxml" />
     <None Include="Properties\PublishProfiles\PerceptualLearningBeta - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\PerceptualLearningBeta - Web Deploy.pubxml" />
+    <None Include="Properties\PublishProfiles\PLMLearningSite - FTP.pubxml" />
+    <None Include="Properties\PublishProfiles\PLMLearningSite - Web Deploy.pubxml" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -1340,6 +1342,7 @@
     <Content Include="Views\FAQs\Edit.cshtml" />
     <Content Include="Views\FAQs\Index.cshtml" />
     <Content Include="Views\Account\CngUserPwd.cshtml" />
+    <Content Include="Views\ModulesEDIT\CopyData.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

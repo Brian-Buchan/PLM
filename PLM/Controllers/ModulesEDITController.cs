@@ -10,6 +10,8 @@ using PLM;
 using Microsoft.AspNet.Identity;
 using System.Data.Entity.Infrastructure;
 using PLM.CutomAttributes;
+using System.Data.SqlClient;
+using System.Configuration;
 
 namespace PLM.Controllers
 {
@@ -17,6 +19,8 @@ namespace PLM.Controllers
     public class ModulesEDITController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
+        private Repos _dc = new Repos();
+
 
         // GET: /ModulesEDIT/
         [AuthorizeOrRedirectAttribute(Roles = "Admin")]
@@ -343,6 +347,31 @@ namespace PLM.Controllers
                 }
             }
             return RedirectToAction("Index", new { controller = "Profile" });
+        }
+
+        public ActionResult CopyData()
+        {
+            return View();
+        }
+        [HttpPost]
+        public ActionResult CopyData(int? i)
+        {
+        
+                //string cs = ConfigurationManager.ConnectionStrings["Azure"].ConnectionString;
+             
+                //using (SqlConnection connection = new SqlConnection(cs))
+                //{
+                //    connection.Open();
+
+
+                //        _dc.CopyPicture(connection);
+
+                    
+
+                //}
+
+        
+            return View();
         }
         protected override void Dispose(bool disposing)
         {

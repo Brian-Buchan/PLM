@@ -7,9 +7,21 @@ using System.Data.SqlTypes;
 using System.Linq;
 using System.Web;
 using Microsoft.AspNet.Identity;
+using System.Data;
 //TODO: COPY OVER
 namespace PLM
 {
+
+    public class picview {
+        public int PictureID { get; set; }
+        public string Location { get; set; }
+        public int AnswerID { get; set; }
+        public string Attribution { get; set; }
+    }
+    public class picdata {
+        public string PictureData { get; set; }
+    }
+
     public class Repos : IDisposable
     {
         ApplicationDbContext _dc = new ApplicationDbContext();
@@ -84,6 +96,58 @@ namespace PLM
             }
             return true;
         }
+
+        //public bool CopyPicture( SqlConnection conn)
+        //{
+
+        //    picdata picture = new picdata();
+        //    IEnumerable<picview> pics = _dc.Database.SqlQuery<picview>("SELECT [PictureID]      ,[Location]      ,[AnswerID]      ,[Attribution]        FROM[dbo].[Pictures]").ToList();
+
+        //    foreach (var pic in pics) {
+
+        //        var idParam = new SqlParameter
+        //        {
+        //            ParameterName = "Location",
+        //            Value = pic.Location ?? ""
+        //        };
+        //        var idParam1 = new SqlParameter
+        //        {
+        //            ParameterName = "AnswerID",
+        //            Value = pic.AnswerID
+        //        };
+        //        var idParam2 = new SqlParameter
+        //        {
+        //            ParameterName = "Attribution",
+        //            Value = pic.Attribution ?? ""
+        //        };
+        //        var idParam4 = new SqlParameter
+        //        {
+        //            ParameterName = "PictureID",
+        //            Value = pic.PictureID
+        //        };
+
+
+        //        var sql = @"SELECT picturedata FROM [dbo].[Pictures] where PictureId = {0}";
+        //        picture = _dc.Database.SqlQuery<picdata>(sql, pic.PictureID).SingleOrDefault();
+
+        //        SqlCommand cm = new SqlCommand("SET IDENTITY_INSERT PICTURES ON  INSERT INTO Pictures (PictureId, Location, AnswerID, Attribution, PictureData) VALUES (@PictureId, @Location, @AnswerID, @Attribution, @PictureData)  SET IDENTITY_INSERT PICTURES OFF  ", conn);
+        //        cm.Parameters.Add(idParam4);
+        //        cm.Parameters.Add(idParam);
+        //        cm.Parameters.Add(idParam1);
+        //        cm.Parameters.Add(idParam2);
+        //        cm.Parameters.Add("@PictureData", SqlDbType.VarChar, -1).Value = picture.PictureData;
+                 
+        //        cm.ExecuteNonQuery();
+
+
+
+        //    }
+
+         
+        //    return true;
+        //}
+
+
         //
         public bool AddCategory(Category category)
         {
@@ -133,6 +197,51 @@ namespace PLM
             //}
             return true;
         }
+
+        //public bool CopyModule(Module module, SqlConnection conn)
+        //{
+        //    //try
+        //    //{
+
+        //    var idParam = new SqlParameter { ParameterName = "Name", Value = module.Name.ToString(), DbType = System.Data.DbType.String };
+        //    var idParam1 = NullChecker(new SqlParameter { ParameterName = "Description", Value = module.Description, DbType = System.Data.DbType.String });
+        //    var idParam2 = new SqlParameter { ParameterName = "CategoryID", Value = module.CategoryId };
+        //    var idParam3 = new SqlParameter { ParameterName = "DefaultNumAnswers", Value = module.DefaultNumAnswers };
+        //    var idParam4 = new SqlParameter { ParameterName = "DefaultTime", Value = module.DefaultTime };
+        //    var idParam5 = new SqlParameter { ParameterName = "DefaultNumQuestions", Value = module.DefaultNumQuestions };
+        //    var idParam6 = new SqlParameter { ParameterName = "isPrivate", Value = module.isPrivate };
+        //    var idParam7 = new SqlParameter { ParameterName = "user_Id", Value = module.User.Id };
+        //    var idParam8 = NullChecker(new SqlParameter { ParameterName = "rightAnswerString", Value = module.rightAnswerString, DbType = System.Data.DbType.String });
+        //    var idParam9 = NullChecker(new SqlParameter { ParameterName = "wrongAnswerString", Value = module.wrongAnswerString, DbType = System.Data.DbType.String });
+        //    var idParam10 = new SqlParameter { ParameterName = "isDisabled", Value = module.isDisabled };
+        //    var idParam11 = NullChecker(new SqlParameter { ParameterName = "DisableModuleNote", Value = module.DisableModuleNote, DbType = System.Data.DbType.String });
+        //    var idParam12 = NullChecker(new SqlParameter { ParameterName = "DisableReason", Value = module.DisableReason });
+             
+        //    SqlCommand cm = new SqlCommand("INSERT INTO Modules(Name, Description, CategoryId, DefaultNumAnswers, DefaultTime, DefaultNumQuestions, isPrivate, User_Id, rightAnswerString, wrongAnswerString, isDisabled, DisableModuleNote, DisableReason) VALUES (@Name, @Description, @CategoryId, @DefaultNumAnswers, @DefaultTime, @DefaultNumQuestions, @isPrivate, @User_Id, @rightAnswerString, @wrongAnswerString, @isDisabled, @DisableModuleNote, @DisableReason)",conn);
+        //    cm.Parameters.Add(idParam);
+        //    cm.Parameters.Add(idParam1);
+        //    cm.Parameters.Add(idParam2);
+        //    cm.Parameters.Add(idParam3);
+        //    cm.Parameters.Add(idParam4);
+        //    cm.Parameters.Add(idParam5);
+        //    cm.Parameters.Add(idParam6);
+        //    cm.Parameters.Add(idParam7);
+        //    cm.Parameters.Add(idParam8);
+        //    cm.Parameters.Add(idParam9);
+        //    cm.Parameters.Add(idParam10);
+        //    cm.Parameters.Add(idParam11);
+        //    cm.Parameters.Add(idParam12);
+
+        //    cm.ExecuteNonQuery( );
+
+        //    //}
+        //    //catch (Exception)
+        //    //{
+        //    //    return false;
+        //    //}
+        //    return true;
+        //}
+
 
         public bool AddScore(Score score)
         {

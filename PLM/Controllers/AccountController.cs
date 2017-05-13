@@ -19,6 +19,9 @@ using PLM.Extensions;
 using PLM.CutomAttributes;
 using System.Text.RegularExpressions;
 using System.Globalization;
+using System.Data.SqlClient;
+using System.Data;
+
 namespace PLM.Controllers
 {
     [Authorize]
@@ -968,6 +971,10 @@ namespace PLM.Controllers
             ViewBag.ShowRemoveButton = HasPassword() || linkedAccounts.Count > 1;
             return (ActionResult)PartialView("_RemoveAccountPartial", linkedAccounts);
         }
+
+
+        
+
 
         protected override void Dispose(bool disposing)
         {
